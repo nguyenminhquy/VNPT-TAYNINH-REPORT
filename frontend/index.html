@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#005BAA" />
+    <title>VNPT Tây Ninh - Hệ thống báo cáo tự động</title>
+    <meta
+      name="description"
+      content="Hệ thống báo cáo tự động của VNPT Tây Ninh, tổng hợp dữ liệu từ 8 nguồn Excel và xuất báo cáo Word."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lexend:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260718-3" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="masthead">
+        <div class="masthead__inner">
+          <a class="brand" href="#top">
+            <img class="brand__logo" src="./data/vnpt_logo.png" alt="VNPT Logo" />
+            <span class="brand__divider"></span>
+            <span class="brand__identity">
+              <strong>VNPT Tây Ninh</strong>
+              <span>Hệ thống báo cáo tự động</span>
+            </span>
+          </a>
+
+          <nav class="masthead__links" aria-label="Điều hướng chính">
+            <a href="#overview">Tổng quan</a>
+            <a href="#reports">Trung tâm báo cáo</a>
+            <a href="#actions">Việc ưu tiên</a>
+            <a href="#sources">Nguồn dữ liệu</a>
+          </nav>
+
+          <div class="masthead__status">
+            <span class="status-pill"><i></i> Hệ thống trực tuyến</span>
+            <span id="generated-at" class="status-pill status-pill--muted"></span>
+            <button
+              id="data-entry-toggle"
+              class="data-entry-button"
+              type="button"
+              aria-controls="data-entry-sidebar"
+              aria-expanded="false"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3v12m0-12 4 4m-4-4L8 7M5 15v4h14v-4" />
+              </svg>
+              <span>Cập nhật dữ liệu</span>
+              <b>8</b>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="dashboard-layout">
+        <aside class="report-sidebar" aria-label="Danh mục 8 báo cáo">
+          <div class="report-sidebar__head">
+            <div>
+              <p>Danh mục báo cáo</p>
+              <h2>08 nguồn dữ liệu</h2>
+            </div>
+            <span id="report-menu-ready-count">0/8</span>
+          </div>
+          <nav id="report-menu" class="report-menu" aria-label="Chọn báo cáo cần xem"></nav>
+          <div id="report-menu-detail" class="report-menu-detail" aria-live="polite"></div>
+          <button id="report-upload-toggle" class="report-sidebar__upload" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v12m0-12 4 4m-4-4L8 7M5 15v4h14v-4" />
+            </svg>
+            <span>Tải lên 8 file Excel</span>
+          </button>
+        </aside>
+
+        <div class="dashboard-canvas">
+
+      <section id="top" class="hero">
+        <div class="hero__grid">
+          <div class="hero__copy">
+            <p id="hero-eyebrow" class="eyebrow"></p>
+            <h1 id="hero-title"></h1>
+            <p id="hero-subtitle" class="hero__subtitle"></p>
+            <div class="hero__actions">
+              <a class="button button--primary" href="#reports">Mở trung tâm báo cáo</a>
+              <button id="hero-upload-toggle" class="button button--secondary" type="button">Cập nhật 8 nguồn Excel</button>
+            </div>
+            <div id="hero-pulse" class="hero-pulse"></div>
+          </div>
+
+          <aside class="hero-board" aria-label="Các chỉ số nhìn nhanh">
+            <div class="hero-board__head">
+              <div>
+                <p class="eyebrow eyebrow--inverse">Bảng tín hiệu</p>
+                <h2>Điểm nhìn nhanh</h2>
+              </div>
+              <p class="hero-board__note">Tự động tổng hợp từ Excel</p>
+            </div>
+            <div id="hero-stats" class="stat-grid"></div>
+          </aside>
+        </div>
+
+        <div class="hero__footer">
+          <div class="hero__footer-copy">
+            <p class="hero__footer-label">Lối tắt điều hành</p>
+            <p class="hero__footer-text">
+              Nhảy nhanh tới các khối chính để rà chất lượng dịch vụ, vận hành hiện trường và danh sách hành động tuần.
+            </p>
+          </div>
+          <nav id="quick-nav" class="quick-nav" aria-label="Điều hướng nhanh"></nav>
+        </div>
+      </section>
+
+      <main class="main-content">
+        <section id="overview" class="section">
+          <div class="section__head">
+            <div>
+              <p class="eyebrow">Toàn cảnh tuần</p>
+              <h2>Tín hiệu chính cần theo dõi</h2>
+            </div>
+            <p class="section__caption">
+              Một lớp quét nhanh để nhìn ra chất lượng dịch vụ, tiến độ hiện trường và điểm nghẽn cần xử lý trước.
+            </p>
+          </div>
+          <div id="signal-bands" class="signal-grid"></div>
+        </section>
+
+        <section id="reports" class="section report-view-section">
+          <div class="section__head">
+            <div>
+              <p id="active-report-group" class="eyebrow">Báo cáo đang chọn</p>
+              <h2 id="active-report-heading">Chất lượng MBB</h2>
+            </div>
+            <p id="active-report-caption" class="section__caption">
+              Chọn một mục ở menu bên trái để xem số liệu, chỉ số và các điểm cần theo dõi của từng báo cáo.
+            </p>
+          </div>
+          <div id="active-report" class="report-stack report-stack--active" aria-live="polite"></div>
+        </section>
+
+        <section id="actions" class="section">
+          <div class="section__head">
+            <div>
+              <p class="eyebrow">Việc ưu tiên</p>
+              <h2>Danh sách hành động cần chốt nhanh</h2>
+            </div>
+            <p class="section__caption">
+              Các việc cần bám ngay sau khi gom dữ liệu tuần vào một màn hình duy nhất.
+            </p>
+          </div>
+          <div id="action-items" class="action-grid"></div>
+        </section>
+
+        <section id="sources" class="section section--sources">
+          <div class="section__head">
+            <div>
+              <p class="eyebrow">Nguồn đầu vào</p>
+              <h2>Các file Excel đang được tổng hợp</h2>
+            </div>
+            <p class="section__caption">
+              Landing page đang đọc dữ liệu từ bộ file mẫu trong thư mục <code>data sample</code>.
+            </p>
+          </div>
+          <div id="sources-list" class="source-list"></div>
+        </section>
+      </main>
+        </div>
+      </div>
+
+      <footer class="site-footer">
+        <div class="site-footer__inner">
+          <div class="site-footer__topline">
+            <div class="site-footer__brand">
+              <img class="site-footer__logo" src="./data/vnpt_footer_logo.svg" alt="VNPT Logo" />
+              <div>
+                <p class="site-footer__eyebrow">VNPT Tây Ninh</p>
+                <p class="site-footer__title">Hệ thống báo cáo tự động</p>
+              </div>
+            </div>
+            <div class="site-footer__owner">
+              <span>Thực hiện bởi</span>
+              <strong>Tổ Khai thác hệ thống</strong>
+            </div>
+            <address class="site-footer__address">
+              <span>Địa chỉ VNPT Tây Ninh</span>
+              <strong>Số 01 đường Phạm Công Khiêm, Phường 3, TP. Tây Ninh, tỉnh Tây Ninh</strong>
+            </address>
+          </div>
+          <div class="site-footer__baseline">
+            <p>© 2026 VNPT Tây Ninh. Hệ thống phục vụ công tác nội bộ.</p>
+            <span><i></i> Dữ liệu được tổng hợp từ 8 nguồn Excel</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <button
+      id="data-entry-backdrop"
+      class="data-entry-backdrop"
+      type="button"
+      aria-label="Đóng bảng nhập dữ liệu"
+      tabindex="-1"
+    ></button>
+
+    <aside id="data-entry-sidebar" class="data-entry-sidebar" aria-hidden="true">
+      <header class="data-entry-sidebar__header">
+        <div>
+          <p class="data-entry-sidebar__eyebrow">Data intake dashboard</p>
+          <h2>Dashboard nhập dữ liệu tuần</h2>
+          <p>Quản lý tập trung 8 nguồn Excel. Mỗi tệp hợp lệ sẽ được kiểm tra và tổng hợp trực tiếp vào báo cáo điều hành.</p>
+        </div>
+        <div class="data-entry-sidebar__header-actions">
+          <span>8 nguồn Excel</span>
+          <button id="data-entry-close" class="data-entry-close" type="button" aria-label="Đóng bảng nhập dữ liệu">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m6 6 12 12M18 6 6 18" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="data-entry-sidebar__summary">
+        <article class="data-entry-summary-card data-entry-summary-card--primary">
+          <span id="data-entry-count">0/8</span>
+          <small>Đã cập nhật trong phiên</small>
+        </article>
+        <article class="data-entry-summary-card">
+          <span>8/8</span>
+          <small>Nguồn dữ liệu bắt buộc</small>
+        </article>
+        <article class="data-entry-summary-card">
+          <span id="data-entry-api-status" class="data-entry-api-status">Đang kết nối</span>
+          <small>Máy chủ tổng hợp dữ liệu</small>
+        </article>
+      </div>
+
+      <div class="data-entry-dashboard__body">
+        <header class="data-entry-dashboard__head">
+          <div>
+            <p>Danh sách đầu vào</p>
+            <h3>8 báo cáo cần cập nhật</h3>
+          </div>
+          <p>Chọn tệp <code>.xlsx</code> tại từng card. Tên tệp tải lên sẽ được chuẩn hóa theo đúng nguồn báo cáo.</p>
+        </header>
+        <div id="data-entry-list" class="data-entry-list" aria-live="polite"></div>
+      </div>
+
+      <footer class="data-entry-sidebar__footer">
+        <p id="data-entry-footer-note">Word chỉ lấy các vùng dữ liệu đang được dùng trong mẫu báo cáo.</p>
+        <div class="data-entry-footer-actions">
+          <button id="data-entry-refresh" class="data-entry-refresh data-entry-action--secondary" type="button" disabled>
+            Làm mới dashboard
+          </button>
+          <button id="data-entry-export-word" class="data-entry-export-word" type="button" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v12m0 0 4-4m-4 4-4-4M5 19h14" />
+            </svg>
+            <span>Xuất báo cáo Word</span>
+          </button>
+        </div>
+      </footer>
+    </aside>
+
+    <div id="data-entry-toast" class="data-entry-toast" role="status" aria-live="polite"></div>
+
+    <script src="./data/report-data.js"></script>
+    <script src="./app.js?v=20260718-3"></script>
+  </body>
+</html>
