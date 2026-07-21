@@ -108,10 +108,10 @@ export async function POST(request: NextRequest): Promise<NextResponse<ExportWor
     });
 
     if (!pythonRes.ok) {
-      const errText = await pythonRes.text();
-      console.error('[export-word/POST] Python API error:', errText);
+      const pythonText = await pythonRes.text();
+      console.error('[export-word] Python API error:', pythonRes.status, pythonText);
       return NextResponse.json(
-        { error: 'Lỗi khi tạo file Word từ Python API. Vui lòng thử lại.' },
+        { error: `Lỗi Python API (${pythonRes.status}): ${pythonText}` },
         { status: 500 }
       );
     }
