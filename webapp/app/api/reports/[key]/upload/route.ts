@@ -204,7 +204,7 @@ export async function POST(
     } catch (blobErr: any) {
       console.error('[upload] Vercel Blob error:', blobErr);
       return NextResponse.json(
-        { error: 'Lỗi upload Vercel Blob (Chưa cấu hình Storage)' },
+        { error: `Lỗi upload Vercel Blob: ${blobErr.message || 'Chưa cấu hình Storage hoặc sai Token'}` },
         { status: 500 },
       );
     }
