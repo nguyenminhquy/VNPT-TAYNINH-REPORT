@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     if (lookupError) {
       console.error('[register] lookup error:', lookupError);
       return NextResponse.json(
-        { error: 'Lỗi kiểm tra tài khoản' },
+        { error: `Lỗi kiểm tra tài khoản: ${lookupError.message}` },
         { status: 500 },
       );
     }
@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
     if (insertError) {
       console.error('[register] insert error:', insertError);
       return NextResponse.json(
-        { error: 'Không thể tạo tài khoản' },
+        { error: `Không thể tạo tài khoản: ${insertError.message}` },
         { status: 500 },
       );
     }
