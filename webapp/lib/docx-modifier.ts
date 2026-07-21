@@ -160,7 +160,7 @@ export class DocxModifier {
 
   flattenLinkFields() {
     // 1. Flatten simple link fields <w:fldSimple>
-    const fldSimples = Array.from(this.doc.getElementsByTagName('w:fldSimple'));
+    const fldSimples = Array.from(this.doc.getElementsByTagName('w:fldSimple')) as Element[];
     for (const field of fldSimples) {
       const instr = field.getAttribute('w:instr') || '';
       if (instr.toUpperCase().trim().startsWith('LINK ')) {
@@ -178,7 +178,7 @@ export class DocxModifier {
     // To match python's robust parsing, we'll just remove any w:instrText that starts with LINK,
     // and its parent w:r. And also remove all w:fldChar begin/separate/end that are siblings.
     // This is a heuristic that works for the generated links.
-    const instrTexts = Array.from(this.doc.getElementsByTagName('w:instrText'));
+    const instrTexts = Array.from(this.doc.getElementsByTagName('w:instrText')) as Element[];
     let inLinkContext = false;
     
     for (const instr of instrTexts) {
@@ -195,7 +195,7 @@ export class DocxModifier {
     // But since the values are already cached in the <w:r> result section, just deleting the 
     // instruction runs and fldChars often breaks nothing.
     // Let's remove all <w:fldChar> as a brute force to un-field all fields (since we want a static document anyway)
-    const fldChars = Array.from(this.doc.getElementsByTagName('w:fldChar'));
+    const fldChars = Array.from(this.doc.getElementsByTagName('w:fldChar')) as Element[];
     for (const fldChar of fldChars) {
        const run = fldChar.parentNode;
        if (run) run.parentNode?.removeChild(run);
