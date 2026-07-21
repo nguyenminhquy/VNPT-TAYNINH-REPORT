@@ -9,6 +9,7 @@ import { useState, useCallback } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import styles from './login.module.css';
+import VnptLogo from '@/components/VnptLogo';
 
 /* ─── Icon components (inline SVG, không cần thêm thư viện) ─── */
 
@@ -64,12 +65,6 @@ const IconCheck = () => (
   </svg>
 );
 
-/* Logo VNPT dạng chữ trong hình vuông */
-const VnptLogoIcon = () => (
-  <svg viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg">
-    <text x="2" y="24" fontFamily="Lexend, sans-serif" fontSize="20" fontWeight="800" fill="white">V</text>
-  </svg>
-);
 
 /* ─── Kiểu dữ liệu ─── */
 type Tab = 'login' | 'register';
@@ -246,11 +241,7 @@ export default function LoginPage() {
 
         {/* ── Header / Logo ── */}
         <div className={styles.header}>
-          <div className={styles.logoIcon}>
-            <VnptLogoIcon />
-          </div>
-          <span className={styles.logoVnpt}>VNPT</span>
-          <span className={styles.logoSub}>Tây Ninh</span>
+          <VnptLogo style={{ width: 140, height: 'auto', marginBottom: 10 }} />
           <p className={styles.headerTitle}>Hệ thống Báo cáo Tự động</p>
         </div>
 
