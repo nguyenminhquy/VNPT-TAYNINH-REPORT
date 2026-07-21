@@ -62,6 +62,7 @@ export const config = {
    * - _next/static (static files)
    * - _next/image  (image optimization)
    * - favicon.ico
+   * - /api/export_python (Standalone Python API)
    */
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|api/export_python).*)'],
 };
