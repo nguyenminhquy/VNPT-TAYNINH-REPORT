@@ -3,7 +3,7 @@ import { DOMParser, XMLSerializer } from '@xmldom/xmldom';
 
 export class DocxModifier {
   private zip: PizZip;
-  private doc: Document;
+  private doc: any;
   private xmlString: string;
 
   constructor(buffer: ArrayBuffer | Buffer) {
@@ -114,7 +114,7 @@ export class DocxModifier {
     return cells;
   }
 
-  resizeTableRows(table: Element, desiredRows: int) {
+  resizeTableRows(table: Element, desiredRows: number) {
     const rows = this.getRows(table);
     let currentRowCount = rows.length;
 
