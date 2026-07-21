@@ -69,14 +69,56 @@ export default function Dashboard() {
   const handleExportWord = async () => {
     setIsExporting(true);
     try {
-      const res = await fetch("/api/export-word", { method: "POST" });
-      const json = await res.json();
-      if (res.ok && json.blobUrl) {
+      // 1. Lấy blobUrls từ state reportSources
+      const blobUrls: Record<string, string> = {};
+      for (const row of reportSources) {
+        if (row.blob_url) {
+          blobUrls[row.key] = row.blob_url;
+        }
+      }
+      
+      if (Object.keys(blobUrls).length < 8) {
+        alert("Chưa đủ 8 file Excel. Vui lòng tải lên đầy đủ.");
+        setIsExporting(false);
+        return;
+      }
+
+      // 2. Gọi Python API trực tiếp từ trình duyệt (để tự động đính kèm Cookie của Vercel)
+      const pythonRes = await fetch("/api/export_python", { 
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          secret: "vnpt-secret-key",
+          blob_urls: blobUrls
+        })
+      });
+
+      if (!pythonRes.ok) {
+        const errText = await pythonRes.text();
+        alert(`Lỗi Python API (${pythonRes.status}): ${errText}`);
+        setIsExporting(false);
+        return;
+      }
+
+      const wordBlob = await pythonRes.blob();
+
+      // 3. Gọi Next.js API để lưu file vào Vercel Blob & lịch sử Supabase
+      const formData = new FormData();
+      formData.append("file", wordBlob, "report.docx");
+
+      const saveRes = await fetch("/api/export-word-save", {
+        method: "POST",
+        body: formData
+      });
+
+      const json = await saveRes.json();
+      if (saveRes.ok && json.blobUrl) {
         window.open(json.blobUrl, "_blank");
       } else {
-        alert(json.error || "Lỗi khi xuất Word");
+        alert(json.error || "Lỗi khi lưu file Word");
       }
     } catch (e) {
+      console.error(e);
       alert("Lỗi mạng khi xuất Word");
     }
     setIsExporting(false);
