@@ -11,12 +11,11 @@
  *  6. Trả về { blobUrl, filename, fileSize }
  */
 
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { supabaseAdmin } from '@/lib/supabase';
 import { put } from '@vercel/blob';
-import { generateWordReport } from '@/lib/word/generateWord';
 
 // ─── Kiểu trả về ─────────────────────────────────────────────────────────────
 
@@ -52,7 +51,7 @@ function buildFilename(): string {
 
 // ─── Route handler ────────────────────────────────────────────────────────────
 
-export async function POST(): Promise<NextResponse<ExportWordResponse | ErrorResponse>> {
+export async function POST(request: NextRequest): Promise<NextResponse<ExportWordResponse | ErrorResponse>> {
   try {
     // ── 1. Xác thực phiên đăng nhập ──────────────────────────────────────────
     const session = await getServerSession(authOptions);
@@ -66,52 +65,58 @@ export async function POST(): Promise<NextResponse<ExportWordResponse | ErrorRes
     const exporterName = session.user.name ?? session.user.email ?? 'Không rõ';
     const exportedBy   = (session.user as { id?: string }).id ?? null;
 
-    // ── 2. Lấy cache mới nhất từ report_data_cache ───────────────────────────
-    const { data: cacheRows, error: cacheError } = await supabaseAdmin
-      .from('report_data_cache')
-      .select('id, data, generated_at')
-      .order('generated_at', { ascending: false })
-      .limit(1);
+    // ── 2. Lấy dữ liệu file Excel từ report_sources ───────────────────────────
+    const { data: sourceRows, error: sourceError } = await supabaseAdmin
+      .from('report_sources')
+      .select('key, blob_url');
 
-    if (cacheError) {
-      console.error('[export-word/POST] cache query error:', cacheError);
+    if (sourceError || !sourceRows) {
+      console.error('[export-word/POST] source query error:', sourceError);
       return NextResponse.json(
-        { error: 'Không thể truy vấn dữ liệu cache. Vui lòng thử lại.' },
+        { error: 'Không thể truy vấn danh sách file. Vui lòng thử lại.' },
         { status: 500 }
       );
     }
 
-    // Nếu chưa có cache → yêu cầu upload đủ 8 file
-    if (!cacheRows || cacheRows.length === 0 || !cacheRows[0].data) {
+    const blobUrls: Record<string, string> = {};
+    for (const row of sourceRows) {
+      if (row.blob_url) {
+        blobUrls[row.key] = row.blob_url;
+      }
+    }
+
+    // Yêu cầu phải có đủ 8 file
+    if (Object.keys(blobUrls).length < 8) {
       return NextResponse.json(
-        {
-          error:
-            'Chưa có dữ liệu. Vui lòng upload đủ 8 file Excel trước khi xuất báo cáo.',
-        },
+        { error: 'Chưa đủ 8 file Excel. Vui lòng upload đầy đủ trước khi xuất báo cáo.' },
         { status: 403 }
       );
     }
 
-    const cacheEntry = cacheRows[0];
-    const cacheData  = cacheEntry.data as Record<string, unknown>;
+    // ── 3. Gọi Python API để sinh file Word ──────────────────────────────────
+    const origin = request.nextUrl.origin;
+    const pythonApiUrl = `${origin}/api/export_python`;
 
-    // Lấy weekLabel từ cache (nếu có) để ghi vào lịch sử
-    const weekLabel =
-      typeof cacheData.weekLabel === 'string'
-        ? cacheData.weekLabel
-        : `Cache ${new Date(cacheEntry.generated_at as string).toLocaleDateString('vi-VN')}`;
+    console.log(`[export-word/POST] Calling Python API at ${pythonApiUrl}`);
+    const pythonRes = await fetch(pythonApiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        secret: process.env.PYTHON_API_SECRET || 'vnpt-secret-key',
+        blob_urls: blobUrls,
+      }),
+    });
 
-    // ── 3. Sinh file Word ─────────────────────────────────────────────────────
-    let wordBuffer: Buffer;
-    try {
-      wordBuffer = await generateWordReport(cacheData);
-    } catch (genError) {
-      console.error('[export-word/POST] generateWordReport error:', genError);
+    if (!pythonRes.ok) {
+      const errText = await pythonRes.text();
+      console.error('[export-word/POST] Python API error:', errText);
       return NextResponse.json(
-        { error: 'Lỗi khi tạo file Word. Vui lòng kiểm tra lại dữ liệu cache.' },
+        { error: 'Lỗi khi tạo file Word từ Python API. Vui lòng thử lại.' },
         { status: 500 }
       );
     }
+
+    const wordBuffer = await pythonRes.arrayBuffer();
 
     const fileSize = wordBuffer.byteLength;
     const filename = buildFilename();
@@ -138,6 +143,7 @@ export async function POST(): Promise<NextResponse<ExportWordResponse | ErrorRes
     }
 
     // ── 5. Lưu vào export_history ─────────────────────────────────────────────
+    const weekLabel = `Báo cáo ${new Date().toLocaleDateString('vi-VN')}`;
     const { error: insertError } = await supabaseAdmin
       .from('export_history')
       .insert({
