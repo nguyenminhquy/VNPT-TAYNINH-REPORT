@@ -44,11 +44,10 @@ body {
   min-height: 100vh;
   font-family: "Be Vietnam Pro", "Segoe UI", sans-serif;
   color: var(--ink);
-  background:
-    radial-gradient(circle at top left, rgba(121, 212, 255, 0.55), transparent 34%),
-    radial-gradient(circle at top right, rgba(246, 195, 92, 0.18), transparent 24%),
-    linear-gradient(180deg, #f8fbfd 0%, #edf5f9 48%, #e7f1f6 100%);
-  background-attachment: fixed;
+  background: 
+    linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)),
+    url('/bg-vnpt.png') no-repeat center center fixed;
+  background-size: cover;
 }
 
 body::before {
