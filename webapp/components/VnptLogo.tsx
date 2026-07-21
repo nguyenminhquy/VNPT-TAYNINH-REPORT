@@ -6,7 +6,7 @@ export default function VnptLogo({ className = "", style = {} }: { className?: s
       src="/vnpt-logo-new.png" 
       alt="VNPT Logo" 
       className={className} 
-      style={style} 
+      style={{ objectFit: 'contain', ...style }} 
     />
   );
 }
