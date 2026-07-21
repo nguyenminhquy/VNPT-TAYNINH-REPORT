@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     const { data: existingUser, error: lookupError } = await supabaseAdmin
       .from('users')
       .select('id')
-      .eq('email', email.toLowerCase())
+      .eq('email', email.toLowerCase().trim())
       .maybeSingle();
 
     if (lookupError) {
@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
 
     // ── Insert user mới vào Supabase ───────────────────────────────────────────
     const { error: insertError } = await supabaseAdmin.from('users').insert({
-      email: email.toLowerCase(),
+      email: email.toLowerCase().trim(),
       name: name.trim(),
       password_hash: hashedPassword,
       created_at: new Date().toISOString(),
