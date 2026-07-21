@@ -8,7 +8,7 @@ import re
 from datetime import date, datetime
 import math
 import copy
-
+from typing import Any, Sequence, Iterable
 from docx import Document
 from docx.document import Document as DocumentType
 from docx.oxml import OxmlElement
