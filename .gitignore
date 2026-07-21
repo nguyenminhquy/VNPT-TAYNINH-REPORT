@@ -1,8 +1,1 @@
-backend/__pycache__/
-*.pyc
-data sample/
-exports/
-templates/
-_docx_export_work/
-frontend/data/report-data.js
-frontend/data/.*.backup
+# Intentionally empty: track all project files in this repository.

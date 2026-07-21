@@ -1,0 +1,171 @@
+{
+  "input": "C:\\Users\\quyng\\Documents\\TOOL T\u1ed4NG H\u1ee2P B\u00c1O C\u00c1O\\VNPT REPORT\\templates\\TTHT B\u00e1o c\u00e1o c\u00f4ng vi\u1ec7c tu\u1ea7n 29.docx",
+  "fonts_by_char_count": {
+    "Times New Roman": 33379,
+    "Segoe UI": 1
+  },
+  "direct_run_formatting_runs": 6367,
+  "direct_paragraph_formatting_paragraphs": 2821,
+  "heading_like_paragraphs_not_heading_style": [
+    {
+      "para_index": 1,
+      "text": "B\u00c1O C\u00c1O",
+      "style": "Normal"
+    },
+    {
+      "para_index": 2,
+      "text": "V/v th\u1ef1c hi\u1ec7n c\u00f4ng vi\u1ec7c tr\u1ecdng t\u00e2m trong tu\u1ea7n 28 n\u0103m 2026",
+      "style": "Normal"
+    },
+    {
+      "para_index": 3,
+      "text": "v\u00e0 k\u1ebf ho\u1ea1ch th\u1ef1c hi\u1ec7n nhi\u1ec7m v\u1ee5 tu\u1ea7n 29",
+      "style": "Normal"
+    },
+    {
+      "para_index": 10,
+      "text": "Ngu\u1ed3n d\u1eef li\u1ec7u: https://cts.vnpt.vn/Report/QoSEs/QoSEsCCL",
+      "style": "Normal"
+    },
+    {
+      "para_index": 15,
+      "text": "Ngu\u1ed3n d\u1eef li\u1ec7u: cts.vnpt.vn",
+      "style": "Normal"
+    },
+    {
+      "para_index": 20,
+      "text": " K\u1ebft qu\u1ea3 x\u1eed l\u00fd Ph\u1ea3n \u00e1nh kh\u00e1ch h\u00e0ng ch\u1ea5t l\u01b0\u1ee3ng m\u1ea1ng (PAKH)",
+      "style": "List Paragraph"
+    },
+    {
+      "para_index": 25,
+      "text": " Ngh\u1ebdn BRC\u0110",
+      "style": "Normal"
+    },
+    {
+      "para_index": 29,
+      "text": "\u0110\u1ed9 kh\u1ea3 d\u1ee5ng v\u00f4 tuy\u1ebfn, th\u1eddi gian MLL tr\u1ea1m BTS/NodeB/EnodeB",
+      "style": "Normal"
+    },
+    {
+      "para_index": 52,
+      "text": "C\u00f4ng t\u00e1c b\u1ea3o d\u01b0\u1ee1ng, t\u1ed1i \u01b0u CSHT nh\u00e0 tr\u1ea1m ",
+      "style": "Normal"
+    },
+    {
+      "para_index": 56,
+      "text": "Th\u1eddi gian l\u1ea5y b\u00e1o c\u00e1o: 01/07/2026 - 16/07/2026",
+      "style": "Normal"
+    },
+    {
+      "para_index": 65,
+      "text": "Th\u1eddi gian l\u1ea5y b\u00e1o c\u00e1o: 14/07/2026",
+      "style": "Normal"
+    },
+    {
+      "para_index": 71,
+      "text": "Th\u1eddi gian l\u1ea5y b\u00e1o c\u00e1o: 14/07/2026",
+      "style": "Normal"
+    },
+    {
+      "para_index": 77,
+      "text": "Th\u1eddi gian l\u1ea5y b\u00e1o c\u00e1o: 14/07/2026",
+      "style": "Normal"
+    },
+    {
+      "para_index": 81,
+      "text": "K\u1ebft qu\u1ea3 phi\u1ebfu XLSC MANE ",
+      "style": "Normal"
+    },
+    {
+      "para_index": 94,
+      "text": " K\u1ebft qu\u1ea3 phi\u1ebfu XLSC ACCESS",
+      "style": "Normal"
+    },
+    {
+      "para_index": 105,
+      "text": "K\u1ebft qu\u1ea3 phi\u1ebfu XLSC v\u00f4 tuy\u1ebfn ",
+      "style": "Normal"
+    },
+    {
+      "para_index": 122,
+      "text": "GI\u1ea2I TR\u00ccNH NGUY\u00caN NH\u00c2N M\u1ea4T LI\u00caN L\u1ea0C TR\u1ea0M TU\u1ea6N 28",
+      "style": "Normal"
+    },
+    {
+      "para_index": 126,
+      "text": "TRUNG T\u00c2M H\u1ea0 T\u1ea6NG \u2013 T\u00c2Y NINH",
+      "style": "Normal"
+    },
+    {
+      "para_index": 128,
+      "text": "VI\u1ec4N TH\u00d4NG T\u00c2Y NINH\nTRUNG T\u00c2M H\u1ea0 T\u1ea6NG",
+      "style": "Normal"
+    },
+    {
+      "para_index": 130,
+      "text": "C\u1ed8NG H\u00d2A X\u00c3 H\u1ed8I CH\u1ee6 NGH\u0128A VI\u1ec6T NAM",
+      "style": "Normal"
+    }
+  ],
+  "examples": {
+    "direct_paragraph_formatting": [
+      {
+        "para_index": 1,
+        "text": "B\u00c1O C\u00c1O",
+        "style": "Normal"
+      },
+      {
+        "para_index": 2,
+        "text": "V/v th\u1ef1c hi\u1ec7n c\u00f4ng vi\u1ec7c tr\u1ecdng t\u00e2m trong tu\u1ea7n 28 n\u0103m 2026",
+        "style": "Normal"
+      },
+      {
+        "para_index": 3,
+        "text": "v\u00e0 k\u1ebf ho\u1ea1ch th\u1ef1c hi\u1ec7n nhi\u1ec7m v\u1ee5 tu\u1ea7n 29",
+        "style": "Normal"
+      },
+      {
+        "para_index": 4,
+        "text": "",
+        "style": "Normal"
+      },
+      {
+        "para_index": 5,
+        "text": "Trung t\u00e2m H\u1ea1 t\u1ea7ng b\u00e1o c\u00e1o k\u1ebft qu\u1ea3 th\u1ef1c hi\u1ec7n c\u00f4ng vi\u1ec7c tr\u1ecdng t\u00e2m trong tu\u1ea7n 28 n\u0103m 2026 nh\u01b0 sau:",
+        "style": "Normal"
+      }
+    ],
+    "direct_run_formatting": [
+      {
+        "para_index": 1,
+        "run_text": "B\u00c1O C\u00c1O",
+        "style": "Normal"
+      },
+      {
+        "para_index": 2,
+        "run_text": "V/v th\u1ef1c hi\u1ec7n c\u00f4ng vi\u1ec7c tr\u1ecdng t\u00e2m trong tu\u1ea7n 2",
+        "style": "Normal"
+      },
+      {
+        "para_index": 2,
+        "run_text": "8",
+        "style": "Normal"
+      },
+      {
+        "para_index": 2,
+        "run_text": " n\u0103m 2026",
+        "style": "Normal"
+      },
+      {
+        "para_index": 3,
+        "run_text": "v\u00e0 k\u1ebf ho\u1ea1ch th\u1ef1c hi\u1ec7n nhi\u1ec7m v\u1ee5 tu\u1ea7n 29",
+        "style": "Normal"
+      }
+    ]
+  },
+  "notes": [
+    "Direct formatting is not always wrong, but it often causes inconsistent output when templates change.",
+    "Heading-like paragraphs not using Heading styles can break TOC and accessibility."
+  ]
+}

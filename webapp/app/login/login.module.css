@@ -1,0 +1,419 @@
+/* =============================================
+   VNPT Report Hub – Login / Register CSS Module
+   ============================================= */
+
+/* ── Nền toàn trang ── */
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #001a3a 0%, #002d5c 60%, #003870 100%);
+  padding: 24px 16px;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+/* Hiệu ứng ánh sáng nền (decorative blobs) */
+.page::before,
+.page::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page::before {
+  width: 500px;
+  height: 500px;
+  top: -150px;
+  left: -150px;
+  background: radial-gradient(circle, rgba(0, 91, 170, 0.25) 0%, transparent 70%);
+}
+
+.page::after {
+  width: 400px;
+  height: 400px;
+  bottom: -100px;
+  right: -100px;
+  background: radial-gradient(circle, rgba(0, 120, 212, 0.2) 0%, transparent 70%);
+}
+
+/* ── Card glass morphism ── */
+.card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 40px 36px 36px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+
+  /* Animation: fade-in + slide-up khi load */
+  animation: cardAppear 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Header / Logo ── */
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.logoIcon {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, #005BAA, #0078D4);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  box-shadow: 0 4px 20px rgba(0, 91, 170, 0.5);
+}
+
+.logoIcon svg {
+  width: 30px;
+  height: 30px;
+  fill: #fff;
+}
+
+.logoVnpt {
+  font-family: 'Lexend', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  line-height: 1;
+  background: linear-gradient(135deg, #4db6ff 0%, #005BAA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+}
+
+.logoSub {
+  font-family: 'Lexend', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 4px;
+  display: block;
+}
+
+.headerTitle {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.38);
+  margin-top: 8px;
+  letter-spacing: 0.3px;
+}
+
+/* ── Tabs ── */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 28px;
+}
+
+.tabBtn {
+  flex: 1;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 0;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  position: relative;
+  transition: color 0.2s ease;
+  letter-spacing: 0.3px;
+}
+
+.tabBtn::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 10%;
+  width: 80%;
+  height: 2px;
+  background: linear-gradient(90deg, #005BAA, #0078D4);
+  border-radius: 2px 2px 0 0;
+  transform: scaleX(0);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tabBtn:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tabActive {
+  color: #5ab4ff !important;
+}
+
+.tabActive::after {
+  transform: scaleX(1);
+}
+
+/* ── Form ── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 13px;
+  color: rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.inputIcon svg {
+  width: 15px;
+  height: 15px;
+}
+
+.input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 11px 14px 11px 40px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 14px;
+  color: #fff;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.22);
+}
+
+.input:focus {
+  border-color: rgba(0, 120, 212, 0.7);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.15);
+}
+
+.input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Input có nút toggle password */
+.inputPad {
+  padding-right: 42px;
+}
+
+.eyeBtn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.eyeBtn:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.eyeBtn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Error banner ── */
+.errorBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 10px;
+  padding: 11px 13px;
+  animation: fadeIn 0.25s ease;
+}
+
+.errorBox svg {
+  width: 16px;
+  height: 16px;
+  color: #f87171;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.errorText {
+  font-size: 13px;
+  color: #fca5a5;
+  line-height: 1.45;
+}
+
+/* ── Success banner ── */
+.successBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 10px;
+  padding: 11px 13px;
+  animation: fadeIn 0.25s ease;
+}
+
+.successBox svg {
+  width: 16px;
+  height: 16px;
+  color: #4ade80;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.successText {
+  font-size: 13px;
+  color: #86efac;
+  line-height: 1.45;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Submit button ── */
+.submitBtn {
+  margin-top: 4px;
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, #005BAA 0%, #0078D4 100%);
+  border: none;
+  border-radius: 10px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: 0.4px;
+  box-shadow: 0 4px 20px rgba(0, 91, 170, 0.45);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.submitBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.submitBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0, 91, 170, 0.6);
+}
+
+.submitBtn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 12px rgba(0, 91, 170, 0.4);
+}
+
+.submitBtn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── Loading spinner ── */
+.spinner {
+  width: 17px;
+  height: 17px;
+  border: 2.5px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .card {
+    padding: 30px 20px 26px;
+    border-radius: 16px;
+  }
+
+  .logoVnpt {
+    font-size: 26px;
+  }
+}

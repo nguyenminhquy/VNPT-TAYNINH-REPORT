@@ -1,0 +1,8 @@
+HTTP/1.0 200 OK
+Server: VNPTReportServer/1.0 Python/3.13.9
+Date: Sat, 18 Jul 2026 11:48:59 GMT
+Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+Content-Disposition: attachment; filename=VNPT-report.docx; filename*=UTF-8''TTHT%20B%C3%A1o%20c%C3%A1o%20c%C3%B4ng%20vi%E1%BB%87c%20tu%E1%BA%A7n%2028%20-%20c%E1%BA%ADp%20nh%E1%BA%ADt%2020260718-184858.docx
+Content-Length: 4188537
+Cache-Control: no-store
+

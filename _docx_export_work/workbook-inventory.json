@@ -1,0 +1,34 @@
+[
+  {
+    "filename": "1. BÁO CÁO MBB_HUNG.xlsx",
+    "sheets": "{\"kind\":\"sheet\",\"id\":\"ws/kja7xz\",\"name\":\"Kết quả chung\",\"index\":0,\"range\":\"A1:D6\",\"address\":\"A1:D6\"}\n{\"kind\":\"sheet\",\"id\":\"ws/ipnwqz\",\"name\":\"So sánh các tỉnh\",\"index\":1,\"range\":\"A1:C7\",\"address\":\"A1:C7\"}\n{\"kind\":\"sheet\",\"id\":\"ws/p67oer\",\"name\":\"Kết quả chi tiết\",\"index\":2,\"range\":\"A1:H12\",\"address\":\"A1:H12\"}\n{\"kind\":\"sheet\",\"id\":\"ws/oq4wx1\",\"name\":\"Giải trình QoS\",\"index\":3,\"range\":\"A1:D10\",\"address\":\"A1:D10\"}\n{\"kind\":\"sheet\",\"id\":\"ws/qpabfd\",\"name\":\"Dự kiến tuần 30\",\"index\":4,\"range\":\"A1:D9\",\"address\":\"A1:D9\"}\n{\"kind\":\"sheet\",\"id\":\"ws/igfi7v\",\"name\":\"Phản ánh khách hàng (PAKH)\",\"index\":5,\"range\":\"A1:C10\",\"address\":\"A1:C10\"}\n{\"kind\":\"sheet\",\"id\":\"ws/qhsax0\",\"name\":\"Giải trình QoE\",\"index\":6,\"range\":\"A1:D8\",\"address\":\"A1:D8\"}"
+  },
+  {
+    "filename": "2. BÁO CÁO FBB_BAO.xlsx",
+    "sheets": "{\"kind\":\"sheet\",\"id\":\"ws/ln1mii\",\"name\":\"Thông tin chung\",\"index\":0,\"range\":\"A1:H17\",\"address\":\"A1:H17\"}\n{\"kind\":\"sheet\",\"id\":\"ws/vrnge8\",\"name\":\"Suy hao thuê bao\",\"index\":1,\"range\":\"A1:G25\",\"address\":\"A1:G25\"}\n{\"kind\":\"sheet\",\"id\":\"ws/wurmg0\",\"name\":\"Chi tiết QoS FBB\",\"index\":2,\"range\":\"A1:G43\",\"address\":\"A1:G43\"}\n{\"kind\":\"sheet\",\"id\":\"ws/y4smdq\",\"name\":\"Chi tiết QoE FBB\",\"index\":3,\"range\":\"A1:E36\",\"address\":\"A1:E36\"}"
+  },
+  {
+    "filename": "3. BÁO CÁO MYTV_TÂN.xlsx",
+    "sheets": "{\"kind\":\"sheet\",\"id\":\"ws/hecl28\",\"name\":\"Sheet1\",\"index\":0,\"range\":\"A1:H16\",\"address\":\"A1:H16\"}"
+  },
+  {
+    "filename": "4. BÁO CÁO MLL_KHANH.xlsx",
+    "sheets": "{\"kind\":\"sheet\",\"id\":\"ws/a3kf0e\",\"name\":\"BC MLL tuần\",\"index\":0,\"range\":\"A1:W216\",\"address\":\"A1:W216\"}\n{\"kind\":\"sheet\",\"id\":\"ws/67y8lh\",\"name\":\"Lũy kế MLL\",\"index\":1,\"range\":\"A1:AS26\",\"address\":\"A1:AS26\"}\n{\"kind\":\"sheet\",\"id\":\"ws/dmfrmd\",\"name\":\"TH\",\"index\":2,\"range\":\"A1:N21\",\"address\":\"A1:N21\"}\n{\"kind\":\"sheet\",\"id\":\"ws/ucyoli\",\"name\":\"Trạm theo NV\",\"index\":3,\"range\":\"A1:M48\",\"address\":\"A1:M48\"}\n{\"kind\":\"sheet\",\"id\":\"ws/fkkxte\",\"name\":\"XLSC Đúng hạn\",\"index\":4,\"range\":\"A1:H37\",\"address\":\"A1:H37\"}\n{\"kind\":\"sheet\",\"id\":\"ws/4axbtr\",\"name\":\"Phân rã TTHT\",\"index\":5,\"range\":\"A1:M99\",\"address\":\"A1:M99\"}\n{\"kind\":\"sheet\",\"id\":\"ws/n9w0k6\",\"name\":\"Cách tính MLL\",\"index\":6,\"range\":\"A1:E13\",\"address\":\"A1:E13\"}"
+  },
+  {
+    "filename": "5. BÁO CÁO ISPEED_QUOC.xlsx",
+    "sheets": "{\"kind\":\"sheet\",\"id\":\"ws/anifcw\",\"name\":\"Báo cáo\",\"index\":0,\"range\":\"A1:K12\",\"address\":\"A1:K12\"}\n{\"kind\":\"sheet\",\"id\":\"ws/mnuto7\",\"name\":\"Thay đổi\",\"index\":1,\"range\":\"A1:K32\",\"address\":\"A1:K32\"}\n{\"kind\":\"sheet\",\"id\":\"ws/ioryfn\",\"name\":\"KQ đo kiểm Speedtest\",\"index\":2,\"range\":\"A1:O1177\",\"address\":\"A1:O1177\"}\n{\"kind\":\"sheet\",\"id\":\"ws/c7slyb\",\"name\":\"Tổ Bến Lức\",\"index\":3,\"range\":\"A1:O230\",\"address\":\"A1:O230\"}\n{\"kind\":\"sheet\",\"id\":\"ws/6xhoar\",\"name\":\"Tổ Gò Dầu\",\"index\":4,\"range\":\"A1:O246\",\"address\":\"A1:O246\"}\n{\"kind\":\"sheet\",\"id\":\"ws/ha5rfl\",\"name\":\"Tổ Đức Hòa\",\"index\":5,\"range\":\"A1:O214\",\"address\":\"A1:O214\"}\n{\"kind\":\"sheet\",\"id\":\"ws/ic7j7y\",\"name\":\"Tổ Kiến Tường\",\"index\":6,\"range\":\"A1:W294\",\"address\":\"A1:W294\"}\n{\"kind\":\"sheet\",\"id\":\"ws/7yv5z2\",\"name\":\"Tổ Tân An\",\"index\":7,\"range\":\"A1:O230\",\"address\":\"A1:O230\"}\n{\"kind\":\"sheet\",\"id\":\"ws/zh3hqm\",\"name\":\"Tổ Tân Châu\",\"index\":8,\"range\":\"A1:O246\",\"address\":\"A1:O246\"}\n{\"kind\":\"sheet\",\"id\":\"ws/kkqhog\",\"name\":\"Tổ Tân Ninh\",\"index\":9,\"range\":\"A1:O278\",\"address\":\"A1:O278\"}\n{\"kind\":\"sheet\",\"id\":\"ws/mdgcsc\",\"name\":\"DS nhân viên Speedtest\",\"index\":10,\"range\":\"A1:K127\",\"address\":\"A1:K127\"}\n{\"kind\":\"sheet\",\"id\":\"ws/twmm62\",\"name\":\"SUM\",\"index\":11,\"range\":\"A1:O1702\",\"address\":\"A1:O1702\"}"
+  },
+  {
+    "filename": "6. BÁO CÁO 5S NHÀ TRẠM_TÂN.xlsx",
+    "sheets": "{\"kind\":\"sheet\",\"id\":\"ws/iashrf\",\"name\":\"Sheet1\",\"index\":0,\"range\":\"A1:F47\",\"address\":\"A1:F47\"}"
+  },
+  {
+    "filename": "7.BÁO CÁO XLSC_TUẤN.xlsx",
+    "sheets": "{\"kind\":\"sheet\",\"id\":\"ws/9v2srh\",\"name\":\"XLSC MANE\",\"index\":0,\"range\":\"A1:O118\",\"address\":\"A1:O118\"}\n{\"kind\":\"sheet\",\"id\":\"ws/2puz6m\",\"name\":\"XLSC ACCESS\",\"index\":1,\"range\":\"A1:O517\",\"address\":\"A1:O517\"}\n{\"kind\":\"sheet\",\"id\":\"ws/m3orxe\",\"name\":\"XLSC VÔ TUYẾN\",\"index\":2,\"range\":\"A1:M1156\",\"address\":\"A1:M1156\"}\n{\"kind\":\"sheet\",\"id\":\"ws/2gzbgp\",\"name\":\"PHIẾU QUÁ HẠN\",\"index\":3,\"range\":\"A1:J59\",\"address\":\"A1:J59\"}\n{\"kind\":\"sheet\",\"id\":\"ws/9z1wg6\",\"name\":\"THỐNG KÊ EMAIL NV\",\"index\":4,\"range\":\"A1:D3\",\"address\":\"A1:D3\"}"
+  },
+  {
+    "filename": "PHỤ LỤC 1.xlsx",
+    "sheets": "{\"kind\":\"sheet\",\"id\":\"ws/pafrdd\",\"name\":\"Báo Cáo Sự Cố Trạm\",\"index\":0,\"range\":\"A1:J53\",\"address\":\"A1:J53\"}"
+  }
+]

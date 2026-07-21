@@ -1,0 +1,1586 @@
+window.VNPT_REPORT_DATA = {
+  "generatedAt": "2026-07-18T18:19:19",
+  "hero": {
+    "eyebrow": "VNPT TAY NINH WEEKLY REPORT HUB",
+    "title": "Landing page tổng hợp báo cáo tuần từ thư mục data sample",
+    "subtitle": "Giao diện gom toàn bộ dữ liệu mẫu MBB, FBB, MyTV, MLL, i-Speed, 5S và XLSC thành một trang theo tông xanh VNPT để theo dõi nhanh chỉ số, điểm nghẽn và kế hoạch xử lý.",
+    "stats": [
+      {
+        "label": "Nguồn Excel",
+        "value": "8",
+        "tone": "info"
+      },
+      {
+        "label": "Phiếu quá hạn",
+        "value": "46",
+        "tone": "critical"
+      },
+      {
+        "label": "Mẫu i-Speed xong",
+        "value": "716",
+        "tone": "warning"
+      },
+      {
+        "label": "5S nhà trạm",
+        "value": "22.46%",
+        "tone": "warning"
+      }
+    ]
+  },
+  "signalBands": [
+    {
+      "label": "MBB QoE",
+      "value": "98.20%",
+      "tone": "warning",
+      "note": "Di động băng rộng"
+    },
+    {
+      "label": "FBB QoS",
+      "value": "97.85%",
+      "tone": "warning",
+      "note": "Cố định băng rộng"
+    },
+    {
+      "label": "MyTV QoE",
+      "value": "0.00%",
+      "tone": "positive",
+      "note": "Truyền hình số"
+    },
+    {
+      "label": "MLL toàn tỉnh",
+      "value": "3 phút",
+      "tone": "warning",
+      "note": "Tuần 28"
+    },
+    {
+      "label": "Tiến độ i-Speed",
+      "value": "42.22%",
+      "tone": "critical",
+      "note": "01/07 - 17/07"
+    },
+    {
+      "label": "Tiến độ 5S",
+      "value": "22.46%",
+      "tone": "critical",
+      "note": "Quý 3/2026"
+    }
+  ],
+  "serviceReports": [
+    {
+      "id": "mbb",
+      "group": "service",
+      "title": "Chất lượng MBB",
+      "kicker": "Di động băng rộng",
+      "tone": "warning",
+      "summary": "Tây Ninh đạt QoS 98.28% và QoE 98.20%. QoE thấp hơn trung bình toàn quốc 0.44 điểm.",
+      "metrics": [
+        {
+          "label": "QoS Tây Ninh",
+          "value": "98.28%",
+          "tone": "warning"
+        },
+        {
+          "label": "QoE Tây Ninh",
+          "value": "98.20%",
+          "tone": "warning"
+        },
+        {
+          "label": "QoE Toàn quốc",
+          "value": "98.64%",
+          "tone": "info"
+        },
+        {
+          "label": "PAKH tiếp nhận",
+          "value": "23",
+          "tone": "info"
+        }
+      ],
+      "insights": [
+        "Cả MBB QoS và MBB QoE đều được đánh giá Đạt; xếp hạng lần lượt 19(↑2) và 31.",
+        "Ghi nhận 23 phản ánh khách hàng, trong đó 5 phản ánh còn hạn xử lý trong tuần tới.",
+        "Kế hoạch tuần 30 tập trung vào Biên giới giáp Campuchia, Tân Ninh, Cầu Khởi, Tân Tập."
+      ],
+      "chart": {
+        "title": "So sánh kết quả các tỉnh",
+        "items": [
+          {
+            "label": "THA (Thanh Hóa)",
+            "value": 98.68,
+            "display": "Hạng 01: 98.68%",
+            "note": "Hạng 19: 98.61%",
+            "tone": "positive"
+          },
+          {
+            "label": "HUE (Thành phố Huế)",
+            "value": 98.56,
+            "display": "Hạng 06: 98.56%",
+            "note": "Hạng 01: 99.52%",
+            "tone": "info"
+          },
+          {
+            "label": "TNH (Tây Ninh)",
+            "value": 98.28,
+            "display": "Hạng 19: 98.28%",
+            "note": "Hạng 31: 98.20%",
+            "tone": "info"
+          },
+          {
+            "label": "Trung bình Tập đoàn",
+            "value": 98.29,
+            "display": "98.29%",
+            "note": "98.64%",
+            "tone": "info"
+          }
+        ]
+      },
+      "table": {
+        "title": "Kế hoạch tuần 30",
+        "columns": [
+          "Khu vực",
+          "Trạm",
+          "Nguyên nhân",
+          "Hướng xử lý"
+        ],
+        "rows": [
+          {
+            "Khu vực": "Biên giới giáp Campuchia",
+            "Trạm": "Tổ HT Tân Châu, Kiến Tường",
+            "Nguyên nhân": "Lỏm sóng biên giới",
+            "Hướng xử lý": "Danh sách sở KHCN thống kê 18 điểm lỏm sóng gồm 12 điểm thuộc HT Tân Châu và 06 điểm thuộc HT Kiến Tường\nĐang thực hiện: rà soát lại dân cư, điện AC, cột, nhà mạng đối thủ để đánh giá khả năng triển khai"
+          },
+          {
+            "Khu vực": "Tân Ninh",
+            "Trạm": "TNI037",
+            "Nguyên nhân": "Tải sử dụng 4G tăng cao",
+            "Hướng xử lý": "Điều chuyển nội bộ cell 5G tải sử dụng thấp để share tải với 4G tải sử dụng cao\nĐang thực hiện: rà soát lại 5G-TBI031 điều chuyển về TNI037: vật tư, điện, cáp, vị trí lắp, …"
+          },
+          {
+            "Khu vực": "Cầu Khởi",
+            "Trạm": "DMC009",
+            "Nguyên nhân": "Tải sử dụng 4G tăng cao",
+            "Hướng xử lý": "Điều chuyển nội bộ cell 5G tải sử dụng thấp để share tải với 4G tải sử dụng cao\nĐang thực hiện: rà soát lại 5G-TBI043 điều chuyển về DMC009: vật tư, điện, cáp, vị trí lắp, …"
+          },
+          {
+            "Khu vực": "Tân Tập",
+            "Trạm": "CGI007",
+            "Nguyên nhân": "Vùng phủ sóng",
+            "Hướng xử lý": "Khảo sát vật tư, vị trí, đề xuất nâng độ cao hướng 4G-CGI007M12-LAN từ 27m lên 33m phục vụ khu vực dân cư."
+          },
+          {
+            "Khu vực": "Thủ Thừa",
+            "Trạm": "TTU033, TTU056",
+            "Nguyên nhân": "Tải sử dụng 4G tăng cao",
+            "Hướng xử lý": "Điều chuyển nội bộ site 5G tải sử dụng thấp để share tải với 4G tải sử dụng cao\nĐang thực hiện: rà soát lại 5G-TAN044 điều chuyển về TTU056: vật tư, điện, cáp, vị trí lắp, …"
+          },
+          {
+            "Khu vực": "Gia Lộc",
+            "Trạm": "GDA103, GDA094",
+            "Nguyên nhân": "Tải sử dụng 4G tăng cao",
+            "Hướng xử lý": "Điều chuyển nội bộ cell 5G tải sử dụng thấp để share tải với 4G tải sử dụng cao\nĐang thực hiện: rà soát lại 5G-BCA023, 5G-TBA052 điều chuyển về GDA103, GDA094: vật tư, điện, cáp, vị trí lắp, …"
+          }
+        ]
+      },
+      "list": {
+        "title": "Điểm giải trình nổi bật",
+        "items": [
+          "Biên giới giáp Campuchia: Lỏm sóng biên giới",
+          "Long Hựu: Khu vực sóng chập chờn indoor",
+          "Mỹ Thạnh: Khu vực sóng chập chờn indoor",
+          "Khu vực: Nguyên nhân",
+          "Bình Minh: Khu vực indoor sóng kém"
+        ]
+      },
+      "raw": {
+        "detailGroups": [
+          {
+            "name": "MBB QoS",
+            "scoreText": "98.28(↑0.02)",
+            "scoreValue": 98.28,
+            "rating": "Đạt",
+            "rank": "19(↑2)",
+            "items": [
+              {
+                "name": "Độ sẵn sàng tài nguyên mạng\n(2G Cell Availability/ 3G Cell Occupancy/ 4G RB Utilization)",
+                "value": "0 / 99.17(↑0.01)/ 98.49(↑0.02)"
+              },
+              {
+                "name": "Khả năng truy cập\n(2G Call Setup SS Rate/ 3G HSPA Accessibility/ ERAB SS Rate)",
+                "value": "0 / 98.60(↑0.17)/ 99.18(↓0.01)"
+              },
+              {
+                "name": "Khả năng duy trì\n(2G Call Completion Rate/ 3G Call Completion Rate/ 4G E-UTRAN Retainability)",
+                "value": "0 / 97.30(↑0.09)/ 99.33(↔)"
+              },
+              {
+                "name": "Tính toàn vẹn dịch vụ\n(3G CQI/ 4G CQI)",
+                "value": "98.81(↑0.01) / 96.26(↑0.04)"
+              },
+              {
+                "name": "Chất lượng vùng phủ sóng\n(3G - Quality of coverage/ 4G - Quality of coverage)",
+                "value": "Không có số liệu"
+              }
+            ]
+          },
+          {
+            "name": "MBB QoE",
+            "scoreText": "98.20(↑0.01)",
+            "scoreValue": 98.2,
+            "rating": "Đạt",
+            "rank": "31",
+            "items": [
+              {
+                "name": "Tốc độ download",
+                "value": "97.13(↑0.08)"
+              },
+              {
+                "name": "Trễ",
+                "value": "99.89(↔)"
+              },
+              {
+                "name": "Rung pha",
+                "value": "99.98(↔)"
+              },
+              {
+                "name": "Tỷ lệ mất gói tin",
+                "value": "99.99(↔)"
+              }
+            ]
+          }
+        ],
+        "feedback": [
+          {
+            "label": "Tổng số lượng phản ánh khách hàng tiếp nhận đến 16/07/2026",
+            "value": 23
+          },
+          {
+            "label": "Phản ánh kĩ thuật liên hệ KH sau khi kiểm tra sim/đầu cuối KH sử dụng được",
+            "value": 8
+          },
+          {
+            "label": "Phản ánh tồn còn hạn xử lý (sẽ xử lý trong tuần 30)",
+            "value": 5
+          },
+          {
+            "label": "Phản ánh khi liên hệ lại hỗ trợ xử lý thì KH đã sử dụng được dịch vụ",
+            "value": 5
+          },
+          {
+            "label": "Đã phối hợp NET/NOC tunning, Crs xử lý PAKH",
+            "value": 4
+          },
+          {
+            "label": "Điểm không liên hệ được với khách hàng",
+            "value": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "fbb",
+      "group": "service",
+      "title": "Chất lượng FBB",
+      "kicker": "Cố định băng rộng",
+      "tone": "warning",
+      "summary": "FBB QoS đạt 97.85% và không đạt mục tiêu, trong khi FBB QoE đạt 99.32%.",
+      "metrics": [
+        {
+          "label": "FBB QoS",
+          "value": "97.85%",
+          "tone": "warning"
+        },
+        {
+          "label": "FBB QoE",
+          "value": "99.32%",
+          "tone": "positive"
+        },
+        {
+          "label": "Trạng thái QoS",
+          "value": "Không đạt",
+          "tone": "warning"
+        },
+        {
+          "label": "Phiếu suy hao",
+          "value": "2.051",
+          "tone": "critical"
+        }
+      ],
+      "insights": [
+        "Tất cả 7 tổ hạ tầng đều chưa đạt QoS; thấp nhất là Gò Dầu với 96.33%.",
+        "Điểm nghẽn BRCĐ nổi bật tại OLT Huawei Gò Đen.HU65 do lưu lượng sử dụng cao.",
+        "QoE vẫn đạt đạt trên toàn tỉnh, giữ mặt bằng từ 99.13% trở lên."
+      ],
+      "chart": {
+        "title": "Top TTVT có tỷ lệ suy hao cao",
+        "items": [
+          {
+            "label": "Trảng Bàng",
+            "value": 51.300000000000004,
+            "display": "51.300%",
+            "note": "Gò Dầu",
+            "tone": "critical"
+          },
+          {
+            "label": "Bến Cầu",
+            "value": 44.2,
+            "display": "44.200%",
+            "note": "Gò Dầu",
+            "tone": "critical"
+          },
+          {
+            "label": "Gò Dầu",
+            "value": 38.6,
+            "display": "38.600%",
+            "note": "Gò Dầu",
+            "tone": "warning"
+          },
+          {
+            "label": "Tân Biên",
+            "value": 33.5,
+            "display": "33.500%",
+            "note": "Tân Châu",
+            "tone": "warning"
+          },
+          {
+            "label": "Tân Ninh",
+            "value": 31.6,
+            "display": "31.600%",
+            "note": "Tân Ninh",
+            "tone": "warning"
+          }
+        ]
+      },
+      "table": {
+        "title": "FBB QoE theo tổ hạ tầng",
+        "columns": [
+          "THT",
+          "FBB QoE",
+          "Đánh giá"
+        ],
+        "rows": [
+          {
+            "THT": "Bến Lức",
+            "FBB QoE": "99.46%",
+            "Đánh giá": "Đạt"
+          },
+          {
+            "THT": "Đức Hòa",
+            "FBB QoE": "99.37%",
+            "Đánh giá": "Đạt"
+          },
+          {
+            "THT": "Gò Dầu",
+            "FBB QoE": "99.30%",
+            "Đánh giá": "Đạt"
+          },
+          {
+            "THT": "Kiến Tường",
+            "FBB QoE": "99.27%",
+            "Đánh giá": "Đạt"
+          },
+          {
+            "THT": "Tân An",
+            "FBB QoE": "99.14%",
+            "Đánh giá": "Đạt"
+          },
+          {
+            "THT": "Tân Châu",
+            "FBB QoE": "99.25%",
+            "Đánh giá": "Đạt"
+          },
+          {
+            "THT": "Tân Ninh",
+            "FBB QoE": "99.13%",
+            "Đánh giá": "Đạt"
+          },
+          {
+            "THT": "Tây Ninh",
+            "FBB QoE": "99.32%",
+            "Đánh giá": "Đạt"
+          }
+        ]
+      },
+      "list": {
+        "title": "Điểm cần xử lý",
+        "items": [
+          "Có 2051 phiếu suy hao thuê bao trong tuần, trong đó:",
+          "Mở rộng thêm 1 uplink 10G",
+          "Đôn đốc xử lý suy hao thuê bao và tách port > 50 thuê bao."
+        ]
+      },
+      "raw": {
+        "lossRows": [
+          {
+            "THT": "Bến Lức",
+            "TTVT": "Bến Lức",
+            "Thuê bao suy hao": 167,
+            "Tỷ lệ suy hao": "16.300%",
+            "ratioValue": 16.3,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Bến Lức",
+            "TTVT": "Cần Đước",
+            "Thuê bao suy hao": 86,
+            "Tỷ lệ suy hao": "13.100%",
+            "ratioValue": 13.100000000000001,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Bến Lức",
+            "TTVT": "Cần Giuộc",
+            "Thuê bao suy hao": 61,
+            "Tỷ lệ suy hao": "9.300%",
+            "ratioValue": 9.3,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Đức Hòa",
+            "TTVT": "Đức Hòa",
+            "Thuê bao suy hao": 234,
+            "Tỷ lệ suy hao": "26.600%",
+            "ratioValue": 26.6,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Đức Hòa",
+            "TTVT": "Đức Huệ",
+            "Thuê bao suy hao": 93,
+            "Tỷ lệ suy hao": "21.500%",
+            "ratioValue": 21.5,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Gò Dầu",
+            "TTVT": "Bến Cầu",
+            "Thuê bao suy hao": 142,
+            "Tỷ lệ suy hao": "44.200%",
+            "ratioValue": 44.2,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Gò Dầu",
+            "TTVT": "Trảng Bàng",
+            "Thuê bao suy hao": 185,
+            "Tỷ lệ suy hao": "51.300%",
+            "ratioValue": 51.300000000000004,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Gò Dầu",
+            "TTVT": "Gò Dầu",
+            "Thuê bao suy hao": 195,
+            "Tỷ lệ suy hao": "38.600%",
+            "ratioValue": 38.6,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Kiến Tường",
+            "TTVT": "Kiến Tường - Mộc Hóa",
+            "Thuê bao suy hao": 25,
+            "Tỷ lệ suy hao": "9.300%",
+            "ratioValue": 9.3,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Kiến Tường",
+            "TTVT": "Thạnh Hóa",
+            "Thuê bao suy hao": 8,
+            "Tỷ lệ suy hao": "4.900%",
+            "ratioValue": 4.9,
+            "Đánh giá": "Đạt"
+          },
+          {
+            "THT": "Kiến Tường",
+            "TTVT": "Tân Thạnh",
+            "Thuê bao suy hao": 6,
+            "Tỷ lệ suy hao": "3.300%",
+            "ratioValue": 3.3000000000000003,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Kiến Tường",
+            "TTVT": "Vĩnh Hưng - Tân Hưng",
+            "Thuê bao suy hao": 84,
+            "Tỷ lệ suy hao": "29.700%",
+            "ratioValue": 29.7,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Tân An",
+            "TTVT": "Tân An",
+            "Thuê bao suy hao": 110,
+            "Tỷ lệ suy hao": "16.400%",
+            "ratioValue": 16.400000000000002,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Tân An",
+            "TTVT": "Tân Trụ",
+            "Thuê bao suy hao": 5,
+            "Tỷ lệ suy hao": "1.800%",
+            "ratioValue": 1.7999999999999998,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Tân An",
+            "TTVT": "Tầm Vu",
+            "Thuê bao suy hao": 41,
+            "Tỷ lệ suy hao": "12.000%",
+            "ratioValue": 12.0,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Tân An",
+            "TTVT": "Thủ Thừa",
+            "Thuê bao suy hao": 73,
+            "Tỷ lệ suy hao": "19.900%",
+            "ratioValue": 19.900000000000002,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Tân Châu",
+            "TTVT": "Tân Châu",
+            "Thuê bao suy hao": 67,
+            "Tỷ lệ suy hao": "18.500%",
+            "ratioValue": 18.5,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Tân Châu",
+            "TTVT": "Tân Biên",
+            "Thuê bao suy hao": 91,
+            "Tỷ lệ suy hao": "33.500%",
+            "ratioValue": 33.5,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Tân Châu",
+            "TTVT": "Dương Minh Châu",
+            "Thuê bao suy hao": 145,
+            "Tỷ lệ suy hao": "30.300%",
+            "ratioValue": 30.3,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Tân Ninh",
+            "TTVT": "Tân Ninh",
+            "Thuê bao suy hao": 166,
+            "Tỷ lệ suy hao": "31.600%",
+            "ratioValue": 31.6,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Tân Ninh",
+            "TTVT": "Hòa Thành",
+            "Thuê bao suy hao": 26,
+            "Tỷ lệ suy hao": "6.600%",
+            "ratioValue": 6.6000000000000005,
+            "Đánh giá": "Chưa đạt"
+          },
+          {
+            "THT": "Tân Ninh",
+            "TTVT": "Châu Thành",
+            "Thuê bao suy hao": 41,
+            "Tỷ lệ suy hao": "15.600%",
+            "ratioValue": 15.6,
+            "Đánh giá": "Đạt"
+          }
+        ],
+        "qosByTeam": [
+          {
+            "label": "Bến Lức",
+            "value": 96.77,
+            "display": "96.77%",
+            "note": "Chưa đạt",
+            "tone": "warning"
+          },
+          {
+            "label": "Đức Hòa",
+            "value": 97.14,
+            "display": "97.14%",
+            "note": "Chưa đạt",
+            "tone": "warning"
+          },
+          {
+            "label": "Gò Dầu",
+            "value": 96.33,
+            "display": "96.33%",
+            "note": "Chưa đạt",
+            "tone": "warning"
+          },
+          {
+            "label": "Kiến Tường",
+            "value": 97.76,
+            "display": "97.76%",
+            "note": "Chưa đạt",
+            "tone": "warning"
+          },
+          {
+            "label": "Tân An",
+            "value": 97.77,
+            "display": "97.77%",
+            "note": "Chưa đạt",
+            "tone": "warning"
+          },
+          {
+            "label": "Tân Châu",
+            "value": 97.1,
+            "display": "97.10%",
+            "note": "Chưa đạt",
+            "tone": "warning"
+          },
+          {
+            "label": "Tân Ninh",
+            "value": 97.2,
+            "display": "97.20%",
+            "note": "Chưa đạt",
+            "tone": "warning"
+          },
+          {
+            "label": "Tây Ninh",
+            "value": 97.85,
+            "display": "97.85%",
+            "note": "Chưa đạt",
+            "tone": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mytv",
+      "group": "service",
+      "title": "Chất lượng MyTV",
+      "kicker": "Truyền hình số",
+      "tone": "critical",
+      "summary": "MyTV QoS đạt 0.00% xếp hạng XẾP HẠNG, trong khi MyTV QoE chạm 0.00% và đứng hạng .",
+      "metrics": [
+        {
+          "label": "MyTV QoS",
+          "value": "0.00%",
+          "tone": "critical"
+        },
+        {
+          "label": "Xếp hạng QoS",
+          "value": "XẾP HẠNG",
+          "tone": "warning"
+        },
+        {
+          "label": "MyTV QoE",
+          "value": "0.00%",
+          "tone": "positive"
+        },
+        {
+          "label": "Xếp hạng QoE",
+          "value": "",
+          "tone": "positive"
+        }
+      ],
+      "insights": [
+        "QoE đang giữ mức tối đa 100%, toàn bộ 10 chỉ số thành phần đều đạt tuyệt đối.",
+        "QoS còn dư địa cải thiện ở chỉ số Tỷ lệ mất gói với kết quả 94.97/97.24.",
+        "Các chỉ số OTT Live/TVoD về độ trễ và rung pha vẫn nằm trong vùng an toàn."
+      ],
+      "chart": {
+        "title": "Các nhóm chỉ số MyTV",
+        "items": [
+          {
+            "label": "MyTV QoS",
+            "value": 0,
+            "display": "0.00%",
+            "note": "Hạng XẾP HẠNG",
+            "tone": "critical"
+          },
+          {
+            "label": "MyTV QoE",
+            "value": 0,
+            "display": "0.00%",
+            "note": "Hạng ",
+            "tone": "positive"
+          }
+        ]
+      },
+      "table": {
+        "title": "Chi tiết chỉ số thành phần",
+        "columns": [
+          "Nhóm",
+          "Chỉ số",
+          "Kết quả"
+        ],
+        "rows": [
+          {
+            "Nhóm": "QoS",
+            "Chỉ số": "Độ trễ (OTT Live/TVoD)",
+            "Kết quả": "99.93/99.96"
+          },
+          {
+            "Nhóm": "QoS",
+            "Chỉ số": "Rung pha (OTT Live/TVoD)",
+            "Kết quả": "98.11/99.99"
+          },
+          {
+            "Nhóm": "QoS",
+            "Chỉ số": "Tỷ lệ mất gói (OTT Live/TVoD)",
+            "Kết quả": "94.97/97.24"
+          },
+          {
+            "Nhóm": "QoE",
+            "Chỉ số": "Tỷ lệ nghẽn kết nối",
+            "Kết quả": "100"
+          },
+          {
+            "Nhóm": "QoE",
+            "Chỉ số": "Tỷ lệ mất hình (Mẫu đạt/Tổng số mẫu)",
+            "Kết quả": "100"
+          },
+          {
+            "Nhóm": "QoE",
+            "Chỉ số": "Tỷ lệ mất tiếng (Mẫu đạt/Tổng số mẫu)",
+            "Kết quả": "100"
+          },
+          {
+            "Nhóm": "QoE",
+            "Chỉ số": "Độ lệch hình/tiếng (Mẫu đạt/Tổng số mẫu)",
+            "Kết quả": "100"
+          },
+          {
+            "Nhóm": "QoE",
+            "Chỉ số": "Băng thông trung bình (Mẫu đạt/Tổng số mẫu)",
+            "Kết quả": "100"
+          }
+        ]
+      },
+      "list": {
+        "title": "Điểm nhấn",
+        "items": [
+          "5 chỉ số thành phần QoE đầu tiên đều đạt 100%.",
+          "Tỷ lệ nghẽn kết nối QoS đạt 100%.",
+          "Tỷ lệ mất gói OTT Live/TVoD cần tiếp tục theo dõi."
+        ]
+      }
+    }
+  ],
+  "operationReports": [
+    {
+      "id": "mll",
+      "group": "operation",
+      "title": "Mất liên lạc mạng di động",
+      "kicker": "MLL tuần 28",
+      "tone": "warning",
+      "summary": "Tổng thời gian MLL quy đổi tuần 28 là 3 phút; nguyên nhân lớn nhất là 3g (phút).",
+      "metrics": [
+        {
+          "label": "MLL toàn tỉnh",
+          "value": "3 phút",
+          "tone": "warning"
+        },
+        {
+          "label": "Nguyên nhân lớn nhất",
+          "value": "3G (Phút)",
+          "tone": "critical"
+        },
+        {
+          "label": "Tỷ lệ đúng hạn thấp nhất",
+          "value": "91.67%",
+          "tone": "warning"
+        },
+        {
+          "label": "Tổ cần chú ý",
+          "value": "Tân Ninh",
+          "tone": "critical"
+        }
+      ],
+      "insights": [
+        "Đội có tổng MLL cao nhất là Tây Ninh.",
+        "Tổ Tân Ninh là đơn vị duy nhất không đạt mục tiêu 98% ở chỉ tiêu hoàn thành đúng hạn.",
+        "Sự cố dài nhất tuần nằm trên 3G_GDA059M_TNH với 253.18 phút."
+      ],
+      "chart": {
+        "title": "MLL theo tổ hạ tầng",
+        "items": [
+          {
+            "label": "Tây Ninh",
+            "value": 11185.956954521114,
+            "display": "11185.96 phút",
+            "note": "3.623 BTS",
+            "tone": "critical"
+          },
+          {
+            "label": "Gò Dầu",
+            "value": 3181.6609869325152,
+            "display": "3181.66 phút",
+            "note": "652 BTS",
+            "tone": "critical"
+          },
+          {
+            "label": "Kiến Tường",
+            "value": 2646.0216497330593,
+            "display": "2646.02 phút",
+            "note": "487 BTS",
+            "tone": "critical"
+          },
+          {
+            "label": "Tân An",
+            "value": 2495.9055389421155,
+            "display": "2495.91 phút",
+            "note": "501 BTS",
+            "tone": "critical"
+          },
+          {
+            "label": "Đức Hòa",
+            "value": 1995.2050900419285,
+            "display": "1995.21 phút",
+            "note": "477 BTS",
+            "tone": "critical"
+          },
+          {
+            "label": "Tân Châu",
+            "value": 387.80582888888887,
+            "display": "387.81 phút",
+            "note": "450 BTS",
+            "tone": "warning"
+          },
+          {
+            "label": "Bến Lức",
+            "value": 230.53696498054475,
+            "display": "230.54 phút",
+            "note": "514 BTS",
+            "tone": "warning"
+          }
+        ]
+      },
+      "table": {
+        "title": "Sự cố MLL kéo dài nổi bật",
+        "columns": [
+          "BTS/Node",
+          "Loại trạm",
+          "Máy nổ",
+          "Bắt đầu",
+          "Kết thúc",
+          "MLL thực tế"
+        ],
+        "rows": [
+          {
+            "BTS/Node": "3G_GDA059M_TNH",
+            "Loại trạm": "Loại 1",
+            "Máy nổ": "Cố định",
+            "Bắt đầu": "07/07/2026 22:41:15",
+            "Kết thúc": "08/07/2026 02:54:26",
+            "MLL thực tế": "253.18 phút"
+          },
+          {
+            "BTS/Node": "4G-GDA059M-TNH",
+            "Loại trạm": "Loại 1",
+            "Máy nổ": "Cố định",
+            "Bắt đầu": "07/07/2026 22:41:12",
+            "Kết thúc": "08/07/2026 02:53:53",
+            "MLL thực tế": "252.68 phút"
+          },
+          {
+            "BTS/Node": "4G-TBI060M-TNH",
+            "Loại trạm": "Loại 2",
+            "Máy nổ": "Cố định",
+            "Bắt đầu": "07/07/2026 16:51:29",
+            "Kết thúc": "07/07/2026 19:06:47",
+            "MLL thực tế": "135.30 phút"
+          },
+          {
+            "BTS/Node": "3G_TBI060M_TNH",
+            "Loại trạm": "Loại 2",
+            "Máy nổ": "Cố định",
+            "Bắt đầu": "07/07/2026 16:51:31",
+            "Kết thúc": "07/07/2026 19:04:42",
+            "MLL thực tế": "133.18 phút"
+          },
+          {
+            "BTS/Node": "UL_CTH024M_LAN",
+            "Loại trạm": "Loại 2",
+            "Máy nổ": "Cố định",
+            "Bắt đầu": "04/07/2026 13:57:56",
+            "Kết thúc": "04/07/2026 15:41:31",
+            "MLL thực tế": "103.58 phút"
+          }
+        ]
+      },
+      "list": {
+        "title": "Xu hướng 6 tháng",
+        "items": [
+          "T1: 31.773 phút",
+          "T2: 29.154 phút",
+          "T3: 21.125 phút",
+          "T4: 24.712 phút",
+          "T5: 34.694 phút",
+          "T6: 16.766 phút"
+        ]
+      },
+      "raw": {
+        "ontimeRows": [
+          {
+            "THT": "Bến Lức",
+            "Tỷ lệ hoàn thành": "100.00%",
+            "Sự cố > 120 phút": "0",
+            "Đánh giá": "Đạt",
+            "rateValue": 100.0
+          },
+          {
+            "THT": "Đức hòa",
+            "Tỷ lệ hoàn thành": "100.00%",
+            "Sự cố > 120 phút": "0",
+            "Đánh giá": "Đạt",
+            "rateValue": 100.0
+          },
+          {
+            "THT": "Gò Dầu",
+            "Tỷ lệ hoàn thành": "98.99%",
+            "Sự cố > 120 phút": "1",
+            "Đánh giá": "Đạt",
+            "rateValue": 98.98989898989899
+          },
+          {
+            "THT": "Kiến Tường",
+            "Tỷ lệ hoàn thành": "100.00%",
+            "Sự cố > 120 phút": "0",
+            "Đánh giá": "Đạt",
+            "rateValue": 100.0
+          },
+          {
+            "THT": "Tân An",
+            "Tỷ lệ hoàn thành": "100.00%",
+            "Sự cố > 120 phút": "0",
+            "Đánh giá": "Đạt",
+            "rateValue": 100.0
+          },
+          {
+            "THT": "Tân Châu",
+            "Tỷ lệ hoàn thành": "100.00%",
+            "Sự cố > 120 phút": "0",
+            "Đánh giá": "Đạt",
+            "rateValue": 100.0
+          },
+          {
+            "THT": "Tân Ninh",
+            "Tỷ lệ hoàn thành": "91.67%",
+            "Sự cố > 120 phút": "2",
+            "Đánh giá": "Không đạt",
+            "rateValue": 91.66666666666666
+          }
+        ]
+      }
+    },
+    {
+      "id": "ispeed",
+      "group": "operation",
+      "title": "Tiến độ đo kiểm i-Speed",
+      "kicker": "Đo kiểm chất lượng vô tuyến",
+      "tone": "critical",
+      "summary": "Đã hoàn thành 716/1.696 mẫu i-Speed và 705/1.696 mẫu Speedtest trong giai đoạn 01/07/2026 - 18/07/2026.",
+      "metrics": [
+        {
+          "label": "Tỷ lệ i-Speed",
+          "value": "42.22%",
+          "tone": "critical"
+        },
+        {
+          "label": "Tỷ lệ Speedtest",
+          "value": "41.57%",
+          "tone": "critical"
+        },
+        {
+          "label": "Mẫu 5G",
+          "value": "313",
+          "tone": "info"
+        },
+        {
+          "label": "Tỷ lệ 5G",
+          "value": "44.40%",
+          "tone": "warning"
+        }
+      ],
+      "insights": [
+        "Đức Hòa đang thấp nhất với tiến độ i-Speed 11.06%.",
+        "Tổ có tỷ lệ 5G cao nhất là Tân An (81.75%).",
+        "Khoảng cách lớn giữa số mẫu cần đo và số mẫu hoàn thành cho thấy cần siết lịch đo theo ngày."
+      ],
+      "chart": {
+        "title": "Tiến độ i-Speed theo tổ",
+        "items": [
+          {
+            "label": "Gò Dầu",
+            "value": 75.0,
+            "display": "75.00%",
+            "note": "Speedtest 75.00% | 5G 21.67%",
+            "tone": "positive",
+            "ispeedDone": 180,
+            "speedtestDone": 180,
+            "ratio5g": 21.666666666666668
+          },
+          {
+            "label": "Tân An",
+            "value": 56.25,
+            "display": "56.25%",
+            "note": "Speedtest 56.25% | 5G 81.75%",
+            "tone": "positive",
+            "ispeedDone": 126,
+            "speedtestDone": 126,
+            "ratio5g": 81.74603174603175
+          },
+          {
+            "label": "Bến Lức",
+            "value": 49.107142857142854,
+            "display": "49.11%",
+            "note": "Speedtest 45.09% | 5G 66.34%",
+            "tone": "positive",
+            "ispeedDone": 110,
+            "speedtestDone": 101,
+            "ratio5g": 66.33663366336634
+          },
+          {
+            "label": "Tân Ninh",
+            "value": 45.955882352941174,
+            "display": "45.96%",
+            "note": "Speedtest 45.96% | 5G 54.61%",
+            "tone": "positive",
+            "ispeedDone": 125,
+            "speedtestDone": 125,
+            "ratio5g": 54.60992907801418
+          },
+          {
+            "label": "Kiến Tường",
+            "value": 29.51388888888889,
+            "display": "29.51%",
+            "note": "Speedtest 29.17% | 5G 0.00%",
+            "tone": "critical",
+            "ispeedDone": 85,
+            "speedtestDone": 84,
+            "ratio5g": 0
+          },
+          {
+            "label": "Tân Châu",
+            "value": 27.916666666666668,
+            "display": "27.92%",
+            "note": "Speedtest 28.33% | 5G 32.35%",
+            "tone": "critical",
+            "ispeedDone": 67,
+            "speedtestDone": 68,
+            "ratio5g": 32.35294117647059
+          },
+          {
+            "label": "Đức Hòa",
+            "value": 11.057692307692307,
+            "display": "11.06%",
+            "note": "Speedtest 10.10% | 5G 23.81%",
+            "tone": "critical",
+            "ispeedDone": 23,
+            "speedtestDone": 21,
+            "ratio5g": 23.809523809523807
+          }
+        ]
+      },
+      "table": {
+        "title": "Tốc độ download trung bình",
+        "columns": [
+          "THT",
+          "i-Speed DL TB",
+          "Speedtest DL TB"
+        ],
+        "rows": [
+          {
+            "THT": "Tân An",
+            "i-Speed DL TB": "354.51 Mbps",
+            "Speedtest DL TB": "715.16 Mbps"
+          },
+          {
+            "THT": "Bến Lức",
+            "i-Speed DL TB": "266.25 Mbps",
+            "Speedtest DL TB": "480.61 Mbps"
+          },
+          {
+            "THT": "Tân Ninh",
+            "i-Speed DL TB": "218.23 Mbps",
+            "Speedtest DL TB": "301.41 Mbps"
+          },
+          {
+            "THT": "Đức Hòa",
+            "i-Speed DL TB": "227.08 Mbps",
+            "Speedtest DL TB": "226.46 Mbps"
+          },
+          {
+            "THT": "Tân Châu",
+            "i-Speed DL TB": "150.85 Mbps",
+            "Speedtest DL TB": "223.24 Mbps"
+          },
+          {
+            "THT": "Gò Dầu",
+            "i-Speed DL TB": "171.21 Mbps",
+            "Speedtest DL TB": "191.34 Mbps"
+          },
+          {
+            "THT": "Kiến Tường",
+            "i-Speed DL TB": "108.04 Mbps",
+            "Speedtest DL TB": "110.56 Mbps"
+          }
+        ]
+      },
+      "list": {
+        "title": "Điểm cần ưu tiên",
+        "items": [
+          "Bù tiến độ cho Đức Hòa, Tân Châu, Kiến Tường.",
+          "Nâng tỷ lệ mẫu 5G vượt ngưỡng 60% ở các tổ còn thấp.",
+          "Theo dõi chặt chẽ nhóm chưa có dữ liệu ở một số lượt đo đầu tuần."
+        ]
+      },
+      "raw": {
+        "totals": {
+          "ispeedDone": 716,
+          "ispeedGoal": 1696,
+          "speedtestDone": 705,
+          "speedtestGoal": 1696,
+          "sample5g": 313
+        }
+      }
+    },
+    {
+      "id": "5s",
+      "group": "operation",
+      "title": "Tiến độ 5S nhà trạm",
+      "kicker": "5S, máy lạnh, AP/OTB",
+      "tone": "critical",
+      "summary": "5S nhà trạm mới đạt 22.46% (373/1.661 trạm). Vệ sinh máy lạnh đạt 13.57%, trong khi AP/OTB đạt 51.23%.",
+      "metrics": [
+        {
+          "label": "5S nhà trạm",
+          "value": "22.46%",
+          "tone": "critical"
+        },
+        {
+          "label": "Vệ sinh máy lạnh",
+          "value": "13.57%",
+          "tone": "warning"
+        },
+        {
+          "label": "5S AP/OTB",
+          "value": "51.23%",
+          "tone": "positive"
+        },
+        {
+          "label": "Khảo sát phụ trợ",
+          "value": "100.00%",
+          "tone": "positive"
+        }
+      ],
+      "insights": [
+        "Tổ thấp nhất ở 5S nhà trạm là Gò Dầu (5.30%).",
+        "Vệ sinh máy lạnh đang chậm nhất tại Gò Dầu.",
+        "Khảo sát phụ trợ đã hoàn thành 100% trên toàn bộ 1.578 trạm."
+      ],
+      "chart": {
+        "title": "Tiến độ 5S nhà trạm theo tổ",
+        "items": [
+          {
+            "label": "Kiến Tường",
+            "value": 56.33187772925764,
+            "display": "56.33%",
+            "note": "129/229",
+            "tone": "positive"
+          },
+          {
+            "label": "Đức Hòa",
+            "value": 33.33333333333333,
+            "display": "33.33%",
+            "note": "70/210",
+            "tone": "warning"
+          },
+          {
+            "label": "Bến Lức",
+            "value": 31.557377049180328,
+            "display": "31.56%",
+            "note": "77/244",
+            "tone": "warning"
+          },
+          {
+            "label": "Tân An",
+            "value": 15.454545454545453,
+            "display": "15.45%",
+            "note": "34/220",
+            "tone": "warning"
+          },
+          {
+            "label": "Tân Châu",
+            "value": 12.669683257918551,
+            "display": "12.67%",
+            "note": "28/221",
+            "tone": "critical"
+          },
+          {
+            "label": "Tân Ninh",
+            "value": 7.874015748031496,
+            "display": "7.87%",
+            "note": "20/254",
+            "tone": "critical"
+          },
+          {
+            "label": "Gò Dầu",
+            "value": 5.30035335689046,
+            "display": "5.30%",
+            "note": "15/283",
+            "tone": "critical"
+          }
+        ]
+      },
+      "table": {
+        "title": "Tổng hợp 3 chương trình song song",
+        "columns": [
+          "Hạng mục",
+          "Đã thực hiện",
+          "Tổng",
+          "Tỷ lệ"
+        ],
+        "rows": [
+          {
+            "Hạng mục": "Vệ sinh máy lạnh",
+            "Đã thực hiện": "202",
+            "Tổng": "1.489",
+            "Tỷ lệ": "13.57%"
+          },
+          {
+            "Hạng mục": "5S AP/OTB",
+            "Đã thực hiện": "7.192",
+            "Tổng": "14.040",
+            "Tỷ lệ": "51.23%"
+          },
+          {
+            "Hạng mục": "Khảo sát phụ trợ",
+            "Đã thực hiện": "1.578",
+            "Tổng": "1.578",
+            "Tỷ lệ": "100.00%"
+          }
+        ]
+      },
+      "list": {
+        "title": "Điểm hành động",
+        "items": [
+          "Đẩy nhanh tiến độ tại Gò Dầu, Tân Ninh, Tân Châu.",
+          "Tách riêng các đội có tiến độ máy lạnh dưới 15% để bám theo tuần.",
+          "Tiếp tục khai thác quán tính tốt của AP/OTB và khảo sát phụ trợ."
+        ]
+      }
+    },
+    {
+      "id": "xlsc",
+      "group": "operation",
+      "title": "Xử lý sự cố tuần",
+      "kicker": "XLSC MANE, ACCESS, Vô tuyến",
+      "tone": "warning",
+      "summary": "Tổng cộng có 46 phiếu quá hạn, trong đó nhóm Vô tuyến chiếm tỷ trọng lớn nhất.",
+      "metrics": [
+        {
+          "label": "MANE đúng hạn",
+          "value": "97.94%",
+          "tone": "positive"
+        },
+        {
+          "label": "ACCESS đúng hạn",
+          "value": "98.39%",
+          "tone": "positive"
+        },
+        {
+          "label": "Vô tuyến đúng hạn",
+          "value": "97.35%",
+          "tone": "warning"
+        },
+        {
+          "label": "Phiếu quá hạn",
+          "value": "46",
+          "tone": "critical"
+        }
+      ],
+      "insights": [
+        "Vô tuyến đang có nhiều phiếu tồn quá hạn nhất với 3 phiếu.",
+        "Tổ có số phiếu quá hạn nhiều nhất là Tổ Hạ tầng Đức Hòa.",
+        "MANE và ACCESS giữ mặt bằng đúng hạn trên 97%, nhưng vẫn cần kéo nốt các tồn quá hạn mở."
+      ],
+      "chart": {
+        "title": "Tỷ lệ hoàn thành đúng hạn theo nhóm mạng",
+        "items": [
+          {
+            "label": "MANE",
+            "value": 97.94,
+            "display": "97.94%",
+            "note": "Tồn quá hạn 0",
+            "tone": "positive"
+          },
+          {
+            "label": "ACCESS",
+            "value": 98.39,
+            "display": "98.39%",
+            "note": "Tồn quá hạn 0",
+            "tone": "positive"
+          },
+          {
+            "label": "Vô tuyến",
+            "value": 97.35,
+            "display": "97.35%",
+            "note": "Tồn quá hạn 3",
+            "tone": "warning"
+          }
+        ]
+      },
+      "table": {
+        "title": "Phiếu quá hạn theo tổ hạ tầng",
+        "columns": [
+          "Tổ Hạ tầng",
+          "Phiếu quá hạn"
+        ],
+        "rows": [
+          {
+            "Tổ Hạ tầng": "Tổ Hạ tầng Đức Hòa",
+            "Phiếu quá hạn": "10"
+          },
+          {
+            "Tổ Hạ tầng": "Tổ Hạ tầng Tân An",
+            "Phiếu quá hạn": "7"
+          },
+          {
+            "Tổ Hạ tầng": "Tổ Hạ tầng Kiến Tường",
+            "Phiếu quá hạn": "7"
+          },
+          {
+            "Tổ Hạ tầng": "Tổ Hạ tầng Gò Dầu",
+            "Phiếu quá hạn": "7"
+          },
+          {
+            "Tổ Hạ tầng": "Tổ Hạ tầng Bến Lức",
+            "Phiếu quá hạn": "6"
+          },
+          {
+            "Tổ Hạ tầng": "Chưa gán THT",
+            "Phiếu quá hạn": "5"
+          },
+          {
+            "Tổ Hạ tầng": "Tổ Hạ tầng Tân Châu",
+            "Phiếu quá hạn": "3"
+          },
+          {
+            "Tổ Hạ tầng": "Tổ Hạ tầng Tân Ninh",
+            "Phiếu quá hạn": "1"
+          }
+        ]
+      },
+      "list": {
+        "title": "Điểm cần bám",
+        "items": [
+          "Ưu tiên bóc 36 phiếu quá hạn của lớp vô tuyến.",
+          "Giữ trạng thái không phát sinh tồn quá hạn mới ở MANE và ACCESS.",
+          "Rà lại các phiếu Kiến Tường, Đức Hòa và Tân An xuất hiện nhiều trong danh sách quá hạn."
+        ]
+      },
+      "raw": {
+        "totalOverdue": 46
+      }
+    },
+    {
+      "id": "appendix",
+      "group": "operation",
+      "title": "Giải trình sự cố trạm",
+      "kicker": "Phụ lục MLL",
+      "tone": "info",
+      "summary": "Phụ lục sự cố cho thấy nhóm nguyên nhân xuất hiện nhiều nhất là truyền dẫn mất liên lạc sw lớp trên.",
+      "metrics": [
+        {
+          "label": "Số sự cố ghi nhận",
+          "value": "47",
+          "tone": "info"
+        },
+        {
+          "label": "Nguyên nhân nhiều nhất",
+          "value": "Truyền dẫn mất liên lạc SW lớp trên",
+          "tone": "warning"
+        },
+        {
+          "label": "Đã xử lý",
+          "value": "43",
+          "tone": "positive"
+        },
+        {
+          "label": "Top MLL",
+          "value": "694 phút",
+          "tone": "warning"
+        }
+      ],
+      "insights": [
+        "Nguồn điện và truyền dẫn là hai lớp nguyên nhân lặp lại nhiều nhất trong phụ lục.",
+        "Sự cố lớn nhất hiện diện trên 3G_TAN051M_LAN.",
+        "Các khuyến nghị xử lý đều nghiêng về kiểm tra định kỳ nguồn điện, máy nổ và lớp truyền dẫn."
+      ],
+      "chart": {
+        "title": "Nhóm nguyên nhân lặp lại nhiều",
+        "items": [
+          {
+            "label": "Truyền dẫn mất liên lạc SW lớp trên",
+            "value": 20,
+            "display": "20",
+            "note": "sự cố",
+            "tone": "warning"
+          },
+          {
+            "label": "Nguồn điện máy nổ bị sự cố",
+            "value": 6,
+            "display": "6",
+            "note": "sự cố",
+            "tone": "info"
+          },
+          {
+            "label": "Nguồn điện nhảy CB",
+            "value": 5,
+            "display": "5",
+            "note": "sự cố",
+            "tone": "info"
+          },
+          {
+            "label": "Nguồn điện máy nổ lưu động",
+            "value": 4,
+            "display": "4",
+            "note": "sự cố",
+            "tone": "info"
+          },
+          {
+            "label": "Nguồn điện accu trạm yếu",
+            "value": 4,
+            "display": "4",
+            "note": "sự cố",
+            "tone": "info"
+          }
+        ]
+      },
+      "table": {
+        "title": "Các sự cố cần xem lại",
+        "columns": [
+          "Tên NE",
+          "Thời gian sự cố",
+          "MLL (phút)",
+          "Nguyên nhân",
+          "Khắc phục",
+          "Trạng thái"
+        ],
+        "rows": [
+          {
+            "Tên NE": "3G_TAN051M_LAN",
+            "Thời gian sự cố": "11/07/2026 06:04:37",
+            "MLL (phút)": "694",
+            "Nguyên nhân": "Thiết bị lỗi card",
+            "Khắc phục": "THT thay card CBU, load lại scrip cấu hình, thay card truyền dẫn",
+            "Trạng thái": "Đã xử lý"
+          },
+          {
+            "Tên NE": "4G-TBA002E-TNH",
+            "Thời gian sự cố": "14/07/2026 02:11:33",
+            "MLL (phút)": "222",
+            "Nguyên nhân": "Truyền dẫn nguyên nhân khác",
+            "Khắc phục": "THT kéo 50m cáp 12FO hàn lại",
+            "Trạng thái": "Đã xử lý"
+          },
+          {
+            "Tên NE": "5G-TBA002M-TNH",
+            "Thời gian sự cố": "14/07/2026 02:20:46",
+            "MLL (phút)": "209",
+            "Nguyên nhân": "Truyền dẫn nguyên nhân khác",
+            "Khắc phục": "THT kéo 50m cáp 12FO hàn lại",
+            "Trạng thái": "Đã xử lý"
+          },
+          {
+            "Tên NE": "UL_DHO046M_LAN",
+            "Thời gian sự cố": "12/07/2026 23:08:26",
+            "MLL (phút)": "169",
+            "Nguyên nhân": "Truyền dẫn côn trùng, chuột cắn",
+            "Khắc phục": "THT hàn cáp",
+            "Trạng thái": "Đã xử lý"
+          },
+          {
+            "Tên NE": "UL_DHO045M_LAN",
+            "Thời gian sự cố": "15/07/2026 12:47:31",
+            "MLL (phút)": "119",
+            "Nguyên nhân": "Truyền dẫn cháy cáp",
+            "Khắc phục": "THT hàn cáp quang",
+            "Trạng thái": "Đã xử lý"
+          },
+          {
+            "Tên NE": "3G_TAN051M_LAN",
+            "Thời gian sự cố": "11/07/2026 18:07:46",
+            "MLL (phút)": "114",
+            "Nguyên nhân": "Thiết bị lỗi card",
+            "Khắc phục": "THT thay card CBU, load lại scrip cấu hình, thay card truyền dẫn",
+            "Trạng thái": "Đã xử lý"
+          }
+        ]
+      },
+      "list": {
+        "title": "Khuyến nghị",
+        "items": [
+          "Kiểm tra định kỳ máy nổ, accu đề và nguồn AC ở các trạm có lặp sự cố.",
+          "Rà soát lớp truyền dẫn SW lớp trên tại các khu vực Gò Dầu và Đức Hòa.",
+          "Chuẩn hóa mẫu giải trình để bám sát nguyên nhân chi tiết và bước khắc phục."
+        ]
+      }
+    }
+  ],
+  "actionItems": [
+    {
+      "title": "Điều chuyển tài nguyên 5G tại các điểm tải cao",
+      "detail": "MBB tuần 30 đang tập trung Tân Ninh, Cầu Khởi, Thủ Thừa và Gia Lộc để share tải cho 4G.",
+      "tone": "warning"
+    },
+    {
+      "title": "Giảm suy hao FBB và mở rộng uplink nghẽn",
+      "detail": "2051 phiếu suy hao thuê bao cần được kéo giảm song song với phương án mở rộng uplink 10G tại Gò Đen.HU65.",
+      "tone": "critical"
+    },
+    {
+      "title": "Bù tiến độ đo kiểm i-Speed",
+      "detail": "Đức Hòa, Tân Châu và Kiến Tường đang là ba đơn vị có tiến độ đo thấp nhất, cần khóa KPI theo ngày.",
+      "tone": "critical"
+    },
+    {
+      "title": "Chốt dứt điểm phiếu quá hạn vô tuyến",
+      "detail": "Trong 46 phiếu quá hạn, nhóm vô tuyến đang chiếm phần lớn và là điểm nghẽn cần xử lý trước.",
+      "tone": "warning"
+    },
+    {
+      "title": "Đẩy 5S nhà trạm tại các tổ chậm",
+      "detail": "Gò Dầu, Tân Ninh và Tân Châu có tiến độ 5S thấp nhất, cần tách lịch kiểm tra hiện trường theo cụm.",
+      "tone": "warning"
+    }
+  ],
+  "sources": [
+    {
+      "name": "1. BÁO CÁO MBB_HUNG.xlsx",
+      "tag": "MBB"
+    },
+    {
+      "name": "2. BÁO CÁO FBB_BAO.xlsx",
+      "tag": "FBB"
+    },
+    {
+      "name": "3. BÁO CÁO MYTV_TÂN.xlsx",
+      "tag": "MyTV"
+    },
+    {
+      "name": "4. BÁO CÁO MLL_KHANH.xlsx",
+      "tag": "MLL"
+    },
+    {
+      "name": "5. BÁO CÁO ISPEED_QUOC.xlsx",
+      "tag": "i-Speed"
+    },
+    {
+      "name": "6. BÁO CÁO 5S NHÀ TRẠM_TÂN.xlsx",
+      "tag": "5S"
+    },
+    {
+      "name": "7.BÁO CÁO XLSC_TUẤN.xlsx",
+      "tag": "XLSC"
+    },
+    {
+      "name": "PHỤ LỤC 1.xlsx",
+      "tag": "Phụ lục"
+    }
+  ]
+};
