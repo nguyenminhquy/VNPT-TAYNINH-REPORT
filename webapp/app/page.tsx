@@ -83,24 +83,23 @@ export default function Dashboard() {
         return;
       }
 
-      // 2. Gọi Python API trực tiếp từ trình duyệt (để tự động đính kèm Cookie của Vercel)
-      const pythonRes = await fetch("/api/export_python", { 
+      // 2. Gọi Javascript API để xử lý file Word
+      const apiRes = await fetch("/api/export-word", { 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          secret: "vnpt-secret-key",
-          blob_urls: blobUrls
+          blobUrls: blobUrls
         })
       });
 
-      if (!pythonRes.ok) {
-        const errText = await pythonRes.text();
-        alert(`Lỗi Python API (${pythonRes.status}): ${errText}`);
+      if (!apiRes.ok) {
+        const errText = await apiRes.text();
+        alert(`Lỗi JS API (${apiRes.status}): ${errText}`);
         setIsExporting(false);
         return;
       }
 
-      const wordBlob = await pythonRes.blob();
+      const wordBlob = await apiRes.blob();
 
       // 3. Gọi Next.js API để lưu file vào Vercel Blob & lịch sử Supabase
       const formData = new FormData();

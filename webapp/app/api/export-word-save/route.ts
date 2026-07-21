@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { put } from '@vercel/blob';
 import { createClient } from '@supabase/supabase-js';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
