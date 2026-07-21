@@ -195,10 +195,19 @@ export async function POST(
     const safeFileName = `${key}_${timestamp}.xlsx`;
     const pathname = `reports/${key}/${safeFileName}`;
 
-    const blobResult = await put(pathname, fileBuffer, {
-      access: 'public',
-      token: process.env.BLOB_READ_WRITE_TOKEN,
-    });
+    let blobResult;
+    try {
+      blobResult = await put(pathname, fileBuffer, {
+        access: 'public',
+        token: process.env.BLOB_READ_WRITE_TOKEN,
+      });
+    } catch (blobErr: any) {
+      console.error('[upload] Vercel Blob error:', blobErr);
+      return NextResponse.json(
+        { error: 'Lỗi upload Vercel Blob (Chưa cấu hình Storage)' },
+        { status: 500 },
+      );
+    }
 
     // ── Xóa blob cũ nếu tồn tại ─────────────────────────────────────────────
     if (currentSource?.blob_url) {
@@ -213,7 +222,7 @@ export async function POST(
     }
 
     // ── Cập nhật report_sources ───────────────────────────────────────────────
-    const uploadedBy = (session.user as { email?: string })?.email ?? 'unknown';
+    const uploadedBy = (session.user as { id?: string })?.id ?? null;
     const uploadedAt = new Date().toISOString();
 
     const { data: updatedSource, error: updateError } = await supabaseAdmin
@@ -252,6 +261,7 @@ export async function POST(
       file_size: file.size,
       blob_url: blobResult.url,
       uploaded_by: uploadedBy,
+      uploader_name: session.user?.name ?? 'unknown',
       uploaded_at: uploadedAt,
     });
 
