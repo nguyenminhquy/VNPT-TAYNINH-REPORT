@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
     const { error: insertError } = await supabaseAdmin.from('users').insert({
       email: email.toLowerCase(),
       name: name.trim(),
-      password: hashedPassword,
+      password_hash: hashedPassword,
       created_at: new Date().toISOString(),
     });
 
