@@ -100,7 +100,10 @@ export async function POST(request: NextRequest): Promise<NextResponse<ExportWor
     console.log(`[export-word/POST] Calling Python API at ${pythonApiUrl}`);
     const pythonRes = await fetch(pythonApiUrl, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Cookie': request.headers.get('cookie') || ''
+      },
       body: JSON.stringify({
         secret: process.env.PYTHON_API_SECRET || 'vnpt-secret-key',
         blob_urls: blobUrls,
