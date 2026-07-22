@@ -159,46 +159,34 @@ export class DocxModifier {
   }
 
   flattenLinkFields() {
-    // 1. Flatten simple link fields <w:fldSimple>
+    // 1. Flatten ALL simple link fields <w:fldSimple>
     const fldSimples = Array.from(this.doc.getElementsByTagName('w:fldSimple')) as Element[];
     for (const field of fldSimples) {
-      const instr = field.getAttribute('w:instr') || '';
-      if (instr.toUpperCase().trim().startsWith('LINK ')) {
-        const parent = field.parentNode;
-        if (parent) {
-          while (field.firstChild) {
-            parent.insertBefore(field.firstChild, field);
-          }
-          parent.removeChild(field);
+      const parent = field.parentNode;
+      if (parent) {
+        while (field.firstChild) {
+          parent.insertBefore(field.firstChild, field);
         }
+        parent.removeChild(field);
       }
     }
 
-    // 2. Flatten complex link fields (simplified: remove w:instrText starting with LINK and surrounding w:fldChar)
-    // To match python's robust parsing, we'll just remove any w:instrText that starts with LINK,
-    // and its parent w:r. And also remove all w:fldChar begin/separate/end that are siblings.
-    // This is a heuristic that works for the generated links.
+    // 2. Remove ALL instruction text runs (<w:instrText>)
     const instrTexts = Array.from(this.doc.getElementsByTagName('w:instrText')) as Element[];
-    let inLinkContext = false;
-    
     for (const instr of instrTexts) {
-      const text = instr.textContent || '';
-      if (text.trim().toUpperCase().startsWith('LINK ')) {
-        inLinkContext = true;
-        // Remove the run containing this instruction
-        const run = instr.parentNode;
-        if (run) run.parentNode?.removeChild(run);
+      const run = instr.parentNode;
+      if (run && run.parentNode) {
+        run.parentNode.removeChild(run);
       }
     }
     
-    // In a real robust implementation, we'd track the state machine of begin -> separate -> end.
-    // But since the values are already cached in the <w:r> result section, just deleting the 
-    // instruction runs and fldChars often breaks nothing.
-    // Let's remove all <w:fldChar> as a brute force to un-field all fields (since we want a static document anyway)
+    // 3. Remove ALL field character runs (begin, separate, end)
     const fldChars = Array.from(this.doc.getElementsByTagName('w:fldChar')) as Element[];
     for (const fldChar of fldChars) {
        const run = fldChar.parentNode;
-       if (run) run.parentNode?.removeChild(run);
+       if (run && run.parentNode) {
+         run.parentNode.removeChild(run);
+       }
     }
   }
 
