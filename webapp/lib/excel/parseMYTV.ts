@@ -39,37 +39,51 @@ interface MyTVItem {
 export function parseMYTV(buffer: Buffer): ReportBlock {
   const sheet = loadSheet(buffer, 'Sheet1');
 
-  // ── Điểm tổng QoS/QoE ──────────────────────────────────────────────────────
-  // Python: row2,col7 → 0-indexed r=1, c=6
-  const qosScore = normalizePercent(cellValue(sheet, 1, 6));
-  const qosRank = txt(cellValue(sheet, 1, 7));
+  const maxRow = getSheetMaxRow(sheet);
+  
+  let qosScore: number | null = null;
+  let qosRank: string = '';
+  let qoeScore: number | null = null;
+  let qoeRank: string = '';
 
-  // Python: row6,col7 → 0-indexed r=5, c=6
-  const qoeScore = normalizePercent(cellValue(sheet, 5, 6));
-  const qoeRank = txt(cellValue(sheet, 5, 7));
-
-  // ── QoS items: rows 2-5, cols 4,5 → r=1..4, c=3,4 ─────────────────────────
   const qosItems: MyTVItem[] = [];
-  for (let r = 1; r <= 4; r++) {
-    const label = txt(cellValue(sheet, r, 3)); // col 4
-    const rawVal = cellValue(sheet, r, 4);      // col 5
-    if (!label) continue;
-    qosItems.push({
-      label,
-      value: normalizePercent(rawVal),
-    });
-  }
-
-  // ── QoE items: rows 6-15, cols 4,5 → r=5..14, c=3,4 ──────────────────────
   const qoeItems: MyTVItem[] = [];
-  for (let r = 5; r <= 14; r++) {
+
+  let currentCategory: 'qos' | 'qoe' | null = null;
+
+  for (let r = 1; r <= maxRow; r++) {
+    const scoreColVal = cellValue(sheet, r, 6); // col 7
+    const rankColVal = txt(cellValue(sheet, r, 7)); // col 8
+    
+    const hasScore = scoreColVal !== null && scoreColVal !== undefined && String(scoreColVal).trim() !== '';
+    const hasRank = rankColVal !== '';
+
+    // Nếu dòng này có chứa điểm số tổng hoặc xếp hạng (dấu hiệu của một nhóm mới do ô bị merge)
+    if (hasScore || hasRank) {
+      if (currentCategory === null) {
+        currentCategory = 'qos';
+        qosScore = normalizePercent(scoreColVal);
+        qosRank = rankColVal;
+      } else if (currentCategory === 'qos') {
+        currentCategory = 'qoe';
+        qoeScore = normalizePercent(scoreColVal);
+        qoeRank = rankColVal;
+      }
+    }
+
     const label = txt(cellValue(sheet, r, 3)); // col 4
-    const rawVal = cellValue(sheet, r, 4);      // col 5
-    if (!label) continue;
-    qoeItems.push({
-      label,
-      value: normalizePercent(rawVal),
-    });
+    const rawVal = cellValue(sheet, r, 4);     // col 5
+
+    // Bỏ qua dòng trống hoặc dòng header
+    if (!label || label.toLowerCase().includes('tiêu chí') || label.toLowerCase() === 'chỉ tiêu' || label.toLowerCase() === 'kết quả') {
+      continue;
+    }
+
+    if (currentCategory === 'qos') {
+      qosItems.push({ label, value: normalizePercent(rawVal) });
+    } else if (currentCategory === 'qoe') {
+      qoeItems.push({ label, value: normalizePercent(rawVal) });
+    }
   }
 
   // ─── Tính toán tone ───────────────────────────────────────────────────────
