@@ -13,7 +13,7 @@ export default function Dashboard() {
   
   const [reportSources, setReportSources] = useState<any[]>([]);
   const [cacheData, setCacheData] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState<"overview" | "upload" | "details">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "upload" | "details" | "special5">("overview");
   const [activeReportKey, setActiveReportKey] = useState<string | null>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -194,6 +194,12 @@ export default function Dashboard() {
               </div>
             )}
           </div>
+          <button 
+            className={`nav-item ${activeTab === 'special5' ? 'active' : ''}`}
+            onClick={() => setActiveTab('special5')}
+          >
+            📋 Báo cáo chuyên đề 5
+          </button>
         </nav>
         <div className="sidebar-footer">
            <button className="btn-logout" onClick={() => signOut()}>Đăng xuất</button>
@@ -207,6 +213,7 @@ export default function Dashboard() {
              {activeTab === 'overview' && 'Tổng quan Hệ thống'}
              {activeTab === 'upload' && 'Quản lý Nguồn Dữ Liệu'}
              {activeTab === 'details' && 'Báo cáo hàng tuần'}
+             {activeTab === 'special5' && 'Báo cáo chuyên đề 5'}
            </h1>
            <div className="header-actions">
               {activeTab === 'upload' && (
@@ -375,6 +382,14 @@ export default function Dashboard() {
                     })()}
                   </div>
                 )}
+             </div>
+           )}
+
+           {/* TAB SPECIAL5 */}
+           {activeTab === 'special5' && (
+             <div style={{ textAlign: 'center', padding: '100px 0', color: '#6f869b' }}>
+               <h2>Báo cáo chuyên đề 5</h2>
+               <p>Chức năng này đang được phát triển...</p>
              </div>
            )}
 
