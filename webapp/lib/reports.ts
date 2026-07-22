@@ -27,7 +27,7 @@ export const REPORT_SOURCES = [
   {
     key: "mll",
     label: "BÁO CÁO MLL",
-    owner: "Khánh",
+    owner: "Khanh",
     filename: "4. BÁO CÁO MLL_KHANH.xlsx",
     tag: "MLL",
     color: "#F25022",
