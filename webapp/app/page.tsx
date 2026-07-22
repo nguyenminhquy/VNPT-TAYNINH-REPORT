@@ -13,8 +13,8 @@ export default function Dashboard() {
   
   const [reportSources, setReportSources] = useState<any[]>([]);
   const [cacheData, setCacheData] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState<"overview" | "upload" | "details" | "special5">("overview");
-  const [activeReportKey, setActiveReportKey] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<"overview" | "details" | "special5">("overview");
+  const [activeReportKey, setActiveReportKey] = useState<string | null>("upload");
   const [isExporting, setIsExporting] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -35,9 +35,7 @@ export default function Dashboard() {
       if (res.ok) {
         setReportSources(json.sources);
         setCacheData(json.cache);
-        if (json.cache?.data?.serviceReports?.length > 0) {
-           setActiveReportKey(json.cache.data.serviceReports[0].id);
-        }
+        // Do not auto-select, let it default to "upload"
       }
     } catch (e) {
       console.error(e);
@@ -167,12 +165,6 @@ export default function Dashboard() {
           >
             📊 Tổng quan
           </button>
-          <button 
-            className={`nav-item ${activeTab === 'upload' ? 'active' : ''}`}
-            onClick={() => setActiveTab('upload')}
-          >
-            📁 Nguồn dữ liệu
-          </button>
           <div className="nav-item-group">
             <button 
               className={`nav-item ${activeTab === 'details' ? 'active' : ''}`}
@@ -182,6 +174,12 @@ export default function Dashboard() {
             </button>
             {activeTab === 'details' && cacheData && (
               <div className="submenu">
+                <button
+                  className={`submenu-item ${activeReportKey === 'upload' ? 'active' : ''}`}
+                  onClick={() => setActiveReportKey('upload')}
+                >
+                  📁 Quản lý nguồn dữ liệu
+                </button>
                 {[...cacheData.data.serviceReports, ...cacheData.data.operationReports].map(report => (
                   <button 
                     key={report.id}
@@ -211,12 +209,12 @@ export default function Dashboard() {
         <header className="dashboard-header">
            <h1 className="header-title">
              {activeTab === 'overview' && 'Tổng quan Hệ thống'}
-             {activeTab === 'upload' && 'Quản lý Nguồn Dữ Liệu'}
-             {activeTab === 'details' && 'Báo cáo hàng tuần'}
+             {activeTab === 'details' && activeReportKey === 'upload' && 'Quản lý Nguồn Dữ Liệu'}
+             {activeTab === 'details' && activeReportKey !== 'upload' && 'Báo cáo hàng tuần'}
              {activeTab === 'special5' && 'Báo cáo chuyên đề 5'}
            </h1>
            <div className="header-actions">
-              {activeTab === 'upload' && (
+              {activeTab === 'details' && activeReportKey === 'upload' && (
                  <button onClick={handleProcess} disabled={isProcessing} style={{ padding: '10px 20px', borderRadius: 99, border: '1px solid #005BAA', background: 'transparent', color: '#005BAA', fontWeight: 'bold', cursor: 'pointer' }}>
                    {isProcessing ? 'Đang xử lý...' : '🔄 Xử lý lại dữ liệu'}
                  </button>
@@ -291,97 +289,98 @@ export default function Dashboard() {
              </div>
            )}
 
-           {/* TAB UPLOAD */}
-           {activeTab === 'upload' && (
-             <div className="upload-grid">
-                {REPORT_SOURCES.map((source) => {
-                  const dbSource = reportSources.find((s) => s.key === source.key);
-                  return (
-                    <div key={source.key} className="upload-card">
-                      <div className="upload-card-header">
-                        <div className="upload-card-title">{source.label}</div>
-                        <div className="upload-card-subtitle">{source.filename}</div>
-                        <div className="upload-card-subtitle" style={{ marginTop: 4 }}>Phụ trách: <strong>{source.owner}</strong></div>
-                      </div>
-                      
-                      <div className="upload-card-status">
-                        {dbSource?.blob_url ? (
-                          <>
-                            <span className="status-badge success">✅ Đã có dữ liệu</span>
-                            <div style={{ fontSize: '0.8rem', color: '#6f869b', marginBottom: 12 }}>
-                              Upload lúc: {new Date(dbSource.uploaded_at).toLocaleString('vi-VN')}
-                            </div>
-                          </>
-                        ) : (
-                          <span className="status-badge error">❌ Chưa có dữ liệu</span>
-                        )}
-                        
-                        <div className="file-input-wrapper">
-                          <button className="btn-upload">Tải file lên</button>
-                          <input 
-                            type="file" 
-                            accept=".xlsx" 
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) handleUpload(source.key, file);
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-             </div>
-           )}
-
            {/* TAB DETAILS */}
            {activeTab === 'details' && (
              <div>
-                {!cacheData ? (
-                  <div style={{ textAlign: 'center', padding: '100px 0', color: '#6f869b' }}>
-                    <h2>Chưa có dữ liệu</h2>
-                  </div>
-                ) : (
-                  <div style={{ background: 'white', padding: 30, borderRadius: 16, boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
-                    {(() => {
-                      const report = [...cacheData.data.serviceReports, ...cacheData.data.operationReports].find((r: any) => r.id === activeReportKey);
-                      if (!report) return (
-                        <div style={{ textAlign: 'center', padding: '50px 0', color: '#6f869b' }}>
-                          <h3>Vui lòng chọn một báo cáo ở menu bên trái</h3>
+               {activeReportKey === 'upload' ? (
+                 <div className="upload-grid">
+                    {REPORT_SOURCES.map((source) => {
+                      const dbSource = reportSources.find((s) => s.key === source.key);
+                      return (
+                        <div key={source.key} className="upload-card">
+                          <div className="upload-card-header">
+                            <div className="upload-card-title">{source.label}</div>
+                            <div className="upload-card-subtitle">{source.filename}</div>
+                            <div className="upload-card-subtitle" style={{ marginTop: 4 }}>Phụ trách: <strong>{source.owner}</strong></div>
+                          </div>
+                          
+                          <div className="upload-card-status">
+                            {dbSource?.blob_url ? (
+                              <>
+                                <span className="status-badge success">✅ Đã có dữ liệu</span>
+                                <div style={{ fontSize: '0.8rem', color: '#6f869b', marginBottom: 12 }}>
+                                  Upload lúc: {new Date(dbSource.uploaded_at).toLocaleString('vi-VN')}
+                                </div>
+                              </>
+                            ) : (
+                              <span className="status-badge error">❌ Chưa có dữ liệu</span>
+                            )}
+                            
+                            <div className="file-input-wrapper">
+                              <button className="btn-upload">Tải file lên</button>
+                              <input 
+                                type="file" 
+                                accept=".xlsx" 
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0];
+                                  if (file) handleUpload(source.key, file);
+                                }}
+                              />
+                            </div>
+                          </div>
                         </div>
                       );
-                      return (
-                        <>
-                          <h2 style={{ marginTop: 0, marginBottom: 8, color: '#0b223f' }}>{report.title}</h2>
-                          <p style={{ color: '#005BAA', fontWeight: 'bold', fontSize: '0.9rem', marginBottom: 20 }}>{report.kicker}</p>
-                          
-                          <p style={{ color: '#47617d', lineHeight: 1.6, marginBottom: 30 }}>{report.summary}</p>
-                          
-                          <h3 style={{ borderBottom: '2px solid #edf5f9', paddingBottom: 10, marginBottom: 20 }}>Chỉ số chi tiết</h3>
-                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16, marginBottom: 30 }}>
-                            {report.metrics.map((m: any, i: number) => (
-                              <div key={i} style={{ background: '#f8fbfd', padding: 16, borderRadius: 12, border: '1px solid #dfeef7' }}>
-                                <div style={{ fontSize: '0.85rem', color: '#6f869b', marginBottom: 8 }}>{m.label}</div>
-                                <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#0b223f' }}>{m.value}</div>
-                              </div>
-                            ))}
-                          </div>
-
-                          {report.insights.length > 0 && (
+                    })}
+                 </div>
+               ) : (
+                  <div>
+                    {!cacheData ? (
+                      <div style={{ textAlign: 'center', padding: '100px 0', color: '#6f869b' }}>
+                        <h2>Chưa có dữ liệu</h2>
+                      </div>
+                    ) : (
+                      <div style={{ background: 'white', padding: 30, borderRadius: 16, boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
+                        {(() => {
+                          const report = [...cacheData.data.serviceReports, ...cacheData.data.operationReports].find((r: any) => r.id === activeReportKey);
+                          if (!report) return (
+                            <div style={{ textAlign: 'center', padding: '50px 0', color: '#6f869b' }}>
+                              <h3>Vui lòng chọn một báo cáo ở menu bên trái</h3>
+                            </div>
+                          );
+                          return (
                             <>
-                              <h3 style={{ borderBottom: '2px solid #edf5f9', paddingBottom: 10, marginBottom: 20 }}>Đánh giá & Nhận xét</h3>
-                              <ul style={{ paddingLeft: 20, color: '#47617d', lineHeight: 1.8 }}>
-                                {report.insights.map((ins: string, i: number) => (
-                                  <li key={i}>{ins}</li>
+                              <h2 style={{ marginTop: 0, marginBottom: 8, color: '#0b223f' }}>{report.title}</h2>
+                              <p style={{ color: '#005BAA', fontWeight: 'bold', fontSize: '0.9rem', marginBottom: 20 }}>{report.kicker}</p>
+                              
+                              <p style={{ color: '#47617d', lineHeight: 1.6, marginBottom: 30 }}>{report.summary}</p>
+                              
+                              <h3 style={{ borderBottom: '2px solid #edf5f9', paddingBottom: 10, marginBottom: 20 }}>Chỉ số chi tiết</h3>
+                              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16, marginBottom: 30 }}>
+                                {report.metrics.map((m: any, i: number) => (
+                                  <div key={i} style={{ background: '#f8fbfd', padding: 16, borderRadius: 12, border: '1px solid #dfeef7' }}>
+                                    <div style={{ fontSize: '0.85rem', color: '#6f869b', marginBottom: 8 }}>{m.label}</div>
+                                    <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#0b223f' }}>{m.value}</div>
+                                  </div>
                                 ))}
-                              </ul>
+                              </div>
+
+                              {report.insights.length > 0 && (
+                                <>
+                                  <h3 style={{ borderBottom: '2px solid #edf5f9', paddingBottom: 10, marginBottom: 20 }}>Đánh giá & Nhận xét</h3>
+                                  <ul style={{ paddingLeft: 20, color: '#47617d', lineHeight: 1.8 }}>
+                                    {report.insights.map((ins: string, i: number) => (
+                                      <li key={i}>{ins}</li>
+                                    ))}
+                                  </ul>
+                                </>
+                              )}
                             </>
-                          )}
-                        </>
-                      )
-                    })()}
+                          )
+                        })()}
+                      </div>
+                    )}
                   </div>
-                )}
+               )}
              </div>
            )}
 
