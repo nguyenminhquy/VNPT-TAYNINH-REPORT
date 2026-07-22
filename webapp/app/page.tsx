@@ -242,7 +242,7 @@ export default function Dashboard() {
                 {!cacheData ? (
                   <div style={{ textAlign: 'center', padding: '100px 0', color: '#6f869b' }}>
                     <h2>Chưa có dữ liệu</h2>
-                    <p>Vui lòng vào tab "Nguồn dữ liệu" để tải lên đủ 8 file Excel.</p>
+                    <p>Vui lòng vào Báo cáo hàng tuần -&gt; Quản lý nguồn dữ liệu để tải lên đủ 8 file Excel.</p>
                   </div>
                 ) : (
                   <>
@@ -286,6 +286,28 @@ export default function Dashboard() {
                     </section>
                   </>
                 )}
+
+                <section className="section" style={{ marginTop: 40, background: '#fff', padding: 30, borderRadius: 16, boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
+                  <div className="section__head" style={{ marginBottom: 20 }}>
+                    <h2 style={{ color: '#0b223f' }}>Chức năng và Hướng dẫn sử dụng</h2>
+                  </div>
+                  <div style={{ color: '#47617d', lineHeight: 1.8 }}>
+                    <h3 style={{ color: '#005BAA', marginTop: 15, marginBottom: 10 }}>🌟 Chức năng chính:</h3>
+                    <ul style={{ paddingLeft: 20, marginBottom: 20 }}>
+                      <li><strong>Tự động tổng hợp dữ liệu:</strong> Đọc và phân tích 8 file Excel báo cáo định kỳ từ các đơn vị.</li>
+                      <li><strong>Trực quan hoá thông tin:</strong> Hiển thị các chỉ số, biểu đồ, bảng dữ liệu chi tiết một cách sinh động, dễ nhìn.</li>
+                      <li><strong>Xuất báo cáo Word (Docx):</strong> Tạo tự động file Word báo cáo tổng hợp để trình lãnh đạo, giữ nguyên định dạng mẫu và tự điền số liệu.</li>
+                    </ul>
+
+                    <h3 style={{ color: '#005BAA', marginTop: 15, marginBottom: 10 }}>📖 Cách sử dụng:</h3>
+                    <ol style={{ paddingLeft: 20 }}>
+                      <li style={{ marginBottom: 8 }}><strong>Bước 1: Tải lên số liệu:</strong> Mở mục <em>Báo cáo hàng tuần</em> &gt; <em>Quản lý nguồn dữ liệu</em>. Nhấn "Tải file lên" cho từng loại báo cáo tương ứng (MBB, FBB, MyTV,...).</li>
+                      <li style={{ marginBottom: 8 }}><strong>Bước 2: Xử lý dữ liệu:</strong> Sau khi tải đủ 8 file, hệ thống sẽ tự động tổng hợp. Bạn cũng có thể nhấn <em>Xử lý lại dữ liệu</em> nếu cần cập nhật thay đổi.</li>
+                      <li style={{ marginBottom: 8 }}><strong>Bước 3: Xem báo cáo chi tiết:</strong> Chọn các báo cáo con trong menu <em>Báo cáo hàng tuần</em> để xem chi tiết các chỉ số, phân tích, đánh giá và bảng dữ liệu chuyên sâu.</li>
+                      <li style={{ marginBottom: 8 }}><strong>Bước 4: Xuất Word:</strong> Nhấn nút <strong>📄 Xuất báo cáo Word</strong> ở góc trên bên phải trang web để tải xuống file Word hoàn chỉnh.</li>
+                    </ol>
+                  </div>
+                </section>
              </div>
            )}
 
@@ -365,14 +387,96 @@ export default function Dashboard() {
                               </div>
 
                               {report.insights.length > 0 && (
-                                <>
+                                <div style={{ marginBottom: 30 }}>
                                   <h3 style={{ borderBottom: '2px solid #edf5f9', paddingBottom: 10, marginBottom: 20 }}>Đánh giá & Nhận xét</h3>
                                   <ul style={{ paddingLeft: 20, color: '#47617d', lineHeight: 1.8 }}>
                                     {report.insights.map((ins: string, i: number) => (
                                       <li key={i}>{ins}</li>
                                     ))}
                                   </ul>
-                                </>
+                                </div>
+                              )}
+
+                              {report.table && report.table.rows && report.table.rows.length > 0 && (
+                                <div style={{ marginBottom: 30 }}>
+                                  <h3 style={{ borderBottom: '2px solid #edf5f9', paddingBottom: 10, marginBottom: 20 }}>{report.table.title}</h3>
+                                  <div style={{ overflowX: 'auto', background: '#f8fbfd', borderRadius: 12, border: '1px solid #dfeef7' }}>
+                                    <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: 600, fontSize: '0.9rem' }}>
+                                      <thead>
+                                        <tr style={{ background: '#edf5f9', borderBottom: '2px solid #dfeef7' }}>
+                                          {report.table.columns.map((col: string, i: number) => (
+                                            <th key={i} style={{ padding: '12px 16px', color: '#0b223f', whiteSpace: 'nowrap' }}>{col}</th>
+                                          ))}
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {report.table.rows.map((row: any, i: number) => (
+                                          <tr key={i} style={{ borderBottom: '1px solid #edf5f9' }}>
+                                            {report.table.columns.map((col: string, j: number) => (
+                                              <td key={j} style={{ padding: '10px 16px', color: '#47617d' }}>{row[col]}</td>
+                                            ))}
+                                          </tr>
+                                        ))}
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              )}
+
+                              {report.list && report.list.items && report.list.items.length > 0 && (
+                                <div style={{ marginBottom: 30 }}>
+                                  <h3 style={{ borderBottom: '2px solid #edf5f9', paddingBottom: 10, marginBottom: 20 }}>{report.list.title}</h3>
+                                  <ul style={{ paddingLeft: 20, color: '#47617d', lineHeight: 1.8 }}>
+                                    {report.list.items.map((item: string, i: number) => (
+                                      <li key={i}>{item}</li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+
+                              {report.raw && Object.keys(report.raw).length > 0 && (
+                                <div style={{ marginTop: 40 }}>
+                                  <h3 style={{ borderBottom: '2px solid #edf5f9', paddingBottom: 10, marginBottom: 20, color: '#005BAA' }}>
+                                    Dữ liệu chi tiết từ Excel
+                                  </h3>
+                                  {Object.keys(report.raw)
+                                    .filter(key => Array.isArray(report.raw[key]) && report.raw[key].length > 0)
+                                    .map(key => {
+                                      const rows = report.raw[key];
+                                      const isTableValid = rows.length > 0 && typeof rows[0] === 'object' && rows[0] !== null && Object.keys(rows[0]).length > 0;
+                                      if (!isTableValid) return null;
+                                      
+                                      const columns = Object.keys(rows[0]);
+                                      return (
+                                        <details key={key} style={{ marginBottom: 15, background: '#fff', border: '1px solid #dfeef7', borderRadius: 8, padding: '10px 16px' }}>
+                                          <summary style={{ fontWeight: 'bold', cursor: 'pointer', color: '#0b223f', textTransform: 'capitalize' }}>
+                                            Bảng: {key} ({rows.length} dòng)
+                                          </summary>
+                                          <div style={{ overflowX: 'auto', marginTop: 15 }}>
+                                            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: 600, fontSize: '0.85rem' }}>
+                                              <thead>
+                                                <tr style={{ background: '#f8fbfd', borderBottom: '1px solid #dfeef7' }}>
+                                                  {columns.map((col: string, i: number) => (
+                                                    <th key={i} style={{ padding: '8px 12px', color: '#0b223f', whiteSpace: 'nowrap' }}>{col}</th>
+                                                  ))}
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                                {rows.map((row: any, i: number) => (
+                                                  <tr key={i} style={{ borderBottom: '1px solid #edf5f9' }}>
+                                                    {columns.map((col: string, j: number) => (
+                                                      <td key={j} style={{ padding: '8px 12px', color: '#47617d' }}>{String(row[col])}</td>
+                                                    ))}
+                                                  </tr>
+                                                ))}
+                                              </tbody>
+                                            </table>
+                                          </div>
+                                        </details>
+                                      );
+                                    })
+                                  }
+                                </div>
                               )}
                             </>
                           )
