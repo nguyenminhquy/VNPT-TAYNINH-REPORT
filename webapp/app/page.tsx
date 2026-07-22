@@ -173,12 +173,27 @@ export default function Dashboard() {
           >
             📁 Nguồn dữ liệu
           </button>
-          <button 
-            className={`nav-item ${activeTab === 'details' ? 'active' : ''}`}
-            onClick={() => setActiveTab('details')}
-          >
-            📝 Chi tiết báo cáo
-          </button>
+          <div className="nav-item-group">
+            <button 
+              className={`nav-item ${activeTab === 'details' ? 'active' : ''}`}
+              onClick={() => setActiveTab('details')}
+            >
+              📝 Báo cáo hàng tuần
+            </button>
+            {activeTab === 'details' && cacheData && (
+              <div className="submenu">
+                {[...cacheData.data.serviceReports, ...cacheData.data.operationReports].map(report => (
+                  <button 
+                    key={report.id}
+                    className={`submenu-item ${activeReportKey === report.id ? 'active' : ''}`}
+                    onClick={() => setActiveReportKey(report.id)}
+                  >
+                    {report.title}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </nav>
         <div className="sidebar-footer">
            <button className="btn-logout" onClick={() => signOut()}>Đăng xuất</button>
@@ -191,7 +206,7 @@ export default function Dashboard() {
            <h1 className="header-title">
              {activeTab === 'overview' && 'Tổng quan Hệ thống'}
              {activeTab === 'upload' && 'Quản lý Nguồn Dữ Liệu'}
-             {activeTab === 'details' && 'Chi tiết Báo cáo'}
+             {activeTab === 'details' && 'Báo cáo hàng tuần'}
            </h1>
            <div className="header-actions">
               {activeTab === 'upload' && (
@@ -320,64 +335,44 @@ export default function Dashboard() {
                     <h2>Chưa có dữ liệu</h2>
                   </div>
                 ) : (
-                  <div style={{ display: 'grid', gridTemplateColumns: '250px 1fr', gap: 30 }}>
-                     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                        {[...cacheData.data.serviceReports, ...cacheData.data.operationReports].map(report => (
-                          <button 
-                            key={report.id} 
-                            onClick={() => setActiveReportKey(report.id)}
-                            style={{ 
-                              padding: '12px 16px', 
-                              textAlign: 'left', 
-                              borderRadius: 8, 
-                              border: 'none',
-                              background: activeReportKey === report.id ? '#005BAA' : 'white',
-                              color: activeReportKey === report.id ? 'white' : '#0b223f',
-                              fontWeight: activeReportKey === report.id ? 'bold' : 'normal',
-                              cursor: 'pointer',
-                              boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
-                            }}
-                          >
-                            {report.title}
-                          </button>
-                        ))}
-                     </div>
-                     
-                     <div style={{ background: 'white', padding: 30, borderRadius: 16, boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
-                        {(() => {
-                          const report = [...cacheData.data.serviceReports, ...cacheData.data.operationReports].find((r: any) => r.id === activeReportKey);
-                          if (!report) return null;
-                          return (
-                            <>
-                              <h2 style={{ marginTop: 0, marginBottom: 8, color: '#0b223f' }}>{report.title}</h2>
-                              <p style={{ color: '#005BAA', fontWeight: 'bold', fontSize: '0.9rem', marginBottom: 20 }}>{report.kicker}</p>
-                              
-                              <p style={{ color: '#47617d', lineHeight: 1.6, marginBottom: 30 }}>{report.summary}</p>
-                              
-                              <h3 style={{ borderBottom: '2px solid #edf5f9', paddingBottom: 10, marginBottom: 20 }}>Chỉ số chi tiết</h3>
-                              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16, marginBottom: 30 }}>
-                                {report.metrics.map((m: any, i: number) => (
-                                  <div key={i} style={{ background: '#f8fbfd', padding: 16, borderRadius: 12, border: '1px solid #dfeef7' }}>
-                                    <div style={{ fontSize: '0.85rem', color: '#6f869b', marginBottom: 8 }}>{m.label}</div>
-                                    <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#0b223f' }}>{m.value}</div>
-                                  </div>
-                                ))}
+                  <div style={{ background: 'white', padding: 30, borderRadius: 16, boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
+                    {(() => {
+                      const report = [...cacheData.data.serviceReports, ...cacheData.data.operationReports].find((r: any) => r.id === activeReportKey);
+                      if (!report) return (
+                        <div style={{ textAlign: 'center', padding: '50px 0', color: '#6f869b' }}>
+                          <h3>Vui lòng chọn một báo cáo ở menu bên trái</h3>
+                        </div>
+                      );
+                      return (
+                        <>
+                          <h2 style={{ marginTop: 0, marginBottom: 8, color: '#0b223f' }}>{report.title}</h2>
+                          <p style={{ color: '#005BAA', fontWeight: 'bold', fontSize: '0.9rem', marginBottom: 20 }}>{report.kicker}</p>
+                          
+                          <p style={{ color: '#47617d', lineHeight: 1.6, marginBottom: 30 }}>{report.summary}</p>
+                          
+                          <h3 style={{ borderBottom: '2px solid #edf5f9', paddingBottom: 10, marginBottom: 20 }}>Chỉ số chi tiết</h3>
+                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16, marginBottom: 30 }}>
+                            {report.metrics.map((m: any, i: number) => (
+                              <div key={i} style={{ background: '#f8fbfd', padding: 16, borderRadius: 12, border: '1px solid #dfeef7' }}>
+                                <div style={{ fontSize: '0.85rem', color: '#6f869b', marginBottom: 8 }}>{m.label}</div>
+                                <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#0b223f' }}>{m.value}</div>
                               </div>
+                            ))}
+                          </div>
 
-                              {report.insights.length > 0 && (
-                                <>
-                                  <h3 style={{ borderBottom: '2px solid #edf5f9', paddingBottom: 10, marginBottom: 20 }}>Đánh giá & Nhận xét</h3>
-                                  <ul style={{ paddingLeft: 20, color: '#47617d', lineHeight: 1.8 }}>
-                                    {report.insights.map((ins: string, i: number) => (
-                                      <li key={i}>{ins}</li>
-                                    ))}
-                                  </ul>
-                                </>
-                              )}
+                          {report.insights.length > 0 && (
+                            <>
+                              <h3 style={{ borderBottom: '2px solid #edf5f9', paddingBottom: 10, marginBottom: 20 }}>Đánh giá & Nhận xét</h3>
+                              <ul style={{ paddingLeft: 20, color: '#47617d', lineHeight: 1.8 }}>
+                                {report.insights.map((ins: string, i: number) => (
+                                  <li key={i}>{ins}</li>
+                                ))}
+                              </ul>
                             </>
-                          )
-                        })()}
-                     </div>
+                          )}
+                        </>
+                      )
+                    })()}
                   </div>
                 )}
              </div>
