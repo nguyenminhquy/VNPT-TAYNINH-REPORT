@@ -330,8 +330,11 @@ export default function Dashboard() {
                             {dbSource?.blob_url ? (
                               <>
                                 <span className="status-badge success">✅ Đã có dữ liệu</span>
+                                <div style={{ fontSize: '0.85rem', color: '#6f869b', marginTop: 10, marginBottom: 4 }}>
+                                  Upload bởi: <strong>{dbSource.uploader_name || 'Hệ thống'}</strong>
+                                </div>
                                 <div style={{ fontSize: '0.8rem', color: '#6f869b', marginBottom: 12 }}>
-                                  Upload lúc: {new Date(dbSource.uploaded_at).toLocaleString('vi-VN')}
+                                  Lúc: {new Date(dbSource.uploaded_at).toLocaleString('vi-VN')}
                                 </div>
                               </>
                             ) : (
@@ -339,7 +342,7 @@ export default function Dashboard() {
                             )}
                             
                             <div className="file-input-wrapper">
-                              <button className="btn-upload">Tải file lên</button>
+                              <button className="btn-upload">{dbSource?.blob_url ? 'Tải file lên mới' : 'Tải file lên'}</button>
                               <input 
                                 type="file" 
                                 accept=".xlsx" 
@@ -349,6 +352,12 @@ export default function Dashboard() {
                                 }}
                               />
                             </div>
+                            
+                            {dbSource?.blob_url && (
+                              <a href={dbSource.blob_url} target="_blank" rel="noopener noreferrer" style={{ display: 'block', textAlign: 'center', marginTop: 12, fontSize: '0.85rem', color: '#005BAA', textDecoration: 'none', fontWeight: 'bold' }}>
+                                ⬇️ Tải xuống file Excel
+                              </a>
+                            )}
                           </div>
                         </div>
                       );

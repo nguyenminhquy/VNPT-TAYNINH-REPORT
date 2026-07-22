@@ -28,6 +28,26 @@ export async function GET() {
       );
     }
 
+    // ── Lấy thông tin người upload ───────────────────────────────────────────
+    let sourcesWithUploader = sources ?? [];
+    if (sources && sources.length > 0) {
+      const userIds = sources.map(s => s.uploaded_by).filter(Boolean);
+      if (userIds.length > 0) {
+        const { data: usersData } = await supabaseAdmin
+          .from('users')
+          .select('id, name')
+          .in('id', userIds);
+        
+        if (usersData) {
+          const userMap = new Map(usersData.map(u => [u.id, u.name]));
+          sourcesWithUploader = sources.map(s => ({
+            ...s,
+            uploader_name: s.uploaded_by ? userMap.get(s.uploaded_by) : null
+          }));
+        }
+      }
+    }
+
     // ── Lấy cache mới nhất ────────────────────────────────────────────────────
     const { data: cacheRows, error: cacheError } = await supabaseAdmin
       .from('report_data_cache')
@@ -45,7 +65,7 @@ export async function GET() {
         ? { data: cacheRows[0].data, generated_at: cacheRows[0].generated_at }
         : null;
 
-    return NextResponse.json({ sources: sources ?? [], cache });
+    return NextResponse.json({ sources: sourcesWithUploader, cache });
   } catch (error) {
     console.error('[reports/GET] unexpected error:', error);
     return NextResponse.json(
