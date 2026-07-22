@@ -5,13 +5,13 @@ import { getToken } from 'next-auth/jwt';
  * Danh sách các path được phép truy cập mà không cần đăng nhập.
  * Sử dụng startsWith để hỗ trợ nested routes.
  */
-const PUBLIC_PATHS = ['/login', '/api/auth'];
+const PUBLIC_PATHS = ['/login', '/api/auth', '/vnpt-logo-new.png', '/bg-vnpt.png'];
 
 /**
  * Kiểm tra xem pathname có thuộc vùng công khai không.
  */
 function isPublicPath(pathname: string): boolean {
-  return PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(p + '/') || pathname.startsWith(p));
+  return PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(p + '/'));
 }
 
 export async function middleware(request: NextRequest) {
@@ -64,5 +64,5 @@ export const config = {
    * - favicon.ico
    * - /api/export_python (Standalone Python API)
    */
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|api/export_python).*)'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|api/export_python|.*\\.(?:png|jpg|jpeg|gif|svg|webp|ico)$).*)'],
 };
