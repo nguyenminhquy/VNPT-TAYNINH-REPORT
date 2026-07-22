@@ -20,6 +20,7 @@ import {
   whole,
   normalizePercent,
   toneFromRatio,
+  getSheetMaxRow,
   type Tone,
   type ReportBlock,
   type MetricItem,
