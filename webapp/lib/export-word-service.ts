@@ -6,34 +6,38 @@ export function updateMbbFbbMytv(doc: DocxModifier, sources: Record<string, xlsx
   const mbb = sources['mbb'];
   const fbb = sources['fbb'];
   const mytv = sources['mytv'];
-  const tables = doc.getTables();
 
   const common = worksheetMatrix(mbb.Sheets['Kết quả chung'], 4, 6, 1, 4);
   for (let i = 1; i < common.length; i++) {
     common[i][2] = decimal(common[i][2]);
     common[i][3] = decimal(common[i][3]);
   }
-  doc.writeTableMatrix(tables[1], common);
+  const table1 = doc.findTableByInternalText('STTĐơn vịQoSQoE') || doc.findTableByInternalText('STT');
+  if (table1) doc.writeTableMatrix(table1, common);
 
   const comparison = worksheetMatrix(mbb.Sheets['So sánh các tỉnh'], 3, 7, 1, 3);
-  doc.writeTableMatrix(tables[2], comparison);
+  const table2 = doc.findTableByInternalText('TỉnhQoS MBBQoE MBB');
+  if (table2) doc.writeTableMatrix(table2, comparison);
 
   const mbbDetail = worksheetMatrix(mbb.Sheets['Kết quả chi tiết'], 4, 12, 1, 8);
-  doc.writeTableMatrix(tables[3], mbbDetail, 3);
-
-  const fbbDetail = worksheetMatrix(fbb.Sheets['Thông tin chung'], 2, 17, 1, 8);
-  doc.writeTableMatrix(tables[3], fbbDetail, 13);
-
-  const mytvRows = rawMatrix(mytv.Sheets['Sheet1'], 2, 15, 1, 8);
-  const mytvDetail: string[][] = [];
-  for (const row of mytvRows) {
-    const total = row[6];
-    mytvDetail.push([
-      clean(row[0]), clean(row[1]), clean(row[3]), clean(row[4]), clean(row[5]),
-      clean(total), evaluateTarget(total), clean(row[7])
-    ]);
+  const table3 = doc.findTableByInternalText('Thành phầnĐiểm thành phầnTổng');
+  if (table3) {
+    doc.writeTableMatrix(table3, mbbDetail, 3);
+    
+    const fbbDetail = worksheetMatrix(fbb.Sheets['Thông tin chung'], 2, 17, 1, 8);
+    doc.writeTableMatrix(table3, fbbDetail, 13);
+    
+    const mytvRows = rawMatrix(mytv.Sheets['Sheet1'], 2, 15, 1, 8);
+    const mytvDetail: string[][] = [];
+    for (const row of mytvRows) {
+      const total = row[6];
+      mytvDetail.push([
+        clean(row[0]), clean(row[1]), clean(row[3]), clean(row[4]), clean(row[5]),
+        clean(total), evaluateTarget(total), clean(row[7])
+      ]);
+    }
+    doc.writeTableMatrix(table3, mytvDetail, 30);
   }
-  doc.writeTableMatrix(tables[3], mytvDetail, 30);
 
   const qosExplanation = worksheetMatrix(mbb.Sheets['Giải trình QoS'], 4, 10, 1, 4);
   const qoeExplanation = worksheetMatrix(mbb.Sheets['Giải trình QoE'], 4, 8, 1, 4);
@@ -42,21 +46,34 @@ export function updateMbbFbbMytv(doc: DocxModifier, sources: Record<string, xlsx
   const plan = planSheetName ? worksheetMatrix(mbb.Sheets[planSheetName], 3, 9, 1, 4) : [];
   const feedback = worksheetMatrix(mbb.Sheets['Phản ánh khách hàng (PAKH)'], 4, 10, 1, 3);
 
-  doc.writeTableMatrix(tables[4], qosExplanation);
-  doc.writeTableMatrix(tables[5], qoeExplanation);
-  if (plan.length) doc.writeTableMatrix(tables[6], plan);
-  doc.writeTableMatrix(tables[7], feedback);
+  const table4 = doc.findTableByPrecedingText('Chỉ số QoS MBB');
+  if (table4) doc.writeTableMatrix(table4, qosExplanation);
+  const table5 = doc.findTableByPrecedingText('Chỉ số QoE MBB');
+  if (table5) doc.writeTableMatrix(table5, qoeExplanation);
+  const table6 = doc.findTableByPrecedingText('Công việc dự kiến tuần');
+  if (table6 && plan.length) doc.writeTableMatrix(table6, plan);
+  const table7 = doc.findTableByPrecedingText('Kết quả thực hiện:');
+  if (table7) doc.writeTableMatrix(table7, feedback);
 
   const qosSheet = fbb.Sheets['Chi tiết QoS FBB'];
-  doc.writeTableMatrix(tables[8], worksheetMatrix(qosSheet, 1, 2, 1, 2));
-  doc.writeTableMatrix(tables[9], worksheetMatrix(qosSheet, 5, 6, 1, 7));
-  doc.writeTableMatrix(tables[10], worksheetMatrix(qosSheet, 9, 17, 1, 4));
-  doc.writeTableMatrix(tables[11], worksheetMatrix(qosSheet, 20, 43, 1, 5));
-  doc.writeTableMatrix(tables[12], worksheetMatrix(fbb.Sheets['Suy hao thuê bao'], 2, 25, 1, 7));
+  const table8Real = doc.findTableByInternalText('Nguyên nhânGiải pháp');
+  if (table8Real) doc.writeTableMatrix(table8Real, worksheetMatrix(qosSheet, 1, 2, 1, 2));
+
+  const table9 = doc.findTableByInternalText('NgàyOLTSố lượng Uplink');
+  if (table9) doc.writeTableMatrix(table9, worksheetMatrix(qosSheet, 5, 6, 1, 7));
+
+  const table10 = doc.findTableByInternalText('STTTHTFBB QoSĐạt/Chưa đạt');
+  if (table10) doc.writeTableMatrix(table10, worksheetMatrix(qosSheet, 9, 17, 1, 4));
+
+  const table11 = doc.findTableByInternalText('STTTHTTTVTFBB QoSĐạt/Chưa đạt');
+  if (table11) doc.writeTableMatrix(table11, worksheetMatrix(qosSheet, 20, 43, 1, 5));
+
+  const table12 = doc.findTableByInternalText('Thuê bao suy haoTỉ lệ suy hao');
+  if (table12) doc.writeTableMatrix(table12, worksheetMatrix(fbb.Sheets['Suy hao thuê bao'], 2, 25, 1, 7));
 
   const planWeekMatch = planSheetName.match(/(\d+)$/);
   if (planWeekMatch) {
-    doc.replaceParagraph(18, `Công việc dự kiến tuần ${planWeekMatch[1]}:`);
+    doc.replaceParagraphByTextMatch(/Công việc dự kiến tuần \d+:/, `Công việc dự kiến tuần ${planWeekMatch[1]}:`);
   }
 
   const feedbackCutoffRow = feedback.slice(1).find(row => clean(row[1]).toLowerCase().includes('đến'));
@@ -67,7 +84,10 @@ export function updateMbbFbbMytv(doc: DocxModifier, sources: Record<string, xlsx
     const d = parts[0].padStart(2, '0');
     const m = parts[1].padStart(2, '0');
     const y = parts[2];
-    doc.replaceParagraph(20, `Thời gian lấy báo cáo: 01/${m}/${y} – ${d}/${m}/${y}`);
+    // Find the first "Thời gian lấy báo cáo:" that happens before table 3? 
+    // We will just do a general regex replacement, but only replace the first occurrence that matches exactly.
+    // Actually, "Thời gian lấy báo cáo: từ" is more specific.
+    doc.replaceParagraphByTextMatch(/Thời gian lấy báo cáo: từ \d{2}\/\d{2}\/\d{4} – \d{2}\/\d{2}\/\d{4}/, `Thời gian lấy báo cáo: từ 01/${m}/${y} – ${d}/${m}/${y}`);
   }
 }
 
@@ -110,33 +130,34 @@ function mllTableMatrix(sheet: xlsx.WorkSheet): { matrix: string[][], metrics: a
 export function updateMll(doc: DocxModifier, sources: Record<string, xlsx.WorkBook>): string {
   const sheet = sources['mll'].Sheets['BC MLL tuần'];
   const { matrix, metrics } = mllTableMatrix(sheet);
-  const tables = doc.getTables();
-  
-  const titleCell = doc.getCells(doc.getRows(tables[13])[0])[0];
-  doc.replaceCell(titleCell, matrix[0][0]);
-  doc.writeTableMatrix(tables[13], matrix.slice(1), 3);
+  const tableMll = doc.findTableByInternalText('THỜI GIAN MẤT LIÊN LẠC MẠNG DI ĐỘNG');
+  if (tableMll) {
+    const titleCell = doc.getCells(doc.getRows(tableMll)[0])[0];
+    doc.replaceCell(titleCell, matrix[0][0]);
+    doc.writeTableMatrix(tableMll, matrix.slice(1), 3);
+  }
 
   const week = metrics.week;
-  doc.replaceParagraph(36, `Tổng thời gian mất liên lạc: ${integer(metrics.total)} phút.`);
-  doc.replaceParagraph(37, `MLL trung bình/1 BTS: ${metrics.average.toFixed(2)} phút.`);
+  doc.replaceParagraphByTextMatch(/Tổng thời gian mất liên lạc:/, `Tổng thời gian mất liên lạc: ${integer(metrics.total)} phút.`);
+  doc.replaceParagraphByTextMatch(/MLL trung bình\/1 BTS:/, `MLL trung bình/1 BTS: ${metrics.average.toFixed(2)} phút.`);
 
   if (week) {
-    doc.replaceParagraph(41, `Đánh giá thời gian mất liên lạc vô tuyến tuần ${week}:`);
-    doc.replaceParagraph(50, `Nguyên nhân chi tiết các trạm MLL trong tuần ${week} năm 2026 và các đánh giá, giải pháp khắc phục (Theo phụ lục 01 đính kèm)`);
-    doc.replaceParagraph(121, `GIẢI TRÌNH NGUYÊN NHÂN MẤT LIÊN LẠC TRẠM TUẦN ${week}`);
+    doc.replaceParagraphByTextMatch(/Đánh giá thời gian mất liên lạc vô tuyến tuần \d+:/, `Đánh giá thời gian mất liên lạc vô tuyến tuần ${week}:`);
+    doc.replaceParagraphByTextMatch(/Nguyên nhân chi tiết các trạm MLL trong tuần \d+ năm \d+/, `Nguyên nhân chi tiết các trạm MLL trong tuần ${week} năm 2026 và các đánh giá, giải pháp khắc phục (Theo phụ lục 01 đính kèm)`);
+    doc.replaceParagraphByTextMatch(/GIẢI TRÌNH NGUYÊN NHÂN MẤT LIÊN LẠC TRẠM TUẦN \d+/, `GIẢI TRÌNH NGUYÊN NHÂN MẤT LIÊN LẠC TRẠM TUẦN ${week}`);
   }
 
   const achieved = metrics.teams.filter((t: any) => t.average <= 3.0).length;
-  doc.replaceParagraph(42, `${achieved}/7 THT có thời gian mất liên lạc đáp ứng chỉ tiêu của VTT (≤3 phút).`);
+  doc.replaceParagraphByTextMatch(/THT có thời gian mất liên lạc đáp ứng chỉ tiêu của VTT/, `${achieved}/7 THT có thời gian mất liên lạc đáp ứng chỉ tiêu của VTT (≤3 phút).`);
   
   const highest = [...metrics.teams].sort((a, b) => b.average - a.average).slice(0, 3);
   const highestText = highest.map(t => `THT ${t.name} (${t.average.toFixed(2)} phút/1 trạm)`).join(', ');
-  doc.replaceParagraph(43, `Thời gian mất liên lạc trung bình trên 1 trạm BTS cao nhất: ${highestText}.`);
+  doc.replaceParagraphByTextMatch(/Thời gian mất liên lạc trung bình trên 1 trạm BTS cao nhất:/, `Thời gian mất liên lạc trung bình trên 1 trạm BTS cao nhất: ${highestText}.`);
 
   const total = metrics.total || 1.0;
-  doc.replaceParagraph(45, `MLL do lỗi nguồn (${Math.round(metrics.causePower / total * 100)}%)`);
-  doc.replaceParagraph(46, `MLL do lỗi thiết bị (${Math.round(metrics.causeEquipment / total * 100)}%)`);
-  doc.replaceParagraph(47, `MLL do lỗi truyền dẫn (${Math.round(metrics.causeTransmission / total * 100)}%)`);
+  doc.replaceParagraphByTextMatch(/MLL do lỗi nguồn/, `MLL do lỗi nguồn (${Math.round(metrics.causePower / total * 100)}%)`);
+  doc.replaceParagraphByTextMatch(/MLL do lỗi thiết bị/, `MLL do lỗi thiết bị (${Math.round(metrics.causeEquipment / total * 100)}%)`);
+  doc.replaceParagraphByTextMatch(/MLL do lỗi truyền dẫn/, `MLL do lỗi truyền dẫn (${Math.round(metrics.causeTransmission / total * 100)}%)`);
   
   return week;
 }
@@ -157,19 +178,23 @@ export function updateIspeed(doc: DocxModifier, sources: Record<string, xlsx.Wor
       percent(row[5]), integer(row[6]), integer(row[7]), percent(row[8]), integer(row[9]), percent(row[10])
     ]);
   }
-  const tables = doc.getTables();
-  doc.writeTableMatrix(tables[14], matrix);
+  const tableIspeed = doc.findTableByInternalText('Tỉ lệ hoàn thành i-Speed');
+  if (tableIspeed) doc.writeTableMatrix(tableIspeed, matrix);
 
   const reportDateCell = sheet[xlsx.utils.encode_cell({r: 11, c: 1})];
   const reportDate = clean(reportDateCell ? reportDateCell.v : '');
   if (reportDate) {
-    doc.replaceParagraph(55, `Thời gian lấy báo cáo: ${reportDate}`);
+    // Only replace if it matches the specific pattern before i-Speed. 
+    // In the template, it is just "Thời gian lấy báo cáo:"
+    // We can just use the global match, but it might replace the first one. 
+    // Wait! Let's match the date format.
+    doc.replaceParagraphByTextMatch(/Thời gian lấy báo cáo: \d{2}\/\d{2}\/\d{4}$/, `Thời gian lấy báo cáo: ${reportDate}`);
   }
 
   const total = raw[raw.length - 1];
-  doc.replaceParagraph(59, `Công tác đo kiểm i-Speed đã thực hiện ${integer(total[4])}/${integer(total[3])} mẫu, đạt ${percent(total[5])}/Tháng kế hoạch.`);
-  doc.replaceParagraph(60, `Công tác đo kiểm SpeedTest đã thực hiện ${integer(total[7])}/${integer(total[6])} mẫu, đạt ${percent(total[8])}/Tháng kế hoạch.`);
-  doc.replaceParagraph(61, `Kết quả mẫu đo 5G SpeedTest đã thực hiện ${integer(total[9])}/${integer(total[7])} mẫu, đạt ${percent(total[10])}/Tổng mẫu đã đo.`);
+  doc.replaceParagraphByTextMatch(/Công tác đo kiểm i-Speed đã thực hiện/, `Công tác đo kiểm i-Speed đã thực hiện ${integer(total[4])}/${integer(total[3])} mẫu, đạt ${percent(total[5])}/Tháng kế hoạch.`);
+  doc.replaceParagraphByTextMatch(/Công tác đo kiểm SpeedTest đã thực hiện/, `Công tác đo kiểm SpeedTest đã thực hiện ${integer(total[7])}/${integer(total[6])} mẫu, đạt ${percent(total[8])}/Tháng kế hoạch.`);
+  doc.replaceParagraphByTextMatch(/Kết quả mẫu đo 5G SpeedTest đã thực hiện/, `Kết quả mẫu đo 5G SpeedTest đã thực hiện ${integer(total[9])}/${integer(total[7])} mẫu, đạt ${percent(total[10])}/Tổng mẫu đã đo.`);
 }
 
 function format5sMatrix(rows: any[][]): string[][] {
@@ -394,11 +419,16 @@ export function replaceReportWeek(doc: DocxModifier, _ignoredWeek: string) {
   const day = String(now.getDate()).padStart(2, '0');
   const month = String(now.getMonth() + 1).padStart(2, '0');
   
-  // The header date is in the first table (index 0), paragraph 6
-  doc.replaceTableParagraph(0, 6, `Tây Ninh, ngày ${day} tháng ${month} năm ${currentYear}`);
+  const headerTable = doc.findTableByInternalText('CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM');
+  if (headerTable) {
+    const cells = doc.getCells(doc.getRows(headerTable)[0]);
+    if (cells.length > 1) {
+      doc.replaceCell(cells[1], `Tây Ninh, ngày ${day} tháng ${month} năm ${currentYear}`);
+    }
+  }
 
-  doc.replaceParagraph(1, `V/v thực hiện công việc trọng tâm trong tuần ${weekStr} năm ${currentYear}`);
-  doc.replaceParagraph(2, `và kế hoạch thực hiện nhiệm vụ tuần ${planWeek}`);
-  doc.replaceParagraph(4, `Trung tâm Hạ tầng báo cáo kết quả thực hiện công việc trọng tâm trong tuần ${weekStr} năm ${currentYear} như sau:`);
-  doc.replaceParagraph(116, `Trên đây là báo cáo kết quả thực hiện công việc tuần ${weekStr} năm ${currentYear}.`);
+  doc.replaceParagraphByTextMatch(/V\/v thực hiện công việc trọng tâm trong tuần \d+ năm \d+/, `V/v thực hiện công việc trọng tâm trong tuần ${weekStr} năm ${currentYear}`);
+  doc.replaceParagraphByTextMatch(/và kế hoạch thực hiện nhiệm vụ tuần \d+/, `và kế hoạch thực hiện nhiệm vụ tuần ${planWeek}`);
+  doc.replaceParagraphByTextMatch(/Trung tâm Hạ tầng báo cáo kết quả thực hiện công việc trọng tâm trong tuần \d+ năm \d+ như sau:/, `Trung tâm Hạ tầng báo cáo kết quả thực hiện công việc trọng tâm trong tuần ${weekStr} năm ${currentYear} như sau:`);
+  doc.replaceParagraphByTextMatch(/Trên đây là báo cáo kết quả thực hiện công việc tuần \d+ năm \d+./, `Trên đây là báo cáo kết quả thực hiện công việc tuần ${weekStr} năm ${currentYear}.`);
 }

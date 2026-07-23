@@ -152,6 +152,36 @@ export class DocxModifier {
     return null;
   }
 
+  findTableByInternalText(keyword: string): Element | null {
+    const tables = this.getTables();
+    for (const table of tables) {
+      if (table.textContent && table.textContent.toLowerCase().includes(keyword.toLowerCase())) {
+        return table;
+      }
+    }
+    return null;
+  }
+
+  replaceParagraphByTextMatch(searchStr: string | RegExp, newText: string): boolean {
+    const paragraphs = this.getParagraphs();
+    for (const p of paragraphs) {
+      const text = p.textContent;
+      if (text) {
+        let match = false;
+        if (typeof searchStr === 'string' && text.toLowerCase().includes(searchStr.toLowerCase())) {
+          match = true;
+        } else if (searchStr instanceof RegExp && searchStr.test(text)) {
+          match = true;
+        }
+        if (match) {
+          this.replaceElementText(p, newText);
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   cloneTableAndHeader(table: Element, numPrecedingParagraphs: number): Element | null {
     const elementsToClone: Element[] = [];
     let node = table.previousSibling;
