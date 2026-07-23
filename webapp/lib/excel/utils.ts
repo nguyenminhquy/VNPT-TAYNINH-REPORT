@@ -148,13 +148,18 @@ export function loadSheets(
   return result;
 }
 
-/**
- * Lấy số hàng tối đa của sheet (0-indexed).
- */
 export function getSheetMaxRow(sheet: WorkSheet): number {
-  if (!sheet['!ref']) return 0;
-  const range = XLSX.utils.decode_range(sheet['!ref']);
-  return range.e.r;
+  let max = -1;
+  for (const key in sheet) {
+    if (Object.prototype.hasOwnProperty.call(sheet, key) && !key.startsWith('!')) {
+      const decoded = XLSX.utils.decode_cell(key);
+      if (decoded.r > max) max = decoded.r;
+    }
+  }
+  if (max === -1 && sheet['!ref']) {
+    return XLSX.utils.decode_range(sheet['!ref']).e.r;
+  }
+  return max;
 }
 
 /**

@@ -69,8 +69,18 @@ export function worksheetMatrix(sheet: xlsx.WorkSheet, startRow: number, endRow:
 }
 
 export function worksheetMatrixUntilBlank(sheet: xlsx.WorkSheet, startRow: number, startCol: number, endCol: number): string[][] {
-  if (!sheet || !sheet['!ref']) return [];
-  const endRow = xlsx.utils.decode_range(sheet['!ref']).e.r + 1;
+  if (!sheet) return [];
+  let endRow = -1;
+  for (const key in sheet) {
+    if (Object.prototype.hasOwnProperty.call(sheet, key) && !key.startsWith('!')) {
+      const decoded = xlsx.utils.decode_cell(key);
+      if (decoded.r > endRow) endRow = decoded.r;
+    }
+  }
+  if (endRow === -1 && sheet['!ref']) {
+    endRow = xlsx.utils.decode_range(sheet['!ref']).e.r;
+  }
+  endRow += 1; // 1-indexed for the loop
   const result: string[][] = [];
   for (let r = startRow; r <= endRow; r++) {
     const row: string[] = [];
@@ -90,8 +100,18 @@ export function worksheetMatrixUntilBlank(sheet: xlsx.WorkSheet, startRow: numbe
 }
 
 export function rawMatrixUntilBlank(sheet: xlsx.WorkSheet, startRow: number, startCol: number, endCol: number): any[][] {
-  if (!sheet || !sheet['!ref']) return [];
-  const endRow = xlsx.utils.decode_range(sheet['!ref']).e.r + 1;
+  if (!sheet) return [];
+  let endRow = -1;
+  for (const key in sheet) {
+    if (Object.prototype.hasOwnProperty.call(sheet, key) && !key.startsWith('!')) {
+      const decoded = xlsx.utils.decode_cell(key);
+      if (decoded.r > endRow) endRow = decoded.r;
+    }
+  }
+  if (endRow === -1 && sheet['!ref']) {
+    endRow = xlsx.utils.decode_range(sheet['!ref']).e.r;
+  }
+  endRow += 1; // 1-indexed for the loop
   const result: any[][] = [];
   for (let r = startRow; r <= endRow; r++) {
     const row: any[] = [];
