@@ -24,7 +24,7 @@ export function updateMbbFbbMytv(doc: DocxModifier, sources: Record<string, xlsx
   const fbbDetail = worksheetMatrix(fbb.Sheets['Thông tin chung'], 2, 17, 1, 8);
   doc.writeTableMatrix(tables[3], fbbDetail, 13);
 
-  const mytvRows = rawMatrix(mytv.Sheets['Sheet1'], 3, 16, 1, 8);
+  const mytvRows = rawMatrix(mytv.Sheets['Sheet1'], 2, 15, 1, 8);
   const mytvDetail: string[][] = [];
   for (const row of mytvRows) {
     const total = row[6];
