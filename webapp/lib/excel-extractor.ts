@@ -32,9 +32,6 @@ export function evaluateTarget(value: any, target = 99.0): string {
 
 export function clean(value: any): string {
   if (value === null || value === undefined) return "";
-  if (typeof value === 'number' && !Number.isInteger(value)) {
-    return (Math.round(value * 100) / 100).toString();
-  }
   return String(value).trim();
 }
 
@@ -54,6 +51,19 @@ export function rawMatrix(sheet: xlsx.WorkSheet, startRow: number, endRow: numbe
 }
 
 export function worksheetMatrix(sheet: xlsx.WorkSheet, startRow: number, endRow: number, startCol: number, endCol: number): string[][] {
-  const raw = rawMatrix(sheet, startRow, endRow, startCol, endCol);
-  return raw.map(row => row.map(v => clean(v)));
+  const result: string[][] = [];
+  for (let r = startRow; r <= endRow; r++) {
+    const row: string[] = [];
+    for (let c = startCol; c <= endCol; c++) {
+      const cellAddress = xlsx.utils.encode_cell({ r: r - 1, c: c - 1 });
+      const cell = sheet[cellAddress];
+      let text = "";
+      if (cell) {
+        text = cell.w !== undefined ? cell.w : clean(cell.v);
+      }
+      row.push(text.trim());
+    }
+    result.push(row);
+  }
+  return result;
 }
