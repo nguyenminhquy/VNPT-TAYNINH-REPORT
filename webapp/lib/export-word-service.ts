@@ -354,26 +354,6 @@ export function updateXlsc(doc: DocxModifier, sources: Record<string, xlsx.WorkB
   }
 }
 
-export function updateMll(doc: DocxModifier, sources: Record<string, xlsx.WorkBook>) {
-  const sheet = sources['mll'].Sheets['Chi tiết'];
-  if (!sheet) return;
-  const maxRow = 100;
-  const dataRows: number[] = [];
-  for (let r = 5; r <= maxRow; r++) {
-    const cell = sheet[xlsx.utils.encode_cell({r: r - 1, c: 0})];
-    const val = clean(cell ? cell.v : '');
-    if (val.match(/^\d+$/)) dataRows.push(r);
-  }
-  const lastRow = dataRows.length > 0 ? Math.max(...dataRows) : 4;
-  const matrix = worksheetMatrix(sheet, 4, lastRow, 1, 10);
-  
-  const table = doc.findTableByPrecedingText('Chi tiết MLL thuê bao');
-  if (table) {
-    doc.resizeTableRows(table, matrix.length);
-    doc.writeTableMatrix(table, matrix);
-  }
-}
-
 export function updateAppendix(doc: DocxModifier, sources: Record<string, xlsx.WorkBook>) {
   const sheet = sources['appendix'].Sheets['Báo Cáo Sự Cố Trạm'];
   const ref = sheet['!ref'] || "A1:A5";
@@ -389,10 +369,11 @@ export function updateAppendix(doc: DocxModifier, sources: Record<string, xlsx.W
   const lastRow = dataRows.length > 0 ? Math.max(...dataRows) : 4;
   const matrix = worksheetMatrix(sheet, 4, lastRow, 1, 10);
   
-  const tables = doc.getTables();
-  const table = tables[22];
-  doc.resizeTableRows(table, matrix.length);
-  doc.writeTableMatrix(table, matrix);
+  const table = doc.findTableByPrecedingText('GIẢI TRÌNH NGUYÊN NHÂN MẤT LIÊN LẠC TRẠM');
+  if (table) {
+    doc.resizeTableRows(table, matrix.length);
+    doc.writeTableMatrix(table, matrix);
+  }
 }
 
 export function replaceReportWeek(doc: DocxModifier, _ignoredWeek: string) {
