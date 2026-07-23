@@ -192,11 +192,38 @@ export function update5s(doc: DocxModifier, sources: Record<string, xlsx.WorkBoo
   const station = format5sMatrix(rawMatrix(sheet, 1, 10, 1, 6));
   const airConditioning = format5sMatrix(rawMatrix(sheet, 14, 23, 1, 6));
   const apOtb = format5sMatrix(rawMatrix(sheet, 26, 35, 1, 6));
+  const survey = format5sMatrix(rawMatrix(sheet, 38, 47, 1, 6)); // Khảo sát phụ trợ
   
-  const tables = doc.getTables();
+  let tables = doc.getTables();
   doc.writeTableMatrix(tables[15], station);
   doc.writeTableMatrix(tables[16], apOtb);
   doc.writeTableMatrix(tables[17], airConditioning);
+
+  // Check if the 4th table (Khảo sát phụ trợ) exists. If not, clone the 3rd table (Vệ sinh máy lạnh)
+  if (tables.length < 19) {
+    const clonedTable = doc.cloneTableAndHeader(17, 4);
+    if (clonedTable) {
+      // Refresh tables list
+      tables = doc.getTables();
+      // Replace the header text for the newly cloned section
+      const paragraphs = doc.getParagraphs();
+      for (let i = paragraphs.length - 1; i >= 0; i--) {
+        const text = paragraphs[i].textContent;
+        if (text && text.includes('3.4 Tiến độ Vệ sinh máy lạnh:')) {
+          // Change it to 3.5 Khảo sát phụ trợ
+          doc.replaceParagraph(i, text.replace('3.4 Tiến độ Vệ sinh máy lạnh', '3.5 Tiến độ Khảo sát phụ trợ'));
+          doc.replaceParagraph(i + 1, 'Mục tiêu: 100% CSHT');
+          // Skip i+2 (Thời gian lấy báo cáo), i+3 (Nguồn dữ liệu)
+          break; // Stop after finding the first one (from the bottom)
+        }
+      }
+    }
+  }
+
+  // Write data to the 4th table (it is now tables[18])
+  if (tables.length >= 19) {
+    doc.writeTableMatrix(tables[18], survey);
+  }
 
   // We don't have file modification time from Blob URL easily, so we just use current date
   const now = new Date();
@@ -204,9 +231,14 @@ export function update5s(doc: DocxModifier, sources: Record<string, xlsx.WorkBoo
   const m = String(now.getMonth() + 1).padStart(2, '0');
   const y = now.getFullYear();
   const value = `Thời gian lấy báo cáo: ${d}/${m}/${y}`;
-  doc.replaceParagraph(64, value);
-  doc.replaceParagraph(70, value);
-  doc.replaceParagraph(76, value);
+  // Replace all instances of "Thời gian lấy báo cáo:" with current date
+  const paras = doc.getParagraphs();
+  for (let i = 0; i < paras.length; i++) {
+    const text = paras[i].textContent;
+    if (text && text.includes('Thời gian lấy báo cáo:')) {
+      doc.replaceParagraph(i, value);
+    }
+  }
 }
 
 function parseXlscTitle(title: string) {

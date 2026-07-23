@@ -134,6 +134,42 @@ export class DocxModifier {
     return cells;
   }
 
+  cloneTableAndHeader(tableIndex: number, numPrecedingParagraphs: number): Element | null {
+    const tables = this.getTables();
+    if (tableIndex >= tables.length) return null;
+    const table = tables[tableIndex];
+    
+    const elementsToClone: Element[] = [];
+    let node = table.previousSibling;
+    while (node && elementsToClone.length < numPrecedingParagraphs) {
+      if (node.nodeType === 1 && (node as Element).tagName === 'w:p') {
+        elementsToClone.unshift(node as Element);
+      }
+      node = node.previousSibling;
+    }
+    
+    // Insert after table
+    let insertRef = table.nextSibling;
+    const body = table.parentNode;
+    if (!body) return null;
+    
+    // Insert an empty paragraph for spacing
+    const spacingP = this.doc.createElement('w:p');
+    body.insertBefore(spacingP, insertRef);
+
+    // Clone and insert paragraphs
+    for (const el of elementsToClone) {
+      const cloned = el.cloneNode(true);
+      body.insertBefore(cloned, insertRef);
+    }
+    
+    // Clone and insert table
+    const clonedTable = table.cloneNode(true) as Element;
+    body.insertBefore(clonedTable, insertRef);
+    
+    return clonedTable;
+  }
+
   resizeTableRows(table: Element, desiredRows: number) {
     const rows = this.getRows(table);
     let currentRowCount = rows.length;
