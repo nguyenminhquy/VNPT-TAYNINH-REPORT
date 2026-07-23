@@ -172,6 +172,18 @@ export class DocxModifier {
         const cell = cells[targetColIndex];
         const value = matrix[r][c];
         
+        // Skip vertically merged continuation cells
+        const tcPr = cell.getElementsByTagName('w:tcPr')[0];
+        if (tcPr) {
+          const vMerge = tcPr.getElementsByTagName('w:vMerge')[0];
+          if (vMerge) {
+            const val = vMerge.getAttribute('w:val');
+            if (!val || val === 'continue') {
+              continue; // Do not overwrite merged continuation cells
+            }
+          }
+        }
+        
         // Skip touched tracking for simplicity, just replace
         this.replaceCell(cell, String(value ?? ''));
       }
