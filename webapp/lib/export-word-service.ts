@@ -310,6 +310,12 @@ export function replaceReportWeek(doc: DocxModifier, _ignoredWeek: string) {
   const planMatch = text.match(/tuần\s+(\d+)/i);
   const planWeek = planMatch ? planMatch[1] : String(currentWeek + 1);
 
+  const day = String(now.getDate()).padStart(2, '0');
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  
+  // The header date is in the first table (index 0), paragraph 6
+  doc.replaceTableParagraph(0, 6, `Tây Ninh, ngày ${day} tháng ${month} năm ${currentYear}`);
+
   doc.replaceParagraph(1, `V/v thực hiện công việc trọng tâm trong tuần ${weekStr} năm ${currentYear}`);
   doc.replaceParagraph(2, `và kế hoạch thực hiện nhiệm vụ tuần ${planWeek}`);
   doc.replaceParagraph(4, `Trung tâm Hạ tầng báo cáo kết quả thực hiện công việc trọng tâm trong tuần ${weekStr} năm ${currentYear} như sau:`);

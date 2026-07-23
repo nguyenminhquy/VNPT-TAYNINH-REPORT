@@ -50,7 +50,22 @@ export class DocxModifier {
     this.replaceElementText(p, text);
   }
 
+  replaceTableParagraph(tableIndex: number, paragraphIndex: number, text: string) {
+    const tables = this.getTables();
+    if (tableIndex >= tables.length) return;
+    const paragraphs = tables[tableIndex].getElementsByTagName('w:p');
+    if (paragraphIndex >= paragraphs.length) return;
+    this.replaceElementText(paragraphs[paragraphIndex], text);
+  }
+
   private replaceElementText(el: Element, text: string) {
+    // Keep paragraph properties
+    let pPr = null;
+    const pPrNode = el.getElementsByTagName('w:pPr')[0];
+    if (pPrNode && pPrNode.parentNode === el) {
+      pPr = pPrNode.cloneNode(true);
+    }
+
     // Keep the first run's properties if any
     let rPr = null;
     const runs = el.getElementsByTagName('w:r');
@@ -64,6 +79,11 @@ export class DocxModifier {
     // Remove all child nodes
     while (el.firstChild) {
       el.removeChild(el.firstChild);
+    }
+
+    // Restore paragraph properties
+    if (pPr) {
+      el.appendChild(pPr);
     }
 
     // Create new w:r
