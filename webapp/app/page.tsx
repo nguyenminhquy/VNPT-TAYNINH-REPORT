@@ -4,6 +4,8 @@ import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { REPORT_SOURCES, type ReportKey } from "@/lib/reports";
+import { Loader2 } from "lucide-react";
+import toast from "react-hot-toast";
 import "./dashboard.css";
 import VnptLogo from "@/components/VnptLogo";
 
@@ -17,6 +19,7 @@ export default function Dashboard() {
   const [activeReportKey, setActiveReportKey] = useState<string | null>("upload");
   const [isExporting, setIsExporting] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [uploadingKey, setUploadingKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [dateInfo, setDateInfo] = useState<{currentWeek: number; currentYear: number} | null>(null);
 
@@ -55,28 +58,32 @@ export default function Dashboard() {
   };
 
   const handleUpload = async (key: ReportKey, file: File) => {
+    setUploadingKey(key);
     const formData = new FormData();
     formData.append("file", file);
+    const uploadToast = toast.loading(`Đang tải lên file ${file.name}...`);
     try {
       const res = await fetch(`/api/reports/${key}/upload`, {
         method: "POST",
         body: formData,
       });
       if (res.ok) {
-        alert("Tải lên thành công!");
+        toast.success("Tải lên thành công!", { id: uploadToast });
         fetchData();
       } else {
         const errorData = await res.json();
-        alert(`Lỗi: ${errorData.error || errorData.message}`);
+        toast.error(`Lỗi: ${errorData.error || errorData.message}`, { id: uploadToast });
       }
     } catch (e) {
       console.error(e);
-      alert("Đã xảy ra lỗi khi tải lên.");
+      toast.error("Đã xảy ra lỗi khi tải lên.", { id: uploadToast });
     }
+    setUploadingKey(null);
   };
 
   const handleExportWord = async () => {
     setIsExporting(true);
+    const exportToast = toast.loading("Đang tạo báo cáo Word...");
     try {
       // 1. Lấy blobUrls từ state reportSources
       const blobUrls: Record<string, string> = {};
@@ -87,7 +94,7 @@ export default function Dashboard() {
       }
       
       if (Object.keys(blobUrls).length < 8) {
-        alert("Chưa đủ 8 file Excel. Vui lòng tải lên đầy đủ.");
+        toast.error("Chưa đủ 8 file Excel. Vui lòng tải lên đầy đủ.", { id: exportToast });
         setIsExporting(false);
         return;
       }
@@ -103,7 +110,7 @@ export default function Dashboard() {
 
       if (!apiRes.ok) {
         const errText = await apiRes.text();
-        alert(`Lỗi JS API (${apiRes.status}): ${errText}`);
+        toast.error(`Lỗi tạo Word (${apiRes.status}): ${errText}`, { id: exportToast });
         setIsExporting(false);
         return;
       }
@@ -121,30 +128,32 @@ export default function Dashboard() {
 
       const json = await saveRes.json();
       if (saveRes.ok && json.blobUrl) {
+        toast.success("Xuất báo cáo thành công!", { id: exportToast });
         window.open(json.blobUrl, "_blank");
       } else {
-        alert(json.error || "Lỗi khi lưu file Word");
+        toast.error(json.error || "Lỗi khi lưu file Word", { id: exportToast });
       }
     } catch (e) {
       console.error(e);
-      alert("Lỗi mạng khi xuất Word");
+      toast.error("Lỗi mạng khi xuất Word", { id: exportToast });
     }
     setIsExporting(false);
   };
 
   const handleProcess = async () => {
     setIsProcessing(true);
+    const processToast = toast.loading("Đang xử lý lại dữ liệu...");
     try {
       const res = await fetch("/api/reports/process", { method: "POST" });
       if (res.ok) {
-        alert("Đã xử lý lại dữ liệu thành công");
+        toast.success("Đã xử lý lại dữ liệu thành công", { id: processToast });
         fetchData();
       } else {
         const errorData = await res.json();
-        alert(`Lỗi khi xử lý dữ liệu: ${errorData.error || errorData.message || 'Lỗi không xác định'}`);
+        toast.error(`Lỗi khi xử lý dữ liệu: ${errorData.error || errorData.message || 'Lỗi không xác định'}`, { id: processToast });
       }
     } catch (e) {
-      alert("Lỗi mạng khi xử lý");
+      toast.error("Lỗi mạng khi xử lý", { id: processToast });
     }
     setIsProcessing(false);
   };
@@ -231,16 +240,17 @@ export default function Dashboard() {
            </h1>
            <div className="header-actions">
               {activeTab === 'details' && activeReportKey === 'upload' && (
-                 <button onClick={handleProcess} disabled={isProcessing} style={{ padding: '10px 20px', borderRadius: 99, border: '1px solid #005BAA', background: 'transparent', color: '#005BAA', fontWeight: 'bold', cursor: 'pointer' }}>
-                   {isProcessing ? 'Đang xử lý...' : '🔄 Xử lý lại dữ liệu'}
+                 <button onClick={handleProcess} disabled={isProcessing} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 20px', borderRadius: 99, border: '1px solid #005BAA', background: 'transparent', color: '#005BAA', fontWeight: 'bold', cursor: 'pointer' }}>
+                   {isProcessing ? <><Loader2 size={16} className="spin-anim" /> Đang xử lý...</> : '🔄 Xử lý lại dữ liệu'}
                  </button>
               )}
               <button 
                 className="btn-export" 
                 onClick={handleExportWord} 
                 disabled={isExporting || !cacheData}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
               >
-                {isExporting ? "⏳ Đang tạo Word..." : "📄 Xuất báo cáo Word"}
+                {isExporting ? <><Loader2 size={16} className="spin-anim" /> Đang tạo Word...</> : "📄 Xuất báo cáo Word"}
               </button>
               <div className="user-profile">
                  <div className="user-avatar">
@@ -358,7 +368,13 @@ export default function Dashboard() {
                             )}
                             
                             <div className="file-input-wrapper">
-                              <button className="btn-upload">{dbSource?.blob_url ? 'Tải file lên mới' : 'Tải file lên'}</button>
+                              <button className="btn-upload" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                                {uploadingKey === source.key ? (
+                                  <><Loader2 size={16} className="spin-anim" /> Đang tải lên...</>
+                                ) : (
+                                  dbSource?.blob_url ? 'Tải file lên mới' : 'Tải file lên'
+                                )}
+                              </button>
                               <input 
                                 type="file" 
                                 accept=".xlsx" 
