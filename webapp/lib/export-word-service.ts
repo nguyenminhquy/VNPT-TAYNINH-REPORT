@@ -214,17 +214,17 @@ export function update5s(doc: DocxModifier, sources: Record<string, xlsx.WorkBoo
   const surveyStart = findTableStart(sheet, 'KHẢO SÁT PHỤ TRỢ');
   const survey = surveyStart > 0 ? format5sMatrix(rawMatrix(sheet, surveyStart, surveyStart + 9, 1, 6)) : [];
   
-  const tblStation = doc.findTableByPrecedingText('3.2 Tiến độ 5S nhà trạm');
+  const tblStation = doc.findTableByPrecedingText('Tiến độ 5S nhà trạm');
   if (tblStation) doc.writeTableMatrix(tblStation, station);
 
-  const tblApOtb = doc.findTableByPrecedingText('3.3 Tiến độ 5S AP/OTB');
+  const tblApOtb = doc.findTableByPrecedingText('Tiến độ 5S AP/OTB');
   if (tblApOtb) doc.writeTableMatrix(tblApOtb, apOtb);
 
-  const tblAir = doc.findTableByPrecedingText('3.4 Tiến độ Vệ sinh máy lạnh');
+  const tblAir = doc.findTableByPrecedingText('Tiến độ vệ sinh máy lạnh');
   if (tblAir) doc.writeTableMatrix(tblAir, airConditioning);
 
   // Check if the 4th table (Khảo sát phụ trợ) exists. If not, clone the 3rd table (Vệ sinh máy lạnh)
-  let tblSurvey = doc.findTableByPrecedingText('3.5 Tiến độ Khảo sát phụ trợ');
+  let tblSurvey = doc.findTableByPrecedingText('Tiến độ Khảo sát phụ trợ');
   if (!tblSurvey && tblAir) {
     const clonedTable = doc.cloneTableAndHeader(tblAir, 4);
     if (clonedTable) {
@@ -233,8 +233,8 @@ export function update5s(doc: DocxModifier, sources: Record<string, xlsx.WorkBoo
       const paragraphs = doc.getParagraphs();
       for (let i = paragraphs.length - 1; i >= 0; i--) {
         const text = paragraphs[i].textContent;
-        if (text && text.includes('3.4 Tiến độ Vệ sinh máy lạnh:')) {
-          doc.replaceParagraph(i, text.replace('3.4 Tiến độ Vệ sinh máy lạnh', '3.5 Tiến độ Khảo sát phụ trợ'));
+        if (text && text.toLowerCase().includes('tiến độ vệ sinh máy lạnh')) {
+          doc.replaceParagraph(i, text.replace(/tiến độ vệ sinh máy lạnh/i, 'Tiến độ Khảo sát phụ trợ'));
           doc.replaceParagraph(i + 1, 'Mục tiêu: 100% CSHT');
           break;
         }
