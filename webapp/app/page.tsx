@@ -140,7 +140,8 @@ export default function Dashboard() {
         alert("Đã xử lý lại dữ liệu thành công");
         fetchData();
       } else {
-        alert("Lỗi khi xử lý dữ liệu");
+        const errorData = await res.json();
+        alert(`Lỗi khi xử lý dữ liệu: ${errorData.error || errorData.message || 'Lỗi không xác định'}`);
       }
     } catch (e) {
       alert("Lỗi mạng khi xử lý");

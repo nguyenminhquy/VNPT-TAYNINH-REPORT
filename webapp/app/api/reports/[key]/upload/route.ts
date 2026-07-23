@@ -75,9 +75,9 @@ export async function processAllReports(): Promise<{
   let dashboardData: unknown;
   try {
     dashboardData = await buildDashboardData(buffers);
-  } catch (buildErr) {
+  } catch (buildErr: any) {
     console.error('[processAllReports] buildDashboardData error:', buildErr);
-    return { success: false, message: 'Lỗi khi tổng hợp dữ liệu báo cáo' };
+    return { success: false, message: `Lỗi khi tổng hợp dữ liệu báo cáo: ${buildErr.message || 'Unknown'}` };
   }
 
   // Lưu vào cache
