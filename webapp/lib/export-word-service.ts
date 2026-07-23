@@ -1,5 +1,5 @@
 import { DocxModifier } from './docx-modifier';
-import { asNumber, percent, integer, decimal, evaluateTarget, clean, rawMatrix, worksheetMatrix } from './excel-extractor';
+import { asNumber, percent, integer, decimal, evaluateTarget, clean, rawMatrix, worksheetMatrix, worksheetMatrixUntilBlank, rawMatrixUntilBlank } from './excel-extractor';
 import * as xlsx from 'xlsx';
 
 export function updateMbbFbbMytv(doc: DocxModifier, sources: Record<string, xlsx.WorkBook>) {
@@ -15,19 +15,19 @@ export function updateMbbFbbMytv(doc: DocxModifier, sources: Record<string, xlsx
   const table1 = doc.findTableByInternalText('STTĐơn vịQoSQoE') || doc.findTableByInternalText('STT');
   if (table1) doc.writeTableMatrix(table1, common);
 
-  const comparison = worksheetMatrix(mbb.Sheets['So sánh các tỉnh'], 3, 7, 1, 3);
+  const comparison = worksheetMatrixUntilBlank(mbb.Sheets['So sánh các tỉnh'], 3, 1, 3);
   const table2 = doc.findTableByInternalText('TỉnhQoS MBBQoE MBB');
   if (table2) doc.writeTableMatrix(table2, comparison);
 
-  const mbbDetail = worksheetMatrix(mbb.Sheets['Kết quả chi tiết'], 4, 12, 1, 8);
+  const mbbDetail = worksheetMatrixUntilBlank(mbb.Sheets['Kết quả chi tiết'], 4, 1, 8);
   const table3 = doc.findTableByInternalText('Thành phầnĐiểm thành phầnTổng');
   if (table3) {
     doc.writeTableMatrix(table3, mbbDetail, 3);
     
-    const fbbDetail = worksheetMatrix(fbb.Sheets['Thông tin chung'], 2, 17, 1, 8);
+    const fbbDetail = worksheetMatrixUntilBlank(fbb.Sheets['Thông tin chung'], 2, 1, 8);
     doc.writeTableMatrix(table3, fbbDetail, 13);
     
-    const mytvRows = rawMatrix(mytv.Sheets['Sheet1'], 2, 15, 1, 8);
+    const mytvRows = rawMatrixUntilBlank(mytv.Sheets['Sheet1'], 2, 1, 8);
     const mytvDetail: string[][] = [];
     for (const row of mytvRows) {
       const total = row[6];
@@ -39,12 +39,12 @@ export function updateMbbFbbMytv(doc: DocxModifier, sources: Record<string, xlsx
     doc.writeTableMatrix(table3, mytvDetail, 30);
   }
 
-  const qosExplanation = worksheetMatrix(mbb.Sheets['Giải trình QoS'], 4, 10, 1, 4);
-  const qoeExplanation = worksheetMatrix(mbb.Sheets['Giải trình QoE'], 4, 8, 1, 4);
+  const qosExplanation = worksheetMatrixUntilBlank(mbb.Sheets['Giải trình QoS'], 4, 1, 4);
+  const qoeExplanation = worksheetMatrixUntilBlank(mbb.Sheets['Giải trình QoE'], 4, 1, 4);
   
   const planSheetName = Object.keys(mbb.Sheets).find(name => name.startsWith('Dự kiến tuần')) || '';
-  const plan = planSheetName ? worksheetMatrix(mbb.Sheets[planSheetName], 3, 9, 1, 4) : [];
-  const feedback = worksheetMatrix(mbb.Sheets['Phản ánh khách hàng (PAKH)'], 4, 10, 1, 3);
+  const plan = planSheetName ? worksheetMatrixUntilBlank(mbb.Sheets[planSheetName], 3, 1, 4) : [];
+  const feedback = worksheetMatrixUntilBlank(mbb.Sheets['Phản ánh khách hàng (PAKH)'], 4, 1, 3);
 
   const table4 = doc.findTableByPrecedingText('Chỉ số QoS MBB');
   if (table4) doc.writeTableMatrix(table4, qosExplanation);
@@ -63,13 +63,13 @@ export function updateMbbFbbMytv(doc: DocxModifier, sources: Record<string, xlsx
   if (table9) doc.writeTableMatrix(table9, worksheetMatrix(qosSheet, 5, 6, 1, 7));
 
   const table10 = doc.findTableByInternalText('STTTHTFBB QoSĐạt/Chưa đạt');
-  if (table10) doc.writeTableMatrix(table10, worksheetMatrix(qosSheet, 9, 17, 1, 4));
+  if (table10) doc.writeTableMatrix(table10, worksheetMatrixUntilBlank(qosSheet, 9, 1, 4));
 
   const table11 = doc.findTableByInternalText('STTTHTTTVTFBB QoSĐạt/Chưa đạt');
-  if (table11) doc.writeTableMatrix(table11, worksheetMatrix(qosSheet, 20, 43, 1, 5));
+  if (table11) doc.writeTableMatrix(table11, worksheetMatrixUntilBlank(qosSheet, 20, 1, 5));
 
   const table12 = doc.findTableByInternalText('Thuê bao suy haoTỉ lệ suy hao');
-  if (table12) doc.writeTableMatrix(table12, worksheetMatrix(fbb.Sheets['Suy hao thuê bao'], 2, 25, 1, 7));
+  if (table12) doc.writeTableMatrix(table12, worksheetMatrixUntilBlank(fbb.Sheets['Suy hao thuê bao'], 2, 1, 7));
 
   const planWeekMatch = planSheetName.match(/(\d+)$/);
   if (planWeekMatch) {

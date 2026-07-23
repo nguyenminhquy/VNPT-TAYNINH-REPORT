@@ -67,3 +67,44 @@ export function worksheetMatrix(sheet: xlsx.WorkSheet, startRow: number, endRow:
   }
   return result;
 }
+
+export function worksheetMatrixUntilBlank(sheet: xlsx.WorkSheet, startRow: number, startCol: number, endCol: number): string[][] {
+  if (!sheet || !sheet['!ref']) return [];
+  const endRow = xlsx.utils.decode_range(sheet['!ref']).e.r + 1;
+  const result: string[][] = [];
+  for (let r = startRow; r <= endRow; r++) {
+    const row: string[] = [];
+    let hasData = false;
+    for (let c = startCol; c <= endCol; c++) {
+      const cellAddress = xlsx.utils.encode_cell({ r: r - 1, c: c - 1 });
+      const cell = sheet[cellAddress];
+      let text = cell ? (cell.w !== undefined ? String(cell.w) : clean(cell.v)) : "";
+      text = text.trim();
+      row.push(text);
+      if (text !== "") hasData = true;
+    }
+    if (!hasData) break;
+    result.push(row);
+  }
+  return result;
+}
+
+export function rawMatrixUntilBlank(sheet: xlsx.WorkSheet, startRow: number, startCol: number, endCol: number): any[][] {
+  if (!sheet || !sheet['!ref']) return [];
+  const endRow = xlsx.utils.decode_range(sheet['!ref']).e.r + 1;
+  const result: any[][] = [];
+  for (let r = startRow; r <= endRow; r++) {
+    const row: any[] = [];
+    let hasData = false;
+    for (let c = startCol; c <= endCol; c++) {
+      const cellAddress = xlsx.utils.encode_cell({ r: r - 1, c: c - 1 });
+      const cell = sheet[cellAddress];
+      const val = cell ? cell.v : null;
+      row.push(val);
+      if (clean(val) !== "") hasData = true;
+    }
+    if (!hasData) break;
+    result.push(row);
+  }
+  return result;
+}
