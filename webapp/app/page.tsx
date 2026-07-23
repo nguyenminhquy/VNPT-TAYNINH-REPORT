@@ -18,6 +18,17 @@ export default function Dashboard() {
   const [isExporting, setIsExporting] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [dateInfo, setDateInfo] = useState<{currentWeek: number; currentYear: number} | null>(null);
+
+  useEffect(() => {
+    const now = new Date();
+    const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+    const dayNum = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    const week = Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+    setDateInfo({ currentWeek: week, currentYear: d.getUTCFullYear() });
+  }, []);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -150,15 +161,6 @@ export default function Dashboard() {
 
   if (!session) return null;
 
-  const { currentWeek, currentYear } = useMemo(() => {
-    const now = new Date();
-    const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
-    const dayNum = d.getUTCDay() || 7;
-    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-    const week = Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
-    return { currentWeek: week, currentYear: d.getUTCFullYear() };
-  }, []);
 
   return (
     <div className="dashboard-container">
@@ -223,7 +225,7 @@ export default function Dashboard() {
              {activeTab === 'details' && activeReportKey !== 'upload' && 'Báo cáo hàng tuần'}
              {activeTab === 'special5' && 'Báo cáo chuyên đề 5'}
              <span style={{ fontSize: '0.9rem', color: '#6f869b', marginLeft: 12, fontWeight: 'normal' }}>
-               (Tuần {currentWeek} - {currentYear})
+               (Tuần {dateInfo?.currentWeek || '...'} - {dateInfo?.currentYear || '...'})
              </span>
            </h1>
            <div className="header-actions">
