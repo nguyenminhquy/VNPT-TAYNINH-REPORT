@@ -32,6 +32,9 @@ export function evaluateTarget(value: any, target = 99.0): string {
 
 export function clean(value: any): string {
   if (value === null || value === undefined) return "";
+  if (typeof value === 'number' && !Number.isInteger(value)) {
+    return (Math.round(value * 100) / 100).toString();
+  }
   return String(value).trim();
 }
 
