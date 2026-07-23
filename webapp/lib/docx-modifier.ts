@@ -134,11 +134,25 @@ export class DocxModifier {
     return cells;
   }
 
-  cloneTableAndHeader(tableIndex: number, numPrecedingParagraphs: number): Element | null {
-    const tables = this.getTables();
-    if (tableIndex >= tables.length) return null;
-    const table = tables[tableIndex];
-    
+  findTableByPrecedingText(keyword: string): Element | null {
+    const body = this.doc.getElementsByTagName('w:body')[0];
+    if (!body) return null;
+    let found = false;
+    for (let i = 0; i < body.childNodes.length; i++) {
+      const node = body.childNodes[i];
+      if (node.nodeType === 1 && (node as Element).tagName === 'w:p') {
+        const text = node.textContent;
+        if (text && text.toLowerCase().includes(keyword.toLowerCase())) {
+          found = true;
+        }
+      } else if (found && node.nodeType === 1 && (node as Element).tagName === 'w:tbl') {
+        return node as Element;
+      }
+    }
+    return null;
+  }
+
+  cloneTableAndHeader(table: Element, numPrecedingParagraphs: number): Element | null {
     const elementsToClone: Element[] = [];
     let node = table.previousSibling;
     while (node && elementsToClone.length < numPrecedingParagraphs) {

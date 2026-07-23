@@ -189,40 +189,62 @@ function format5sMatrix(rows: any[][]): string[][] {
 
 export function update5s(doc: DocxModifier, sources: Record<string, xlsx.WorkBook>) {
   const sheet = sources['5s'].Sheets['Sheet1'];
-  const station = format5sMatrix(rawMatrix(sheet, 1, 10, 1, 6));
-  const airConditioning = format5sMatrix(rawMatrix(sheet, 14, 23, 1, 6));
-  const apOtb = format5sMatrix(rawMatrix(sheet, 26, 35, 1, 6));
-  const survey = format5sMatrix(rawMatrix(sheet, 38, 47, 1, 6)); // Khảo sát phụ trợ
+
+  function findTableStart(sheet: xlsx.WorkSheet, keyword: string): number {
+    for (let r = 0; r < 200; r++) {
+      for (let c = 0; c < 5; c++) {
+        const cell = sheet[xlsx.utils.encode_cell({r, c})];
+        if (cell && cell.v && String(cell.v).toUpperCase().includes(keyword.toUpperCase())) {
+          return r + 1; // Return 1-indexed start row for rawMatrix
+        }
+      }
+    }
+    return -1; // Not found
+  }
+
+  const stationStart = findTableStart(sheet, '5S NHÀ TRẠM');
+  const station = stationStart > 0 ? format5sMatrix(rawMatrix(sheet, stationStart, stationStart + 9, 1, 6)) : [];
+
+  const airStart = findTableStart(sheet, 'VỆ SINH MÁY LẠNH');
+  const airConditioning = airStart > 0 ? format5sMatrix(rawMatrix(sheet, airStart, airStart + 9, 1, 6)) : [];
+
+  const apOtbStart = findTableStart(sheet, '5S AP/OTB');
+  const apOtb = apOtbStart > 0 ? format5sMatrix(rawMatrix(sheet, apOtbStart, apOtbStart + 9, 1, 6)) : [];
+
+  const surveyStart = findTableStart(sheet, 'KHẢO SÁT PHỤ TRỢ');
+  const survey = surveyStart > 0 ? format5sMatrix(rawMatrix(sheet, surveyStart, surveyStart + 9, 1, 6)) : [];
   
-  let tables = doc.getTables();
-  doc.writeTableMatrix(tables[15], station);
-  doc.writeTableMatrix(tables[16], apOtb);
-  doc.writeTableMatrix(tables[17], airConditioning);
+  const tblStation = doc.findTableByPrecedingText('3.2 Tiến độ 5S nhà trạm');
+  if (tblStation) doc.writeTableMatrix(tblStation, station);
+
+  const tblApOtb = doc.findTableByPrecedingText('3.3 Tiến độ 5S AP/OTB');
+  if (tblApOtb) doc.writeTableMatrix(tblApOtb, apOtb);
+
+  const tblAir = doc.findTableByPrecedingText('3.4 Tiến độ Vệ sinh máy lạnh');
+  if (tblAir) doc.writeTableMatrix(tblAir, airConditioning);
 
   // Check if the 4th table (Khảo sát phụ trợ) exists. If not, clone the 3rd table (Vệ sinh máy lạnh)
-  if (tables.length < 19) {
-    const clonedTable = doc.cloneTableAndHeader(17, 4);
+  let tblSurvey = doc.findTableByPrecedingText('3.5 Tiến độ Khảo sát phụ trợ');
+  if (!tblSurvey && tblAir) {
+    const clonedTable = doc.cloneTableAndHeader(tblAir, 4);
     if (clonedTable) {
-      // Refresh tables list
-      tables = doc.getTables();
+      tblSurvey = clonedTable;
       // Replace the header text for the newly cloned section
       const paragraphs = doc.getParagraphs();
       for (let i = paragraphs.length - 1; i >= 0; i--) {
         const text = paragraphs[i].textContent;
         if (text && text.includes('3.4 Tiến độ Vệ sinh máy lạnh:')) {
-          // Change it to 3.5 Khảo sát phụ trợ
           doc.replaceParagraph(i, text.replace('3.4 Tiến độ Vệ sinh máy lạnh', '3.5 Tiến độ Khảo sát phụ trợ'));
           doc.replaceParagraph(i + 1, 'Mục tiêu: 100% CSHT');
-          // Skip i+2 (Thời gian lấy báo cáo), i+3 (Nguồn dữ liệu)
-          break; // Stop after finding the first one (from the bottom)
+          break;
         }
       }
     }
   }
 
-  // Write data to the 4th table (it is now tables[18])
-  if (tables.length >= 19) {
-    doc.writeTableMatrix(tables[18], survey);
+  // Write data to the 4th table
+  if (tblSurvey) {
+    doc.writeTableMatrix(tblSurvey, survey);
   }
 
   // We don't have file modification time from Blob URL easily, so we just use current date
@@ -272,37 +294,83 @@ function xlscMatrix(sheet: xlsx.WorkSheet): string[][] {
 export function updateXlsc(doc: DocxModifier, sources: Record<string, xlsx.WorkBook>) {
   const workbook = sources['xlsc'];
   const mappings = [
-    { sheetName: 'XLSC MANE', tableIndex: 18, paragraphStart: 81 },
-    { sheetName: 'XLSC ACCESS', tableIndex: 19, paragraphStart: 94 },
-    { sheetName: 'XLSC VÔ TUYẾN', tableIndex: 20, paragraphStart: 105 },
+    { sheetName: 'XLSC MANE', prefix: '1. Kết quả phiếu XLSC MANE' },
+    { sheetName: 'XLSC ACCESS', prefix: '2. Kết quả phiếu XLSC ACCESS' },
+    { sheetName: 'XLSC VÔ TUYẾN', prefix: '3. Kết quả phiếu XLSC VÔ TUYẾN' },
   ];
-  const tables = doc.getTables();
   let reportMonth: any = null;
 
   for (const m of mappings) {
     const sheet = workbook.Sheets[m.sheetName];
     if (!sheet) continue;
     const matrix = xlscMatrix(sheet);
-    doc.writeTableMatrix(tables[m.tableIndex], matrix);
+    
+    const table = doc.findTableByPrecedingText(m.prefix);
+    if (table) {
+      doc.resizeTableRows(table, matrix.length);
+      doc.writeTableMatrix(table, matrix);
+    }
     
     const titleCell = sheet[xlsx.utils.encode_cell({r: 0, c: 0})];
     const dateRange = parseXlscTitle(clean(titleCell ? titleCell.v : ''));
     if (dateRange) reportMonth = dateRange;
 
     const totalRow = rawMatrix(sheet, 10, 10, 1, 10)[0];
-    if (dateRange) {
-      doc.replaceParagraph(m.paragraphStart, `Kỳ báo cáo: ${dateRange.start} – ${dateRange.end}`);
+    
+    // Find paragraphs to replace dynamically
+    const paras = doc.getParagraphs();
+    let foundIndex = -1;
+    for (let i = 0; i < paras.length; i++) {
+      if (paras[i].textContent?.includes(m.prefix)) {
+        foundIndex = i;
+        break;
+      }
     }
-    doc.replaceParagraph(m.paragraphStart + 1, `Tổng phiếu giao: ${integer(totalRow[1])} phiếu`);
-    doc.replaceParagraph(m.paragraphStart + 2, `Hoàn thành: ${integer(totalRow[2])}/${integer(totalRow[1])} phiếu`);
-    doc.replaceParagraph(m.paragraphStart + 3, `Hoàn thành đúng hạn: ${integer(totalRow[3])} phiếu`);
-    doc.replaceParagraph(m.paragraphStart + 4, `Hoàn thành quá hạn: ${integer(totalRow[4])} phiếu`);
-    doc.replaceParagraph(m.paragraphStart + 5, `Tỉ lệ đúng hạn: ${percent(totalRow[5], 2, true)}`);
-    doc.replaceParagraph(m.paragraphStart + 6, `Phiếu tồn quá hạn: ${integer(totalRow[8])} phiếu`);
+    if (foundIndex >= 0) {
+      // Find following specific texts and replace them
+      for (let i = foundIndex; i < Math.min(foundIndex + 15, paras.length); i++) {
+        const text = paras[i].textContent || '';
+        if (dateRange && text.includes('Kỳ báo cáo:')) {
+          doc.replaceParagraph(i, `Kỳ báo cáo: ${dateRange.start} – ${dateRange.end}`);
+        } else if (text.includes('Tổng phiếu giao:')) {
+          doc.replaceParagraph(i, `Tổng phiếu giao: ${integer(totalRow[1])} phiếu`);
+        } else if (text.includes('Hoàn thành:')) {
+          doc.replaceParagraph(i, `Hoàn thành: ${integer(totalRow[2])}/${integer(totalRow[1])} phiếu`);
+        } else if (text.includes('Hoàn thành đúng hạn:')) {
+          doc.replaceParagraph(i, `Hoàn thành đúng hạn: ${integer(totalRow[3])} phiếu`);
+        } else if (text.includes('Hoàn thành quá hạn:')) {
+          doc.replaceParagraph(i, `Hoàn thành quá hạn: ${integer(totalRow[4])} phiếu`);
+        } else if (text.includes('Tỉ lệ đúng hạn:')) {
+          doc.replaceParagraph(i, `Tỉ lệ đúng hạn: ${percent(totalRow[5], 2, true)}`);
+        } else if (text.includes('Phiếu tồn quá hạn:')) {
+          doc.replaceParagraph(i, `Phiếu tồn quá hạn: ${integer(totalRow[8])} phiếu`);
+        }
+      }
+    }
   }
 
   if (reportMonth) {
     doc.replaceParagraph(79, `KẾT QUẢ THỰC HIỆN PHIẾU SỰ CỐ CHUYÊN ĐỀ 5 THÁNG ${reportMonth.month} NĂM ${reportMonth.year}:`);
+  }
+}
+
+export function updateMll(doc: DocxModifier, sources: Record<string, xlsx.WorkBook>) {
+  const sheet = sources['mll'].Sheets['Chi tiết'];
+  if (!sheet) return;
+  const maxRow = 100;
+  const dataRows: number[] = [];
+  for (let r = 5; r <= maxRow; r++) {
+    const cell = sheet[xlsx.utils.encode_cell({r: r - 1, c: 0})];
+    const val = clean(cell ? cell.v : '');
+    if (val.match(/^\d+$/)) dataRows.push(r);
+  }
+  const lastRow = dataRows.length > 0 ? Math.max(...dataRows) : 4;
+  const matrix = worksheetMatrix(sheet, 4, lastRow, 1, 10);
+  
+  const table = doc.findTableByPrecedingText('Chi tiết MLL thuê bao');
+  if (table) {
+    doc.resizeTableRows(table, matrix.length);
+    doc.writeTableMatrix(table, matrix);
   }
 }
 
