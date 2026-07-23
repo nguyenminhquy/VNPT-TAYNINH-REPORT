@@ -41,7 +41,7 @@ export default function Dashboard() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/reports");
+      const res = await fetch("/api/reports", { cache: 'no-store' });
       const json = await res.json();
       if (res.ok) {
         setReportSources(json.sources);

@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 
     // 1. Download all Excels concurrently
     const downloadPromises = Object.entries(blobUrls).map(async ([key, url]) => {
-      const resp = await fetch(url as string);
+      const resp = await fetch(url as string, { cache: 'no-store' });
       if (!resp.ok) throw new Error(`Failed to download ${key} from ${url}`);
       const arrayBuffer = await resp.arrayBuffer();
       const workbook = xlsx.read(arrayBuffer, { type: 'array', cellDates: true });
