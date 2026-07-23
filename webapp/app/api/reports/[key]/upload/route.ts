@@ -209,18 +209,6 @@ export async function POST(
       );
     }
 
-    // ── Xóa blob cũ nếu tồn tại ─────────────────────────────────────────────
-    if (currentSource?.blob_url) {
-      try {
-        await del(currentSource.blob_url, {
-          token: process.env.BLOB_READ_WRITE_TOKEN,
-        });
-      } catch (delErr) {
-        // Không block flow nếu xóa blob cũ thất bại
-        console.warn('[upload] failed to delete old blob:', delErr);
-      }
-    }
-
     // ── Cập nhật report_sources ───────────────────────────────────────────────
     const uploadedBy = (session.user as { id?: string })?.id ?? null;
     const uploadedAt = new Date().toISOString();
@@ -229,7 +217,6 @@ export async function POST(
       .from('report_sources')
       .update({
         blob_url: blobResult.url,
-        blob_pathname: blobResult.pathname,
         file_size: file.size,
         uploaded_by: uploadedBy,
         uploaded_at: uploadedAt,
@@ -252,6 +239,18 @@ export async function POST(
         { error: 'Lỗi cập nhật thông tin nguồn báo cáo' },
         { status: 500 },
       );
+    }
+
+    // ── Xóa blob cũ nếu tồn tại SAU KHI update DB thành công ─────────────────
+    if (currentSource?.blob_url && currentSource.blob_url !== blobResult.url) {
+      try {
+        await del(currentSource.blob_url, {
+          token: process.env.BLOB_READ_WRITE_TOKEN,
+        });
+      } catch (delErr) {
+        // Không block flow nếu xóa blob cũ thất bại
+        console.warn('[upload] failed to delete old blob:', delErr);
+      }
     }
 
     // ── Ghi lịch sử upload ────────────────────────────────────────────────────
