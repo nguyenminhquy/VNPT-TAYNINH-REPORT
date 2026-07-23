@@ -295,15 +295,23 @@ export function updateAppendix(doc: DocxModifier, sources: Record<string, xlsx.W
   doc.writeTableMatrix(table, matrix);
 }
 
-export function replaceReportWeek(doc: DocxModifier, week: string) {
-  if (!week) return;
+export function replaceReportWeek(doc: DocxModifier, _ignoredWeek: string) {
+  const now = new Date();
+  const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const currentWeek = Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+  const currentYear = d.getUTCFullYear();
+  const weekStr = String(currentWeek);
+
   const planPara = doc.getParagraphs()[18];
   const text = planPara ? planPara.textContent || '' : '';
   const planMatch = text.match(/tuần\s+(\d+)/i);
-  const planWeek = planMatch ? planMatch[1] : String(parseInt(week) + 1);
+  const planWeek = planMatch ? planMatch[1] : String(currentWeek + 1);
 
-  doc.replaceParagraph(1, `V/v thực hiện công việc trọng tâm trong tuần ${week} năm 2026`);
+  doc.replaceParagraph(1, `V/v thực hiện công việc trọng tâm trong tuần ${weekStr} năm ${currentYear}`);
   doc.replaceParagraph(2, `và kế hoạch thực hiện nhiệm vụ tuần ${planWeek}`);
-  doc.replaceParagraph(4, `Trung tâm Hạ tầng báo cáo kết quả thực hiện công việc trọng tâm trong tuần ${week} năm 2026 như sau:`);
-  doc.replaceParagraph(116, `Trên đây là báo cáo kết quả thực hiện công việc tuần ${week} năm 2026.`);
+  doc.replaceParagraph(4, `Trung tâm Hạ tầng báo cáo kết quả thực hiện công việc trọng tâm trong tuần ${weekStr} năm ${currentYear} như sau:`);
+  doc.replaceParagraph(116, `Trên đây là báo cáo kết quả thực hiện công việc tuần ${weekStr} năm ${currentYear}.`);
 }
