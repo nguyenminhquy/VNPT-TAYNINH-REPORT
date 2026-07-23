@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "VNPT Tây Ninh – Hệ thống báo cáo tự động",
   description:
     "Hệ thống báo cáo tự động của VNPT Tây Ninh, tổng hợp dữ liệu từ 8 nguồn Excel và xuất báo cáo Word.",
+  icons: {
+    icon: '/vnpt-logo-new.png',
+  }
 };
 
 export default function RootLayout({
