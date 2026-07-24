@@ -13,22 +13,29 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Tài khoản VNPT",
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Mật khẩu", type: "password" },
+        name: { label: "Họ và tên", type: "text", placeholder: "Ví dụ: Nguyễn Văn A" },
+        phone: { label: "Số điện thoại", type: "text", placeholder: "Ví dụ: 0912345678" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
+        if (!credentials?.name || !credentials?.phone) return null;
+
+        const emailToFind = `${credentials.phone.trim()}@vnpt.vn`;
 
         const { data: user, error } = await supabaseAdmin
           .from("users")
           .select("id, email, name, password_hash")
-          .eq("email", credentials.email.toLowerCase().trim())
+          .eq("email", emailToFind)
           .single();
 
         if (error || !user) return null;
+        
+        // Verify name matches strictly (case insensitive)
+        if (user.name.toLowerCase().trim() !== credentials.name.toLowerCase().trim()) {
+          return null;
+        }
 
         const valid = await bcrypt.compare(
-          credentials.password,
+          credentials.phone.trim(),
           user.password_hash
         );
         if (!valid) return null;
