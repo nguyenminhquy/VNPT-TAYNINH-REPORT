@@ -173,17 +173,29 @@ export class DocxModifier {
 
   replaceParagraphByTextMatch(searchStr: string | RegExp, newText: string): boolean {
     const paragraphs = this.getParagraphs();
+    return this.replaceInParagraphs(paragraphs, searchStr, newText);
+  }
+
+  replaceTextInEntireDocument(searchStr: string | RegExp, newText: string): boolean {
+    const paragraphs = Array.from(this.doc.getElementsByTagName('w:p')) as Element[];
+    return this.replaceInParagraphs(paragraphs, searchStr, newText);
+  }
+
+  private replaceInParagraphs(paragraphs: Element[], searchStr: string | RegExp, newText: string): boolean {
     for (const p of paragraphs) {
       const text = p.textContent;
       if (text) {
         let match = false;
-        if (typeof searchStr === 'string' && text.toLowerCase().includes(searchStr.toLowerCase())) {
-          match = true;
-        } else if (searchStr instanceof RegExp && searchStr.test(text)) {
-          match = true;
+        if (typeof searchStr === 'string') {
+          match = text.includes(searchStr);
+        } else {
+          match = searchStr.test(text);
         }
         if (match) {
-          this.replaceElementText(p, newText);
+          const replacedText = typeof searchStr === 'string' 
+            ? text.replace(searchStr, newText) 
+            : text.replace(searchStr, newText);
+          this.replaceElementText(p as Element, replacedText);
           return true;
         }
       }

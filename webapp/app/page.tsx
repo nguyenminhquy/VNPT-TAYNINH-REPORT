@@ -4,7 +4,7 @@ import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { REPORT_SOURCES, type ReportKey } from "@/lib/reports";
-import { Loader2 } from "lucide-react";
+import { Loader2, Plus, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 import "./dashboard.css";
 import VnptLogo from "@/components/VnptLogo";
@@ -15,13 +15,26 @@ export default function Dashboard() {
   
   const [reportSources, setReportSources] = useState<any[]>([]);
   const [cacheData, setCacheData] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState<"overview" | "details" | "special5">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "details" | "special5" | "petition">("overview");
   const [activeReportKey, setActiveReportKey] = useState<string | null>("upload");
   const [isExporting, setIsExporting] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [uploadingKey, setUploadingKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [dateInfo, setDateInfo] = useState<{currentWeek: number; currentYear: number} | null>(null);
+
+  // Petition form state
+  const [petitionForm, setPetitionForm] = useState({
+    docNumber: '1975/ĐN-TTHT-KTHT',
+    docDate: 'tháng 07 năm 2026',
+    baseClause: 'Căn cứ tờ trình số 1937/TTr-TTHT ngày 17/06/2026 của Trung tâm Hạ tầng V/v xét duyệt tăng nhân viên cho Tổ Khai thác hệ thống đã được Giám đốc Viễn thông Tây Ninh phê duyệt;',
+    manager: 'Nguyễn Hoàng Hưng',
+    author: 'Nguyễn Thành Luân',
+    users: [
+      { name: '', hrm: '', cccd: '', phone: '', dob: '', email: '', title: 'Tổ Khai thác Hệ thống – Kỹ thuật viên', systems: 'Mail eoffice, ONEBSS, APP PHĐB, ĐHVT TNH' }
+    ]
+  });
+  const [isExportingPetition, setIsExportingPetition] = useState(false);
 
   useEffect(() => {
     const now = new Date();
@@ -31,6 +44,14 @@ export default function Dashboard() {
     const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
     const week = Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
     setDateInfo({ currentWeek: week, currentYear: d.getUTCFullYear() });
+    
+    // Auto fill date
+    const dStr = String(now.getDate()).padStart(2, '0');
+    const mStr = String(now.getMonth() + 1).padStart(2, '0');
+    setPetitionForm(prev => ({
+      ...prev,
+      docDate: `ngày ${dStr} tháng ${mStr} năm ${now.getFullYear()}`
+    }));
   }, []);
 
   useEffect(() => {
@@ -100,9 +121,7 @@ export default function Dashboard() {
       const apiRes = await fetch("/api/export-word", { 
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          blobUrls: blobUrls
-        })
+        body: JSON.stringify({ blobUrls })
       });
 
       if (!apiRes.ok) {
@@ -113,7 +132,6 @@ export default function Dashboard() {
       }
 
       const wordBlob = await apiRes.blob();
-
       const formData = new FormData();
       formData.append("file", wordBlob, "report.docx");
 
@@ -136,6 +154,36 @@ export default function Dashboard() {
     setIsExporting(false);
   };
 
+  const handleExportPetition = async () => {
+    setIsExportingPetition(true);
+    const exportToast = toast.loading("Đang tạo file Đề nghị cấp tài khoản...");
+    try {
+      const res = await fetch("/api/export-petition", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(petitionForm)
+      });
+      if (res.ok) {
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+        a.download = `De_nghi_cap_user_${today}.docx`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        toast.success("Đã tải xuống file Word!", { id: exportToast });
+      } else {
+        const errorData = await res.json();
+        toast.error(`Lỗi: ${errorData.error}`, { id: exportToast });
+      }
+    } catch (e) {
+      toast.error("Lỗi mạng khi xuất file", { id: exportToast });
+    }
+    setIsExportingPetition(false);
+  };
+
   const handleProcess = async () => {
     setIsProcessing(true);
     const processToast = toast.loading("Đang xử lý lại dữ liệu...");
@@ -152,6 +200,28 @@ export default function Dashboard() {
       toast.error("Lỗi mạng khi xử lý", { id: processToast });
     }
     setIsProcessing(false);
+  };
+
+  const handleAddUser = () => {
+    setPetitionForm(prev => ({
+      ...prev,
+      users: [...prev.users, { name: '', hrm: '', cccd: '', phone: '', dob: '', email: '', title: prev.users[0]?.title || '', systems: prev.users[0]?.systems || '' }]
+    }));
+  };
+
+  const handleRemoveUser = (index: number) => {
+    setPetitionForm(prev => ({
+      ...prev,
+      users: prev.users.filter((_, i) => i !== index)
+    }));
+  };
+
+  const handleUserChange = (index: number, field: string, value: string) => {
+    setPetitionForm(prev => {
+      const newUsers = [...prev.users];
+      newUsers[index] = { ...newUsers[index], [field]: value };
+      return { ...prev, users: newUsers };
+    });
   };
 
   if (loading || status === "loading") {
@@ -178,44 +248,31 @@ export default function Dashboard() {
            <span className="sidebar-subtitle">TÂY NINH</span>
         </div>
         <nav className="sidebar-nav">
-          <button 
-            className={`nav-item ${activeTab === 'overview' ? 'active' : ''}`}
-            onClick={() => setActiveTab('overview')}
-          >
+          <button className={`nav-item ${activeTab === 'overview' ? 'active' : ''}`} onClick={() => setActiveTab('overview')}>
             <span style={{fontSize: '1.2rem'}}>📊</span> Tổng quan
           </button>
           <div className="nav-item-group">
-            <button 
-              className={`nav-item ${activeTab === 'details' ? 'active' : ''}`}
-              onClick={() => setActiveTab('details')}
-            >
+            <button className={`nav-item ${activeTab === 'details' ? 'active' : ''}`} onClick={() => setActiveTab('details')}>
               <span style={{fontSize: '1.2rem'}}>📝</span> Báo cáo hàng tuần
             </button>
             {activeTab === 'details' && cacheData && (
               <div className="submenu fade-in">
-                <button
-                  className={`submenu-item ${activeReportKey === 'upload' ? 'active' : ''}`}
-                  onClick={() => setActiveReportKey('upload')}
-                >
+                <button className={`submenu-item ${activeReportKey === 'upload' ? 'active' : ''}`} onClick={() => setActiveReportKey('upload')}>
                   📁 Quản lý nguồn dữ liệu
                 </button>
                 {[...cacheData.data.serviceReports, ...cacheData.data.operationReports].map(report => (
-                  <button 
-                    key={report.id}
-                    className={`submenu-item ${activeReportKey === report.id ? 'active' : ''}`}
-                    onClick={() => setActiveReportKey(report.id)}
-                  >
+                  <button key={report.id} className={`submenu-item ${activeReportKey === report.id ? 'active' : ''}`} onClick={() => setActiveReportKey(report.id)}>
                     {report.title}
                   </button>
                 ))}
               </div>
             )}
           </div>
-          <button 
-            className={`nav-item ${activeTab === 'special5' ? 'active' : ''}`}
-            onClick={() => setActiveTab('special5')}
-          >
+          <button className={`nav-item ${activeTab === 'special5' ? 'active' : ''}`} onClick={() => setActiveTab('special5')}>
             <span style={{fontSize: '1.2rem'}}>📋</span> Báo cáo chuyên đề 5
+          </button>
+          <button className={`nav-item ${activeTab === 'petition' ? 'active' : ''}`} onClick={() => setActiveTab('petition')}>
+            <span style={{fontSize: '1.2rem'}}>👤</span> Đề nghị cấp tài khoản
           </button>
         </nav>
         <div className="sidebar-footer">
@@ -234,9 +291,12 @@ export default function Dashboard() {
              {activeTab === 'details' && activeReportKey === 'upload' && 'Quản lý Nguồn Dữ Liệu'}
              {activeTab === 'details' && activeReportKey !== 'upload' && 'Báo cáo hàng tuần'}
              {activeTab === 'special5' && 'Báo cáo chuyên đề 5'}
-             <span style={{ fontSize: '1rem', color: 'var(--text-muted)', marginLeft: 16, fontWeight: 'normal' }}>
-               (Tuần {dateInfo?.currentWeek || '...'} - Năm {dateInfo?.currentYear || '...'})
-             </span>
+             {activeTab === 'petition' && 'Đề nghị cấp tài khoản'}
+             {activeTab !== 'petition' && (
+               <span style={{ fontSize: '1rem', color: 'var(--text-muted)', marginLeft: 16, fontWeight: 'normal' }}>
+                 (Tuần {dateInfo?.currentWeek || '...'} - Năm {dateInfo?.currentYear || '...'})
+               </span>
+             )}
            </h1>
            <div className="header-actions">
               {activeTab === 'details' && activeReportKey === 'upload' && (
@@ -245,14 +305,17 @@ export default function Dashboard() {
                    {isProcessing ? 'Đang xử lý...' : 'Xử lý lại dữ liệu'}
                  </button>
               )}
-              <button 
-                className="btn-export" 
-                onClick={handleExportWord} 
-                disabled={isExporting || !cacheData}
-              >
-                {isExporting ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
-                {isExporting ? 'Đang tạo Word...' : 'Xuất báo cáo Word'}
-              </button>
+              {activeTab === 'petition' ? (
+                 <button className="btn-export" onClick={handleExportPetition} disabled={isExportingPetition}>
+                   {isExportingPetition ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
+                   {isExportingPetition ? 'Đang tạo Word...' : 'Xuất Đề nghị (Word)'}
+                 </button>
+              ) : (
+                 <button className="btn-export" onClick={handleExportWord} disabled={isExporting || !cacheData}>
+                   {isExporting ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
+                   {isExporting ? 'Đang tạo Word...' : 'Xuất báo cáo Word'}
+                 </button>
+              )}
               <div className="user-profile">
                  <div className="user-avatar">
                    {session.user?.name?.charAt(0).toUpperCase() || 'U'}
@@ -294,7 +357,6 @@ export default function Dashboard() {
                     <section className="card-glass">
                       <div className="section-title">Tổng quan tín hiệu</div>
                       <p className="content-text" style={{ marginBottom: 30 }}>Các chỉ số nổi bật trong tuần từ tất cả các đơn vị.</p>
-                      
                       <div className="metrics-grid">
                         {cacheData.data.signalBands.map((band: any, i: number) => (
                           <div key={i} className="metric-card" style={{ borderLeft: `4px solid ${band.tone === 'positive' ? 'var(--success-text)' : band.tone === 'warning' ? 'var(--warning-text)' : 'var(--primary-color)'}` }}>
@@ -307,31 +369,6 @@ export default function Dashboard() {
                     </section>
                   </>
                 )}
-
-                <section className="card-glass" style={{ marginTop: 40 }}>
-                  <h2 className="section-title">Chức năng & Hướng dẫn sử dụng</h2>
-                  
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, marginTop: 30 }}>
-                    <div>
-                      <h3 className="section-subtitle">🌟 Chức năng chính</h3>
-                      <ul style={{ paddingLeft: 20 }} className="content-text">
-                        <li style={{ marginBottom: 12 }}><strong>Tự động tổng hợp dữ liệu:</strong> Đọc và phân tích 8 file Excel báo cáo định kỳ.</li>
-                        <li style={{ marginBottom: 12 }}><strong>Trực quan hoá thông tin:</strong> Hiển thị biểu đồ, bảng dữ liệu sinh động, dễ nhìn.</li>
-                        <li style={{ marginBottom: 12 }}><strong>Xuất báo cáo Word:</strong> Tạo file Word tự động theo biểu mẫu chuẩn xác 100%.</li>
-                      </ul>
-                    </div>
-                    
-                    <div style={{ background: '#f8fafc', padding: 24, borderRadius: 16 }}>
-                      <h3 className="section-subtitle">📖 Cách sử dụng</h3>
-                      <ol style={{ paddingLeft: 20, margin: 0 }} className="content-text">
-                        <li style={{ marginBottom: 12 }}><strong>Tải lên số liệu:</strong> Mở mục <em>Báo cáo hàng tuần &gt; Quản lý nguồn dữ liệu</em>.</li>
-                        <li style={{ marginBottom: 12 }}><strong>Xử lý dữ liệu:</strong> Hệ thống tự tổng hợp khi đủ 8 file. Bạn cũng có thể bấm thủ công.</li>
-                        <li style={{ marginBottom: 12 }}><strong>Xem chi tiết:</strong> Chọn các báo cáo con trong menu để xem phân tích.</li>
-                        <li style={{ marginBottom: 12 }}><strong>Xuất Word:</strong> Nhấn nút "Xuất báo cáo Word" góc phải trên.</li>
-                      </ol>
-                    </div>
-                  </div>
-                </section>
              </div>
            )}
 
@@ -354,52 +391,30 @@ export default function Dashboard() {
                               <div className="upload-card-subtitle">{source.filename}</div>
                               <div className="upload-card-subtitle" style={{ marginTop: 8 }}>Phụ trách: <strong>{source.owner}</strong></div>
                             </div>
-                            
                             <div className="upload-card-status">
                               {dbSource?.blob_url ? (
                                 <>
-                                  <span className="status-badge success">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                    Đã có dữ liệu
-                                  </span>
+                                  <span className="status-badge success">✅ Đã có dữ liệu</span>
                                   <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: 16 }}>
-                                    <div>Tải lên bởi: <strong>{dbSource.uploader_name || 'Hệ thống'}</strong></div>
                                     <div>Lúc: {new Date(dbSource.uploaded_at).toLocaleString('vi-VN')}</div>
                                   </div>
                                 </>
                               ) : (
-                                <span className="status-badge error">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                                  Chưa có dữ liệu
-                                </span>
+                                <span className="status-badge error">❌ Chưa có dữ liệu</span>
                               )}
-                              
                               <div className="file-input-wrapper">
                                 <button className="btn-upload">
                                   {uploadingKey === source.key ? (
                                     <><Loader2 size={18} className="spin-anim" /> Đang tải lên...</>
                                   ) : (
-                                    <>
-                                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                                      {dbSource?.blob_url ? 'Tải file lên mới' : 'Tải file lên'}
-                                    </>
+                                    dbSource?.blob_url ? 'Tải file lên mới' : 'Tải file lên'
                                   )}
                                 </button>
-                                <input 
-                                  type="file" 
-                                  accept=".xlsx" 
-                                  onChange={(e) => {
-                                    const file = e.target.files?.[0];
-                                    if (file) handleUpload(source.key, file);
-                                  }}
-                                />
+                                <input type="file" accept=".xlsx" onChange={(e) => {
+                                  const file = e.target.files?.[0];
+                                  if (file) handleUpload(source.key, file);
+                                }} />
                               </div>
-                              
-                              {dbSource?.blob_url && (
-                                <a href={dbSource.blob_url} target="_blank" rel="noopener noreferrer" style={{ display: 'block', textAlign: 'center', marginTop: 16, fontSize: '0.9rem', color: 'var(--primary-color)', textDecoration: 'none', fontWeight: '600' }}>
-                                  Tải xuống file Excel &darr;
-                                </a>
-                              )}
                             </div>
                           </div>
                         );
@@ -416,39 +431,13 @@ export default function Dashboard() {
                       <div className="card-glass">
                         {(() => {
                           const report = [...cacheData.data.serviceReports, ...cacheData.data.operationReports].find((r: any) => r.id === activeReportKey);
-                          if (!report) return (
-                            <div style={{ textAlign: 'center', padding: '50px 0', color: 'var(--text-muted)' }}>
-                              <h3>Vui lòng chọn một báo cáo ở menu bên trái</h3>
-                            </div>
-                          );
+                          if (!report) return null;
                           return (
                             <div className="fade-in">
                               <h2 className="section-title" style={{ fontSize: '2rem' }}>{report.title}</h2>
                               <p className="section-subtitle" style={{ marginBottom: 24 }}>{report.kicker}</p>
-                              
                               <p className="content-text" style={{ fontSize: '1.1rem', marginBottom: 40 }}>{report.summary}</p>
                               
-                              <h3 className="section-title" style={{ fontSize: '1.3rem', marginBottom: 24 }}>Chỉ số chi tiết</h3>
-                              <div className="metrics-grid">
-                                {report.metrics.map((m: any, i: number) => (
-                                  <div key={i} className="metric-card" style={{ background: '#f8fafc' }}>
-                                    <div className="metric-label">{m.label}</div>
-                                    <div className="metric-value" style={{ color: 'var(--primary-color)' }}>{m.value}</div>
-                                  </div>
-                                ))}
-                              </div>
-
-                              {report.insights.length > 0 && (
-                                <div style={{ marginBottom: 48 }}>
-                                  <h3 className="section-title" style={{ fontSize: '1.3rem', marginBottom: 20 }}>Đánh giá & Nhận xét</h3>
-                                  <ul className="content-text" style={{ paddingLeft: 20 }}>
-                                    {report.insights.map((ins: string, i: number) => (
-                                      <li key={i} style={{ marginBottom: 12 }}>{ins}</li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              )}
-
                               {report.table && report.table.rows && report.table.rows.length > 0 && (
                                 <div style={{ marginBottom: 48 }}>
                                   <h3 className="section-title" style={{ fontSize: '1.3rem', marginBottom: 20 }}>{report.table.title}</h3>
@@ -456,80 +445,18 @@ export default function Dashboard() {
                                     <table className="data-table">
                                       <thead>
                                         <tr>
-                                          {report.table.columns.map((col: string, i: number) => (
-                                            <th key={i}>{col}</th>
-                                          ))}
+                                          {report.table.columns.map((col: string, i: number) => <th key={i}>{col}</th>)}
                                         </tr>
                                       </thead>
                                       <tbody>
                                         {report.table.rows.map((row: any, i: number) => (
                                           <tr key={i}>
-                                            {report.table.columns.map((col: string, j: number) => (
-                                              <td key={j}>{row[col]}</td>
-                                            ))}
+                                            {report.table.columns.map((col: string, j: number) => <td key={j}>{row[col]}</td>)}
                                           </tr>
                                         ))}
                                       </tbody>
                                     </table>
                                   </div>
-                                </div>
-                              )}
-
-                              {report.list && report.list.items && report.list.items.length > 0 && (
-                                <div style={{ marginBottom: 48 }}>
-                                  <h3 className="section-title" style={{ fontSize: '1.3rem', marginBottom: 20 }}>{report.list.title}</h3>
-                                  <ul className="content-text" style={{ paddingLeft: 20 }}>
-                                    {report.list.items.map((item: string, i: number) => (
-                                      <li key={i} style={{ marginBottom: 8 }}>{item}</li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              )}
-
-                              {report.raw && Object.keys(report.raw).length > 0 && (
-                                <div style={{ marginTop: 64 }}>
-                                  <h3 className="section-title" style={{ fontSize: '1.3rem', marginBottom: 24, color: 'var(--primary-color)' }}>
-                                    Dữ liệu chi tiết từ Excel
-                                  </h3>
-                                  {Object.keys(report.raw)
-                                    .filter(key => Array.isArray(report.raw[key]) && report.raw[key].length > 0)
-                                    .map(key => {
-                                      const rows = report.raw[key];
-                                      const isTableValid = rows.length > 0 && typeof rows[0] === 'object' && rows[0] !== null && Object.keys(rows[0]).length > 0;
-                                      if (!isTableValid) return null;
-                                      
-                                      const columns = Object.keys(rows[0]);
-                                      return (
-                                        <details key={key} className="details-box">
-                                          <summary className="details-summary">
-                                            Bảng: {key} <span style={{ marginLeft: 8, color: 'var(--text-muted)', fontWeight: 'normal' }}>({rows.length} dòng)</span>
-                                          </summary>
-                                          <div className="details-content">
-                                            <div className="table-container" style={{ marginTop: 24, marginBottom: 0, boxShadow: 'none', border: '1px solid rgba(226, 232, 240, 0.5)' }}>
-                                              <table className="data-table">
-                                                <thead>
-                                                  <tr>
-                                                    {columns.map((col: string, i: number) => (
-                                                      <th key={i}>{col}</th>
-                                                    ))}
-                                                  </tr>
-                                                </thead>
-                                                <tbody>
-                                                  {rows.map((row: any, i: number) => (
-                                                    <tr key={i}>
-                                                      {columns.map((col: string, j: number) => (
-                                                        <td key={j}>{String(row[col])}</td>
-                                                      ))}
-                                                    </tr>
-                                                  ))}
-                                                </tbody>
-                                              </table>
-                                            </div>
-                                          </div>
-                                        </details>
-                                      );
-                                    })
-                                  }
                                 </div>
                               )}
                             </div>
@@ -550,6 +477,94 @@ export default function Dashboard() {
              </div>
            )}
 
+           {/* TAB PETITION */}
+           {activeTab === 'petition' && (
+             <div className="fade-in">
+                <div className="card-glass" style={{ padding: '32px 40px', marginBottom: 24 }}>
+                  <h2 className="section-title" style={{ marginBottom: 24 }}>Thông tin chung</h2>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+                    <div>
+                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Số Đề nghị</label>
+                      <input type="text" value={petitionForm.docNumber} onChange={e => setPetitionForm(p => ({ ...p, docNumber: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Ngày tháng (Ví dụ: ngày 24 tháng 07 năm 2026)</label>
+                      <input type="text" value={petitionForm.docDate} onChange={e => setPetitionForm(p => ({ ...p, docDate: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                    </div>
+                    <div style={{ gridColumn: '1 / -1' }}>
+                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Căn cứ pháp lý</label>
+                      <textarea value={petitionForm.baseClause} onChange={e => setPetitionForm(p => ({ ...p, baseClause: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 60 }} />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Người Ký duyệt (Lãnh đạo)</label>
+                      <input type="text" value={petitionForm.manager} onChange={e => setPetitionForm(p => ({ ...p, manager: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Người Đề nghị (Tổ trưởng)</label>
+                      <input type="text" value={petitionForm.author} onChange={e => setPetitionForm(p => ({ ...p, author: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="card-glass" style={{ padding: '32px 40px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+                    <h2 className="section-title" style={{ margin: 0 }}>Danh sách Cấp quyền</h2>
+                    <button onClick={handleAddUser} className="btn-action btn-outline" style={{ padding: '8px 16px', fontSize: '0.9rem' }}>
+                      <Plus size={16} /> Thêm nhân viên
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+                    {petitionForm.users.map((user, index) => (
+                      <div key={index} style={{ padding: 24, borderRadius: 12, border: '1px solid rgba(0,0,0,0.05)', background: '#f8fafc', position: 'relative' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
+                          <h3 style={{ margin: 0, fontSize: '1.1rem', color: 'var(--primary-color)' }}>Nhân viên #{index + 1}</h3>
+                          {petitionForm.users.length > 1 && (
+                            <button onClick={() => handleRemoveUser(index)} style={{ background: 'transparent', border: 'none', color: 'var(--error-text)', cursor: 'pointer' }}>
+                              <Trash2 size={18} />
+                            </button>
+                          )}
+                        </div>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16 }}>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4 }}>Họ và tên</label>
+                            <input type="text" value={user.name} onChange={e => handleUserChange(index, 'name', e.target.value)} style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #cbd5e1' }} />
+                          </div>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4 }}>Mã HRM</label>
+                            <input type="text" value={user.hrm} onChange={e => handleUserChange(index, 'hrm', e.target.value)} style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #cbd5e1' }} />
+                          </div>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4 }}>CCCD</label>
+                            <input type="text" value={user.cccd} onChange={e => handleUserChange(index, 'cccd', e.target.value)} style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #cbd5e1' }} />
+                          </div>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4 }}>Số ĐT</label>
+                            <input type="text" value={user.phone} onChange={e => handleUserChange(index, 'phone', e.target.value)} style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #cbd5e1' }} />
+                          </div>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4 }}>Ngày sinh</label>
+                            <input type="text" placeholder="DD/MM/YYYY" value={user.dob} onChange={e => handleUserChange(index, 'dob', e.target.value)} style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #cbd5e1' }} />
+                          </div>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4 }}>Email</label>
+                            <input type="email" value={user.email} onChange={e => handleUserChange(index, 'email', e.target.value)} style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #cbd5e1' }} />
+                          </div>
+                          <div style={{ gridColumn: '1 / -1' }}>
+                            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4 }}>Tổ / Chức danh</label>
+                            <input type="text" value={user.title} onChange={e => handleUserChange(index, 'title', e.target.value)} style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #cbd5e1' }} />
+                          </div>
+                          <div style={{ gridColumn: '1 / -1' }}>
+                            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4 }}>Hệ thống cần cấp (Ghi chú)</label>
+                            <input type="text" value={user.systems} onChange={e => handleUserChange(index, 'systems', e.target.value)} style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #cbd5e1' }} />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+             </div>
+           )}
         </div>
       </main>
     </div>
