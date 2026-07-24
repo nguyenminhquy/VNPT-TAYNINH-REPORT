@@ -181,3 +181,18 @@ CREATE TABLE IF NOT EXISTS inspection_logs (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- 9. Nhật Ký Kiểm Tra Máy Phát Điện
+CREATE TABLE IF NOT EXISTS generator_logs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  inspection_date DATE NOT NULL DEFAULT CURRENT_DATE,
+  inspection_time TIME NOT NULL,
+  user_id UUID REFERENCES users(id) ON DELETE SET NULL,
+  user_name TEXT,
+  mpd_200_data JSONB NOT NULL DEFAULT '{}'::jsonb,
+  mpd_350_data JSONB NOT NULL DEFAULT '{}'::jsonb,
+  is_abnormal BOOLEAN DEFAULT false,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+

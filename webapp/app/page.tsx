@@ -8,6 +8,7 @@ import { Loader2, Plus, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 import ShiftHandover from "@/components/ShiftHandover";
 import InspectionLog from "@/components/InspectionLog";
+import GeneratorLog from "@/components/GeneratorLog";
 import "./dashboard.css";
 import VnptLogo from "@/components/VnptLogo";
 
@@ -17,7 +18,7 @@ export default function Dashboard() {
   
   const [reportSources, setReportSources] = useState<any[]>([]);
   const [cacheData, setCacheData] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState<"overview" | "details" | "special5" | "petition" | "handover" | "inspection">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "details" | "special5" | "petition" | "handover" | "inspection" | "generator">("overview");
   const [activeReportKey, setActiveReportKey] = useState<string | null>("upload");
   const [isExporting, setIsExporting] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -282,6 +283,9 @@ export default function Dashboard() {
           <button className={`nav-item ${activeTab === 'inspection' ? 'active' : ''}`} onClick={() => setActiveTab('inspection')}>
             <span style={{fontSize: '1.2rem'}}>📋</span> Nhật Ký Kiểm Tra
           </button>
+          <button className={`nav-item ${activeTab === 'generator' ? 'active' : ''}`} onClick={() => setActiveTab('generator')}>
+            <span style={{fontSize: '1.2rem'}}>⚡</span> Nhật Ký MPD
+          </button>
         </nav>
         <div className="sidebar-footer">
            <button className="btn-logout" onClick={() => signOut()}>
@@ -302,7 +306,8 @@ export default function Dashboard() {
              {activeTab === 'petition' && 'Đề nghị cấp tài khoản'}
              {activeTab === 'handover' && 'Sổ Giao Ca'}
              {activeTab === 'inspection' && 'Nhật Ký Kiểm Tra Định Kỳ'}
-             {activeTab !== 'petition' && activeTab !== 'handover' && activeTab !== 'inspection' && (
+             {activeTab === 'generator' && 'Nhật Ký Máy Phát Điện'}
+             {activeTab !== 'petition' && activeTab !== 'handover' && activeTab !== 'inspection' && activeTab !== 'generator' && (
                <span style={{ fontSize: '1rem', color: 'var(--text-muted)', marginLeft: 16, fontWeight: 'normal' }}>
                  (Tuần {dateInfo?.currentWeek || '...'} - Năm {dateInfo?.currentYear || '...'})
                </span>
@@ -320,7 +325,7 @@ export default function Dashboard() {
                    {isExportingPetition ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
                    {isExportingPetition ? 'Đang tạo Word...' : 'Xuất Đề nghị (Word)'}
                  </button>
-              ) : (activeTab === 'handover' || activeTab === 'inspection') ? null : (
+              ) : (activeTab === 'handover' || activeTab === 'inspection' || activeTab === 'generator') ? null : (
                  <button className="btn-export" onClick={handleExportWord} disabled={isExporting || !cacheData}>
                    {isExporting ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
                    {isExporting ? 'Đang tạo Word...' : 'Xuất báo cáo Word'}
@@ -581,6 +586,9 @@ export default function Dashboard() {
 
            {/* TAB INSPECTION */}
            {activeTab === 'inspection' && <InspectionLog user={session.user} />}
+
+           {/* TAB GENERATOR */}
+           {activeTab === 'generator' && <GeneratorLog user={session.user} />}
         </div>
       </main>
     </div>
