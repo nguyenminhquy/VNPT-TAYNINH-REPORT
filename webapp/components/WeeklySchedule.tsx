@@ -21,7 +21,7 @@ export default function WeeklySchedule({ user }: { user: any }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   
-  const [isMySchedule, setIsMySchedule] = useState(false);
+  const [highlightedUser, setHighlightedUser] = useState<string>('');
 
   // Edit mode UI state
   const [activeCell, setActiveCell] = useState<{day: string, shift: string} | null>(null);
@@ -219,25 +219,29 @@ export default function WeeklySchedule({ user }: { user: any }) {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, padding: '16px', background: '#f8fafc', borderRadius: 8, border: '1px solid #e2e8f0' }}>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', fontWeight: 600, color: isMySchedule ? 'var(--primary-color)' : 'var(--text-main)' }}>
-              <div style={{ 
-                width: 44, height: 24, borderRadius: 12, background: isMySchedule ? 'var(--primary-color)' : '#cbd5e1', 
-                position: 'relative', transition: 'all 0.2s ease'
-              }}>
-                <div style={{ 
-                  width: 20, height: 20, borderRadius: '50%', background: '#fff', 
-                  position: 'absolute', top: 2, left: isMySchedule ? 22 : 2, transition: 'all 0.2s ease',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-                }} />
-              </div>
-              Lịch của tôi
-              <input 
-                type="checkbox" 
-                checked={isMySchedule}
-                onChange={e => setIsMySchedule(e.target.checked)}
-                style={{ display: 'none' }}
-              />
-            </label>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <label style={{ fontSize: '0.9rem', fontWeight: 600, color: '#64748b' }}>Tra cứu lịch:</label>
+              <select 
+                value={highlightedUser} 
+                onChange={e => setHighlightedUser(e.target.value)}
+                style={{ padding: '6px 12px', borderRadius: 6, border: '1px solid #cbd5e1', outline: 'none' }}
+              >
+                <option value="">-- Hiện tất cả --</option>
+                {users.map(u => (
+                  <option key={u.id} value={u.name}>{u.name}</option>
+                ))}
+              </select>
+              
+              {user?.name && (
+                <button 
+                  onClick={() => setHighlightedUser(highlightedUser === user.name ? '' : user.name)}
+                  className="btn-action btn-outline"
+                  style={{ padding: '6px 12px', fontSize: '0.85rem', background: highlightedUser === user.name ? '#dcfce7' : 'transparent', borderColor: highlightedUser === user.name ? '#22c55e' : '#cbd5e1', color: highlightedUser === user.name ? '#16a34a' : 'inherit' }}
+                >
+                  Lịch của tôi
+                </button>
+              )}
+            </div>
             
             {status === 'draft' && (
               <span style={{ padding: '4px 10px', background: '#fef3c7', color: '#d97706', borderRadius: 20, fontSize: '0.85rem', fontWeight: 600 }}>
@@ -311,14 +315,14 @@ export default function WeeklySchedule({ user }: { user: any }) {
                       
                       {DAYS.map(day => {
                         const assigned = scheduleData[day]?.[shift] || [];
-                        const isMeAssigned = user?.name ? assigned.includes(user.name) : false;
+                        const isUserAssigned = highlightedUser ? assigned.includes(highlightedUser) : false;
                         
                         let cellBg = '#fff';
                         let cellBorder = '1px solid transparent';
                         let cellOpacity = 1;
                         
-                        if (isMySchedule) {
-                          if (isMeAssigned) {
+                        if (highlightedUser) {
+                          if (isUserAssigned) {
                             cellBg = '#f0fdf4';
                             cellBorder = '2px solid #22c55e';
                           } else {
@@ -354,8 +358,8 @@ export default function WeeklySchedule({ user }: { user: any }) {
                                   key={name}
                                   style={{ 
                                     padding: '4px 8px', 
-                                    background: (isMySchedule && name === user?.name) ? '#22c55e' : '#e2e8f0', 
-                                    color: (isMySchedule && name === user?.name) ? '#fff' : '#334155',
+                                    background: (highlightedUser && name === highlightedUser) ? '#22c55e' : '#e2e8f0', 
+                                    color: (highlightedUser && name === highlightedUser) ? '#fff' : '#334155',
                                     borderRadius: 4, 
                                     fontSize: '0.85rem',
                                     fontWeight: 600,
