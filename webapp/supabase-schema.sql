@@ -167,3 +167,17 @@ BEGIN
   END IF;
 END
 $$;
+
+-- 8. Nhật Ký Kiểm Tra Định Kỳ (Phòng máy / Thiết bị)
+CREATE TABLE IF NOT EXISTS inspection_logs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  inspection_date DATE NOT NULL DEFAULT CURRENT_DATE,
+  inspection_time TIME NOT NULL,
+  user_id UUID REFERENCES users(id) ON DELETE SET NULL,
+  user_name TEXT,
+  areas_status JSONB NOT NULL DEFAULT '{}'::jsonb,
+  notes TEXT,
+  is_abnormal BOOLEAN DEFAULT false,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
