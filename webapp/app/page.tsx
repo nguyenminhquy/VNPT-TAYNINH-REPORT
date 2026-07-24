@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import ShiftHandover from "@/components/ShiftHandover";
 import InspectionLog from "@/components/InspectionLog";
 import GeneratorLog from "@/components/GeneratorLog";
+import WeeklySchedule from "@/components/WeeklySchedule";
 import "./dashboard.css";
 import VnptLogo from "@/components/VnptLogo";
 
@@ -18,7 +19,7 @@ export default function Dashboard() {
   
   const [reportSources, setReportSources] = useState<any[]>([]);
   const [cacheData, setCacheData] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState<"overview" | "details" | "special5" | "petition" | "handover" | "inspection" | "generator">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "details" | "special5" | "petition" | "handover" | "inspection" | "generator" | "schedule">("overview");
   const [activeReportKey, setActiveReportKey] = useState<string | null>("upload");
   const [isExporting, setIsExporting] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -286,6 +287,9 @@ export default function Dashboard() {
           <button className={`nav-item ${activeTab === 'generator' ? 'active' : ''}`} onClick={() => setActiveTab('generator')}>
             <span style={{fontSize: '1.2rem'}}>⚡</span> Nhật Ký MPD
           </button>
+          <button className={`nav-item ${activeTab === 'schedule' ? 'active' : ''}`} onClick={() => setActiveTab('schedule')}>
+            <span style={{fontSize: '1.2rem'}}>📅</span> Lịch Trực Tuần
+          </button>
         </nav>
         <div className="sidebar-footer">
            <button className="btn-logout" onClick={() => signOut()}>
@@ -307,7 +311,8 @@ export default function Dashboard() {
              {activeTab === 'handover' && 'Sổ Giao Ca'}
              {activeTab === 'inspection' && 'Nhật Ký Kiểm Tra Định Kỳ'}
              {activeTab === 'generator' && 'Nhật Ký Máy Phát Điện'}
-             {activeTab !== 'petition' && activeTab !== 'handover' && activeTab !== 'inspection' && activeTab !== 'generator' && (
+             {activeTab === 'schedule' && 'Lịch Trực Tuần'}
+             {activeTab !== 'petition' && activeTab !== 'handover' && activeTab !== 'inspection' && activeTab !== 'generator' && activeTab !== 'schedule' && (
                <span style={{ fontSize: '1rem', color: 'var(--text-muted)', marginLeft: 16, fontWeight: 'normal' }}>
                  (Tuần {dateInfo?.currentWeek || '...'} - Năm {dateInfo?.currentYear || '...'})
                </span>
@@ -325,7 +330,7 @@ export default function Dashboard() {
                    {isExportingPetition ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
                    {isExportingPetition ? 'Đang tạo Word...' : 'Xuất Đề nghị (Word)'}
                  </button>
-              ) : (activeTab === 'handover' || activeTab === 'inspection' || activeTab === 'generator') ? null : (
+              ) : (activeTab === 'handover' || activeTab === 'inspection' || activeTab === 'generator' || activeTab === 'schedule') ? null : (
                  <button className="btn-export" onClick={handleExportWord} disabled={isExporting || !cacheData}>
                    {isExporting ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
                    {isExporting ? 'Đang tạo Word...' : 'Xuất báo cáo Word'}
@@ -589,6 +594,9 @@ export default function Dashboard() {
 
            {/* TAB GENERATOR */}
            {activeTab === 'generator' && <GeneratorLog user={session.user} />}
+
+           {/* TAB SCHEDULE */}
+           {activeTab === 'schedule' && <WeeklySchedule user={session.user} />}
         </div>
       </main>
     </div>

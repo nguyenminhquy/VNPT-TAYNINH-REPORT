@@ -196,3 +196,19 @@ CREATE TABLE IF NOT EXISTS generator_logs (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- 10. Lịch Trực Tuần
+CREATE TABLE IF NOT EXISTS weekly_schedules (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  year INTEGER NOT NULL,
+  week_number INTEGER NOT NULL,
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
+  status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'published')),
+  general_notes TEXT,
+  schedule_data JSONB NOT NULL DEFAULT '{}'::jsonb,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(year, week_number)
+);
+
+
