@@ -54,7 +54,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { id, shift_type, handover_date, notes, items, status, user_name } = body;
+    const { id, shift_time, shift_type, handover_date, notes, items, status, user_name } = body;
 
     let targetUserId = userRow.id;
     let targetUserName = userRow.name;
@@ -74,6 +74,7 @@ export async function POST(req: Request) {
     }
 
     const payload: any = {
+      shift_time,
       shift_type,
       handover_date,
       user_id: targetUserId,

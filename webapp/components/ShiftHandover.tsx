@@ -29,6 +29,7 @@ export default function ShiftHandover({ user }: { user: any }) {
   const [loadingItems, setLoadingItems] = useState(false);
   
   // Handover state
+  const [currentShiftTime, setCurrentShiftTime] = useState<string>('Sáng (07h-14h)');
   const [currentShift, setCurrentShift] = useState<ShiftType>(1);
   const [handoverDate, setHandoverDate] = useState(new Date().toISOString().slice(0, 10));
   const [notes, setNotes] = useState('');
@@ -128,6 +129,7 @@ export default function ShiftHandover({ user }: { user: any }) {
     try {
       const payload = {
         id: draftId,
+        shift_time: currentShiftTime,
         shift_type: currentShift,
         handover_date: handoverDate,
         user_name: selectedUserName,
@@ -166,6 +168,7 @@ export default function ShiftHandover({ user }: { user: any }) {
   };
 
   const loadDraft = (record: any) => {
+    setCurrentShiftTime(record.shift_time || 'Sáng (07h-14h)');
     setCurrentShift(record.shift_type);
     setHandoverDate(record.handover_date);
     setSelectedUserName(record.user_name || user?.name || '');
@@ -256,7 +259,23 @@ export default function ShiftHandover({ user }: { user: any }) {
           
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 32 }}>
             <div>
-              <label style={{ display: 'block', marginBottom: 8, fontWeight: 600 }}>Ca làm việc</label>
+              <label style={{ display: 'block', marginBottom: 8, fontWeight: 600 }}>Thời gian ca</label>
+              <select 
+                value={currentShiftTime} 
+                onChange={(e) => {
+                  setCurrentShiftTime(e.target.value);
+                  setCheckedItems({});
+                  setDraftId(undefined);
+                }}
+                style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }}
+              >
+                <option value="Sáng (07h-14h)">Sáng (07h-14h)</option>
+                <option value="Chiều (14h-22h)">Chiều (14h-22h)</option>
+                <option value="Đêm (22h-07h)">Đêm (22h-07h)</option>
+              </select>
+            </div>
+            <div>
+              <label style={{ display: 'block', marginBottom: 8, fontWeight: 600 }}>Vị trí trực</label>
               <select 
                 value={currentShift} 
                 onChange={(e) => {
@@ -266,9 +285,9 @@ export default function ShiftHandover({ user }: { user: any }) {
                 }}
                 style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }}
               >
-                <option value={1}>Ca 1</option>
-                <option value={2}>Ca 2</option>
-                <option value={3}>Ca 3</option>
+                <option value={1}>Vị trí Ca 1</option>
+                <option value={2}>Vị trí Ca 2</option>
+                <option value={3}>Vị trí Ca 3</option>
               </select>
             </div>
             <div>
@@ -376,7 +395,8 @@ export default function ShiftHandover({ user }: { user: any }) {
                 <thead>
                   <tr>
                     <th>Ngày</th>
-                    <th>Ca làm việc</th>
+                    <th>Thời gian</th>
+                    <th>Vị trí</th>
                     <th>Người bàn giao</th>
                     <th>Trạng thái</th>
                     <th>Tồn đọng</th>
@@ -387,6 +407,7 @@ export default function ShiftHandover({ user }: { user: any }) {
                   {history.map(record => (
                     <tr key={record.id}>
                       <td>{new Date(record.handover_date).toLocaleDateString('vi-VN')}</td>
+                      <td>{record.shift_time}</td>
                       <td><strong>Ca {record.shift_type}</strong></td>
                       <td>{record.user_name}</td>
                       <td>
@@ -440,7 +461,7 @@ export default function ShiftHandover({ user }: { user: any }) {
                 onChange={e => setAdminShiftType(Number(e.target.value))}
                 style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1' }}
               >
-                <option value={0}>Tất cả các ca</option>
+                <option value={0}>Tất cả các vị trí</option>
                 <option value={1}>Chỉ Ca 1</option>
                 <option value={2}>Chỉ Ca 2</option>
                 <option value={3}>Chỉ Ca 3</option>
@@ -470,7 +491,7 @@ export default function ShiftHandover({ user }: { user: any }) {
                   <tr key={item.id}>
                     <td>{item.content}</td>
                     <td>
-                      {item.shift_type === 0 ? <span className="status-badge" style={{ background: '#e2e8f0', color: '#475569' }}>Cả 3 ca</span> : <span className="status-badge" style={{ background: '#dbeafe', color: '#1e40af' }}>Ca {item.shift_type}</span>}
+                      {item.shift_type === 0 ? <span className="status-badge" style={{ background: '#e2e8f0', color: '#475569' }}>Mọi vị trí</span> : <span className="status-badge" style={{ background: '#dbeafe', color: '#1e40af' }}>Ca {item.shift_type}</span>}
                     </td>
                     <td>{item.is_active ? 'Đang bật' : 'Đã ẩn'}</td>
                     <td style={{ textAlign: 'right' }}>

@@ -141,7 +141,8 @@ ON CONFLICT DO NOTHING;
 -- 7. Lịch sử phiếu giao ca (Sổ giao ca)
 CREATE TABLE IF NOT EXISTS shift_handovers (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  shift_type INTEGER NOT NULL, -- 1, 2, 3
+  shift_time TEXT NOT NULL, -- Sáng (07h-14h), Chiều (14h-22h), Đêm (22h-07h)
+  shift_type INTEGER NOT NULL, -- Vị trí 1, 2, 3
   handover_date DATE NOT NULL DEFAULT CURRENT_DATE,
   user_id UUID REFERENCES users(id) ON DELETE SET NULL,
   user_name TEXT,
