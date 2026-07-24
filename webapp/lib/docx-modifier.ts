@@ -15,18 +15,9 @@ export class DocxModifier {
     this.doc = new DOMParser().parseFromString(this.xmlString, 'text/xml');
   }
 
-  // Returns all tables in the document (recursively or top-level. python-docx returns top-level)
+  // Returns all tables in the document recursively
   getTables(): Element[] {
-    const body = this.doc.getElementsByTagName('w:body')[0];
-    if (!body) return [];
-    const tables: Element[] = [];
-    for (let i = 0; i < body.childNodes.length; i++) {
-      const node = body.childNodes[i];
-      if (node.nodeType === 1 && (node as Element).tagName === 'w:tbl') {
-        tables.push(node as Element);
-      }
-    }
-    return tables;
+    return Array.from(this.doc.getElementsByTagName('w:tbl')) as Element[];
   }
 
   // Returns all top-level paragraphs
@@ -166,7 +157,7 @@ export class DocxModifier {
 
   findTableByInternalText(keyword: string): Element | null {
     const tables = this.getTables();
-    for (const table of tables) {
+    for (const table of tables.reverse()) {
       if (table.textContent && table.textContent.toLowerCase().includes(keyword.toLowerCase())) {
         return table;
       }
