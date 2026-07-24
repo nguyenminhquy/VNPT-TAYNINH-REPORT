@@ -35,6 +35,10 @@ export default function ShiftHandover({ user }: { user: any }) {
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
   const [draftId, setDraftId] = useState<string | undefined>(undefined);
   const [isSaving, setIsSaving] = useState(false);
+  
+  // Custom user selection
+  const [users, setUsers] = useState<any[]>([]);
+  const [selectedUserName, setSelectedUserName] = useState(user?.name || '');
 
   // History state
   const [history, setHistory] = useState<any[]>([]);
@@ -43,6 +47,7 @@ export default function ShiftHandover({ user }: { user: any }) {
   useEffect(() => {
     if (activeSubTab === 'new') {
       fetchChecklist(currentShift);
+      if (users.length === 0) fetchUsers();
     } else if (activeSubTab === 'history') {
       fetchHistory();
     } else if (activeSubTab === 'admin') {
@@ -64,6 +69,21 @@ export default function ShiftHandover({ user }: { user: any }) {
       toast.error('Lỗi tải danh sách công việc');
     }
     setLoadingItems(false);
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const res = await fetch('/api/users');
+      const json = await res.json();
+      if (res.ok) {
+        setUsers(json.users || []);
+        if (!selectedUserName && user?.name) {
+          setSelectedUserName(user.name);
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const fetchHistory = async () => {
@@ -110,6 +130,7 @@ export default function ShiftHandover({ user }: { user: any }) {
         id: draftId,
         shift_type: currentShift,
         handover_date: handoverDate,
+        user_name: selectedUserName,
         notes,
         items: checkedItems,
         status
@@ -147,6 +168,7 @@ export default function ShiftHandover({ user }: { user: any }) {
   const loadDraft = (record: any) => {
     setCurrentShift(record.shift_type);
     setHandoverDate(record.handover_date);
+    setSelectedUserName(record.user_name || user?.name || '');
     setNotes(record.notes || '');
     setCheckedItems(record.items || {});
     setDraftId(record.id);
@@ -260,12 +282,24 @@ export default function ShiftHandover({ user }: { user: any }) {
             </div>
             <div style={{ gridColumn: '1 / -1' }}>
               <label style={{ display: 'block', marginBottom: 8, fontWeight: 600 }}>Người bàn giao</label>
-              <input 
-                type="text" 
-                value={user?.name || ''} 
-                disabled 
-                style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#e2e8f0', color: '#64748b' }} 
-              />
+              {users.length > 0 ? (
+                <select
+                  value={selectedUserName}
+                  onChange={e => setSelectedUserName(e.target.value)}
+                  style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }}
+                >
+                  {users.map(u => (
+                    <option key={u.id} value={u.name}>{u.name}</option>
+                  ))}
+                </select>
+              ) : (
+                <input 
+                  type="text" 
+                  value={selectedUserName} 
+                  disabled 
+                  style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#e2e8f0', color: '#64748b' }} 
+                />
+              )}
             </div>
             <div style={{ gridColumn: '1 / -1' }}>
               <label style={{ display: 'block', marginBottom: 8, fontWeight: 600 }}>Nội dung tồn bàn giao ca</label>

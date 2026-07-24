@@ -54,13 +54,30 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { id, shift_type, handover_date, notes, items, status } = body;
+    const { id, shift_type, handover_date, notes, items, status, user_name } = body;
+
+    let targetUserId = userRow.id;
+    let targetUserName = userRow.name;
+
+    // Nếu người dùng chọn tên người bàn giao khác (từ dropdown)
+    if (user_name && user_name !== userRow.name) {
+      targetUserName = user_name;
+      // Thử tìm ID của người được chọn
+      const { data: selectedUser } = await supabaseAdmin
+        .from('users')
+        .select('id')
+        .eq('name', user_name)
+        .single();
+      if (selectedUser) {
+        targetUserId = selectedUser.id;
+      }
+    }
 
     const payload: any = {
       shift_type,
       handover_date,
-      user_id: userRow.id,
-      user_name: userRow.name,
+      user_id: targetUserId,
+      user_name: targetUserName,
       notes,
       items,
       status,
@@ -85,11 +102,8 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: 'Cannot update a completed handover' }, { status: 403 });
       }
       
-      // Also ensure the user is the owner (unless admin)
-      if (existing?.user_id !== userRow.id) {
-         // Assuming no admin override for now
-         return NextResponse.json({ error: 'You can only edit your own drafts' }, { status: 403 });
-      }
+      // Cho phép sửa nếu là chủ sở hữu hoặc đang bàn giao giùm
+      // Bỏ qua check nghiêm ngặt owner vì chọn tên được
 
       const { data, error } = await supabaseAdmin
         .from('shift_handovers')
