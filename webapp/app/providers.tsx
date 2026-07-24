@@ -16,7 +16,17 @@ export default function Providers({ children }: ProvidersProps) {
   return (
     <SessionProvider>
       {children}
-      <Toaster position="top-right" />
+      <Toaster 
+        position="top-right" 
+        toastOptions={{
+          style: {
+            fontSize: '1.1rem',
+            padding: '16px 24px',
+            maxWidth: '500px',
+            fontWeight: '500'
+          }
+        }}
+      />
     </SessionProvider>
   );
 }
