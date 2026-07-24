@@ -458,9 +458,19 @@ export function replaceReportWeek(doc: DocxModifier, _ignoredWeek: string) {
   
   const headerTable = doc.findTableByInternalText('CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM');
   if (headerTable) {
-    const cells = doc.getCells(doc.getRows(headerTable)[0]);
-    if (cells.length > 1) {
-      doc.replaceCell(cells[1], `Tây Ninh, ngày ${day} tháng ${month} năm ${currentYear}`);
+    const rows = doc.getRows(headerTable);
+    for (const row of rows) {
+      const cells = doc.getCells(row);
+      for (const cell of cells) {
+        if (cell.textContent?.includes('Tây Ninh, ngày')) {
+          const paras = cell.getElementsByTagName('w:p');
+          for (let i = 0; i < paras.length; i++) {
+            if (paras[i].textContent?.includes('Tây Ninh, ngày')) {
+               doc.replaceElementText(paras[i] as Element, `Tây Ninh, ngày ${day} tháng ${month} năm ${currentYear}`);
+            }
+          }
+        }
+      }
     }
   }
 

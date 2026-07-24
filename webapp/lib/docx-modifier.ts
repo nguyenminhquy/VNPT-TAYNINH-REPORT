@@ -58,7 +58,7 @@ export class DocxModifier {
     this.replaceElementText(paragraphs[paragraphIndex], text);
   }
 
-  private replaceElementText(el: Element, text: string) {
+  replaceElementText(el: Element, text: string) {
     // Keep paragraph properties
     let pPr = null;
     const pPrNode = el.getElementsByTagName('w:pPr')[0];
