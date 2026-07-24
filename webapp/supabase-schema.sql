@@ -94,7 +94,8 @@ CREATE TABLE IF NOT EXISTS shift_checklist_items (
   shift_type INTEGER NOT NULL, -- 0: Tất cả các ca, 1: Ca 1, 2: Ca 2, 3: Ca 3
   is_active BOOLEAN DEFAULT true,
   display_order INTEGER DEFAULT 0,
-  created_at TIMESTAMPTZ DEFAULT NOW()
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  CONSTRAINT unique_content_shift UNIQUE(content, shift_type)
 );
 
 -- Seed các đầu việc cố định (Cả 3 ca đều phải làm)
@@ -106,7 +107,7 @@ INSERT INTO shift_checklist_items (content, shift_type, display_order) VALUES
   ('Kiểm tra email', 0, 5),
   ('Theo dõi camera OMC', 0, 6),
   ('Cập nhật số ca online', 0, 7)
-ON CONFLICT DO NOTHING;
+ON CONFLICT (content, shift_type) DO NOTHING;
 
 -- Seed các đầu việc CA 1
 INSERT INTO shift_checklist_items (content, shift_type, display_order) VALUES
@@ -116,7 +117,7 @@ INSERT INTO shift_checklist_items (content, shift_type, display_order) VALUES
   ('Kiểm tra nghẽn thiết bị băng rộng cố định, xóa PMS', 1, 11),
   ('Kiểm tra OLT, SW', 1, 12),
   ('Thực hiện tích hợp thiết bị vô tuyến', 1, 13)
-ON CONFLICT DO NOTHING;
+ON CONFLICT (content, shift_type) DO NOTHING;
 
 -- Seed các đầu việc CA 2
 INSERT INTO shift_checklist_items (content, shift_type, display_order) VALUES
@@ -126,7 +127,7 @@ INSERT INTO shift_checklist_items (content, shift_type, display_order) VALUES
   ('Kiểm tra, xử lý báo hỏng KH VIP trên email, zalo, viber', 2, 11),
   ('Đổi port PON', 2, 12),
   ('Thực hiện biến động cố định 2 site (Ca tối)', 2, 13)
-ON CONFLICT DO NOTHING;
+ON CONFLICT (content, shift_type) DO NOTHING;
 
 -- Seed các đầu việc CA 3
 INSERT INTO shift_checklist_items (content, shift_type, display_order) VALUES
@@ -136,7 +137,7 @@ INSERT INTO shift_checklist_items (content, shift_type, display_order) VALUES
   ('Kiểm tra Báo hỏng mạng lớp trên', 3, 11),
   ('Đổi port PON', 3, 12),
   ('Test máy nổ (Thứ 2)', 3, 13)
-ON CONFLICT DO NOTHING;
+ON CONFLICT (content, shift_type) DO NOTHING;
 
 -- 7. Lịch sử phiếu giao ca (Sổ giao ca)
 CREATE TABLE IF NOT EXISTS shift_handovers (
