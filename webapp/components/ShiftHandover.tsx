@@ -347,14 +347,31 @@ export default function ShiftHandover({ user }: { user: any }) {
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 40 }}>
               {checklistItems.map((item, index) => (
-                <label key={item.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', background: '#f8fafc', borderRadius: 8, border: '1px solid rgba(0,0,0,0.05)', cursor: 'pointer' }}>
+                <label 
+                  key={item.id} 
+                  style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: 12, 
+                    padding: '12px 16px', 
+                    background: checkedItems[item.id] ? '#dbeafe' : '#f8fafc', 
+                    borderRadius: 8, 
+                    border: checkedItems[item.id] ? '1px solid #93c5fd' : '1px solid rgba(0,0,0,0.05)', 
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
                   <input 
                     type="checkbox" 
                     checked={!!checkedItems[item.id]} 
                     onChange={() => handleToggleCheck(item.id)} 
-                    style={{ width: 18, height: 18 }}
+                    style={{ width: 18, height: 18, accentColor: 'var(--primary-color)' }}
                   />
-                  <span style={{ fontSize: '1.05rem', color: checkedItems[item.id] ? 'var(--text-muted)' : 'var(--text-main)', textDecoration: checkedItems[item.id] ? 'line-through' : 'none' }}>
+                  <span style={{ 
+                    fontSize: '1.05rem', 
+                    color: checkedItems[item.id] ? 'var(--primary-color)' : 'var(--text-main)', 
+                    fontWeight: checkedItems[item.id] ? 600 : 400 
+                  }}>
                     {index + 1}. {item.content}
                   </span>
                 </label>
