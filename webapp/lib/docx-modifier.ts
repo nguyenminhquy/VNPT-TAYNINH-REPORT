@@ -86,15 +86,24 @@ export class DocxModifier {
       el.appendChild(pPr);
     }
 
-    // Create new w:r
-    const newRun = this.doc.createElement('w:r');
-    if (rPr) {
-      newRun.appendChild(rPr);
+    // Split text by newline to support multiline text
+    const lines = text.split('\\n');
+    for (let i = 0; i < lines.length; i++) {
+      const newRun = this.doc.createElement('w:r');
+      if (rPr) {
+        newRun.appendChild(rPr.cloneNode(true));
+      }
+      const newText = this.doc.createElement('w:t');
+      newText.appendChild(this.doc.createTextNode(lines[i]));
+      newRun.appendChild(newText);
+      el.appendChild(newRun);
+
+      if (i < lines.length - 1) {
+        const brRun = this.doc.createElement('w:r');
+        brRun.appendChild(this.doc.createElement('w:br'));
+        el.appendChild(brRun);
+      }
     }
-    const newText = this.doc.createElement('w:t');
-    newText.appendChild(this.doc.createTextNode(text));
-    newRun.appendChild(newText);
-    el.appendChild(newRun);
   }
 
   replaceCell(cell: Element, text: string) {

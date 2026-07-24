@@ -2,6 +2,20 @@ import { DocxModifier } from './docx-modifier';
 import { asNumber, percent, integer, decimal, evaluateTarget, clean, rawMatrix, worksheetMatrix, worksheetMatrixUntilBlank, rawMatrixUntilBlank } from './excel-extractor';
 import * as xlsx from 'xlsx';
 
+function padAndTruncateMatrix(matrix: string[][], maxRows: number, cols: number): string[][] {
+  const result: string[][] = [];
+  for (let r = 0; r < maxRows; r++) {
+    if (r < matrix.length) {
+      const row = [...matrix[r]];
+      while (row.length < cols) row.push('');
+      result.push(row.slice(0, cols));
+    } else {
+      result.push(Array(cols).fill(''));
+    }
+  }
+  return result;
+}
+
 export function updateMbbFbbMytv(doc: DocxModifier, sources: Record<string, xlsx.WorkBook>) {
   const mbb = sources['mbb'];
   const fbb = sources['fbb'];
@@ -17,20 +31,24 @@ export function updateMbbFbbMytv(doc: DocxModifier, sources: Record<string, xlsx
 
   const comparison = worksheetMatrixUntilBlank(mbb.Sheets['So sánh các tỉnh'], 3, 1, 3);
   const table2 = doc.findTableByInternalText('TỉnhQoS MBBQoE MBB');
-  if (table2) doc.writeTableMatrix(table2, comparison);
+  if (table2) {
+    doc.resizeTableRows(table2, comparison.length);
+    doc.writeTableMatrix(table2, comparison);
+  }
 
-  const mbbDetail = worksheetMatrixUntilBlank(mbb.Sheets['Kết quả chi tiết'], 4, 1, 8);
+  // table3 is fixed size with multiple sections, pad to original hardcoded sizes to avoid overwriting next sections
+  const mbbDetail = padAndTruncateMatrix(worksheetMatrixUntilBlank(mbb.Sheets['Kết quả chi tiết'], 4, 1, 8), 9, 8);
   const table3 = doc.findTableByInternalText('Thành phầnĐiểm thành phầnTổng');
   if (table3) {
     doc.writeTableMatrix(table3, mbbDetail, 3);
     
-    const fbbDetail = worksheetMatrixUntilBlank(fbb.Sheets['Thông tin chung'], 2, 1, 8);
+    const fbbDetail = padAndTruncateMatrix(worksheetMatrixUntilBlank(fbb.Sheets['Thôngত্তি chung'], 2, 1, 8), 16, 8);
     doc.writeTableMatrix(table3, fbbDetail, 13);
     
-    const mytvRows = rawMatrixUntilBlank(mytv.Sheets['Sheet1'], 2, 1, 8);
+    const mytvRows = padAndTruncateMatrix(rawMatrixUntilBlank(mytv.Sheets['Sheet1'], 2, 1, 8), 14, 8);
     const mytvDetail: string[][] = [];
     for (const row of mytvRows) {
-      const total = row[6];
+      const total = row[6] || '';
       mytvDetail.push([
         clean(row[0]), clean(row[1]), clean(row[3]), clean(row[4]), clean(row[5]),
         clean(total), evaluateTarget(total), clean(row[7])
@@ -41,35 +59,54 @@ export function updateMbbFbbMytv(doc: DocxModifier, sources: Record<string, xlsx
 
   const qosExplanation = worksheetMatrixUntilBlank(mbb.Sheets['Giải trình QoS'], 4, 1, 4);
   const qoeExplanation = worksheetMatrixUntilBlank(mbb.Sheets['Giải trình QoE'], 4, 1, 4);
-  
   const planSheetName = Object.keys(mbb.Sheets).find(name => name.startsWith('Dự kiến tuần')) || '';
   const plan = planSheetName ? worksheetMatrixUntilBlank(mbb.Sheets[planSheetName], 3, 1, 4) : [];
   const feedback = worksheetMatrixUntilBlank(mbb.Sheets['Phản ánh khách hàng (PAKH)'], 4, 1, 3);
 
   const table4 = doc.findTableByPrecedingText('Chỉ số QoS MBB');
-  if (table4) doc.writeTableMatrix(table4, qosExplanation);
+  if (table4) { doc.resizeTableRows(table4, qosExplanation.length); doc.writeTableMatrix(table4, qosExplanation); }
   const table5 = doc.findTableByPrecedingText('Chỉ số QoE MBB');
-  if (table5) doc.writeTableMatrix(table5, qoeExplanation);
+  if (table5) { doc.resizeTableRows(table5, qoeExplanation.length); doc.writeTableMatrix(table5, qoeExplanation); }
   const table6 = doc.findTableByPrecedingText('Công việc dự kiến tuần');
-  if (table6 && plan.length) doc.writeTableMatrix(table6, plan);
+  if (table6 && plan.length) { doc.resizeTableRows(table6, plan.length); doc.writeTableMatrix(table6, plan); }
   const table7 = doc.findTableByPrecedingText('Kết quả thực hiện:');
-  if (table7) doc.writeTableMatrix(table7, feedback);
+  if (table7) { doc.resizeTableRows(table7, feedback.length); doc.writeTableMatrix(table7, feedback); }
 
   const qosSheet = fbb.Sheets['Chi tiết QoS FBB'];
   const table8Real = doc.findTableByInternalText('Nguyên nhânGiải pháp');
-  if (table8Real) doc.writeTableMatrix(table8Real, worksheetMatrix(qosSheet, 1, 2, 1, 2));
+  if (table8Real) {
+    const data8 = worksheetMatrix(qosSheet, 1, 2, 1, 2);
+    doc.resizeTableRows(table8Real, data8.length);
+    doc.writeTableMatrix(table8Real, data8);
+  }
 
   const table9 = doc.findTableByInternalText('NgàyOLTSố lượng Uplink');
-  if (table9) doc.writeTableMatrix(table9, worksheetMatrix(qosSheet, 5, 6, 1, 7));
+  if (table9) {
+    const data9 = worksheetMatrix(qosSheet, 5, 6, 1, 7);
+    doc.resizeTableRows(table9, data9.length);
+    doc.writeTableMatrix(table9, data9);
+  }
 
   const table10 = doc.findTableByInternalText('STTTHTFBB QoSĐạt/Chưa đạt');
-  if (table10) doc.writeTableMatrix(table10, worksheetMatrixUntilBlank(qosSheet, 9, 1, 4));
+  if (table10) {
+    const data10 = worksheetMatrixUntilBlank(qosSheet, 9, 1, 4);
+    doc.resizeTableRows(table10, data10.length);
+    doc.writeTableMatrix(table10, data10);
+  }
 
   const table11 = doc.findTableByInternalText('STTTHTTTVTFBB QoSĐạt/Chưa đạt');
-  if (table11) doc.writeTableMatrix(table11, worksheetMatrixUntilBlank(qosSheet, 20, 1, 5));
+  if (table11) {
+    const data11 = worksheetMatrixUntilBlank(qosSheet, 20, 1, 5);
+    doc.resizeTableRows(table11, data11.length);
+    doc.writeTableMatrix(table11, data11);
+  }
 
   const table12 = doc.findTableByInternalText('Thuê bao suy haoTỉ lệ suy hao');
-  if (table12) doc.writeTableMatrix(table12, worksheetMatrixUntilBlank(fbb.Sheets['Suy hao thuê bao'], 2, 1, 7));
+  if (table12) {
+    const data12 = worksheetMatrixUntilBlank(fbb.Sheets['Suy hao thuê bao'], 2, 1, 7);
+    doc.resizeTableRows(table12, data12.length);
+    doc.writeTableMatrix(table12, data12);
+  }
 
   const planWeekMatch = planSheetName.match(/(\d+)$/);
   if (planWeekMatch) {
