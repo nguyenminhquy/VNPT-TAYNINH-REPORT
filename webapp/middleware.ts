@@ -5,7 +5,7 @@ import { getToken } from 'next-auth/jwt';
  * Danh sách các path được phép truy cập mà không cần đăng nhập.
  * Sử dụng startsWith để hỗ trợ nested routes.
  */
-const PUBLIC_PATHS = ['/login', '/api/auth', '/api/debug-blobs', '/api/test-put', '/vnpt-logo-new.png', '/bg-vnpt.png'];
+const PUBLIC_PATHS = ['/login', '/api/auth', '/api/debug-blobs', '/api/test-put', '/vnpt-logo-new.png', '/bg-vnpt.png', '/api/setup-users'];
 
 /**
  * Kiểm tra xem pathname có thuộc vùng công khai không.
