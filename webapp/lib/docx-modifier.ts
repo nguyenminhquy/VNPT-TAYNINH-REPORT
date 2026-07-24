@@ -114,9 +114,12 @@ export class DocxModifier {
       cell.appendChild(p);
     } else {
       this.replaceElementText(paragraphs[0], text);
-      // Remove other paragraphs
+      // Remove other paragraphs safely
       for (let i = paragraphs.length - 1; i > 0; i--) {
-        cell.removeChild(paragraphs[i]);
+        const p = paragraphs[i];
+        if (p.parentNode) {
+          p.parentNode.removeChild(p);
+        }
       }
     }
   }
