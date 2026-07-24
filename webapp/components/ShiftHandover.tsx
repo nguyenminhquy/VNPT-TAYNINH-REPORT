@@ -44,6 +44,11 @@ export default function ShiftHandover({ user }: { user: any }) {
   // History state
   const [history, setHistory] = useState<any[]>([]);
   const [loadingHistory, setLoadingHistory] = useState(false);
+  
+  // Search filters
+  const [searchDate, setSearchDate] = useState('');
+  const [searchUser, setSearchUser] = useState('');
+  const [searchNotes, setSearchNotes] = useState('');
 
   useEffect(() => {
     if (activeSubTab === 'new') {
@@ -230,6 +235,14 @@ export default function ShiftHandover({ user }: { user: any }) {
     }
   };
 
+  const filteredHistory = history.filter(record => {
+    let match = true;
+    if (searchDate && record.handover_date !== searchDate) match = false;
+    if (searchUser && !record.user_name?.toLowerCase().includes(searchUser.toLowerCase())) match = false;
+    if (searchNotes && !record.notes?.toLowerCase().includes(searchNotes.toLowerCase())) match = false;
+    return match;
+  });
+
   return (
     <div className="fade-in">
       <div style={{ display: 'flex', gap: 16, marginBottom: 24, borderBottom: '1px solid var(--border-color)', paddingBottom: 16 }}>
@@ -402,8 +415,40 @@ export default function ShiftHandover({ user }: { user: any }) {
 
       {activeSubTab === 'history' && (
         <div className="card-glass" style={{ padding: '32px 40px' }}>
-          <h2 className="section-title" style={{ marginBottom: 24 }}>Lịch sử Phiếu Giao Ca</h2>
+          <h2 className="section-title" style={{ marginBottom: 24 }}>Lịch sử giao ca</h2>
           
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 2fr', gap: 16, marginBottom: 24, padding: 16, background: '#f8fafc', borderRadius: 8, border: '1px solid #cbd5e1' }}>
+            <div>
+              <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4, fontWeight: 600 }}>Tìm theo Ngày</label>
+              <input 
+                type="date" 
+                value={searchDate} 
+                onChange={e => setSearchDate(e.target.value)} 
+                style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #cbd5e1' }}
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4, fontWeight: 600 }}>Tìm theo Người bàn giao</label>
+              <input 
+                type="text" 
+                placeholder="Nhập tên người trực..."
+                value={searchUser} 
+                onChange={e => setSearchUser(e.target.value)} 
+                style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #cbd5e1' }}
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4, fontWeight: 600 }}>Tìm theo Nội dung tồn đọng</label>
+              <input 
+                type="text" 
+                placeholder="Nhập từ khóa nội dung..."
+                value={searchNotes} 
+                onChange={e => setSearchNotes(e.target.value)} 
+                style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #cbd5e1' }}
+              />
+            </div>
+          </div>
+
           {loadingHistory ? (
             <div style={{ textAlign: 'center', padding: '40px' }}><Loader2 className="spin-anim" /></div>
           ) : (
@@ -421,7 +466,13 @@ export default function ShiftHandover({ user }: { user: any }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {history.map(record => (
+                  {filteredHistory.length === 0 ? (
+                    <tr>
+                      <td colSpan={7} style={{ textAlign: 'center', padding: '30px 0', color: '#64748b' }}>
+                        Không tìm thấy phiếu giao ca nào.
+                      </td>
+                    </tr>
+                  ) : filteredHistory.map(record => (
                     <tr key={record.id}>
                       <td>{new Date(record.handover_date).toLocaleDateString('vi-VN')}</td>
                       <td>{record.shift_time}</td>
