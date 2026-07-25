@@ -168,12 +168,33 @@ export default function WeeklySchedule({ user }: { user: any }) {
           const header = `${DAY_LABELS[idx]} (${dateStr})`;
           
           const assigned = scheduleData[day]?.[shift] || [];
-          const assignedStrings = assigned.map(item => {
-            const name = typeof item === 'string' ? item.split('|')[0] : item;
-            const pos = typeof item === 'string' ? (item.split('|')[1] || '') : '';
-            return pos ? `${name} (${pos})` : name;
-          });
-          rowData[header] = assignedStrings.join(', ');
+          const is3Slot = ['Sáng', 'Chiều', 'Tối'].includes(shift);
+          
+          if (is3Slot) {
+            const getU = (p: string) => {
+              for (const item of assigned) {
+                const name = typeof item === 'string' ? item.split('|')[0] : (typeof item === 'object' ? (item as any).name : item);
+                const pos = typeof item === 'string' ? (item.split('|')[1] || '') : (typeof item === 'object' ? (item as any).pos || '' : '');
+                if (pos === p) return name;
+              }
+              return '';
+            };
+            const c1 = getU('Ca 1');
+            const c2 = getU('Ca 2');
+            const c3 = getU('Ca 3');
+            const parts = [];
+            if (c1) parts.push(`Ca 1: ${c1}`);
+            if (c2) parts.push(`Ca 2: ${c2}`);
+            if (c3) parts.push(`Ca 3: ${c3}`);
+            rowData[header] = parts.length > 0 ? parts.join(' | ') : '(Trống)';
+          } else {
+            const assignedStrings = assigned.map(item => {
+              const name = typeof item === 'string' ? item.split('|')[0] : item;
+              const pos = typeof item === 'string' ? (item.split('|')[1] || '') : '';
+              return pos ? `${name} (${pos})` : name;
+            });
+            rowData[header] = assignedStrings.join(', ');
+          }
         });
         
         return rowData;
@@ -212,6 +233,16 @@ export default function WeeklySchedule({ user }: { user: any }) {
     return null; // Not assigned
   };
 
+  const getSlotUser = (day: string, shift: string, pos: string) => {
+    const assigned = scheduleData[day]?.[shift] || [];
+    for (const item of assigned) {
+      const name = typeof item === 'string' ? item.split('|')[0] : (typeof item === 'object' ? (item as any).name : item);
+      const p = typeof item === 'string' ? (item.split('|')[1] || '') : (typeof item === 'object' ? (item as any).pos || '' : '');
+      if (p === pos) return name;
+    }
+    return '';
+  };
+
   const handleSetUserPos = (userName: string, pos: string) => {
     if (!activeCell) return;
     setScheduleData(prev => {
@@ -219,10 +250,14 @@ export default function WeeklySchedule({ user }: { user: any }) {
       if (!newData[activeCell.day]) newData[activeCell.day] = {};
       const currentAssigned = newData[activeCell.day][activeCell.shift] || [];
       
-      // Remove existing entry for this user
+      // Remove existing entry for this user OR for this pos if it's a 3-slot shift and pos is Ca 1/2/3
+      const is3Slot = ['Sáng', 'Chiều', 'Tối'].includes(activeCell.shift);
       const filtered = currentAssigned.filter(item => {
         const name = typeof item === 'string' ? item.split('|')[0] : (typeof item === 'object' ? (item as any).name : item);
-        return name !== userName;
+        const p = typeof item === 'string' ? (item.split('|')[1] || '') : (typeof item === 'object' ? (item as any).pos || '' : '');
+        if (name === userName) return false;
+        if (is3Slot && ['Ca 1', 'Ca 2', 'Ca 3'].includes(pos) && p === pos) return false;
+        return true;
       });
 
       if (pos && pos !== 'Remove') {
@@ -405,11 +440,13 @@ export default function WeeklySchedule({ user }: { user: any }) {
                           cellBorder = '2px solid #3b82f6';
                         }
 
+                        const is3Slot = ['Sáng', 'Chiều', 'Tối'].includes(shift);
+
                         return (
                           <td 
                             key={`${day}-${shift}`} 
                             style={{ 
-                              padding: 8, 
+                              padding: 6, 
                               verticalAlign: 'top', 
                               borderRight: '1px solid #e2e8f0', 
                               background: cellBg,
@@ -421,51 +458,92 @@ export default function WeeklySchedule({ user }: { user: any }) {
                             }}
                             onClick={() => handleCellClick(day, shift)}
                           >
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, minHeight: 60, alignContent: 'flex-start' }}>
-                              {assigned.map(item => {
-                                const name = typeof item === 'string' ? item.split('|')[0] : (typeof item === 'object' ? (item as any).name : item);
-                                const pos = typeof item === 'string' ? (item.split('|')[1] || '') : (typeof item === 'object' ? (item as any).pos || '' : '');
-                                
-                                const isHighlight = highlightedUser && name === highlightedUser;
-                                
-                                let bg = isHighlight ? '#22c55e' : '#e2e8f0';
-                                let color = isHighlight ? '#fff' : '#334155';
-                                
-                                if (!isHighlight && pos) {
-                                  if (pos === 'Ca 1') { bg = '#dbeafe'; color = '#1e40af'; }
-                                  else if (pos === 'Ca 2') { bg = '#fef9c3'; color = '#854d0e'; }
-                                  else if (pos === 'Ca 3') { bg = '#f3e8ff'; color = '#6b21a8'; }
-                                  else if (pos === 'Trưởng ca') { bg = '#ffe4e6'; color = '#be123c'; }
-                                }
+                            {is3Slot ? (
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: 4, minHeight: 64 }}>
+                                {['Ca 1', 'Ca 2', 'Ca 3'].map(slot => {
+                                  const slotUser = getSlotUser(day, shift, slot);
+                                  const isHighlight = highlightedUser && slotUser === highlightedUser;
+                                  
+                                  let slotBg = '#f8fafc';
+                                  let slotColor = '#334155';
+                                  let labelColor = '#64748b';
+                                  
+                                  if (isHighlight) {
+                                    slotBg = '#22c55e';
+                                    slotColor = '#fff';
+                                    labelColor = '#fff';
+                                  } else if (slotUser) {
+                                    if (slot === 'Ca 1') { slotBg = '#eff6ff'; slotColor = '#1e40af'; labelColor = '#3b82f6'; }
+                                    else if (slot === 'Ca 2') { slotBg = '#fef9c3'; slotColor = '#854d0e'; labelColor = '#eab308'; }
+                                    else if (slot === 'Ca 3') { slotBg = '#f3e8ff'; slotColor = '#6b21a8'; labelColor = '#a855f7'; }
+                                  }
 
-                                return (
-                                  <span 
-                                    key={name}
-                                    style={{ 
-                                      padding: '4px 8px', 
-                                      background: bg, 
-                                      color: color,
-                                      borderRadius: 4, 
-                                      fontSize: '0.85rem',
-                                      fontWeight: 600,
-                                      whiteSpace: 'nowrap',
-                                      display: 'inline-flex',
-                                      alignItems: 'center',
-                                      gap: 4
-                                    }}
-                                  >
-                                    {name}
-                                    {pos && <span style={{ fontSize: '0.75rem', opacity: 0.9, background: 'rgba(0,0,0,0.08)', padding: '1px 5px', borderRadius: 3 }}>{pos}</span>}
-                                  </span>
-                                );
-                              })}
-                              {assigned.length === 0 && (
-                                <span style={{ color: '#cbd5e1', fontSize: '0.85rem', fontStyle: 'italic', margin: 'auto' }}>(Trống)</span>
-                              )}
-                            </div>
-                          </td>
-                        );
-                      })}
+                                  return (
+                                    <div 
+                                      key={slot} 
+                                      style={{ 
+                                        display: 'flex', alignItems: 'center', justifyContent: 'space-between', 
+                                        padding: '3px 6px', borderRadius: 4, background: slotBg, 
+                                        border: slotUser && !isHighlight ? '1px solid rgba(0,0,0,0.05)' : '1px solid transparent',
+                                        fontSize: '0.8rem' 
+                                      }}
+                                    >
+                                      <span style={{ fontWeight: 700, color: labelColor, fontSize: '0.75rem' }}>{slot}:</span>
+                                      <span style={{ fontWeight: 600, color: slotColor, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 85 }}>
+                                        {slotUser || <i style={{ color: '#cbd5e1', fontWeight: 400 }}>--</i>}
+                                      </span>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            ) : (
+                              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, minHeight: 60, alignContent: 'flex-start' }}>
+                                {assigned.map(item => {
+                                  const name = typeof item === 'string' ? item.split('|')[0] : (typeof item === 'object' ? (item as any).name : item);
+                                  const pos = typeof item === 'string' ? (item.split('|')[1] || '') : (typeof item === 'object' ? (item as any).pos || '' : '');
+                                  
+                                  const isHighlight = highlightedUser && name === highlightedUser;
+                                  
+                                  let bg = isHighlight ? '#22c55e' : '#e2e8f0';
+                                  let color = isHighlight ? '#fff' : '#334155';
+                                  
+                                  if (!isHighlight && pos) {
+                                    if (pos === 'Ca 1') { bg = '#dbeafe'; color = '#1e40af'; }
+                                    else if (pos === 'Ca 2') { bg = '#fef9c3'; color = '#854d0e'; }
+                                    else if (pos === 'Ca 3') { bg = '#f3e8ff'; color = '#6b21a8'; }
+                                    else if (pos === 'Trưởng ca') { bg = '#ffe4e6'; color = '#be123c'; }
+                                  }
+
+                                  return (
+                                    <span 
+                                      key={name}
+                                      style={{ 
+                                        padding: '4px 8px', 
+                                        background: bg, 
+                                        color: color,
+                                        borderRadius: 4, 
+                                        fontSize: '0.85rem',
+                                        fontWeight: 600,
+                                        whiteSpace: 'nowrap',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: 4
+                                      }}
+                                    >
+                                      {name}
+                                      {pos && <span style={{ fontSize: '0.75rem', opacity: 0.9, background: 'rgba(0,0,0,0.08)', padding: '1px 5px', borderRadius: 3 }}>{pos}</span>}
+                                    </span>
+                                  );
+                                })}
+                                {assigned.length === 0 && (
+                                  <span style={{ color: '#cbd5e1', fontSize: '0.85rem', fontStyle: 'italic', margin: 'auto' }}>(Trống)</span>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        </td>
+                      );
+                    })}
                     </tr>
                   ))}
                 </tbody>
@@ -485,58 +563,99 @@ export default function WeeklySchedule({ user }: { user: any }) {
                   <button onClick={() => setActiveCell(null)} style={{ background: 'none', border: 'none', fontSize: '1.2rem', cursor: 'pointer', color: '#64748b' }}>&times;</button>
                 </div>
                 
-                <div style={{ padding: 16, maxHeight: 400, overflowY: 'auto' }}>
-                  <p style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: 12 }}>Chọn nhân sự và chỉ định vị trí ca:</p>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                    {users.map(u => {
-                      const currentPos = getUserPos(activeCell.day, activeCell.shift, u.name);
-                      const isSelected = currentPos !== null;
-                      return (
-                        <div 
-                          key={u.id}
-                          style={{ 
-                            display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 12px', 
-                            borderRadius: 6,
-                            background: isSelected ? '#f0f9ff' : '#f8fafc',
-                            border: isSelected ? '1px solid #bfdbfe' : '1px solid transparent',
-                            transition: 'all 0.1s'
-                          }}
-                        >
-                          <label style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', flex: 1, margin: 0 }}>
-                            <input 
-                              type="checkbox" 
-                              checked={isSelected}
-                              onChange={() => {
-                                if (isSelected) handleSetUserPos(u.name, 'Remove');
-                                else {
-                                  const defaultPos = ['Sáng', 'Chiều', 'Tối'].includes(activeCell.shift) ? 'Ca 1' : 'Không';
-                                  handleSetUserPos(u.name, defaultPos);
-                                }
+                <div style={{ padding: 16, maxHeight: 420, overflowY: 'auto' }}>
+                  {['Sáng', 'Chiều', 'Tối'].includes(activeCell.shift) ? (
+                    <div>
+                      <p style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: 16, fontWeight: 600 }}>Chỉ định nhân sự theo vị trí ca:</p>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                        {['Ca 1', 'Ca 2', 'Ca 3'].map(slot => {
+                          const currentUser = getSlotUser(activeCell.day, activeCell.shift, slot);
+                          let bg = '#eff6ff'; let border = '#bfdbfe'; let labelCol = '#1e40af';
+                          if (slot === 'Ca 2') { bg = '#fef9c3'; border = '#fde047'; labelCol = '#854d0e'; }
+                          else if (slot === 'Ca 3') { bg = '#f3e8ff'; border = '#d8b4fe'; labelCol = '#6b21a8'; }
+
+                          return (
+                            <div key={slot} style={{ background: bg, padding: 12, borderRadius: 8, border: `1px solid ${border}` }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                                <label style={{ fontWeight: 700, color: labelCol, fontSize: '0.9rem', margin: 0 }}>
+                                  {slot} {slot === 'Ca 1' ? '(Vô tuyến)' : slot === 'Ca 2' ? '(Truyền dẫn)' : '(Mạng lõi/OMC)'}:
+                                </label>
+                                {currentUser && (
+                                  <button 
+                                    onClick={() => handleSetUserPos(currentUser, 'Remove')}
+                                    style={{ background: 'none', border: 'none', color: '#ef4444', fontSize: '0.75rem', cursor: 'pointer', fontWeight: 600, padding: 0 }}
+                                  >
+                                    Xóa
+                                  </button>
+                                )}
+                              </div>
+                              <select
+                                value={currentUser || ''}
+                                onChange={e => {
+                                  if (currentUser) handleSetUserPos(currentUser, 'Remove');
+                                  if (e.target.value) handleSetUserPos(e.target.value, slot);
+                                }}
+                                style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #cbd5e1', background: '#fff', color: '#1e293b', fontWeight: 600, outline: 'none', fontSize: '0.9rem' }}
+                              >
+                                <option value="">-- Chọn nhân sự --</option>
+                                {users.map(u => (
+                                  <option key={u.id} value={u.name}>{u.name}</option>
+                                ))}
+                              </select>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <p style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: 12 }}>Chọn nhân sự và chỉ định vị trí ca:</p>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                        {users.map(u => {
+                          const currentPos = getUserPos(activeCell.day, activeCell.shift, u.name);
+                          const isSelected = currentPos !== null;
+                          return (
+                            <div 
+                              key={u.id}
+                              style={{ 
+                                display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 12px', 
+                                borderRadius: 6,
+                                background: isSelected ? '#f0f9ff' : '#f8fafc',
+                                border: isSelected ? '1px solid #bfdbfe' : '1px solid transparent',
+                                transition: 'all 0.1s'
                               }}
-                              style={{ width: 16, height: 16, accentColor: 'var(--primary-color)' }}
-                            />
-                            <span style={{ fontWeight: isSelected ? 600 : 400, color: isSelected ? 'var(--primary-color)' : 'inherit' }}>
-                              {u.name}
-                            </span>
-                          </label>
-                          
-                          {isSelected && (
-                            <select
-                              value={currentPos || 'Không'}
-                              onChange={e => handleSetUserPos(u.name, e.target.value)}
-                              style={{ padding: '4px 8px', borderRadius: 4, border: '1px solid #cbd5e1', fontSize: '0.8rem', background: '#fff', color: '#1e293b', fontWeight: 600, outline: 'none' }}
                             >
-                              <option value="Không">Chung (Không chia)</option>
-                              <option value="Ca 1">Ca 1</option>
-                              <option value="Ca 2">Ca 2</option>
-                              <option value="Ca 3">Ca 3</option>
-                              <option value="Trưởng ca">Trưởng ca</option>
-                            </select>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
+                              <label style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', flex: 1, margin: 0 }}>
+                                <input 
+                                  type="checkbox" 
+                                  checked={isSelected}
+                                  onChange={() => {
+                                    if (isSelected) handleSetUserPos(u.name, 'Remove');
+                                    else handleSetUserPos(u.name, 'Không');
+                                  }}
+                                  style={{ width: 16, height: 16, accentColor: 'var(--primary-color)' }}
+                                />
+                                <span style={{ fontWeight: isSelected ? 600 : 400, color: isSelected ? 'var(--primary-color)' : 'inherit' }}>
+                                  {u.name}
+                                </span>
+                              </label>
+                              
+                              {isSelected && (
+                                <select
+                                  value={currentPos || 'Không'}
+                                  onChange={e => handleSetUserPos(u.name, e.target.value)}
+                                  style={{ padding: '4px 8px', borderRadius: 4, border: '1px solid #cbd5e1', fontSize: '0.8rem', background: '#fff', color: '#1e293b', fontWeight: 600, outline: 'none' }}
+                                >
+                                  <option value="Không">Chung (Không chia)</option>
+                                  <option value="Trưởng ca">Trưởng ca</option>
+                                </select>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
                 </div>
                 
                 <div style={{ padding: 16, background: '#f8fafc', borderTop: '1px solid #e2e8f0' }}>
