@@ -5,6 +5,22 @@ import path from 'path';
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
+    
+    // Nếu có biến môi trường CD5_BACKEND_URL, chuyển tiếp upload chunk đến FastAPI server
+    const backendUrl = process.env.CD5_BACKEND_URL || process.env.NEXT_PUBLIC_CD5_BACKEND_URL;
+    if (backendUrl) {
+      try {
+        const res = await fetch(`${backendUrl}/upload-chunk`, {
+          method: 'POST',
+          body: formData as any
+        });
+        const data = await res.json();
+        return NextResponse.json(data, { status: res.status });
+      } catch (err: any) {
+        return NextResponse.json({ success: false, error: `Lỗi chuyển tiếp chunk lên FastAPI Backend: ${err.message}` }, { status: 502 });
+      }
+    }
+
     const fileChunk = formData.get('chunk') as Blob | null;
     const fileName = formData.get('fileName') as string | null;
     const chunkIndex = parseInt(formData.get('chunkIndex') as string || '0', 10);

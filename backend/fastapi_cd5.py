@@ -3,7 +3,7 @@ import shutil
 import json
 from pathlib import Path
 from typing import List, Optional
-from fastapi import FastAPI, UploadFile, File, HTTPException, BackgroundTasks
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, BackgroundTasks
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
@@ -54,6 +54,34 @@ async def upload_files(files: List[UploadFile] = File(...)):
         "success": True,
         "message": f"Đã tải lên thành công {len(saved_files)} file.",
         "files": saved_files
+    }
+
+@app.post("/upload-chunk", summary="Upload phân đoạn (Chunked Upload) cho file Excel lớn")
+async def upload_chunk(
+    chunk: UploadFile = File(...),
+    fileName: str = Form(...),
+    chunkIndex: int = Form(0),
+    totalChunks: int = Form(1),
+    clearAll: Optional[str] = Form(None)
+):
+    """
+    Nhận từng mảnh 2MB của file lớn để không bị giới hạn bộ nhớ/payload.
+    """
+    if clearAll == "true" and chunkIndex == 0:
+        for f in UPLOAD_DIR.glob("*"):
+            if f.is_file():
+                try: f.unlink()
+                except: pass
+
+    file_path = UPLOAD_DIR / fileName
+    mode = "wb" if chunkIndex == 0 else "ab"
+    with open(file_path, mode) as buffer:
+        shutil.copyfileobj(chunk.file, buffer)
+
+    return {
+        "success": True,
+        "message": f"Đã lưu phần {chunkIndex + 1}/{totalChunks} của file {fileName}",
+        "isDone": chunkIndex == totalChunks - 1
     }
 
 @app.post("/process", summary="Kích hoạt quá trình xử lý & tính toán KPI")

@@ -4,6 +4,20 @@ import path from 'path';
 
 export async function GET(req: NextRequest) {
   try {
+    const backendUrl = process.env.CD5_BACKEND_URL || process.env.NEXT_PUBLIC_CD5_BACKEND_URL;
+    if (backendUrl) {
+      try {
+        const res = await fetch(`${backendUrl}/download`);
+        const buffer = await res.arrayBuffer();
+        const headers = new Headers();
+        headers.set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        headers.set('Content-Disposition', 'attachment; filename="BaoCao_XLSC_TayNinh_Updated.xlsx"');
+        return new NextResponse(buffer, { status: 200, headers });
+      } catch (err: any) {
+        return NextResponse.json({ success: false, error: `Lỗi tải báo cáo từ FastAPI Backend: ${err.message}` }, { status: 502 });
+      }
+    }
+
     const outputFile = path.join(process.cwd(), '..', 'exports', 'BaoCao_XLSC_TayNinh_Updated.xlsx');
     
     try {
