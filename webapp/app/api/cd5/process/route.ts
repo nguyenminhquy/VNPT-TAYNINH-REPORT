@@ -16,8 +16,8 @@ export async function POST(req: NextRequest) {
       // no body or not json
     }
 
-    // 1. Kiểm tra kiến trúc phân tách Backend (ưu tiên header từ UI -> biến môi trường Vercel)
-    const backendUrl = req.headers.get('x-cd5-backend-url') || req.nextUrl?.searchParams.get('backend_url') || process.env.CD5_BACKEND_URL || process.env.NEXT_PUBLIC_CD5_BACKEND_URL;
+    // 1. Kiểm tra kiến trúc phân tách Backend (ưu tiên header từ UI -> biến môi trường Vercel -> mặc định Render)
+    const backendUrl = req.headers.get('x-cd5-backend-url') || req.nextUrl?.searchParams.get('backend_url') || process.env.CD5_BACKEND_URL || process.env.NEXT_PUBLIC_CD5_BACKEND_URL || (process.env.VERCEL ? 'https://vnpt-tayninh-report.onrender.com' : null);
     if (backendUrl) {
       const cleanUrl = backendUrl.replace(/\/+$/, '');
       try {

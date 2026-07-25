@@ -4,7 +4,7 @@ import path from 'path';
 
 export async function GET(req: NextRequest) {
   try {
-    const backendUrl = req.headers.get('x-cd5-backend-url') || req.nextUrl?.searchParams.get('backend_url') || process.env.CD5_BACKEND_URL || process.env.NEXT_PUBLIC_CD5_BACKEND_URL;
+    const backendUrl = req.headers.get('x-cd5-backend-url') || req.nextUrl?.searchParams.get('backend_url') || process.env.CD5_BACKEND_URL || process.env.NEXT_PUBLIC_CD5_BACKEND_URL || (process.env.VERCEL ? 'https://vnpt-tayninh-report.onrender.com' : null);
     if (backendUrl) {
       const cleanUrl = backendUrl.replace(/\/+$/, '');
       try {

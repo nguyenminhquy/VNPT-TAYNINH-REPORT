@@ -6,8 +6,8 @@ export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
     
-    // Nếu có cấu hình Backend riêng (từ header UI hoặc biến môi trường Vercel), chuyển tiếp chunk
-    const backendUrl = req.headers.get('x-cd5-backend-url') || req.nextUrl?.searchParams.get('backend_url') || process.env.CD5_BACKEND_URL || process.env.NEXT_PUBLIC_CD5_BACKEND_URL;
+    // Nếu có cấu hình Backend riêng (từ header UI, biến môi trường Vercel, hoặc mặc định trên Render), chuyển tiếp chunk
+    const backendUrl = req.headers.get('x-cd5-backend-url') || req.nextUrl?.searchParams.get('backend_url') || process.env.CD5_BACKEND_URL || process.env.NEXT_PUBLIC_CD5_BACKEND_URL || (process.env.VERCEL ? 'https://vnpt-tayninh-report.onrender.com' : null);
     if (backendUrl) {
       try {
         const res = await fetch(`${backendUrl}/upload-chunk`, {
