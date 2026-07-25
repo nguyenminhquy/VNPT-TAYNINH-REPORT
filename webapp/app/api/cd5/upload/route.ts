@@ -5,12 +5,6 @@ import path from 'path';
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
-    const files = formData.getAll('files') as File[];
-
-    if (!files || files.length === 0) {
-      return NextResponse.json({ success: false, error: 'Không có file nào được chọn' }, { status: 400 });
-    }
-
     const uploadDir = path.join(process.cwd(), '..', 'exports', 'cd5_uploads');
     await fs.mkdir(uploadDir, { recursive: true });
 
@@ -20,22 +14,48 @@ export async function POST(req: NextRequest) {
       for (const f of oldFiles) {
         await fs.unlink(path.join(uploadDir, f)).catch(() => {});
       }
-    } catch (e) {
-      // ignore if folder empty
-    }
+    } catch (e) {}
+
+    const fieldMapping: { [key: string]: string } = {
+      vt_tientrinh: '01_tien_trinh_xu_ly_su_co_votuyen.xlsx',
+      access_tientrinh: '02_tien_trinh_xu_ly_su_co_access.xlsx',
+      mane_tientrinh: '03_tien_trinh_xu_ly_su_co_mane.xlsx',
+      xlsc_cd5: '04_xlsc_brcd_chi_tiet_cd5.xlsx',
+      votuyen_bc: '05_bao_cao_xlsc_tram_votuyen.xlsx',
+      export_map: '06_export.xlsx'
+    };
 
     const savedFiles: string[] = [];
-    for (const file of files) {
-      if (!file.name) continue;
-      const buffer = Buffer.from(await file.arrayBuffer());
-      const filePath = path.join(uploadDir, file.name);
-      await fs.writeFile(filePath, buffer);
-      savedFiles.push(file.name);
+
+    // 1. Kiểm tra upload theo từng card (field cụ thể)
+    for (const [field, targetName] of Object.entries(fieldMapping)) {
+      const file = formData.get(field) as File | null;
+      if (file && file.name) {
+        const buffer = Buffer.from(await file.arrayBuffer());
+        const filePath = path.join(uploadDir, targetName);
+        await fs.writeFile(filePath, buffer);
+        savedFiles.push(`${file.name} -> ${targetName}`);
+      }
+    }
+
+    // 2. Fallback cho trường hợp upload chung vào mảng 'files'
+    if (savedFiles.length === 0) {
+      const files = formData.getAll('files') as File[];
+      if (!files || files.length === 0) {
+        return NextResponse.json({ success: false, error: 'Không có file nào được chọn hoặc tải lên' }, { status: 400 });
+      }
+      for (const file of files) {
+        if (!file.name) continue;
+        const buffer = Buffer.from(await file.arrayBuffer());
+        const filePath = path.join(uploadDir, file.name);
+        await fs.writeFile(filePath, buffer);
+        savedFiles.push(file.name);
+      }
     }
 
     return NextResponse.json({
       success: true,
-      message: `Đã tải lên thành công ${savedFiles.length} file.`,
+      message: `Đã tải lên thành công ${savedFiles.length} file đầu vào.`,
       files: savedFiles
     });
   } catch (error: any) {
