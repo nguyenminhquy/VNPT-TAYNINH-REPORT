@@ -136,14 +136,40 @@ export default function Special5Report() {
     }
   };
 
-  const handleSingleFileSelect = (key: keyof FileMapState, file: File | null) => {
-    if (file && file.size > 4.5 * 1024 * 1024) {
-      setError(`⚠️ CẢNH BÁO: File "${file.name}" có dung lượng ${(file.size / 1024 / 1024).toFixed(2)}MB. Vercel online có giới hạn tối đa 4.5MB/request nên file này có thể báo lỗi "Request Entity Too Large". Vui lòng chọn file nhỏ hơn hoặc kiểm thử offline!`);
-    } else {
-      setError(null);
+  const CHUNK_SIZE = 2 * 1024 * 1024; // 2MB mỗi chunk (đảm bảo luôn nhỏ hơn giới hạn 4.5MB của Vercel)
+
+  const uploadFileInChunks = async (file: File, targetName: string, clearAll: boolean) => {
+    const totalChunks = Math.ceil(file.size / CHUNK_SIZE) || 1;
+
+    for (let i = 0; i < totalChunks; i++) {
+      const start = i * CHUNK_SIZE;
+      const end = Math.min(file.size, start + CHUNK_SIZE);
+      const chunkBlob = file.slice(start, end);
+
+      const formData = new FormData();
+      formData.append('chunk', chunkBlob);
+      formData.append('fileName', targetName);
+      formData.append('chunkIndex', i.toString());
+      formData.append('totalChunks', totalChunks.toString());
+      if (clearAll && i === 0) {
+        formData.append('clearAll', 'true');
+      }
+
+      const resJson = await safeFetchJson('/api/cd5/upload-chunk', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!resJson || !resJson.success) {
+        throw new Error(resJson?.error || `Lỗi tải lên phần ${i + 1}/${totalChunks} của file ${file.name}`);
+      }
     }
+  };
+
+  const handleSingleFileSelect = (key: keyof FileMapState, file: File | null) => {
     setFileMap(prev => ({ ...prev, [key]: file }));
     setUseSample(false);
+    setError(null);
   };
 
   const selectedCount = Object.values(fileMap).filter(f => f !== null).length;
@@ -154,29 +180,28 @@ export default function Special5Report() {
     setUseSample(sample);
 
     try {
-      // 1. Nếu không dùng mẫu thì upload từng file tuần tự (để tránh giới hạn 4.5MB của Vercel)
+      // 1. Nếu không dùng mẫu thì upload chia nhỏ file (Chunked Upload) để vượt giới hạn 4.5MB của Vercel
       if (!sample) {
         if (selectedCount === 0) {
           throw new Error('Vui lòng chọn file vào các thẻ tương ứng trước khi xử lý!');
         }
         setUploading(true);
         
+        const fieldMapping: { [key: string]: string } = {
+          vt_tientrinh: '01_tien_trinh_xu_ly_su_co_votuyen.xlsx',
+          access_tientrinh: '02_tien_trinh_xu_ly_su_co_access.xlsx',
+          mane_tientrinh: '03_tien_trinh_xu_ly_su_co_mane.xlsx',
+          xlsc_cd5: '04_xlsc_brcd_chi_tiet_cd5.xlsx',
+          votuyen_bc: '05_bao_cao_xlsc_tram_votuyen.xlsx',
+          export_map: '06_export.xlsx'
+        };
+
+        let isFirstFile = true;
         for (const [key, file] of Object.entries(fileMap)) {
           if (!file) continue;
-          if (file.size > 4.5 * 1024 * 1024) {
-            throw new Error(`⚠️ File "${file.name}" (${(file.size / 1024 / 1024).toFixed(1)}MB) vượt quá giới hạn tải lên của Vercel online (tối đa 4.5MB/request). Vui lòng dùng nút "Dùng Dữ Liệu Mẫu TTS" để thử nghiệm ngay!`);
-          }
-          const formData = new FormData();
-          formData.append(key, file);
-
-          const upJson = await safeFetchJson('/api/cd5/upload', {
-            method: 'POST',
-            body: formData
-          });
-
-          if (!upJson || !upJson.success) {
-            throw new Error(upJson?.error || `Lỗi tải lên file ${file.name}`);
-          }
+          const targetName = fieldMapping[key] || file.name;
+          await uploadFileInChunks(file, targetName, isFirstFile);
+          isFirstFile = false;
         }
         setUploading(false);
       }
