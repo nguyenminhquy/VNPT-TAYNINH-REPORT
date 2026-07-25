@@ -21,6 +21,13 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    if (process.env.VERCEL) {
+      return NextResponse.json({
+        success: false,
+        error: '❌ Lỗi cấu hình Vercel: Bạn đã thêm biến CD5_BACKEND_URL trong Vercel Settings nhưng CHƯA BẤM REDEPLOY! Vui lòng vào Vercel -> tab Deployments -> bấm dấu 3 chấm (...) -> chọn Redeploy để kích hoạt biến môi trường!'
+      }, { status: 500 });
+    }
+
     const uploadDir = path.join(process.cwd(), '..', 'exports', 'cd5_uploads');
     await fs.mkdir(uploadDir, { recursive: true });
 
