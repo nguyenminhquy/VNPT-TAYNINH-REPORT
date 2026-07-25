@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import { supabaseAdmin } from "@/lib/supabase";
 
 export const authOptions: NextAuthOptions = {
-  session: { strategy: "jwt", maxAge: 8 * 60 * 60 },
+  session: { strategy: "jwt", maxAge: 30 * 60 }, // 30 phút (1800 giây)
   pages: {
     signIn: "/login",
     error: "/login",
