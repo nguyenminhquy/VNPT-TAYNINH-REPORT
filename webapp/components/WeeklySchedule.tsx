@@ -540,10 +540,9 @@ export default function WeeklySchedule({ user }: { user: any }) {
                                 )}
                               </div>
                             )}
-                          </div>
-                        </td>
-                      );
-                    })}
+                          </td>
+                        );
+                      })}
                     </tr>
                   ))}
                 </tbody>
