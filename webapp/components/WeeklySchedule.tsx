@@ -168,7 +168,12 @@ export default function WeeklySchedule({ user }: { user: any }) {
           const header = `${DAY_LABELS[idx]} (${dateStr})`;
           
           const assigned = scheduleData[day]?.[shift] || [];
-          rowData[header] = assigned.join(', ');
+          const assignedStrings = assigned.map(item => {
+            const name = typeof item === 'string' ? item.split('|')[0] : item;
+            const pos = typeof item === 'string' ? (item.split('|')[1] || '') : '';
+            return pos ? `${name} (${pos})` : name;
+          });
+          rowData[header] = assignedStrings.join(', ');
         });
         
         return rowData;
@@ -192,28 +197,46 @@ export default function WeeklySchedule({ user }: { user: any }) {
     }
   };
 
-  const handleToggleUser = (userName: string) => {
+  const getUserPos = (day: string, shift: string, userName: string) => {
+    const assigned = scheduleData[day]?.[shift] || [];
+    for (const item of assigned) {
+      if (typeof item === 'string') {
+        const [name, pos] = item.split('|');
+        if (name === userName) return pos || 'Không';
+      } else if (item && typeof item === 'object' && (item as any).name === userName) {
+        return (item as any).pos || 'Không';
+      } else if (item === userName) {
+        return 'Không';
+      }
+    }
+    return null; // Not assigned
+  };
+
+  const handleSetUserPos = (userName: string, pos: string) => {
     if (!activeCell) return;
-    
     setScheduleData(prev => {
       const newData = { ...prev };
       if (!newData[activeCell.day]) newData[activeCell.day] = {};
-      
       const currentAssigned = newData[activeCell.day][activeCell.shift] || [];
       
-      if (currentAssigned.includes(userName)) {
-        newData[activeCell.day][activeCell.shift] = currentAssigned.filter(n => n !== userName);
-      } else {
-        newData[activeCell.day][activeCell.shift] = [...currentAssigned, userName];
+      // Remove existing entry for this user
+      const filtered = currentAssigned.filter(item => {
+        const name = typeof item === 'string' ? item.split('|')[0] : (typeof item === 'object' ? (item as any).name : item);
+        return name !== userName;
+      });
+
+      if (pos && pos !== 'Remove') {
+        const posVal = pos === 'Không' ? '' : pos;
+        filtered.push(`${userName}|${posVal}`);
       }
-      
+
+      newData[activeCell.day][activeCell.shift] = filtered;
       return newData;
     });
   };
 
   const isUserInCell = (day: string, shift: string, userName: string) => {
-    const assigned = scheduleData[day]?.[shift] || [];
-    return assigned.includes(userName);
+    return getUserPos(day, shift, userName) !== null;
   };
 
   return (
@@ -361,7 +384,7 @@ export default function WeeklySchedule({ user }: { user: any }) {
                       
                       {DAYS.map(day => {
                         const assigned = scheduleData[day]?.[shift] || [];
-                        const isUserAssigned = highlightedUser ? assigned.includes(highlightedUser) : false;
+                        const isUserAssigned = highlightedUser ? isUserInCell(day, shift, highlightedUser) : false;
                         
                         let cellBg = '#fff';
                         let cellBorder = '1px solid transparent';
@@ -399,22 +422,43 @@ export default function WeeklySchedule({ user }: { user: any }) {
                             onClick={() => handleCellClick(day, shift)}
                           >
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, minHeight: 60, alignContent: 'flex-start' }}>
-                              {assigned.map(name => (
-                                <span 
-                                  key={name}
-                                  style={{ 
-                                    padding: '4px 8px', 
-                                    background: (highlightedUser && name === highlightedUser) ? '#22c55e' : '#e2e8f0', 
-                                    color: (highlightedUser && name === highlightedUser) ? '#fff' : '#334155',
-                                    borderRadius: 4, 
-                                    fontSize: '0.85rem',
-                                    fontWeight: 600,
-                                    whiteSpace: 'nowrap'
-                                  }}
-                                >
-                                  {name}
-                                </span>
-                              ))}
+                              {assigned.map(item => {
+                                const name = typeof item === 'string' ? item.split('|')[0] : (typeof item === 'object' ? (item as any).name : item);
+                                const pos = typeof item === 'string' ? (item.split('|')[1] || '') : (typeof item === 'object' ? (item as any).pos || '' : '');
+                                
+                                const isHighlight = highlightedUser && name === highlightedUser;
+                                
+                                let bg = isHighlight ? '#22c55e' : '#e2e8f0';
+                                let color = isHighlight ? '#fff' : '#334155';
+                                
+                                if (!isHighlight && pos) {
+                                  if (pos === 'Ca 1') { bg = '#dbeafe'; color = '#1e40af'; }
+                                  else if (pos === 'Ca 2') { bg = '#fef9c3'; color = '#854d0e'; }
+                                  else if (pos === 'Ca 3') { bg = '#f3e8ff'; color = '#6b21a8'; }
+                                  else if (pos === 'Trưởng ca') { bg = '#ffe4e6'; color = '#be123c'; }
+                                }
+
+                                return (
+                                  <span 
+                                    key={name}
+                                    style={{ 
+                                      padding: '4px 8px', 
+                                      background: bg, 
+                                      color: color,
+                                      borderRadius: 4, 
+                                      fontSize: '0.85rem',
+                                      fontWeight: 600,
+                                      whiteSpace: 'nowrap',
+                                      display: 'inline-flex',
+                                      alignItems: 'center',
+                                      gap: 4
+                                    }}
+                                  >
+                                    {name}
+                                    {pos && <span style={{ fontSize: '0.75rem', opacity: 0.9, background: 'rgba(0,0,0,0.08)', padding: '1px 5px', borderRadius: 3 }}>{pos}</span>}
+                                  </span>
+                                );
+                              })}
                               {assigned.length === 0 && (
                                 <span style={{ color: '#cbd5e1', fontSize: '0.85rem', fontStyle: 'italic', margin: 'auto' }}>(Trống)</span>
                               )}
@@ -442,31 +486,54 @@ export default function WeeklySchedule({ user }: { user: any }) {
                 </div>
                 
                 <div style={{ padding: 16, maxHeight: 400, overflowY: 'auto' }}>
-                  <p style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: 12 }}>Nhấp vào tên để thêm/xóa khỏi ca:</p>
+                  <p style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: 12 }}>Chọn nhân sự và chỉ định vị trí ca:</p>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                     {users.map(u => {
-                      const isSelected = isUserInCell(activeCell.day, activeCell.shift, u.name);
+                      const currentPos = getUserPos(activeCell.day, activeCell.shift, u.name);
+                      const isSelected = currentPos !== null;
                       return (
-                        <label 
+                        <div 
                           key={u.id}
                           style={{ 
-                            display: 'flex', alignItems: 'center', gap: 12, padding: '8px 12px', 
-                            borderRadius: 6, cursor: 'pointer',
+                            display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 12px', 
+                            borderRadius: 6,
                             background: isSelected ? '#f0f9ff' : '#f8fafc',
                             border: isSelected ? '1px solid #bfdbfe' : '1px solid transparent',
                             transition: 'all 0.1s'
                           }}
                         >
-                          <input 
-                            type="checkbox" 
-                            checked={isSelected}
-                            onChange={() => handleToggleUser(u.name)}
-                            style={{ width: 16, height: 16, accentColor: 'var(--primary-color)' }}
-                          />
-                          <span style={{ fontWeight: isSelected ? 600 : 400, color: isSelected ? 'var(--primary-color)' : 'inherit' }}>
-                            {u.name}
-                          </span>
-                        </label>
+                          <label style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', flex: 1, margin: 0 }}>
+                            <input 
+                              type="checkbox" 
+                              checked={isSelected}
+                              onChange={() => {
+                                if (isSelected) handleSetUserPos(u.name, 'Remove');
+                                else {
+                                  const defaultPos = ['Sáng', 'Chiều', 'Tối'].includes(activeCell.shift) ? 'Ca 1' : 'Không';
+                                  handleSetUserPos(u.name, defaultPos);
+                                }
+                              }}
+                              style={{ width: 16, height: 16, accentColor: 'var(--primary-color)' }}
+                            />
+                            <span style={{ fontWeight: isSelected ? 600 : 400, color: isSelected ? 'var(--primary-color)' : 'inherit' }}>
+                              {u.name}
+                            </span>
+                          </label>
+                          
+                          {isSelected && (
+                            <select
+                              value={currentPos || 'Không'}
+                              onChange={e => handleSetUserPos(u.name, e.target.value)}
+                              style={{ padding: '4px 8px', borderRadius: 4, border: '1px solid #cbd5e1', fontSize: '0.8rem', background: '#fff', color: '#1e293b', fontWeight: 600, outline: 'none' }}
+                            >
+                              <option value="Không">Chung (Không chia)</option>
+                              <option value="Ca 1">Ca 1</option>
+                              <option value="Ca 2">Ca 2</option>
+                              <option value="Ca 3">Ca 3</option>
+                              <option value="Trưởng ca">Trưởng ca</option>
+                            </select>
+                          )}
+                        </div>
                       );
                     })}
                   </div>
