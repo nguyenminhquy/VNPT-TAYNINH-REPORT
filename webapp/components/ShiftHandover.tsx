@@ -563,8 +563,8 @@ export default function ShiftHandover({ user }: { user: any }) {
                     </td>
                     <td>{item.is_active ? 'Đang bật' : 'Đã ẩn'}</td>
                     <td style={{ textAlign: 'right' }}>
-                      <button onClick={() => handleDeleteChecklistItem(item.id)} style={{ background: 'transparent', border: 'none', color: 'var(--error-text)', cursor: 'pointer', padding: 8 }}>
-                        <Trash2 size={18} />
+                      <button onClick={() => handleDeleteChecklistItem(item.id)} title="Xóa" style={{ background: 'transparent', border: 'none', color: 'var(--error-text)', cursor: 'pointer', padding: 8, fontWeight: 700 }}>
+                        [Xóa]
                       </button>
                     </td>
                   </tr>

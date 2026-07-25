@@ -588,3 +588,57 @@ body {
   padding: 0 24px 24px;
   border-top: 1px solid rgba(226, 232, 240, 0.8);
 }
+
+/* ==========================================================================
+   GLOBAL OVERRIDES: FORMAT TÙY CHỈNH GIAO DIỆN & LOẠI BỎ TOÀN BỘ ICON
+   Yêu cầu từ người dùng: Phông chữ Times New Roman, ẩn toàn bộ Icon/SVG
+   ========================================================================== */
+
+/* 1. Thiết lập phông chữ chuẩn Times New Roman toàn diện cho toàn hệ thống */
+*, body, html, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, div, table, th, td, a, label, strong, b, i, u, footer, header, nav, section, article {
+  font-family: "Times New Roman", Times, serif !important;
+}
+
+/* 2. Triệt để loại bỏ và ẩn tất cả các loại Icon đồ họa (Lucide icons, Inline SVGs) */
+svg,
+.lucide,
+[data-lucide],
+i.icon,
+i.lucide,
+button > svg,
+span > svg,
+div > svg,
+a > svg,
+label > svg,
+h1 > svg,
+h2 > svg,
+h3 > svg,
+h4 > svg,
+h5 > svg,
+h6 > svg,
+footer svg {
+  display: none !important;
+}
+
+/* 3. Phục hồi hiển thị văn bản cho các nút chức năng nếu chỉ có Icon (như nút Xóa, nút Gỡ) */
+button[title="Gỡ file này"]::after,
+button[title="Xóa"]::after,
+button[title="Xóa mục này"]::after {
+  content: "[Xóa]";
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ef4444;
+}
+
+/* 4. Tăng tính thẩm mỹ hiện đại: hiệu ứng chuyển động mượt mà, bóng đổ tinh tế cho Card và Button */
+.card-glass, .details-box, .section, .dashboard-sidebar, .stat-card, .signal-card, .report-card {
+  transition: all 0.25s ease-in-out !important;
+}
+
+button {
+  transition: all 0.2s ease-in-out !important;
+}
+button:hover:not(:disabled) {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
