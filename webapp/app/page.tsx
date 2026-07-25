@@ -13,6 +13,7 @@ import WeeklySchedule from "@/components/WeeklySchedule";
 import Special5Report from "@/components/Special5Report";
 import "./dashboard.css";
 import VnptLogo from "@/components/VnptLogo";
+import Footer from "@/components/Footer";
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
@@ -651,44 +652,7 @@ export default function Dashboard() {
         </div>
         
         {/* DASHBOARD FOOTER */}
-        <footer style={{
-          marginTop: 'auto',
-          padding: '24px 40px',
-          background: 'rgba(255, 255, 255, 0.75)',
-          backdropFilter: 'blur(16px)',
-          borderTop: '1px solid rgba(0, 91, 170, 0.12)',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: 16,
-          color: '#475569',
-          fontSize: '0.85rem'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <div style={{ width: 42, height: 42, borderRadius: 10, background: 'rgba(0, 91, 170, 0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem' }}>
-              📡
-            </div>
-            <div>
-              <div style={{ fontWeight: 700, color: '#005BAA', fontSize: '0.95rem', marginBottom: 2 }}>
-                TRUNG TÂM HẠ TẦNG - VNPT TÂY NINH
-              </div>
-              <div style={{ color: '#64748b', fontSize: '0.8rem' }}>
-                Hệ thống Tổng hợp Báo cáo, Lịch trực Điều hành &amp; Nhật ký Khai thác Kỹ thuật • Phiên bản 2026.1 Pro
-              </div>
-            </div>
-          </div>
-          <div style={{ textAlign: 'right' }}>
-            <div style={{ fontWeight: 600, color: '#1e293b', marginBottom: 2 }}>
-              © 2026 VNPT Tây Ninh. Tất cả quyền được bảo lưu.
-            </div>
-            <div style={{ fontSize: '0.75rem', color: '#64748b', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 6 }}>
-              <span>🔒 Bảo mật JWT 30 phút</span>
-              <span>•</span>
-              <span>Phát triển bởi Tổ Kỹ thuật &amp; Hạ tầng</span>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </main>
     </div>
   );
