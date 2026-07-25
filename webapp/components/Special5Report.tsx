@@ -93,6 +93,33 @@ export default function Special5Report() {
   const [useSample, setUseSample] = useState(false);
   const [activeChartNetwork, setActiveChartNetwork] = useState<'MANE' | 'ACCESS' | 'VOTUYEN'>('MANE');
 
+  const safeFetchJson = async (url: string, options?: RequestInit) => {
+    const res = await fetch(url, options);
+    const text = await res.text().catch(() => '');
+    if (!res.ok) {
+      if (res.status === 413 || text.includes('Request Entity Too Large') || text.includes('too large') || text.includes('Request En')) {
+        throw new Error('⚠️ Kích thước file vượt quá giới hạn của máy chủ Vercel (tối đa 4.5MB/request). Vui lòng chọn file nhỏ hơn hoặc dùng nút Dữ liệu Mẫu TTS!');
+      }
+      if (text.startsWith('<html') || text.startsWith('<!DOCTYPE')) {
+        throw new Error(`⚠️ Lỗi máy chủ (${res.status}): Trang HTML bị trả về thay vì JSON. Vui lòng thử lại sau.`);
+      }
+      try {
+        const errJson = JSON.parse(text);
+        throw new Error(errJson.error || `Lỗi máy chủ (${res.status})`);
+      } catch (e) {
+        throw new Error(`⚠️ Lỗi (${res.status}): ${text.slice(0, 150)}`);
+      }
+    }
+    try {
+      return JSON.parse(text);
+    } catch (e) {
+      if (text.includes('Request Entity Too Large') || text.includes('Request En')) {
+        throw new Error('⚠️ Kích thước file vượt quá giới hạn của máy chủ Vercel (413 Payload Too Large).');
+      }
+      throw new Error(`⚠️ Dữ liệu trả về không phải JSON hợp lệ: ${text.slice(0, 100)}`);
+    }
+  };
+
   // Thử tải dữ liệu kết quả gần nhất nếu có
   useEffect(() => {
     fetchResult();
@@ -100,12 +127,9 @@ export default function Special5Report() {
 
   const fetchResult = async () => {
     try {
-      const res = await fetch('/api/cd5/result');
-      if (res.ok) {
-        const json = await res.json();
-        if (json.success && json.data) {
-          setData(json.data);
-        }
+      const json = await safeFetchJson('/api/cd5/result');
+      if (json && json.success && json.data) {
+        setData(json.data);
       }
     } catch (e) {
       // bỏ qua nếu chưa có
@@ -113,9 +137,13 @@ export default function Special5Report() {
   };
 
   const handleSingleFileSelect = (key: keyof FileMapState, file: File | null) => {
+    if (file && file.size > 4.5 * 1024 * 1024) {
+      setError(`⚠️ CẢNH BÁO: File "${file.name}" có dung lượng ${(file.size / 1024 / 1024).toFixed(2)}MB. Vercel online có giới hạn tối đa 4.5MB/request nên file này có thể báo lỗi "Request Entity Too Large". Vui lòng chọn file nhỏ hơn hoặc kiểm thử offline!`);
+    } else {
+      setError(null);
+    }
     setFileMap(prev => ({ ...prev, [key]: file }));
     setUseSample(false);
-    setError(null);
   };
 
   const selectedCount = Object.values(fileMap).filter(f => f !== null).length;
@@ -126,48 +154,48 @@ export default function Special5Report() {
     setUseSample(sample);
 
     try {
-      // 1. Nếu không dùng mẫu thì upload các file từ fileMap
+      // 1. Nếu không dùng mẫu thì upload từng file tuần tự (để tránh giới hạn 4.5MB của Vercel)
       if (!sample) {
         if (selectedCount === 0) {
-          throw new Error('Vui lòng chọn ít nhất file đầu vào vào các thẻ tương ứng trước khi xử lý!');
+          throw new Error('Vui lòng chọn file vào các thẻ tương ứng trước khi xử lý!');
         }
         setUploading(true);
-        const formData = new FormData();
         
-        Object.entries(fileMap).forEach(([key, file]) => {
-          if (file) {
-            formData.append(key, file);
+        for (const [key, file] of Object.entries(fileMap)) {
+          if (!file) continue;
+          if (file.size > 4.5 * 1024 * 1024) {
+            throw new Error(`⚠️ File "${file.name}" (${(file.size / 1024 / 1024).toFixed(1)}MB) vượt quá giới hạn tải lên của Vercel online (tối đa 4.5MB/request). Vui lòng dùng nút "Dùng Dữ Liệu Mẫu TTS" để thử nghiệm ngay!`);
           }
-        });
+          const formData = new FormData();
+          formData.append(key, file);
 
-        const upRes = await fetch('/api/cd5/upload', {
-          method: 'POST',
-          body: formData
-        });
-        const upJson = await upRes.json();
-        setUploading(false);
+          const upJson = await safeFetchJson('/api/cd5/upload', {
+            method: 'POST',
+            body: formData
+          });
 
-        if (!upJson.success) {
-          throw new Error(upJson.error || 'Lỗi khi tải file lên máy chủ.');
+          if (!upJson || !upJson.success) {
+            throw new Error(upJson?.error || `Lỗi tải lên file ${file.name}`);
+          }
         }
+        setUploading(false);
       }
 
       // 2. Gọi API xử lý dữ liệu và tạo báo cáo
-      const procRes = await fetch('/api/cd5/process', {
+      const procJson = await safeFetchJson('/api/cd5/process', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ use_sample: sample })
       });
-      const procJson = await procRes.json();
 
-      if (!procJson.success) {
-        throw new Error(procJson.error || 'Lỗi trong quá trình tính toán và tạo báo cáo Excel.');
+      if (!procJson || !procJson.success) {
+        throw new Error(procJson?.error || 'Lỗi trong quá trình tính toán và tạo báo cáo Excel.');
       }
 
       setData(procJson.data);
       setSubTab('visualize');
     } catch (err: any) {
-      setError(err.message || 'Có lỗi xảy ra');
+      setError(err.message || 'Có lỗi xảy ra trong quá trình thực hiện.');
     } finally {
       setUploading(false);
       setProcessing(false);
