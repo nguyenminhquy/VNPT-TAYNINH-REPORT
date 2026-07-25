@@ -34,8 +34,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'Chưa có dữ liệu nào được upload. Vui lòng chọn file trước hoặc bấm Dùng Dữ liệu Mẫu.' }, { status: 400 });
     }
 
-    // 1. Kiểm tra kiến trúc phân tách Backend (nếu cắm biến môi trường CD5_BACKEND_URL hoặc NEXT_PUBLIC_CD5_BACKEND_URL)
-    const backendUrl = process.env.CD5_BACKEND_URL || process.env.NEXT_PUBLIC_CD5_BACKEND_URL;
+    // 1. Kiểm tra kiến trúc phân tách Backend (ưu tiên header từ UI -> biến môi trường Vercel)
+    const backendUrl = req.headers.get('x-cd5-backend-url') || req.nextUrl?.searchParams.get('backend_url') || process.env.CD5_BACKEND_URL || process.env.NEXT_PUBLIC_CD5_BACKEND_URL;
     if (backendUrl) {
       try {
         const res = await fetch(`${backendUrl}/process`, {

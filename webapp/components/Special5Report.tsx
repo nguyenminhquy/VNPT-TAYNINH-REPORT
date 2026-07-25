@@ -92,9 +92,32 @@ export default function Special5Report() {
   const [subTab, setSubTab] = useState<'visualize' | 'overview' | 'mane' | 'access' | 'votuyen' | 'overdue' | 'email'>('visualize');
   const [useSample, setUseSample] = useState(false);
   const [activeChartNetwork, setActiveChartNetwork] = useState<'MANE' | 'ACCESS' | 'VOTUYEN'>('MANE');
+  const [customBackendUrl, setCustomBackendUrl] = useState<string>('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('cd5_custom_backend_url');
+      if (saved) setCustomBackendUrl(saved);
+    }
+  }, []);
+
+  const handleBackendUrlChange = (val: string) => {
+    setCustomBackendUrl(val);
+    if (typeof window !== 'undefined') {
+      if (val.trim()) {
+        localStorage.setItem('cd5_custom_backend_url', val.trim());
+      } else {
+        localStorage.removeItem('cd5_custom_backend_url');
+      }
+    }
+  };
 
   const safeFetchJson = async (url: string, options?: RequestInit) => {
-    const res = await fetch(url, options);
+    const headers: any = { ...options?.headers };
+    if (customBackendUrl.trim()) {
+      headers['x-cd5-backend-url'] = customBackendUrl.trim();
+    }
+    const res = await fetch(url, { ...options, headers });
     const text = await res.text().catch(() => '');
     if (!res.ok) {
       if (res.status === 413 || text.includes('Request Entity Too Large') || text.includes('too large') || text.includes('Request En')) {
@@ -228,7 +251,10 @@ export default function Special5Report() {
   };
 
   const handleDownload = () => {
-    window.location.href = '/api/cd5/download';
+    const url = customBackendUrl.trim() 
+      ? `/api/cd5/download?backend_url=${encodeURIComponent(customBackendUrl.trim())}`
+      : '/api/cd5/download';
+    window.location.href = url;
   };
 
   const renderStatTable = (tableData: any[], title: string, color: string) => {
@@ -608,6 +634,40 @@ export default function Special5Report() {
 
       {/* 6 INDIVIDUAL FILE CARDS GRID SECTION */}
       <div className="card-glass" style={{ padding: '28px 36px', marginBottom: 32, background: '#ffffff', borderRadius: 20, boxShadow: '0 4px 25px rgba(0,0,0,0.05)' }}>
+        {/* FASTAPI CUSTOM BACKEND URL BOX */}
+        <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '14px 20px', borderRadius: 14, marginBottom: 24, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ fontSize: '1.2rem' }}>🌐</span>
+            <div>
+              <strong style={{ fontSize: '0.92rem', color: '#1E293B', display: 'block' }}>Cấu hình kết nối Server Python Xử lý Excel (FastAPI Backend)</strong>
+              <span style={{ fontSize: '0.82rem', color: '#64748B' }}>
+                {customBackendUrl ? `✨ Đang kết nối trực tiếp tới server riêng: ${customBackendUrl}` : '💡 Để trống nếu chạy local trên Windows hoặc đã cấu hình biến môi trường CD5_BACKEND_URL trên Vercel.'}
+              </span>
+            </div>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flex: '1 1 300px', maxWidth: '450px' }}>
+            <input
+              type="text"
+              placeholder="Dán link Render/Railway (VD: https://...onrender.com)"
+              value={customBackendUrl}
+              onChange={(e) => handleBackendUrlChange(e.target.value)}
+              style={{
+                flex: 1, padding: '8px 14px', borderRadius: 8, border: '1px solid #CBD5E1', fontSize: '0.85rem',
+                background: '#FFFFFF', color: '#0F172A', outline: 'none', boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.05)'
+              }}
+            />
+            {customBackendUrl && (
+              <button
+                onClick={() => handleBackendUrlChange('')}
+                title="Xóa link thiết lập"
+                style={{ padding: '8px 12px', background: '#EF4444', color: '#FFF', border: 'none', borderRadius: 8, fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer' }}
+              >
+                Xóa
+              </button>
+            )}
+          </div>
+        </div>
+
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16, marginBottom: 20 }}>
           <div>
             <h2 style={{ fontSize: '1.3rem', color: '#1F3864', margin: 0, display: 'flex', alignItems: 'center', gap: 10 }}>

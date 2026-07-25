@@ -32,6 +32,14 @@ RESULT_JSON_FILE = BASE_DIR / "exports" / "cd5_result.json"
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
 
+@app.get("/", summary="Kiểm tra trạng thái hoạt động của Server (Health Check)")
+async def root():
+    return {
+        "status": "online",
+        "message": "✨ VNPT Tây Ninh - Báo Cáo Chuyên Đề 5 API Server is Live & Ready!",
+        "version": "1.0.0"
+    }
+
 @app.post("/upload", summary="Upload 06 file Excel đầu vào")
 async def upload_files(files: List[UploadFile] = File(...)):
     """
