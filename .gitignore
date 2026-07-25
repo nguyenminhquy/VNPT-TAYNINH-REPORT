@@ -1,1 +1,4 @@
 # Intentionally empty: track all project files in this repository.
+~$*.docx
+exports/*
+!exports/.gitignore

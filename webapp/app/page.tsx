@@ -10,6 +10,7 @@ import ShiftHandover from "@/components/ShiftHandover";
 import InspectionLog from "@/components/InspectionLog";
 import GeneratorLog from "@/components/GeneratorLog";
 import WeeklySchedule from "@/components/WeeklySchedule";
+import Special5Report from "@/components/Special5Report";
 import "./dashboard.css";
 import VnptLogo from "@/components/VnptLogo";
 
@@ -545,12 +546,7 @@ export default function Dashboard() {
            )}
 
            {/* TAB SPECIAL5 */}
-           {activeTab === 'special5' && (
-             <div className="card-glass" style={{ textAlign: 'center', padding: '100px 0' }}>
-               <h2 className="section-title">Báo cáo chuyên đề 5</h2>
-               <p className="content-text">Chức năng này đang được phát triển...</p>
-             </div>
-           )}
+           {activeTab === 'special5' && <Special5Report />}
 
            {/* TAB PETITION */}
            {activeTab === 'petition' && (
