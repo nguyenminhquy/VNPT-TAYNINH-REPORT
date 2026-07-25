@@ -39,8 +39,19 @@ export default function Dashboard() {
     ]
   });
   const [isExportingPetition, setIsExportingPetition] = useState(false);
+  const [currentTimeStr, setCurrentTimeStr] = useState<string>('');
 
   useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const days = ['Chủ Nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
+      const dayName = days[now.getDay()];
+      const str = `${dayName}, ${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} • ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+      setCurrentTimeStr(str);
+    };
+    updateTime();
+    const timer = setInterval(updateTime, 30000);
+
     const now = new Date();
     const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
     const dayNum = d.getUTCDay() || 7;
@@ -56,6 +67,8 @@ export default function Dashboard() {
       ...prev,
       docDate: `ngày ${dStr} tháng ${mStr} năm ${now.getFullYear()}`
     }));
+
+    return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
@@ -301,48 +314,90 @@ export default function Dashboard() {
 
       {/* MAIN CONTENT */}
       <main className="dashboard-main">
-        <header className="dashboard-header">
-           <h1 className="header-title">
-             {activeTab === 'overview' && 'Tổng quan Hệ thống'}
-             {activeTab === 'details' && activeReportKey === 'upload' && 'Quản lý Nguồn Dữ Liệu'}
-             {activeTab === 'details' && activeReportKey !== 'upload' && 'Báo cáo hàng tuần'}
-             {activeTab === 'special5' && 'Báo cáo chuyên đề 5'}
-             {activeTab === 'petition' && 'Đề nghị cấp tài khoản'}
-             {activeTab === 'handover' && 'Sổ Giao Ca'}
-             {activeTab === 'inspection' && 'Nhật Ký Kiểm Tra Định Kỳ'}
-             {activeTab === 'generator' && 'Nhật Ký Máy Phát Điện'}
-             {activeTab === 'schedule' && 'Lịch Trực Tuần'}
-             {activeTab !== 'petition' && activeTab !== 'handover' && activeTab !== 'inspection' && activeTab !== 'generator' && activeTab !== 'schedule' && (
-               <span style={{ fontSize: '1rem', color: 'var(--text-muted)', marginLeft: 16, fontWeight: 'normal' }}>
-                 (Tuần {dateInfo?.currentWeek || '...'} - Năm {dateInfo?.currentYear || '...'})
-               </span>
-             )}
-           </h1>
-           <div className="header-actions">
-              {activeTab === 'details' && activeReportKey === 'upload' && (
-                 <button className="btn-action btn-outline" onClick={handleProcess} disabled={isProcessing}>
-                   {isProcessing ? <Loader2 size={18} className="spin-anim" /> : '🔄'} 
-                   {isProcessing ? 'Đang xử lý...' : 'Xử lý lại dữ liệu'}
-                 </button>
+        <header className="dashboard-header" style={{
+          height: 'auto',
+          minHeight: 88,
+          padding: '16px 40px',
+          background: 'rgba(255, 255, 255, 0.88)',
+          backdropFilter: 'blur(20px)',
+          borderBottom: '1px solid rgba(0, 91, 170, 0.12)',
+          boxShadow: '0 4px 20px -2px rgba(0, 0, 0, 0.03)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: 16
+        }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+              <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#005BAA', background: 'rgba(0, 91, 170, 0.08)', padding: '3px 10px', borderRadius: 20, letterSpacing: '0.04em' }}>
+                🏢 VNPT TÂY NINH • TRUNG TÂM ĐIỀU HÀNH THÔNG TIN
+              </span>
+              {currentTimeStr && (
+                <span style={{ fontSize: '0.75rem', color: '#475569', background: '#f1f5f9', padding: '3px 10px', borderRadius: 20, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6 }}>
+                  🕒 {currentTimeStr}
+                </span>
               )}
-              {activeTab === 'petition' ? (
-                 <button className="btn-export" onClick={handleExportPetition} disabled={isExportingPetition}>
-                   {isExportingPetition ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
-                   {isExportingPetition ? 'Đang tạo Word...' : 'Xuất Đề nghị (Word)'}
-                 </button>
-              ) : (activeTab === 'handover' || activeTab === 'inspection' || activeTab === 'generator' || activeTab === 'schedule') ? null : (
-                 <button className="btn-export" onClick={handleExportWord} disabled={isExporting || !cacheData}>
-                   {isExporting ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
-                   {isExporting ? 'Đang tạo Word...' : 'Xuất báo cáo Word'}
-                 </button>
+              <span style={{ fontSize: '0.75rem', color: '#166534', background: '#dcfce7', padding: '2px 8px', borderRadius: 12, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 5 }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#22c55e', display: 'inline-block' }}></span> Trực tuyến
+              </span>
+            </div>
+            <h1 className="header-title" style={{ fontSize: '1.6rem', fontWeight: 800, color: '#0f172a', display: 'flex', alignItems: 'center', gap: 12, margin: 0 }}>
+              {activeTab === 'overview' && '📊 Tổng quan Hệ thống'}
+              {activeTab === 'details' && activeReportKey === 'upload' && '📁 Quản lý Nguồn Dữ Liệu'}
+              {activeTab === 'details' && activeReportKey !== 'upload' && '📝 Báo cáo hàng tuần'}
+              {activeTab === 'special5' && '📋 Báo cáo chuyên đề 5'}
+              {activeTab === 'petition' && '👤 Đề nghị cấp tài khoản'}
+              {activeTab === 'handover' && '📓 Sổ Giao Ca Trực Bản Doanh'}
+              {activeTab === 'inspection' && '📋 Nhật Ký Kiểm Tra Định Kỳ Hạ Tầng'}
+              {activeTab === 'generator' && '⚡ Nhật Ký Kiểm Tra Máy Phát Điện'}
+              {activeTab === 'schedule' && '📅 Lịch Trực Tuần & Quản Lý Phân Ca'}
+              {activeTab !== 'petition' && activeTab !== 'handover' && activeTab !== 'inspection' && activeTab !== 'generator' && activeTab !== 'schedule' && (
+                <span style={{ fontSize: '0.9rem', color: '#005BAA', fontWeight: 600, background: '#eff6ff', border: '1px solid #bfdbfe', padding: '3px 12px', borderRadius: 8 }}>
+                  Tuần {dateInfo?.currentWeek || '...'} / {dateInfo?.currentYear || '...'}
+                </span>
               )}
-              <div className="user-profile">
-                 <div className="user-avatar">
-                   {session.user?.name?.charAt(0).toUpperCase() || 'U'}
-                 </div>
-                 <span>{session.user?.name}</span>
-              </div>
-           </div>
+            </h1>
+          </div>
+          <div className="header-actions" style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+               {activeTab === 'details' && activeReportKey === 'upload' && (
+                  <button className="btn-action btn-outline" onClick={handleProcess} disabled={isProcessing}>
+                    {isProcessing ? <Loader2 size={18} className="spin-anim" /> : '🔄'} 
+                    {isProcessing ? 'Đang xử lý...' : 'Xử lý lại dữ liệu'}
+                  </button>
+               )}
+               {activeTab === 'petition' ? (
+                  <button className="btn-export" onClick={handleExportPetition} disabled={isExportingPetition}>
+                    {isExportingPetition ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
+                    {isExportingPetition ? 'Đang tạo Word...' : 'Xuất Đề nghị (Word)'}
+                  </button>
+               ) : (activeTab === 'handover' || activeTab === 'inspection' || activeTab === 'generator' || activeTab === 'schedule') ? null : (
+                  <button className="btn-export" onClick={handleExportWord} disabled={isExporting || !cacheData}>
+                    {isExporting ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
+                    {isExporting ? 'Đang tạo Word...' : 'Xuất báo cáo Word'}
+                  </button>
+               )}
+               <div style={{ height: 32, width: 1, background: '#cbd5e1', margin: '0 4px' }}></div>
+               <div className="user-profile" style={{ 
+                 display: 'flex', alignItems: 'center', gap: 12, 
+                 background: '#f8fafc', padding: '6px 14px 6px 6px', 
+                 borderRadius: 50, border: '1px solid #e2e8f0',
+                 boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
+               }}>
+                  <div className="user-avatar" style={{ 
+                    width: 38, height: 38, borderRadius: '50%', 
+                    background: 'linear-gradient(135deg, #005BAA, #003366)', 
+                    color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', 
+                    fontWeight: 700, fontSize: '1rem', boxShadow: '0 2px 6px rgba(0,91,170,0.3)'
+                  }}>
+                    {session.user?.name?.charAt(0).toUpperCase() || 'U'}
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <span style={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a', lineHeight: 1.2 }}>{session.user?.name}</span>
+                    <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 500 }}>Tài khoản VNPT</span>
+                  </div>
+               </div>
+            </div>
         </header>
 
         <div className="dashboard-content fade-in">
@@ -598,6 +653,46 @@ export default function Dashboard() {
            {/* TAB SCHEDULE */}
            {activeTab === 'schedule' && <WeeklySchedule user={session.user} />}
         </div>
+        
+        {/* DASHBOARD FOOTER */}
+        <footer style={{
+          marginTop: 'auto',
+          padding: '24px 40px',
+          background: 'rgba(255, 255, 255, 0.75)',
+          backdropFilter: 'blur(16px)',
+          borderTop: '1px solid rgba(0, 91, 170, 0.12)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: 16,
+          color: '#475569',
+          fontSize: '0.85rem'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <div style={{ width: 42, height: 42, borderRadius: 10, background: 'rgba(0, 91, 170, 0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem' }}>
+              📡
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, color: '#005BAA', fontSize: '0.95rem', marginBottom: 2 }}>
+                TRUNG TÂM ĐIỀU HÀNH THÔNG TIN - VNPT TÂY NINH
+              </div>
+              <div style={{ color: '#64748b', fontSize: '0.8rem' }}>
+                Hệ thống Tổng hợp Báo cáo, Lịch trực Điều hành &amp; Nhật ký Khai thác Kỹ thuật • Phiên bản 2026.1 Pro
+              </div>
+            </div>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontWeight: 600, color: '#1e293b', marginBottom: 2 }}>
+              © 2026 VNPT Tây Ninh. Tất cả quyền được bảo lưu.
+            </div>
+            <div style={{ fontSize: '0.75rem', color: '#64748b', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 6 }}>
+              <span>🔒 Bảo mật JWT 30 phút</span>
+              <span>•</span>
+              <span>Phát triển bởi Tổ Kỹ thuật &amp; Hạ tầng</span>
+            </div>
+          </div>
+        </footer>
       </main>
     </div>
   );
