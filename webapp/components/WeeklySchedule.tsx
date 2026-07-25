@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Loader2, Calendar, Save, ArrowLeft, ArrowRight, CheckCircle, Copy } from 'lucide-react';
+import { Loader2, Calendar, Save, ArrowLeft, ArrowRight, CheckCircle, Copy, Download } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { startOfISOWeek, endOfISOWeek, addWeeks, subWeeks, getISOWeek, getYear, format, setISOWeek, setYear } from 'date-fns';
+import * as XLSX from 'xlsx';
 
 const SHIFTS = ['Sáng', 'Chiều', 'Tối', 'HC', 'Học', 'P', 'CN', 'Khác'];
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -153,6 +154,44 @@ export default function WeeklySchedule({ user }: { user: any }) {
     }
   };
 
+  const handleExportExcel = () => {
+    try {
+      const exportData = SHIFTS.map(shift => {
+        const rowData: Record<string, string> = {
+          'Ca / Ngày': shift
+        };
+        
+        DAYS.forEach((day, idx) => {
+          const d = new Date(startDate);
+          d.setDate(d.getDate() + idx);
+          const dateStr = format(d, 'dd/MM/yyyy');
+          const header = `${DAY_LABELS[idx]} (${dateStr})`;
+          
+          const assigned = scheduleData[day]?.[shift] || [];
+          rowData[header] = assigned.join(', ');
+        });
+        
+        return rowData;
+      });
+
+      const worksheet = XLSX.utils.json_to_sheet(exportData);
+      
+      // Auto-size columns
+      const cols = [{ wch: 15 }]; // Ca / Ngày
+      for (let i = 0; i < 7; i++) cols.push({ wch: 25 }); // 7 days
+      worksheet['!cols'] = cols;
+
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, `T${weekNumber}_${year}`);
+      
+      XLSX.writeFile(workbook, `LichTrucTuan_T${weekNumber}_${year}.xlsx`);
+      toast.success('Xuất file Excel thành công!');
+    } catch (err) {
+      console.error(err);
+      toast.error('Có lỗi xảy ra khi xuất file!');
+    }
+  };
+
   const handleToggleUser = (userName: string) => {
     if (!activeCell) return;
     
@@ -256,6 +295,13 @@ export default function WeeklySchedule({ user }: { user: any }) {
           </div>
 
           <div style={{ display: 'flex', gap: 12 }}>
+            <button 
+              onClick={handleExportExcel}
+              className="btn-action btn-outline"
+              style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '0.9rem' }}
+            >
+              <Download size={16} /> Xuất Excel
+            </button>
             <button 
               onClick={handleCopyPrevWeek}
               className="btn-action btn-outline"
