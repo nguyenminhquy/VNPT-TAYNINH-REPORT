@@ -590,16 +590,18 @@ body {
 }
 
 /* ==========================================================================
-   GLOBAL OVERRIDES: FORMAT TÙY CHỈNH GIAO DIỆN & LOẠI BỎ TOÀN BỘ ICON
-   Yêu cầu từ người dùng: Phông chữ Times New Roman, ẩn toàn bộ Icon/SVG
+   GLOBAL OVERRIDES & MODERN DASHBOARD DESIGN SUITE
+   Yêu cầu từ người dùng: Phông chữ Times New Roman, KHÔNG ICON, Giao diện HIỆN ĐẠI, SANG TRỌNG
    ========================================================================== */
 
-/* 1. Thiết lập phông chữ chuẩn Times New Roman toàn diện cho toàn hệ thống */
+/* 1. Thiết lập phông chữ chuẩn Times New Roman với khả năng hiển thị sắc nét hiện đại */
 *, body, html, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, div, table, th, td, a, label, strong, b, i, u, footer, header, nav, section, article {
   font-family: "Times New Roman", Times, serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* 2. Triệt để loại bỏ và ẩn tất cả các loại Icon đồ họa (Lucide icons, Inline SVGs) */
+/* 2. Triệt để loại bỏ và ẩn tất cả các loại Icon đồ họa (Lucide icons, Inline SVGs, Emoji Icons) */
 svg,
 .lucide,
 [data-lucide],
@@ -620,7 +622,7 @@ footer svg {
   display: none !important;
 }
 
-/* 3. Phục hồi hiển thị văn bản cho các nút chức năng nếu chỉ có Icon (như nút Xóa, nút Gỡ) */
+/* 3. Phục hồi hiển thị văn bản cho các nút chức năng nếu chỉ có Icon */
 button[title="Gỡ file này"]::after,
 button[title="Xóa"]::after,
 button[title="Xóa mục này"]::after {
@@ -630,15 +632,157 @@ button[title="Xóa mục này"]::after {
   color: #ef4444;
 }
 
-/* 4. Tăng tính thẩm mỹ hiện đại: hiệu ứng chuyển động mượt mà, bóng đổ tinh tế cho Card và Button */
-.card-glass, .details-box, .section, .dashboard-sidebar, .stat-card, .signal-card, .report-card {
-  transition: all 0.25s ease-in-out !important;
+/* ==========================================================================
+   GIAO DIỆN HIỆN ĐẠI HÓA (MODERN UI/UX UPGRADE WITHOUT ICONS)
+   ========================================================================== */
+
+/* Nền tổng thể: Gradient chiều sâu tinh tế, sang trọng */
+body, .dashboard-container {
+  background: radial-gradient(circle at 15% 15%, #eff6ff 0%, #f8fafc 45%, #e2e8f0 100%) !important;
+  color: #0f172a !important;
 }
 
-button {
-  transition: all 0.2s ease-in-out !important;
+/* Tiêu đề & Header: Chữ đậm, nét, tương phản cao */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 800 !important;
+  color: #003366 !important;
+  letter-spacing: -0.01em;
+  line-height: 1.35 !important;
 }
+
+/* Sidebar & Điều hướng: Phong cách Glassmorphism và thẻ nổi (Floating Cards) */
+.dashboard-sidebar {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border-right: 1px solid rgba(226, 232, 240, 0.8) !important;
+  box-shadow: 4px 0 25px rgba(0, 51, 102, 0.05) !important;
+}
+
+.nav-item {
+  border-radius: 12px !important;
+  margin-bottom: 4px;
+  padding: 14px 18px !important;
+  font-size: 1.05rem !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.nav-item:hover {
+  background: linear-gradient(90deg, rgba(0, 91, 170, 0.08) 0%, rgba(239, 246, 255, 0) 100%) !important;
+  color: #005BAA !important;
+  transform: translateX(6px) !important;
+}
+
+.nav-item.active {
+  background: linear-gradient(135deg, #005BAA 0%, #003366 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(0, 91, 170, 0.3) !important;
+  transform: translateX(6px) !important;
+  font-weight: 700 !important;
+}
+
+.submenu-item.active {
+  background: rgba(0, 91, 170, 0.1) !important;
+  color: #005BAA !important;
+  font-weight: 700 !important;
+  border-left: 4px solid #005BAA !important;
+}
+
+/* Thẻ (Cards), Hộp chi tiết & Khu vực tải lên: Glassmorphism cao cấp */
+.card-glass, .details-box, .section, .upload-card, .stat-card, .signal-card, .report-card, div[style*="background: #ffffff"], div[style*="background: '#ffffff'"] {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(226, 232, 240, 0.9) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 10px 30px -5px rgba(0, 51, 102, 0.07), 0 4px 12px -2px rgba(0, 0, 0, 0.03) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.card-glass:hover, .upload-card:hover, .stat-card:hover, .details-box:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 20px 40px -10px rgba(0, 51, 102, 0.12), 0 8px 20px -5px rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 91, 170, 0.3) !important;
+}
+
+/* Bảng biểu hiện đại (Modern Enterprise Table Formatting) */
+table {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  box-shadow: 0 8px 25px rgba(0, 51, 102, 0.06) !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+  margin-top: 12px !important;
+  margin-bottom: 20px !important;
+}
+
+thead tr, tr[style*="background: #1F3864"], tr[style*="background: color"], tr[style*="background: '#1F3864'"] {
+  background: linear-gradient(135deg, #005BAA 0%, #003366 100%) !important;
+  color: #ffffff !important;
+}
+
+th {
+  padding: 15px 18px !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15) !important;
+  text-align: left !important;
+}
+
+td {
+  padding: 14px 18px !important;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.7) !important;
+  font-size: 0.95rem !important;
+  color: #1e293b !important;
+  transition: background 0.2s ease !important;
+}
+
+tbody tr:nth-child(even) td {
+  background: rgba(248, 250, 252, 0.85) !important;
+}
+
+tbody tr:hover td {
+  background: rgba(219, 234, 254, 0.65) !important;
+  color: #005BAA !important;
+}
+
+/* Nút bấm hiện đại (Modern Button Proportions & Micro-animations) */
+button {
+  border-radius: 12px !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer !important;
+}
+
 button:hover:not(:disabled) {
-  opacity: 0.92;
-  transform: translateY(-1px);
+  opacity: 0.95 !important;
+  transform: translateY(-2px) scale(1.01) !important;
+  box-shadow: 0 8px 20px rgba(0, 91, 170, 0.25) !important;
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0) scale(0.99) !important;
+}
+
+/* Nút hành động chính (Primary Actions & Process buttons) */
+.btn-action, button[style*="background: '#1F3864'"], button[style*="background: #1F3864"], .btn-export {
+  background: linear-gradient(135deg, #005BAA 0%, #003366 100%) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  padding: 14px 32px !important;
+  border: none !important;
+  box-shadow: 0 6px 20px rgba(0, 91, 170, 0.3) !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* Khung trạng thái / Cảnh báo (Alerts & Status boxes) */
+div[style*="background: '#eff6ff'"], div[style*="background: #eff6ff"] {
+  background: linear-gradient(135deg, rgba(239, 246, 255, 0.9) 0%, rgba(219, 234, 254, 0.7) 100%) !important;
+  border: 1px solid #60a5fa !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.12) !important;
+  padding: 22px !important;
 }
