@@ -16,29 +16,12 @@ export async function POST(req: NextRequest) {
       // no body or not json
     }
 
-    const baseDir = path.resolve(process.cwd(), '..');
-    const inputDir = useSample
-      ? path.join(baseDir, 'templates', 'TTS')
-      : path.join(baseDir, 'exports', 'cd5_uploads');
-    
-    const outputFile = path.join(baseDir, 'exports', 'BaoCao_XLSC_TayNinh_Updated.xlsx');
-    const jsonOutputFile = path.join(baseDir, 'exports', 'cd5_result.json');
-
-    // Kiểm tra xem inputDir có tồn tại không
-    try {
-      const stats = await fs.stat(inputDir);
-      if (!stats.isDirectory()) {
-        return NextResponse.json({ success: false, error: 'Thư mục chứa dữ liệu đầu vào không đúng định dạng.' }, { status: 400 });
-      }
-    } catch (e) {
-      return NextResponse.json({ success: false, error: 'Chưa có dữ liệu nào được upload. Vui lòng chọn file trước hoặc bấm Dùng Dữ liệu Mẫu.' }, { status: 400 });
-    }
-
     // 1. Kiểm tra kiến trúc phân tách Backend (ưu tiên header từ UI -> biến môi trường Vercel)
     const backendUrl = req.headers.get('x-cd5-backend-url') || req.nextUrl?.searchParams.get('backend_url') || process.env.CD5_BACKEND_URL || process.env.NEXT_PUBLIC_CD5_BACKEND_URL;
     if (backendUrl) {
+      const cleanUrl = backendUrl.replace(/\/+$/, '');
       try {
-        const res = await fetch(`${backendUrl}/process`, {
+        const res = await fetch(`${cleanUrl}/process`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ use_sample: useSample })
@@ -48,9 +31,27 @@ export async function POST(req: NextRequest) {
       } catch (err: any) {
         return NextResponse.json({ 
           success: false, 
-          error: `❌ Lỗi kết nối đến Python FastAPI Backend riêng (${backendUrl}): ${err.message}. Vui lòng kiểm tra lại server Python của bạn!` 
+          error: `❌ Lỗi kết nối đến Python FastAPI Backend riêng (${cleanUrl}): ${err.message}. Vui lòng kiểm tra lại server Python của bạn!` 
         }, { status: 502 });
       }
+    }
+
+    const baseDir = path.resolve(process.cwd(), '..');
+    const inputDir = useSample
+      ? path.join(baseDir, 'templates', 'TTS')
+      : path.join(baseDir, 'exports', 'cd5_uploads');
+    
+    const outputFile = path.join(baseDir, 'exports', 'BaoCao_XLSC_TayNinh_Updated.xlsx');
+    const jsonOutputFile = path.join(baseDir, 'exports', 'cd5_result.json');
+
+    // Kiểm tra xem inputDir có tồn tại không (chỉ chạy khi xử lý local trên Windows)
+    try {
+      const stats = await fs.stat(inputDir);
+      if (!stats.isDirectory()) {
+        return NextResponse.json({ success: false, error: 'Thư mục chứa dữ liệu đầu vào không đúng định dạng.' }, { status: 400 });
+      }
+    } catch (e) {
+      return NextResponse.json({ success: false, error: 'Chưa có dữ liệu nào được upload. Vui lòng chọn file trước hoặc bấm Dùng Dữ liệu Mẫu.' }, { status: 400 });
     }
 
     const scriptPath = path.join(baseDir, 'backend', 'process_cd5.py');
