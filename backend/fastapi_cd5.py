@@ -120,7 +120,10 @@ async def get_result():
     
     with open(RESULT_JSON_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
-    return data
+    return {
+        "success": True,
+        "data": data
+    }
 
 @app.get("/download", summary="Tải xuống file Excel Báo cáo tổng hợp 5 Sheet")
 async def download_report():

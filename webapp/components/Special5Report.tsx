@@ -634,40 +634,6 @@ export default function Special5Report() {
 
       {/* 6 INDIVIDUAL FILE CARDS GRID SECTION */}
       <div className="card-glass" style={{ padding: '28px 36px', marginBottom: 32, background: '#ffffff', borderRadius: 20, boxShadow: '0 4px 25px rgba(0,0,0,0.05)' }}>
-        {/* FASTAPI CUSTOM BACKEND URL BOX */}
-        <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '14px 20px', borderRadius: 14, marginBottom: 24, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span style={{ fontSize: '1.2rem' }}>🌐</span>
-            <div>
-              <strong style={{ fontSize: '0.92rem', color: '#1E293B', display: 'block' }}>Cấu hình kết nối Server Python Xử lý Excel (FastAPI Backend)</strong>
-              <span style={{ fontSize: '0.82rem', color: '#64748B' }}>
-                {customBackendUrl ? `✨ Đang kết nối trực tiếp tới server riêng: ${customBackendUrl}` : '💡 Để trống nếu chạy local trên Windows hoặc đã cấu hình biến môi trường CD5_BACKEND_URL trên Vercel.'}
-              </span>
-            </div>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flex: '1 1 300px', maxWidth: '450px' }}>
-            <input
-              type="text"
-              placeholder="Dán link Render/Railway (VD: https://...onrender.com)"
-              value={customBackendUrl}
-              onChange={(e) => handleBackendUrlChange(e.target.value)}
-              style={{
-                flex: 1, padding: '8px 14px', borderRadius: 8, border: '1px solid #CBD5E1', fontSize: '0.85rem',
-                background: '#FFFFFF', color: '#0F172A', outline: 'none', boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.05)'
-              }}
-            />
-            {customBackendUrl && (
-              <button
-                onClick={() => handleBackendUrlChange('')}
-                title="Xóa link thiết lập"
-                style={{ padding: '8px 12px', background: '#EF4444', color: '#FFF', border: 'none', borderRadius: 8, fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer' }}
-              >
-                Xóa
-              </button>
-            )}
-          </div>
-        </div>
-
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16, marginBottom: 20 }}>
           <div>
             <h2 style={{ fontSize: '1.3rem', color: '#1F3864', margin: 0, display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -784,22 +750,39 @@ export default function Special5Report() {
             </div>
           </div>
 
-          <button 
-            onClick={() => handleProcess(false)} 
-            disabled={processing || (selectedCount === 0 && !data)}
-            className="btn-action" 
-            style={{ 
-              background: selectedCount > 0 ? '#1F3864' : '#94a3b8', 
-              color: '#fff', padding: '14px 32px', fontWeight: 700, fontSize: '1rem',
-              borderRadius: 12, border: 'none', display: 'flex', alignItems: 'center', gap: 10,
-              cursor: (processing || selectedCount === 0) ? 'not-allowed' : 'pointer',
-              boxShadow: selectedCount > 0 ? '0 4px 15px rgba(31, 56, 100, 0.3)' : 'none',
-              transition: 'all 0.2s'
-            }}
-          >
-            {processing && !useSample ? <RefreshCw className="animate-spin" size={20} /> : <Play size={20} />}
-            {processing && !useSample ? 'Đang Xử Lý & Tính Toán KPI...' : `⚡ Xử Lý File Upload (${selectedCount} File)`}
-          </button>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+            <button
+              onClick={() => {
+                fetchResult();
+                setSubTab('visualize');
+              }}
+              title="Mở bảng Dashboard trực quan của báo cáo đã xử lý gần nhất"
+              style={{
+                background: '#0ea5e9',
+                color: '#fff', padding: '14px 24px', fontWeight: 700, fontSize: '0.95rem',
+                borderRadius: 12, border: 'none', display: 'flex', alignItems: 'center', gap: 8,
+                cursor: 'pointer', boxShadow: '0 4px 15px rgba(14, 165, 233, 0.3)', transition: 'all 0.2s'
+              }}
+            >
+              📊 Xem Dashboard Vừa Tạo
+            </button>
+            <button 
+              onClick={() => handleProcess(false)} 
+              disabled={processing || (selectedCount === 0 && !data)}
+              className="btn-action" 
+              style={{ 
+                background: selectedCount > 0 ? '#1F3864' : '#94a3b8', 
+                color: '#fff', padding: '14px 32px', fontWeight: 700, fontSize: '1rem',
+                borderRadius: 12, border: 'none', display: 'flex', alignItems: 'center', gap: 10,
+                cursor: (processing || selectedCount === 0) ? 'not-allowed' : 'pointer',
+                boxShadow: selectedCount > 0 ? '0 4px 15px rgba(31, 56, 100, 0.3)' : 'none',
+                transition: 'all 0.2s'
+              }}
+            >
+              {processing && !useSample ? <RefreshCw className="animate-spin" size={20} /> : <Play size={20} />}
+              {processing && !useSample ? 'Đang Xử Lý & Tính Toán KPI...' : `⚡ Xử Lý File Upload (${selectedCount} File)`}
+            </button>
+          </div>
         </div>
 
         {/* PROCESSING INDICATOR */}

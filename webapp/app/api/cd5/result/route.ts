@@ -6,10 +6,12 @@ export async function GET(req: NextRequest) {
   try {
     const backendUrl = req.headers.get('x-cd5-backend-url') || req.nextUrl?.searchParams.get('backend_url') || process.env.CD5_BACKEND_URL || process.env.NEXT_PUBLIC_CD5_BACKEND_URL;
     if (backendUrl) {
+      const cleanUrl = backendUrl.replace(/\/+$/, '');
       try {
-        const res = await fetch(`${backendUrl}/result`);
-        const data = await res.json();
-        return NextResponse.json(data, { status: res.status });
+        const res = await fetch(`${cleanUrl}/result`);
+        const json = await res.json();
+        const payload = json.success !== undefined ? json : { success: true, data: json };
+        return NextResponse.json(payload, { status: res.status });
       } catch (err: any) {
         return NextResponse.json({ success: false, error: `Lỗi lấy kết quả từ FastAPI Backend: ${err.message}` }, { status: 502 });
       }
