@@ -331,7 +331,7 @@ export default function Dashboard() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
               <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#005BAA', background: 'rgba(0, 91, 170, 0.08)', padding: '3px 10px', borderRadius: 20, letterSpacing: '0.04em' }}>
-                🏢 VNPT TÂY NINH • TRUNG TÂM ĐIỀU HÀNH THÔNG TIN
+                🏢 VNPT TÂY NINH • TRUNG TÂM HẠ TẦNG
               </span>
               {currentTimeStr && (
                 <span style={{ fontSize: '0.75rem', color: '#475569', background: '#f1f5f9', padding: '3px 10px', borderRadius: 20, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -675,7 +675,7 @@ export default function Dashboard() {
             </div>
             <div>
               <div style={{ fontWeight: 700, color: '#005BAA', fontSize: '0.95rem', marginBottom: 2 }}>
-                TRUNG TÂM ĐIỀU HÀNH THÔNG TIN - VNPT TÂY NINH
+                TRUNG TÂM HẠ TẦNG - VNPT TÂY NINH
               </div>
               <div style={{ color: '#64748b', fontSize: '0.8rem' }}>
                 Hệ thống Tổng hợp Báo cáo, Lịch trực Điều hành &amp; Nhật ký Khai thác Kỹ thuật • Phiên bản 2026.1 Pro
