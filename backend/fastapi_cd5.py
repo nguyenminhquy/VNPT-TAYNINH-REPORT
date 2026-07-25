@@ -3,7 +3,7 @@ import shutil
 import json
 from pathlib import Path
 from typing import List, Optional
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException, BackgroundTasks
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, BackgroundTasks, Request
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
@@ -93,13 +93,22 @@ async def upload_chunk(
     }
 
 @app.post("/process", summary="Kích hoạt quá trình xử lý & tính toán KPI")
-async def process_report():
+async def process_report(request: Request):
     """
-    Đọc các file Excel đã tải lên, thực hiện mapping, tính toán KPI theo Tổ Hạ tầng
-    và sinh ra file Báo cáo Excel 5 Sheet cũng như JSON Dashboard.
+    Đọc các file Excel đã tải lên (hoặc dùng dữ liệu mẫu), thực hiện mapping, tính toán KPI theo Tổ Hạ tầng
+    và sinh ra file Báo cáo Excel 8 Sheet cũng như JSON Dashboard.
     """
     try:
-        res = process_cd5(str(UPLOAD_DIR), str(OUTPUT_FILE), str(RESULT_JSON_FILE))
+        use_sample = False
+        try:
+            body = await request.json()
+            if isinstance(body, dict) and body.get("use_sample"):
+                use_sample = True
+        except:
+            pass
+
+        input_dir = BASE_DIR / "templates" / "TTS" if use_sample else UPLOAD_DIR
+        res = process_cd5(str(input_dir), str(OUTPUT_FILE), str(RESULT_JSON_FILE))
         return {
             "success": True,
             "message": "Xử lý và tính toán KPI thành công!",

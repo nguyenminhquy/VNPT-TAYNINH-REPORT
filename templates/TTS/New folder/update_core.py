@@ -72,16 +72,6 @@ if n_mk_dup > 0:
 mk_dedup = df2.dropna(subset=['_MK']).drop_duplicates(subset='_MK', keep='first')
 mk_to_csht = dict(zip(mk_dedup['_MK'], mk_dedup['Mã CSHT'].astype(str)))
 
-# Fallback: cùng 1 trạm nhưng khác loại thiết bị chỉ khác ký tự thứ 7 (VD: BLU104E và
-# BLU104M là cùng 1 trạm/nhân viên, chỉ khác loại thiết bị) -> tra theo 6 ký tự đầu.
-mk_dedup = mk_dedup.copy()
-mk_dedup['_MK6'] = mk_dedup['_MK'].str[:6]
-n_mk6_dup = mk_dedup['_MK6'].duplicated().sum()
-if n_mk6_dup > 0:
-    print(f'[EXPORT] Canh bao: {n_mk6_dup} gia tri "Ma Khai thac" bi trung khi rut con 6 ky tu dau, da giu dong dau tien cho moi gia tri')
-mk_dedup6 = mk_dedup.drop_duplicates(subset='_MK6', keep='first')
-mk6_to_csht = dict(zip(mk_dedup6['_MK6'], mk_dedup6['Mã CSHT'].astype(str)))
-
 df3 = pd.concat([pd.read_excel(f) for f in tientrinh_fs], ignore_index=True)
 print(f"[TT] Tong {len(df3)} dong sau khi gop {len(tientrinh_fs)} file Tien trinh")
 ma_sc_to_csht = dict(zip(df3['Mã sự cố'].astype(str), df3['Mã CSHT'].astype(str)))
@@ -175,7 +165,6 @@ df4['Mã CSHT'] = df4['Mã phiếu'].astype(str).map(ma_sc_to_csht)
 
 # Bù các dòng thiếu Mã CSHT bằng cách tra "Tên node" -> Mã Khai thác (export),
 # chuẩn hóa theo độ dài mã (xem hàm _norm_ma_khai_thac ở trên).
-key_node = None
 if 'Tên node' in df4.columns:
     def _derive_khaithac_key(ten_node):
         first = str(ten_node).split(',')[0].strip()
@@ -189,57 +178,13 @@ if 'Tên node' in df4.columns:
     mask_still_missing = df4['Mã CSHT'].isna() | (df4['Mã CSHT'].astype(str).str.strip().isin(['','nan']))
     n_filled = n_missing_before - int(mask_still_missing.sum())
     print(f'[VT] Da bo sung {n_filled}/{n_missing_before} dong thieu Ma CSHT bang Ten node (chuan hoa do dai ma)')
-
-    # Fallback tiếp theo: cùng trạm nhưng khác loại thiết bị (chỉ khác ký tự thứ 7,
-    # VD BLU104E và BLU104M là cùng 1 trạm/nhân viên) -> tra theo 6 ký tự đầu.
-    mask_missing6 = df4['Mã CSHT'].isna() | (df4['Mã CSHT'].astype(str).str.strip().isin(['','nan']))
-    n_missing6_before = int(mask_missing6.sum())
-    csht_tu_node6 = key_node.str[:6].map(mk6_to_csht)
-    df4.loc[mask_missing6, 'Mã CSHT'] = csht_tu_node6[mask_missing6]
-    mask_still_missing6 = df4['Mã CSHT'].isna() | (df4['Mã CSHT'].astype(str).str.strip().isin(['','nan']))
-    n_filled6 = n_missing6_before - int(mask_still_missing6.sum())
-    if n_filled6 > 0:
-        print(f'[VT] Da bo sung them {n_filled6}/{n_missing6_before} dong bang cach khop 6 ky tu dau (cung tram khac loai thiet bi)')
 else:
     print('[VT] Khong tim thay cot "Tên node", bo qua buoc bu Ma CSHT')
 
 df4['TỔ HẠ TẦNG'] = df4['Mã CSHT'].astype(str).map(csht_to_to)
 mask = df4['TỔ HẠ TẦNG'].isna() & df4['Đơn vị xử lý'].astype(str).str.contains('Tổ Hạ tầng', na=False)
 df4.loc[mask,'TỔ HẠ TẦNG'] = df4.loc[mask,'Đơn vị xử lý']
-
-# Fallback cuối: với các dòng vẫn CHƯA xác định được Tổ Hạ tầng (không dò ra Mã CSHT),
-# suy đoán Tổ Hạ tầng qua 3 ký tự đầu của mã trạm (mỗi khu vực thường gắn với 1 Tổ cố định),
-# dựa trên chính các dòng trong báo cáo đã xác định được Tổ. Chỉ áp dụng khi 1 tiền tố
-# gắn với 1 Tổ áp đảo (>=70%) để tránh suy đoán sai ở tiền tố dùng chung nhiều Tổ.
-if key_node is not None:
-    df4['_PREFIX'] = key_node.str[:3]
-    known_mask = df4['TỔ HẠ TẦNG'].notna()
-    prefix_to_to = {}
-    for prefix, sub in df4[known_mask].groupby('_PREFIX'):
-        counts = sub['TỔ HẠ TẦNG'].value_counts()
-        if len(counts) and counts.iloc[0] / counts.sum() >= 0.7:
-            prefix_to_to[prefix] = counts.index[0]
-    mask_missing_to = df4['TỔ HẠ TẦNG'].isna()
-    n_before_guess = int(mask_missing_to.sum())
-    guessed = df4.loc[mask_missing_to, '_PREFIX'].map(prefix_to_to)
-    df4.loc[mask_missing_to, 'TỔ HẠ TẦNG'] = guessed
-    n_guessed = int(guessed.notna().sum())
-    if n_guessed > 0:
-        print(f'[VT] Da suy doan {n_guessed}/{n_before_guess} dong con thieu To Ha tang qua tien to ma tram (3 ky tu dau)')
-    df4.drop(columns=['_PREFIX'], inplace=True)
-
 df1['TỔ HẠ TẦNG'] = df1['MÃ CSHT'].astype(str).map(csht_to_to)
-
-# Các dòng không dò được Tổ Hạ tầng (Mã CSHT không khớp/không có) vẫn phải được
-# tính vào bảng thống kê (nếu không sẽ bị "rơi" mất, khiến TỔNG lệch so với số
-# phiếu thực tế trong sheet PHIẾU QUÁ HẠN).
-UNASSIGNED_TO = 'Chưa xác định Tổ Hạ tầng'
-df1['TỔ HẠ TẦNG'] = df1['TỔ HẠ TẦNG'].fillna(UNASSIGNED_TO)
-df4['TỔ HẠ TẦNG'] = df4['TỔ HẠ TẦNG'].fillna(UNASSIGNED_TO)
-n_unassigned_mane_access = int((df1['TỔ HẠ TẦNG']==UNASSIGNED_TO).sum())
-n_unassigned_vt = int((df4['TỔ HẠ TẦNG']==UNASSIGNED_TO).sum())
-if n_unassigned_mane_access>0: print(f'[MANE/ACCESS] Canh bao: {n_unassigned_mane_access} dong khong xac dinh duoc To Ha tang')
-if n_unassigned_vt>0: print(f'[VT] Canh bao: {n_unassigned_vt} dong khong xac dinh duoc To Ha tang')
 
 # Thông tin nhân viên (mapping theo Mã CSHT, từ file DS_NV_CSHT)
 df1['TÊN NHÂN VIÊN']   = df1['MÃ CSHT'].astype(str).map(csht_to_ten)
@@ -252,7 +197,7 @@ df4['SĐT NHÂN VIÊN']   = df4['Mã CSHT'].astype(str).map(csht_to_sdt)
 df4['EMAIL NHÂN VIÊN'] = df4['Mã CSHT'].astype(str).map(csht_to_email)
 df4['TỔ HẠ TẦNG NV']   = df4['Mã CSHT'].astype(str).map(csht_to_to_nv)
 
-ALL_TO = sorted(['Tổ Hạ tầng Bến Lức','Tổ Hạ tầng Đức Hòa','Tổ Hạ tầng Gò Dầu','Tổ Hạ tầng Kiến Tường','Tổ Hạ tầng Tân An','Tổ Hạ tầng Tân Châu','Tổ Hạ tầng Tân Ninh']) + [UNASSIGNED_TO]
+ALL_TO = sorted(['Tổ Hạ tầng Bến Lức','Tổ Hạ tầng Đức Hòa','Tổ Hạ tầng Gò Dầu','Tổ Hạ tầng Kiến Tường','Tổ Hạ tầng Tân An','Tổ Hạ tầng Tân Châu','Tổ Hạ tầng Tân Ninh'])
 
 def pct(a,b): return round(a/b*100,2) if b>0 else 0.0  # float 2 số lẻ
 
@@ -260,8 +205,6 @@ def stats_new(df, to_col, tt_col, qh_col):
     rows=[]
     for to in ALL_TO:
         sub=df[df[to_col]==to]; total=len(sub)
-        if total==0 and to==UNASSIGNED_TO:
-            continue  # khong hien thi dong "Chua xac dinh" neu khong co phieu nao
         ht=int((sub[tt_col].astype(str)=='Đã xác nhận').sum())
         ht_dh=int(((sub[tt_col].astype(str)=='Đã xác nhận')&(sub[qh_col].astype(str).str.strip()=='No')).sum())
         ht_qh=int(((sub[tt_col].astype(str)=='Đã xác nhận')&(sub[qh_col].astype(str).str.strip()=='Yes')).sum())
@@ -466,21 +409,11 @@ mane_qh   = mane[mane['PHIẾU QUÁ HẠN TOÀN TRÌNH'].astype(str).str.strip()
 access_qh = access_df[access_df['PHIẾU QUÁ HẠN TOÀN TRÌNH'].astype(str).str.strip()=='Yes'].copy()
 vt_qh     = df4[df4['Phiếu quá hạn toàn trình'].astype(str).str.strip()=='Yes'].copy()
 
-# Nguyên nhân quá hạn:
-#  - MANE / ACCESS: áp cứng "Do tổ Hạ tầng đóng phiếu chậm" cho mọi phiếu quá hạn
-#  - VÔ TUYẾN: chỉ ghi nguyên nhân này cho phiếu có Loại sự cố SITE_OOS hoặc POWER_DC_EAS
-LY_DO_TOHT_CHAM = 'Do tổ Hạ tầng đóng phiếu chậm'
-mane_qh['NGUYÊN NHÂN QUÁ HẠN']   = LY_DO_TOHT_CHAM
-access_qh['NGUYÊN NHÂN QUÁ HẠN'] = LY_DO_TOHT_CHAM
-vt_qh['NGUYÊN NHÂN QUÁ HẠN'] = ''
-mask_vt_ly_do = vt_qh['Loại sự cố'].astype(str).str.strip().isin(['SITE_OOS','POWER_DC_EAS'])
-vt_qh.loc[mask_vt_ly_do, 'NGUYÊN NHÂN QUÁ HẠN'] = LY_DO_TOHT_CHAM
-
-qh_src_ma = ['MÃ PHIẾU','TRẠNG THÁI','LOẠI CẢNH BÁO','THỜI GIAN BẮT ĐẦU','THỜI GIAN KẾT THÚC','ĐƠN VỊ XỬ LÝ','LOẠI MẠNG','TÊN ĐỐI TƯỢNG','TỔ HẠ TẦNG','EMAIL NHÂN VIÊN','NGUYÊN NHÂN QUÁ HẠN']
-qh_hc_ma  = ['Mã phiếu','Trạng thái','Loại cảnh báo','Bắt đầu','Kết thúc','Đơn vị xử lý','Loại mạng','Tên đối tượng','Tổ Hạ tầng','Email nhân viên','Nguyên nhân quá hạn']
-qh_src_vt = ['Mã phiếu','Trạng thái','Loại sự cố','Thời gian bắt đầu','Thời gian kết thúc','Đơn vị xử lý','Loại node','Tên node','TỔ HẠ TẦNG','EMAIL NHÂN VIÊN','NGUYÊN NHÂN QUÁ HẠN']
-qh_hc_vt  = ['Mã phiếu','Trạng thái','Loại sự cố','Bắt đầu','Kết thúc','Đơn vị xử lý','Loại node','Tên node','Tổ Hạ tầng','Email nhân viên','Nguyên nhân quá hạn']
-qh_w      = [12,18,22,20,20,22,14,26,24,28,26]
+qh_src_ma = ['MÃ PHIẾU','TRẠNG THÁI','LOẠI CẢNH BÁO','THỜI GIAN BẮT ĐẦU','THỜI GIAN KẾT THÚC','ĐƠN VỊ XỬ LÝ','LOẠI MẠNG','TÊN ĐỐI TƯỢNG','TỔ HẠ TẦNG','EMAIL NHÂN VIÊN']
+qh_hc_ma  = ['Mã phiếu','Trạng thái','Loại cảnh báo','Bắt đầu','Kết thúc','Đơn vị xử lý','Loại mạng','Tên đối tượng','Tổ Hạ tầng','Email nhân viên']
+qh_src_vt = ['Mã phiếu','Trạng thái','Loại sự cố','Thời gian bắt đầu','Thời gian kết thúc','Đơn vị xử lý','Loại node','Tên node','TỔ HẠ TẦNG','EMAIL NHÂN VIÊN']
+qh_hc_vt  = ['Mã phiếu','Trạng thái','Loại sự cố','Bắt đầu','Kết thúc','Đơn vị xử lý','Loại node','Tên node','Tổ Hạ tầng','Email nhân viên']
+qh_w      = [12,18,22,20,20,22,14,26,24,28]
 
 def write_qh_section(ws, start_row, label, color_tab, df_sub, src_cols, hdr_cols, left_idx):
     ws.row_dimensions[start_row].height = 24
@@ -522,9 +455,9 @@ sc2.alignment = Alignment(horizontal="left", vertical="center", indent=1)
 ws_qh.merge_cells(start_row=2, start_column=1, end_row=2, end_column=len(qh_hc_ma))
 
 cur = 4
-cur = write_qh_section(ws_qh, cur, "MANE",       CM,  mane_qh,   qh_src_ma, qh_hc_ma, [3,7,8,10,11])
-cur = write_qh_section(ws_qh, cur, "ACCESS",     CA,  access_qh, qh_src_ma, qh_hc_ma, [3,7,8,10,11])
-cur = write_qh_section(ws_qh, cur, "VÔ TUYẾN",  CV,  vt_qh,     qh_src_vt, qh_hc_vt, [3,7,8,10,11])
+cur = write_qh_section(ws_qh, cur, "MANE",       CM,  mane_qh,   qh_src_ma, qh_hc_ma, [3,7,8,10])
+cur = write_qh_section(ws_qh, cur, "ACCESS",     CA,  access_qh, qh_src_ma, qh_hc_ma, [3,7,8,10])
+cur = write_qh_section(ws_qh, cur, "VÔ TUYẾN",  CV,  vt_qh,     qh_src_vt, qh_hc_vt, [3,7,8,10])
 
 for ci, w in enumerate(qh_w, start=1):
     ws_qh.column_dimensions[get_column_letter(ci)].width = w

@@ -16,6 +16,8 @@ interface FileMapState {
   xlsc_cd5: File | null;
   votuyen_bc: File | null;
   export_map: File | null;
+  nv_csht: File | null;
+  qlcsht: File | null;
 }
 
 const FILE_CARDS_INFO = [
@@ -73,6 +75,24 @@ const FILE_CARDS_INFO = [
     bg: '#ecfdf5',
     border: '#a7f3d0'
   },
+  {
+    key: 'nv_csht' as keyof FileMapState,
+    title: '7. Danh sách nhân viên CSHT (DS_NV_CSHT)',
+    desc: 'Bảng ánh xạ Mã CSHT sang Email kỹ thuật xử lý (tự động fallback mẫu nếu bỏ trống).',
+    icon: Users,
+    color: '#0284c7',
+    bg: '#f0f9ff',
+    border: '#bae6fd'
+  },
+  {
+    key: 'qlcsht' as keyof FileMapState,
+    title: '8. Quản lý CSHT 2026 (Quản lý CSHT)',
+    desc: 'Bảng ánh xạ Mã CSHT sang Tên/SĐT và Tổ hạ tầng (tự động fallback mẫu nếu bỏ trống).',
+    icon: ShieldAlert,
+    color: '#d97706',
+    bg: '#fffbeb',
+    border: '#fde68a'
+  },
 ];
 
 export default function Special5Report() {
@@ -83,6 +103,8 @@ export default function Special5Report() {
     xlsc_cd5: null,
     votuyen_bc: null,
     export_map: null,
+    nv_csht: null,
+    qlcsht: null,
   });
 
   const [uploading, setUploading] = useState(false);
@@ -92,6 +114,7 @@ export default function Special5Report() {
   const [subTab, setSubTab] = useState<'visualize' | 'overview' | 'mane' | 'access' | 'votuyen' | 'overdue' | 'email'>('visualize');
   const [useSample, setUseSample] = useState(false);
   const [activeChartNetwork, setActiveChartNetwork] = useState<'MANE' | 'ACCESS' | 'VOTUYEN'>('MANE');
+  const [emailFilter, setEmailFilter] = useState<'tong' | 'mane' | 'access' | 'votuyen'>('tong');
   const [customBackendUrl, setCustomBackendUrl] = useState<string>('');
 
   useEffect(() => {
@@ -216,7 +239,9 @@ export default function Special5Report() {
           mane_tientrinh: '03_tien_trinh_xu_ly_su_co_mane.xlsx',
           xlsc_cd5: '04_xlsc_brcd_chi_tiet_cd5.xlsx',
           votuyen_bc: '05_bao_cao_xlsc_tram_votuyen.xlsx',
-          export_map: '06_export.xlsx'
+          export_map: '06_export.xlsx',
+          nv_csht: '07_ds_nv_csht.xlsx',
+          qlcsht: '08_quan_ly_csht.xlsx'
         };
 
         let isFirstFile = true;
@@ -615,7 +640,7 @@ export default function Special5Report() {
                 boxShadow: '0 4px 15px rgba(34, 197, 94, 0.4)', cursor: 'pointer', transition: 'all 0.2s'
               }}
             >
-              <Download size={22} /> TẢI XUỐNG EXCEL BÁO CÁO CĐ5 (5 SHEET)
+              <Download size={22} /> TẢI XUỐNG EXCEL BÁO CÁO CĐ5 (8 SHEET)
             </button>
           )}
         </div>
@@ -792,7 +817,7 @@ export default function Special5Report() {
             <div>
               <strong style={{ color: '#1e40af', display: 'block', fontSize: '1.05rem' }}>Hệ thống đang thực hiện tự động hóa...</strong>
               <span style={{ fontSize: '0.9rem', color: '#3b82f6' }}>
-                1️⃣ Chuẩn hóa 6 file Excel &rarr; 2️⃣ Mapping CSHT Tổ Hạ tầng &rarr; 3️⃣ Tính toán KPI MANE, ACCESS, VÔ TUYẾN &rarr; 4️⃣ Sinh báo cáo openpyxl 5 Sheet.
+                1️⃣ Chuẩn hóa 8 file dữ liệu &rarr; 2️⃣ Mapping CSHT Tổ Hạ tầng & Kỹ thuật &rarr; 3️⃣ Tính toán KPI & TB giờ đóng phiếu &rarr; 4️⃣ Sinh báo cáo Excel 8 Sheet.
               </span>
             </div>
           </div>
@@ -963,6 +988,7 @@ export default function Special5Report() {
                           <th style={{ padding: '12px 14px' }}>Đơn Vị Xử Lý</th>
                           <th style={{ padding: '12px 14px' }}>Đối Tượng / Node</th>
                           <th style={{ padding: '12px 14px' }}>Email Nhân Viên</th>
+                          <th style={{ padding: '12px 14px' }}>Nguyên Nhân Quá Hạn</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -975,6 +1001,7 @@ export default function Special5Report() {
                             <td style={{ padding: '10px 14px' }}>{row.don_vi}</td>
                             <td style={{ padding: '10px 14px' }}>{row.doi_tuong}</td>
                             <td style={{ padding: '10px 14px', color: '#4338ca' }}>{row.email}</td>
+                            <td style={{ padding: '10px 14px', color: '#dc2626', fontWeight: 600 }}>{row.nguyen_nhan || '---'}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -986,41 +1013,79 @@ export default function Special5Report() {
 
             {subTab === 'email' && (
               <div>
-                <h3 style={{ color: '#7030A0', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <Users size={22} /> Thống kê Thời gian Đóng phiếu Trung bình theo Email Nhân Viên (Từ chậm nhất &rarr; nhanh nhất)
+                <h3 style={{ color: '#7030A0', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <Users size={22} /> Thống kê Thời gian Đóng phiếu Trung bình theo Email Nhân Viên
                 </h3>
+                <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
+                  {[
+                    { key: 'tong', label: '📊 Tổng Hợp (MANE + ACCESS + VÔ TUYẾN)', color: '#7030A0' },
+                    { key: 'mane', label: '🔵 MANE', color: '#4472C4' },
+                    { key: 'access', label: '🟠 ACCESS', color: '#ED7D31' },
+                    { key: 'votuyen', label: '🟢 VÔ TUYẾN', color: '#70AD47' }
+                  ].map(tab => (
+                    <button
+                      key={tab.key}
+                      onClick={() => setEmailFilter(tab.key as any)}
+                      style={{
+                        padding: '8px 16px', borderRadius: 8, fontWeight: 600, fontSize: '0.88rem',
+                        border: `2px solid ${tab.color}`,
+                        background: emailFilter === tab.key ? tab.color : '#fff',
+                        color: emailFilter === tab.key ? '#fff' : tab.color,
+                        cursor: 'pointer', transition: 'all 0.2s', boxShadow: emailFilter === tab.key ? '0 2px 8px rgba(0,0,0,0.15)' : 'none'
+                      }}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
                 <div style={{ overflowX: 'auto' }}>
                   <table style={{ width: '100%', borderCollapse: 'collapse', background: '#fff', borderRadius: 8, overflow: 'hidden' }}>
                     <thead>
                       <tr style={{ background: '#7030A0', color: '#fff', textAlign: 'left', fontSize: '0.9rem' }}>
-                        <th style={{ padding: '12px 16px', textAlign: 'center', width: 60 }}>STT</th>
-                        <th style={{ padding: '12px 16px' }}>Email Nhân Viên</th>
-                        <th style={{ padding: '12px 16px', textAlign: 'center' }}>Số Phiếu Xử Lý</th>
-                        <th style={{ padding: '12px 16px', textAlign: 'center' }}>TB Thời Gian Đóng Phiếu (giờ)</th>
+                        <th style={{ padding: '12px 14px', textAlign: 'center', width: 60 }}>STT</th>
+                        <th style={{ padding: '12px 14px' }}>Email Nhân Viên</th>
+                        <th style={{ padding: '12px 14px' }}>Tên Nhân Viên</th>
+                        <th style={{ padding: '12px 14px' }}>Số Điện Thoại</th>
+                        <th style={{ padding: '12px 14px' }}>Tổ Hạ Tầng</th>
+                        <th style={{ padding: '12px 14px', textAlign: 'center' }}>Số Phiếu Xử Lý</th>
+                        <th style={{ padding: '12px 14px', textAlign: 'center' }}>TB Thời Gian Đóng Phiếu (giờ)</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {data.staff_emails.map((row: any, idx: number) => {
-                        let badgeColor = '#16a34a'; // Nhanh (< 2h)
-                        if (row.avg_hours >= 10) badgeColor = '#dc2626'; // Rất chậm (>= 10h)
-                        else if (row.avg_hours >= 4) badgeColor = '#d97706'; // Trung bình chậm
+                      {(() => {
+                        const currentList = 
+                          emailFilter === 'mane' ? (data.staff_mane || []) :
+                          emailFilter === 'access' ? (data.staff_access || []) :
+                          emailFilter === 'votuyen' ? (data.staff_votuyen || []) :
+                          (data.staff_emails || []);
 
-                        return (
-                          <tr key={idx} style={{ background: idx % 2 === 0 ? '#F9F5FF' : '#FFFFFF', borderBottom: '1px solid #f3e8ff', fontSize: '0.95rem' }}>
-                            <td style={{ padding: '10px 16px', textAlign: 'center', fontWeight: 600, color: '#6b21a8' }}>{row.stt}</td>
-                            <td style={{ padding: '10px 16px', fontWeight: 600, color: '#1F3864' }}>{row.email}</td>
-                            <td style={{ padding: '10px 16px', textAlign: 'center', fontWeight: 600 }}>{row.count}</td>
-                            <td style={{ padding: '10px 16px', textAlign: 'center' }}>
-                              <span style={{ 
-                                background: badgeColor, color: '#fff', padding: '4px 12px', 
-                                borderRadius: 20, fontWeight: 700, fontSize: '0.85rem' 
-                              }}>
-                                {row.avg_hours} giờ
-                              </span>
-                            </td>
-                          </tr>
-                        );
-                      })}
+                        return currentList.map((row: any, idx: number) => {
+                          const avgHrs = row.tb_gio !== undefined ? row.tb_gio : (row.avg_hours !== undefined ? row.avg_hours : 0);
+                          const countPhi = row.so_phieu !== undefined ? row.so_phieu : (row.count !== undefined ? row.count : 0);
+                          let badgeColor = '#16a34a'; // Nhanh (< 2h)
+                          if (avgHrs >= 10) badgeColor = '#dc2626'; // Rất chậm (>= 10h)
+                          else if (avgHrs >= 4) badgeColor = '#d97706'; // Trung bình chậm
+
+                          return (
+                            <tr key={idx} style={{ background: idx % 2 === 0 ? '#F9F5FF' : '#FFFFFF', borderBottom: '1px solid #f3e8ff', fontSize: '0.94rem' }}>
+                              <td style={{ padding: '10px 14px', textAlign: 'center', fontWeight: 600, color: '#6b21a8' }}>{row.stt || idx + 1}</td>
+                              <td style={{ padding: '10px 14px', fontWeight: 600, color: '#1F3864' }}>{row.email}</td>
+                              <td style={{ padding: '10px 14px', color: '#334155', fontWeight: 600 }}>{row.ten || '---'}</td>
+                              <td style={{ padding: '10px 14px', color: '#64748b' }}>{row.sdt || '---'}</td>
+                              <td style={{ padding: '10px 14px', color: '#0f172a', fontWeight: 600 }}>{row.to || '---'}</td>
+                              <td style={{ padding: '10px 14px', textAlign: 'center', fontWeight: 600 }}>{countPhi}</td>
+                              <td style={{ padding: '10px 14px', textAlign: 'center' }}>
+                                <span style={{ 
+                                  background: badgeColor, color: '#fff', padding: '4px 12px', 
+                                  borderRadius: 20, fontWeight: 700, fontSize: '0.85rem' 
+                                }}>
+                                  {avgHrs} giờ
+                                </span>
+                              </td>
+                            </tr>
+                          );
+                        });
+                      })()}
                     </tbody>
                   </table>
                 </div>
