@@ -591,8 +591,8 @@ export default function Dashboard() {
                       <div key={index} style={{ padding: 24, borderRadius: 12, border: '1px solid rgba(0,0,0,0.05)', background: '#f8fafc', position: 'relative' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
                           <h3 style={{ margin: 0, fontSize: '1.1rem', color: 'var(--primary-color)' }}>Nhân viên #{index + 1}</h3>
-                            <button onClick={() => handleRemoveUser(index)} title="Xóa" style={{ background: 'transparent', border: 'none', color: 'var(--error-text)', cursor: 'pointer', fontWeight: 700 }}>
-                              [Xóa]
+                            <button onClick={() => handleRemoveUser(index)} style={{ background: 'transparent', border: 'none', color: 'var(--error-text)', cursor: 'pointer' }}>
+                              <Trash2 size={18} />
                             </button>
                         </div>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16 }}>

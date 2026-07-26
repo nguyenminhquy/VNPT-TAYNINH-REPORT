@@ -2798,39 +2798,8 @@ body.data-entry-open {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* 2. Triệt để loại bỏ và ẩn tất cả các loại Icon đồ họa (Lucide icons, Inline SVGs, Emoji Icons) */
-svg,
-.lucide,
-[data-lucide],
-i.icon,
-i.lucide,
-button > svg,
-span > svg,
-div > svg,
-a > svg,
-label > svg,
-h1 > svg,
-h2 > svg,
-h3 > svg,
-h4 > svg,
-h5 > svg,
-h6 > svg,
-footer svg {
-  display: none !important;
-}
-
-/* 3. Phục hồi hiển thị văn bản cho các nút chức năng nếu chỉ có Icon */
-button[title="Gỡ file này"]::after,
-button[title="Xóa"]::after,
-button[title="Xóa mục này"]::after {
-  content: "[Xóa]";
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #ef4444;
-}
-
 /* ==========================================================================
-   GIAO DIỆN HIỆN ĐẠI HÓA (MODERN UI/UX UPGRADE WITHOUT ICONS)
+   GIAO DIỆN HIỆN ĐẠI HÓA (MODERN UI/UX UPGRADE WITH ICONS)
    ========================================================================== */
 
 /* Nền tổng thể: Gradient chiều sâu tinh tế, sang trọng */

@@ -727,9 +727,9 @@ export default function Special5Report() {
                     <button 
                       onClick={() => handleSingleFileSelect(info.key, null)} 
                       title="Gỡ file này"
-                      style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', padding: 4, fontWeight: 700 }}
+                      style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', padding: 4 }}
                     >
-                      [Gỡ]
+                      <X size={18} />
                     </button>
                   </div>
                 ) : (
