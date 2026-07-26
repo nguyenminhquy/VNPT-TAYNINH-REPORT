@@ -2,7 +2,7 @@
 
 /**
  * Trang Login – VNPT Report Hub
- * Hỗ trợ Đăng nhập bằng Họ tên và Số điện thoại
+ * Hỗ trợ Đăng nhập bằng Họ tên và Số điện thoại với hình nền Đà Lạt và bố cục bên phải sang trọng
  */
 
 import { useState } from 'react';
@@ -92,81 +92,119 @@ export default function LoginPage() {
 
   return (
     <div className={styles.page}>
-      <div className={styles.card}>
-        {/* ── Header / Logo ── */}
-        <div className={styles.header}>
-          <VnptLogo style={{ width: 140, height: 'auto', marginBottom: 10 }} />
-          <p className={styles.headerTitle}>Hệ thống Báo cáo Tự động</p>
+      {/* ── Background Overlay / Glowing Blobs ── */}
+      <div className={styles.bgOverlay} />
+
+      {/* ── Left Hero Section (Giới thiệu VNPT Tây Ninh trên hình nền Đà Lạt) ── */}
+      <div className={styles.heroSection}>
+        <div className={styles.heroBadge}>
+          <span className={styles.badgeDot}></span>
+          <span>NỀN TẢNG BÁO CÁO VIỄN THÔNG THÔNG MINH</span>
         </div>
+        <h1 className={styles.heroTitle}>VNPT TÂY NINH</h1>
+        <p className={styles.heroSubtitle}>
+          Hệ thống Quản lý &amp; Tổng hợp Báo cáo Tự động hóa
+        </p>
+        <p className={styles.heroDesc}>
+          Tối ưu hóa quy trình giám sát chỉ tiêu KPI, tự động hóa xử lý sự cố Chuyên đề 5 và xuất báo cáo chuẩn Corporate nhanh chóng, chính xác trên quê hương núi Bà Đen / Đà Lạt.
+        </p>
 
-        <div className={styles.tabs}>
-          <button type="button" className={`${styles.tabBtn} ${styles.tabActive}`} style={{ width: '100%' }}>
-            Đăng nhập
-          </button>
+        <div className={styles.heroFooter}>
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>8+</span>
+            <span className={styles.statLabel}>Nguồn Excel</span>
+          </div>
+          <div className={styles.statDivider} />
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>100%</span>
+            <span className={styles.statLabel}>Tự động hóa Word</span>
+          </div>
+          <div className={styles.statDivider} />
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>24/7</span>
+            <span className={styles.statLabel}>Giám sát KPI</span>
+          </div>
         </div>
+      </div>
 
-        {error && (
-          <div className={styles.errorBox} style={{ marginBottom: 16 }}>
-            <IconAlert />
-            <span className={styles.errorText}>{error}</span>
+      {/* ── Right Login Section (Khung đăng nhập bên phải) ── */}
+      <div className={styles.loginContainer}>
+        <div className={styles.card}>
+          {/* ── Header / Logo ── */}
+          <div className={styles.header}>
+            <VnptLogo style={{ width: 140, height: 'auto', marginBottom: 10 }} />
+            <p className={styles.headerTitle}>Hệ thống Báo cáo Tự động</p>
           </div>
-        )}
 
-        <form className={styles.form} onSubmit={handleLogin} noValidate>
-          {/* Họ tên */}
-          <div className={styles.fieldGroup}>
-            <label className={styles.label} htmlFor="login-name">Họ và tên</label>
-            <div className={styles.inputWrapper}>
-              <span className={styles.inputIcon}><IconUser /></span>
-              <input
-                id="login-name"
-                type="text"
-                className={styles.input}
-                placeholder="vd: Nguyễn Văn A"
-                autoComplete="name"
-                value={loginForm.name}
-                onChange={(e) => setLoginForm((f) => ({ ...f, name: e.target.value }))}
-                disabled={loading}
-                required
-              />
+          <div className={styles.tabs}>
+            <button type="button" className={`${styles.tabBtn} ${styles.tabActive}`} style={{ width: '100%' }}>
+              Đăng nhập
+            </button>
+          </div>
+
+          {error && (
+            <div className={styles.errorBox} style={{ marginBottom: 16 }}>
+              <IconAlert />
+              <span className={styles.errorText}>{error}</span>
             </div>
-          </div>
+          )}
 
-          {/* Số điện thoại */}
-          <div className={styles.fieldGroup}>
-            <label className={styles.label} htmlFor="login-phone">Số điện thoại</label>
-            <div className={styles.inputWrapper}>
-              <span className={styles.inputIcon}><IconPhone /></span>
-              <input
-                id="login-phone"
-                type="text"
-                className={`${styles.input}`}
-                placeholder="Nhập số điện thoại"
-                autoComplete="tel"
-                value={loginForm.phone}
-                onChange={(e) => setLoginForm((f) => ({ ...f, phone: e.target.value }))}
-                disabled={loading}
-                required
-              />
+          <form className={styles.form} onSubmit={handleLogin} noValidate>
+            {/* Họ tên */}
+            <div className={styles.fieldGroup}>
+              <label className={styles.label} htmlFor="login-name">Họ và tên</label>
+              <div className={styles.inputWrapper}>
+                <span className={styles.inputIcon}><IconUser /></span>
+                <input
+                  id="login-name"
+                  type="text"
+                  className={styles.input}
+                  placeholder="vd: Nguyễn Văn A"
+                  autoComplete="name"
+                  value={loginForm.name}
+                  onChange={(e) => setLoginForm((f) => ({ ...f, name: e.target.value }))}
+                  disabled={loading}
+                  required
+                />
+              </div>
             </div>
-          </div>
 
-          {/* Submit */}
-          <button type="submit" className={styles.submitBtn} disabled={loading}>
-            {loading ? (
-              <>
-                <span className={styles.spinner} />
-                Đang đăng nhập…
-              </>
-            ) : (
-              'Đăng nhập'
-            )}
-          </button>
-          
-          <div style={{ marginTop: 24, textAlign: 'center', fontSize: '0.85rem', color: '#64748b' }}>
-            Tài khoản được cấp tự động. Vui lòng liên hệ Quản trị viên nếu bạn không đăng nhập được.
-          </div>
-        </form>
+            {/* Số điện thoại */}
+            <div className={styles.fieldGroup}>
+              <label className={styles.label} htmlFor="login-phone">Số điện thoại</label>
+              <div className={styles.inputWrapper}>
+                <span className={styles.inputIcon}><IconPhone /></span>
+                <input
+                  id="login-phone"
+                  type="text"
+                  className={styles.input}
+                  placeholder="Nhập số điện thoại"
+                  autoComplete="tel"
+                  value={loginForm.phone}
+                  onChange={(e) => setLoginForm((f) => ({ ...f, phone: e.target.value }))}
+                  disabled={loading}
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Submit */}
+            <button type="submit" className={styles.submitBtn} disabled={loading}>
+              {loading ? (
+                <>
+                  <span className={styles.spinner} />
+                  Đang đăng nhập…
+                </>
+              ) : (
+                'Đăng nhập'
+              )}
+            </button>
+
+            <div style={{ marginTop: 24, textAlign: 'center', fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.55)' }}>
+              Tài khoản được cấp tự động. Vui lòng liên hệ Quản trị viên nếu bạn không đăng nhập được.
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
