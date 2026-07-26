@@ -21,8 +21,11 @@ from openpyxl.cell.cell import Cell
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data sample"
-# Ưu tiên template.docx chuẩn, fallback sang file tên cũ
+# Ưu tiên template.docx chuẩn trong /app/templates (Docker) hoặc root/templates, fallback sang file tên cũ
+_CUR_DIR = Path(__file__).resolve().parent
 _TEMPLATE_CANDIDATES = [
+    _CUR_DIR / "templates" / "template.docx",
+    _CUR_DIR / "templates" / "TTHT Báo cáo công việc tuần 29.docx",
     ROOT / "templates" / "template.docx",
     ROOT / "webapp" / "templates" / "template.docx",
     ROOT / "templates" / "TTHT Báo cáo công việc tuần 29.docx",

@@ -11,8 +11,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Tạo thư mục exports chứa kết quả xử lý
-RUN mkdir -p ../exports/cd5_uploads ../templates/TTS
+# Tạo thư mục exports chứa kết quả xử lý và copy templates ra root /templates nếu có
+RUN mkdir -p ../exports/cd5_uploads ../templates/TTS && cp -r templates/* ../templates/ 2>/dev/null || true
 
 EXPOSE 8000
 
