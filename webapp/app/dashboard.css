@@ -594,9 +594,11 @@ body {
    Yêu cầu từ người dùng: Phông chữ Times New Roman, KHÔNG ICON, Giao diện HIỆN ĐẠI, SANG TRỌNG
    ========================================================================== */
 
-/* 1. Thiết lập phông chữ chuẩn Times New Roman với khả năng hiển thị sắc nét hiện đại */
+/* 1. Thiết lập phông chữ hiện đại Be Vietnam Pro / Plus Jakarta Sans sắc nét cao cấp */
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 *, body, html, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, div, table, th, td, a, label, strong, b, i, u, footer, header, nav, section, article {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: 'Be Vietnam Pro', 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
