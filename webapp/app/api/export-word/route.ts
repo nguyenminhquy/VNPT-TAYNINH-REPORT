@@ -1,16 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
-import * as xlsx from 'xlsx';
-import path from 'path';
-import fs from 'fs';
-import { execFile } from 'child_process';
-import { promisify } from 'util';
-import os from 'os';
 
-const execFileAsync = promisify(execFile);
-
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   // ── Xác thực ──────────────────────────────────────────────────────────────
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -18,102 +10,76 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { blobUrls } = await req.json();
+    const body = await req.json();
+    const { blobUrls } = body;
+
     if (!blobUrls || Object.keys(blobUrls).length === 0) {
       return NextResponse.json({ error: 'Missing blobUrls' }, { status: 400 });
     }
 
-    // ── Tạo thư mục tạm ───────────────────────────────────────────────────
-    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'vnpt_report_'));
+    const REQUIRED_KEYS = ['mbb', 'fbb', 'mytv', 'mll', 'ispeed', '5s', 'xlsc', 'appendix'];
+    const missingKeys = REQUIRED_KEYS.filter(k => !blobUrls[k]);
+    if (missingKeys.length > 0) {
+      return NextResponse.json({
+        error: `Chưa đủ file Excel. Còn thiếu: ${missingKeys.join(', ')}`
+      }, { status: 422 });
+    }
+
+    // ── Proxy sang Render Python Backend (giống CD5) ─────────────────────────
+    // Ưu tiên: header từ UI → biến môi trường Vercel → default Render URL
+    const backendUrl = (
+      req.headers.get('x-cd5-backend-url') ||
+      process.env.CD5_BACKEND_URL ||
+      process.env.NEXT_PUBLIC_CD5_BACKEND_URL ||
+      'https://vnpt-tayninh-report.onrender.com'
+    ).replace(/\/+$/, '');
 
     try {
-      // ── Tải các file Excel xuống thư mục tạm ────────────────────────────
-      const REQUIRED_KEYS = ['mbb', 'fbb', 'mytv', 'mll', 'ispeed', '5s', 'xlsc', 'appendix'];
-      const missingKeys = REQUIRED_KEYS.filter(k => !blobUrls[k]);
-      if (missingKeys.length > 0) {
-        return NextResponse.json({
-          error: `Chưa đủ file Excel. Còn thiếu: ${missingKeys.join(', ')}`
-        }, { status: 422 });
-      }
-
-      const xlsxPaths: Record<string, string> = {};
-      await Promise.all(
-        Object.entries(blobUrls).map(async ([key, url]) => {
-          const resp = await fetch(url as string, { cache: 'no-store' });
-          if (!resp.ok) {
-            throw new Error(`Không thể tải file ${key} từ Vercel Blob (HTTP ${resp.status})`);
-          }
-          const arrayBuffer = await resp.arrayBuffer();
-          const filePath = path.join(tmpDir, `${key}.xlsx`);
-          fs.writeFileSync(filePath, Buffer.from(arrayBuffer));
-          xlsxPaths[key] = filePath;
-        })
-      );
-
-      // ── Xác định Python interpreter ────────────────────────────────────
-      // Ưu tiên: python3 → python → py
-      const pythonCandidates = ['python3', 'python', 'py'];
-      let pythonBin = 'python';
-      for (const candidate of pythonCandidates) {
-        try {
-          await execFileAsync(candidate, ['--version']);
-          pythonBin = candidate;
-          break;
-        } catch {}
-      }
-
-      // ── Tạo script driver gọi generate_report.py ──────────────────────
-      const generateScript = path.join(process.cwd(), 'generate_report.py');
-      const outputDocx = path.join(tmpDir, 'output.docx');
-
-      // Build paths JSON cho Python script
-      const pathsJson = JSON.stringify(xlsxPaths).replace(/\\/g, '\\\\');
-      const driverScript = `
-import sys, json
-sys.path.insert(0, r'${process.cwd().replace(/\\/g, '\\\\')}')
-from generate_report import generate_report
-excel_paths = json.loads(r'''${pathsJson}''')
-generate_report(excel_paths, r'${outputDocx.replace(/\\/g, '\\\\')}')
-`;
-      const driverPath = path.join(tmpDir, 'driver.py');
-      fs.writeFileSync(driverPath, driverScript, 'utf-8');
-
-      // ── Chạy Python ───────────────────────────────────────────────────
-      const { stdout, stderr } = await execFileAsync(pythonBin, [driverPath], {
-        timeout: 120_000,
-        maxBuffer: 10 * 1024 * 1024,
-        env: {
-          ...process.env,
-          PYTHONIOENCODING: 'utf-8',
-        }
-      }).catch((err: any) => {
-        throw new Error(`Python error: ${err.stderr || err.stdout || err.message}`);
+      console.log(`[export-word] Proxying to: ${backendUrl}/export-word`);
+      const renderRes = await fetch(`${backendUrl}/export-word`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ blobUrls }),
+        // Timeout 5 phút (Render free instance có thể cold start ~50s)
+        signal: AbortSignal.timeout(300_000),
       });
 
-      if (!fs.existsSync(outputDocx)) {
-        throw new Error(`Python không tạo được file output. Stderr: ${stderr}`);
+      if (!renderRes.ok) {
+        let errMsg = `Lỗi từ Python backend (HTTP ${renderRes.status})`;
+        try {
+          const errJson = await renderRes.json();
+          errMsg = errJson.detail || errJson.error || errMsg;
+        } catch {}
+        return NextResponse.json({ error: errMsg }, { status: renderRes.status });
       }
 
-      // ── Đọc file kết quả và trả về ───────────────────────────────────
-      const docxBuffer = fs.readFileSync(outputDocx);
+      // Stream file .docx trực tiếp từ Render về browser
+      const docxBuffer = await renderRes.arrayBuffer();
+      const contentDisposition = renderRes.headers.get('content-disposition') ||
+        'attachment; filename="Bao_cao_VNPT_tuan.docx"';
 
       return new NextResponse(docxBuffer as unknown as BodyInit, {
         status: 200,
         headers: {
           'Content-Type': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-          'Content-Disposition': `attachment; filename="Bao_cao_VNPT_tuan.docx"`,
+          'Content-Disposition': contentDisposition,
         }
       });
 
-    } finally {
-      // ── Dọn dẹp thư mục tạm ──────────────────────────────────────────
-      try {
-        fs.rmSync(tmpDir, { recursive: true, force: true });
-      } catch {}
+    } catch (fetchError: any) {
+      // Xử lý riêng lỗi timeout / cold start
+      if (fetchError.name === 'TimeoutError' || fetchError.name === 'AbortError') {
+        return NextResponse.json({
+          error: '⏳ Render Backend đang khởi động (cold start). Vui lòng thử lại sau 30 giây. Render free tier tắt sau 15 phút không hoạt động.'
+        }, { status: 504 });
+      }
+      return NextResponse.json({
+        error: `❌ Không thể kết nối đến Python Backend (${backendUrl}): ${fetchError.message}`
+      }, { status: 502 });
     }
 
   } catch (error: any) {
-    console.error('[export-word/Python] Error:', error);
+    console.error('[export-word] Error:', error);
     return NextResponse.json({
       error: error.message || 'Lỗi server nội bộ khi xuất báo cáo Word'
     }, { status: 500 });

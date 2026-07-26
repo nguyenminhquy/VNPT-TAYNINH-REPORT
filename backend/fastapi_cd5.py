@@ -1,10 +1,12 @@
 import os
 import shutil
 import json
+import tempfile
+import urllib.request
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Dict
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException, BackgroundTasks, Request
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, Response
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
@@ -147,6 +149,95 @@ async def download_report():
         filename="BaoCao_XLSC_TayNinh_Updated.xlsx",
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
+# ─── ENDPOINT: Xuất Báo cáo tuần dạng Word ────────────────────────────────────
+
+@app.post("/export-word", summary="Tạo báo cáo tuần .docx từ 8 file Excel (truyền qua Blob URL)")
+async def export_word(request: Request):
+    """
+    Nhận JSON body: { blobUrls: { mbb, fbb, mytv, mll, ispeed, "5s", xlsc, appendix } }
+    Tải từng file Excel từ Vercel Blob URL → gọi generate_word_report.generate() → trả về file .docx
+    """
+    try:
+        body = await request.json()
+    except Exception:
+        raise HTTPException(status_code=400, detail="Body JSON không hợp lệ.")
+
+    blob_urls: Dict[str, str] = body.get("blobUrls", {})
+    REQUIRED_KEYS = ["mbb", "fbb", "mytv", "mll", "ispeed", "5s", "xlsc", "appendix"]
+    missing = [k for k in REQUIRED_KEYS if k not in blob_urls or not blob_urls[k]]
+    if missing:
+        raise HTTPException(
+            status_code=422,
+            detail=f"Chưa đủ file Excel. Còn thiếu: {', '.join(missing)}"
+        )
+
+    # Import generate_word_report động để lấy hàm generate()
+    import sys
+    sys.path.insert(0, str(Path(__file__).parent))
+    import generate_word_report as gwr
+
+    # Tải file Excel vào thư mục tạm giống DATA_DIR mà generate_word_report dùng
+    ROOT = Path(__file__).resolve().parents[1]
+    DATA_DIR = ROOT / "data sample"
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+    EXCEL_KEYS = {
+        "mbb":      "1. BÁO CÁO MBB_HUNG.xlsx",
+        "fbb":      "2. BÁO CÁO FBB_BAO.xlsx",
+        "mytv":     "3. BÁO CÁO MYTV_TÂN.xlsx",
+        "mll":      "4. BÁO CÁO MLL_KHANH.xlsx",
+        "ispeed":   "5. BÁO CÁO ISPEED_QUOC.xlsx",
+        "5s":       "6. BÁO CÁO 5S NHÀ TRẠM_TÂN.xlsx",
+        "xlsc":     "7.BÁO CÁO XLSC_TUẤN.xlsx",
+        "appendix": "PHỤ LỤC 1.xlsx",
+    }
+
+    # Tải từng file từ Blob URL về data sample/
+    import httpx
+    async with httpx.AsyncClient(timeout=60.0) as client:
+        for key, filename in EXCEL_KEYS.items():
+            url = blob_urls.get(key)
+            if not url:
+                raise HTTPException(status_code=422, detail=f"Thiếu URL cho key: {key}")
+            try:
+                resp = await client.get(url)
+                resp.raise_for_status()
+                (DATA_DIR / filename).write_bytes(resp.content)
+            except Exception as e:
+                raise HTTPException(
+                    status_code=502,
+                    detail=f"Không thể tải file '{key}' từ Vercel Blob: {str(e)}"
+                )
+
+    # Tạo file output tạm
+    EXPORT_DIR = ROOT / "exports"
+    EXPORT_DIR.mkdir(parents=True, exist_ok=True)
+    output_path = EXPORT_DIR / "Bao_cao_VNPT_tuan_export.docx"
+
+    try:
+        result = gwr.generate(output=output_path)
+    except FileNotFoundError as e:
+        raise HTTPException(status_code=500, detail=f"Không tìm thấy template Word: {str(e)}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Lỗi tạo báo cáo Word: {str(e)}")
+
+    if not output_path.exists():
+        raise HTTPException(status_code=500, detail="File Word không được tạo ra.")
+
+    docx_bytes = output_path.read_bytes()
+    week = result.get("week", "")
+    filename_out = f"Bao_cao_VNPT{f'_tuan_{week}' if week else ''}.docx"
+
+    return Response(
+        content=docx_bytes,
+        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        headers={
+            "Content-Disposition": f'attachment; filename="{filename_out}"',
+            "Content-Length": str(len(docx_bytes)),
+        }
+    )
+
 
 if __name__ == "__main__":
     print("=== Khởi động FastAPI Server cho Báo Cáo Chuyên Đề 5 ===")

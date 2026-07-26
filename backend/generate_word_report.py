@@ -21,7 +21,13 @@ from openpyxl.cell.cell import Cell
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data sample"
-TEMPLATE_FILE = ROOT / "templates" / "TTHT Báo cáo công việc tuần 29.docx"
+# Ưu tiên template.docx chuẩn, fallback sang file tên cũ
+_TEMPLATE_CANDIDATES = [
+    ROOT / "templates" / "template.docx",
+    ROOT / "webapp" / "templates" / "template.docx",
+    ROOT / "templates" / "TTHT Báo cáo công việc tuần 29.docx",
+]
+TEMPLATE_FILE = next((p for p in _TEMPLATE_CANDIDATES if p.is_file()), _TEMPLATE_CANDIDATES[0])
 EXPORT_DIR = ROOT / "exports"
 
 FILES = {
