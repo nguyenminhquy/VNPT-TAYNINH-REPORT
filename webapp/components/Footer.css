@@ -1,0 +1,623 @@
+/* ==========================================================================
+   VNPT TÂY NINH - MODERN CORPORATE TELECOM FOOTER STYLESHEET
+   Futuristic, Clean, Professional & 100% Responsive
+   ========================================================================== */
+
+/* ── 0. GENERAL WRAPPER & TYPOGRAPHY ── */
+.vnpt-modern-footer {
+  width: 100%;
+  position: relative;
+  background: #021B4D;
+  color: #FFFFFF;
+  font-family: 'Be Vietnam Pro', 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  overflow: hidden;
+  margin-top: auto;
+  box-sizing: border-box;
+}
+
+.vnpt-modern-footer * {
+  box-sizing: border-box;
+}
+
+/* ── 1. HERO / BRAND AREA (Top Section) ── */
+.footer-hero {
+  position: relative;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F0F9FF 50%, #EAF7FF 100%);
+  padding: 60px 24px 70px;
+  text-align: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Decorative Backgrounds in Hero */
+.hero-bg-left,
+.hero-bg-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 45%;
+  pointer-events: none;
+  opacity: 0.22;
+  z-index: 0;
+}
+
+.hero-bg-left {
+  left: 0;
+  background-image: 
+    radial-gradient(circle at 10% 30%, #0072E8 1.5px, transparent 1.5px),
+    radial-gradient(circle at 25% 65%, #00B8F4 1px, transparent 1px),
+    radial-gradient(circle at 40% 40%, #173DA5 2px, transparent 2px);
+  background-size: 32px 32px;
+}
+
+.hero-bg-right {
+  right: 0;
+  background-image: 
+    radial-gradient(circle at 90% 40%, #00B8F4 1.5px, transparent 1.5px),
+    radial-gradient(circle at 75% 70%, #0072E8 1px, transparent 1px),
+    radial-gradient(circle at 60% 25%, #173DA5 2px, transparent 2px);
+  background-size: 36px 36px;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* VNPT Logo Box */
+.vnpt-logo-badge {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #0072E8 0%, #00B8F4 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0, 114, 232, 0.35), 0 0 0 4px rgba(255, 255, 255, 0.8);
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vnpt-logo-badge:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 15px 35px rgba(0, 184, 244, 0.5), 0 0 0 6px rgba(255, 255, 255, 0.9);
+}
+
+/* Brand Title */
+.brand-title {
+  margin: 0 0 16px;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  background: linear-gradient(90deg, #173DA5 0%, #0072E8 50%, #00B8F4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 20px rgba(0, 114, 232, 0.15);
+  line-height: 1.2;
+}
+
+/* Slogan Container */
+.brand-slogan-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 650px;
+}
+
+.slogan-line {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00B8F4);
+}
+
+.slogan-line.right {
+  background: linear-gradient(90deg, #00B8F4, transparent);
+}
+
+.brand-slogan {
+  margin: 0;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 600;
+  color: #0c2340;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  position: relative;
+}
+
+.slogan-glow {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 6px;
+  background: radial-gradient(ellipse at center, #00B8F4 0%, transparent 70%);
+  filter: blur(3px);
+}
+
+/* ── 2. WAVE TRANSITION (Curved Tech Ribbon) ── */
+.footer-wave-container {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  background: #EAF7FF;
+  overflow: hidden;
+  line-height: 0;
+  z-index: 2;
+}
+
+.footer-wave-svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ── 3. INFORMATION AREA (Middle Section) ── */
+.footer-info-section {
+  position: relative;
+  background: linear-gradient(120deg, #021B4D 0%, #052C70 50%, #031A45 100%);
+  padding: 55px 30px 65px;
+  z-index: 3;
+}
+
+/* Depth Radial Glow */
+.info-radial-depth {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  background: radial-gradient(circle, rgba(0, 184, 244, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Tech Decorative Backgrounds */
+.info-bg-skyline,
+.info-bg-circuit {
+  position: absolute;
+  bottom: 0;
+  width: 35%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.12;
+  z-index: 0;
+}
+
+.info-bg-skyline {
+  left: 0;
+  background-image: 
+    linear-gradient(to right, rgba(0,200,255,0.2) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,200,255,0.2) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.info-bg-circuit {
+  right: 0;
+  background-image: 
+    radial-gradient(circle at 80% 80%, #00C8FF 2px, transparent 2px),
+    radial-gradient(circle at 40% 60%, #0072E8 3px, transparent 3px);
+  background-size: 50px 50px;
+}
+
+/* Grid Container */
+.footer-grid-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1250px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.35fr 1fr;
+  gap: 36px;
+}
+
+/* Column Separatings */
+.footer-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-col.col-contact {
+  padding: 0 28px;
+  border-left: 1px solid rgba(50, 170, 255, 0.20);
+  border-right: 1px solid rgba(50, 170, 255, 0.20);
+}
+
+.footer-col.col-connect {
+  padding-left: 12px;
+}
+
+/* Column Header Styling: [ICON] TIÊU ĐỀ */
+.col-header {
+  margin-bottom: 24px;
+}
+
+.col-header-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.col-header-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  border: 1.5px solid #00C8FF;
+  background: rgba(0, 200, 255, 0.1);
+  color: #00C8FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba(0, 200, 255, 0.25);
+  flex-shrink: 0;
+}
+
+.col-title {
+  margin: 0;
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  font-weight: 700;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.col-underline {
+  width: 58px;
+  height: 3px;
+  background: #00C8FF;
+  border-radius: 2px;
+  box-shadow: 0 0 10px #00C8FF;
+}
+
+/* ── 4. COLUMN 1 ITEMS (ABOUT US) ── */
+.about-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.about-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 75px;
+  border-bottom: 1px solid rgba(0, 190, 255, 0.12);
+  color: #FFFFFF;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.about-item:last-child {
+  border-bottom: none;
+}
+
+.about-icon-wrap {
+  color: #00C8FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+.about-item:hover {
+  transform: translateX(6px);
+  color: #00C8FF;
+}
+
+.about-item:hover .about-icon-wrap {
+  filter: drop-shadow(0 0 8px rgba(0, 200, 255, 0.8));
+  transform: scale(1.1);
+}
+
+/* ── 5. COLUMN 2 ITEMS (CONTACT INFO) ── */
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-top: 6px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.contact-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(0, 200, 255, 0.08);
+  border: 1px solid rgba(0, 200, 255, 0.25);
+  color: #00C8FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: all 0.25s ease;
+}
+
+.contact-item:hover .contact-icon-wrap {
+  background: rgba(0, 200, 255, 0.18);
+  box-shadow: 0 0 15px rgba(0, 200, 255, 0.3);
+}
+
+.contact-text-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.contact-label {
+  font-weight: 700;
+  color: #FFFFFF;
+  font-size: 1.05rem;
+}
+
+.contact-value {
+  font-weight: 400;
+  color: #F1F7FF;
+}
+
+.contact-link {
+  color: #00C8FF;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  overflow-wrap: anywhere;
+}
+
+.contact-link:hover {
+  color: #60EFFF;
+  text-decoration: underline;
+  text-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+}
+
+/* ── 6. COLUMN 3 ITEMS (CONNECT / SOCIALS) ── */
+.connect-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 6px;
+}
+
+.connect-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(0, 200, 255, 0.12);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.connect-icon-round {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.connect-icon-round.blue-tone {
+  background: rgba(0, 200, 255, 0.15);
+  border: 1.5px solid #00C8FF;
+  color: #00C8FF;
+  box-shadow: 0 0 12px rgba(0, 200, 255, 0.2);
+}
+
+.connect-icon-round.red-tone {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1.5px solid #EF4444;
+  color: #EF4444;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.2);
+}
+
+.connect-text-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.connect-name {
+  font-weight: 700;
+  color: #FFFFFF;
+  font-size: 1.05rem;
+}
+
+.connect-url {
+  font-weight: 400;
+  color: #CBD5E1;
+  font-size: 0.9rem;
+  transition: color 0.25s ease;
+  overflow-wrap: anywhere;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.connect-item:hover {
+  background: rgba(0, 200, 255, 0.08);
+  border-color: rgba(0, 200, 255, 0.35);
+  transform: translateX(6px);
+  box-shadow: 0 8px 25px rgba(0, 200, 255, 0.15);
+}
+
+.connect-item:hover .connect-icon-round {
+  transform: scale(1.08) rotate(5deg);
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.connect-item:hover .connect-url {
+  color: #00C8FF;
+}
+
+/* ── 7. COPYRIGHT BAR (Bottom Section) ── */
+.footer-copyright-bar {
+  position: relative;
+  background: linear-gradient(90deg, #021438 0%, #031B48 50%, #021438 100%);
+  border-top: 2px solid #00C8FF;
+  padding: 24px 20px;
+  text-align: center;
+  z-index: 4;
+  box-shadow: 0 -4px 20px rgba(0, 200, 255, 0.25);
+}
+
+/* Angled / Polygon top edge enhancement */
+.copyright-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #E2E8F0;
+  font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+  font-weight: 500;
+  flex-wrap: wrap;
+}
+
+.copyright-icon {
+  color: #00C8FF;
+  display: flex;
+  align-items: center;
+  filter: drop-shadow(0 0 6px #00C8FF);
+}
+
+.copyright-text {
+  letter-spacing: 0.3px;
+}
+
+/* ── 8. RESPONSIVE MEDIA QUERIES ── */
+
+/* Tablet (768px – 1023px) */
+@media screen and (max-width: 1023px) {
+  .footer-grid-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  
+  .footer-col.col-connect {
+    grid-column: span 2;
+    padding-left: 0;
+    border-top: 1px solid rgba(50, 170, 255, 0.20);
+    padding-top: 32px;
+  }
+  
+  .footer-col.col-contact {
+    padding-right: 0;
+    border-right: none;
+  }
+  
+  .brand-title {
+    letter-spacing: 1px;
+  }
+}
+
+/* Mobile (< 768px) */
+@media screen and (max-width: 767px) {
+  .footer-hero {
+    padding: 45px 16px 50px;
+  }
+
+  .vnpt-logo-badge {
+    width: 60px;
+    height: 60px;
+  }
+
+  .brand-slogan-wrapper {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .slogan-line {
+    width: 60px;
+    height: 2px;
+  }
+
+  .brand-slogan {
+    white-space: normal;
+    text-align: center;
+  }
+
+  .footer-info-section {
+    padding: 40px 20px 50px;
+  }
+
+  .footer-grid-container {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .footer-col.col-contact {
+    padding: 0;
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid rgba(50, 170, 255, 0.20);
+    border-bottom: 1px solid rgba(50, 170, 255, 0.20);
+    padding: 36px 0;
+  }
+
+  .footer-col.col-connect {
+    grid-column: span 1;
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .col-header-top {
+    gap: 12px;
+  }
+
+  .col-header-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .about-item {
+    height: 65px;
+    font-size: 1rem;
+  }
+
+  .contact-item {
+    gap: 14px;
+  }
+
+  .contact-icon-wrap {
+    width: 38px;
+    height: 38px;
+  }
+
+  .connect-icon-round {
+    width: 40px;
+    height: 40px;
+  }
+
+  .copyright-inner {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+}
