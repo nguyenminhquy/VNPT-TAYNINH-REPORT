@@ -1,8 +1,8 @@
 'use client';
 
 /**
- * Trang Login – VNPT Report Hub
- * Hỗ trợ Đăng nhập bằng Họ tên và Số điện thoại với hình nền Đà Lạt và bố cục bên phải sang trọng
+ * Trang Login / Register – VNPT Report Hub
+ * Hỗ trợ Đăng nhập & Đăng ký tài khoản mới bằng Họ tên và Số điện thoại
  */
 
 import { useState } from 'react';
@@ -33,8 +33,15 @@ const IconAlert = () => (
   </svg>
 );
 
+const IconSuccess = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+    <polyline points="22 4 12 14.01 9 11.01" />
+  </svg>
+);
+
 /* ─── Kiểu dữ liệu ─── */
-interface LoginForm {
+interface AuthForm {
   name: string;
   phone: string;
 }
@@ -54,15 +61,24 @@ function mapAuthError(error: string | undefined | null): string {
 /* ─── Component chính ─── */
 export default function LoginPage() {
   const router = useRouter();
-  const [loginForm, setLoginForm] = useState<LoginForm>({ name: '', phone: '' });
+  const [tab, setTab] = useState<'login' | 'register'>('login');
+  const [form, setForm] = useState<AuthForm>({ name: '', phone: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+
+  const switchTab = (newTab: 'login' | 'register') => {
+    setTab(newTab);
+    setError(null);
+    setSuccess(null);
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setSuccess(null);
 
-    if (!loginForm.name.trim() || !loginForm.phone.trim()) {
+    if (!form.name.trim() || !form.phone.trim()) {
       setError('Vui lòng nhập đầy đủ Họ tên và Số điện thoại.');
       return;
     }
@@ -70,8 +86,8 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const result = await signIn('credentials', {
-        name: loginForm.name.trim(),
-        phone: loginForm.phone.trim(),
+        name: form.name.trim(),
+        phone: form.phone.trim(),
         redirect: false,
       });
 
@@ -85,6 +101,58 @@ export default function LoginPage() {
       }
     } catch {
       setError('Lỗi kết nối. Vui lòng kiểm tra lại mạng và thử lại.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setSuccess(null);
+
+    if (!form.name.trim() || !form.phone.trim()) {
+      setError('Vui lòng nhập đầy đủ Họ tên và Số điện thoại.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          phone: form.phone.trim(),
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || 'Đã có lỗi xảy ra khi đăng ký.');
+        setLoading(false);
+        return;
+      }
+
+      setSuccess('Đăng ký tài khoản thành công! Đang tự động đăng nhập...');
+
+      // Tự động đăng nhập luôn sau khi tạo tài khoản thành công
+      const result = await signIn('credentials', {
+        name: form.name.trim(),
+        phone: form.phone.trim(),
+        redirect: false,
+      });
+
+      if (result?.ok) {
+        router.push('/');
+        router.refresh();
+      } else {
+        setSuccess('Đăng ký thành công! Vui lòng nhấn nút Đăng nhập.');
+        setTab('login');
+      }
+    } catch {
+      setError('Lỗi kết nối máy chủ. Vui lòng kiểm tra lại mạng và thử lại.');
     } finally {
       setLoading(false);
     }
@@ -133,12 +201,27 @@ export default function LoginPage() {
           {/* ── Header / Logo ── */}
           <div className={styles.header}>
             <VnptLogo style={{ width: 140, height: 'auto', marginBottom: 10 }} />
-            <p className={styles.headerTitle}>Hệ thống Báo cáo Tự động</p>
+            <p className={styles.headerTitle}>
+              {tab === 'login' ? 'Hệ thống Báo cáo Tự động' : 'Đăng ký tài khoản thành viên'}
+            </p>
           </div>
 
           <div className={styles.tabs}>
-            <button type="button" className={`${styles.tabBtn} ${styles.tabActive}`} style={{ width: '100%' }}>
+            <button
+              type="button"
+              className={`${styles.tabBtn} ${tab === 'login' ? styles.tabActive : ''}`}
+              onClick={() => switchTab('login')}
+              disabled={loading}
+            >
               Đăng nhập
+            </button>
+            <button
+              type="button"
+              className={`${styles.tabBtn} ${tab === 'register' ? styles.tabActive : ''}`}
+              onClick={() => switchTab('register')}
+              disabled={loading}
+            >
+              Đăng ký
             </button>
           </div>
 
@@ -149,20 +232,27 @@ export default function LoginPage() {
             </div>
           )}
 
-          <form className={styles.form} onSubmit={handleLogin} noValidate>
+          {success && (
+            <div className={styles.successBox} style={{ marginBottom: 16 }}>
+              <IconSuccess />
+              <span className={styles.successText}>{success}</span>
+            </div>
+          )}
+
+          <form className={styles.form} onSubmit={tab === 'login' ? handleLogin : handleRegister} noValidate>
             {/* Họ tên */}
             <div className={styles.fieldGroup}>
-              <label className={styles.label} htmlFor="login-name">Họ và tên</label>
+              <label className={styles.label} htmlFor="auth-name">Họ và tên</label>
               <div className={styles.inputWrapper}>
                 <span className={styles.inputIcon}><IconUser /></span>
                 <input
-                  id="login-name"
+                  id="auth-name"
                   type="text"
                   className={styles.input}
                   placeholder="vd: Nguyễn Văn A"
                   autoComplete="name"
-                  value={loginForm.name}
-                  onChange={(e) => setLoginForm((f) => ({ ...f, name: e.target.value }))}
+                  value={form.name}
+                  onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
                   disabled={loading}
                   required
                 />
@@ -171,17 +261,17 @@ export default function LoginPage() {
 
             {/* Số điện thoại */}
             <div className={styles.fieldGroup}>
-              <label className={styles.label} htmlFor="login-phone">Số điện thoại</label>
+              <label className={styles.label} htmlFor="auth-phone">Số điện thoại</label>
               <div className={styles.inputWrapper}>
                 <span className={styles.inputIcon}><IconPhone /></span>
                 <input
-                  id="login-phone"
+                  id="auth-phone"
                   type="text"
                   className={styles.input}
-                  placeholder="Nhập số điện thoại"
+                  placeholder="Nhập số điện thoại (từ 8-11 chữ số)"
                   autoComplete="tel"
-                  value={loginForm.phone}
-                  onChange={(e) => setLoginForm((f) => ({ ...f, phone: e.target.value }))}
+                  value={form.phone}
+                  onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
                   disabled={loading}
                   required
                 />
@@ -193,15 +283,43 @@ export default function LoginPage() {
               {loading ? (
                 <>
                   <span className={styles.spinner} />
-                  Đang đăng nhập…
+                  {tab === 'login' ? 'Đang đăng nhập…' : 'Đang đăng ký…'}
                 </>
               ) : (
-                'Đăng nhập'
+                tab === 'login' ? 'Đăng nhập' : 'Đăng ký tài khoản'
               )}
             </button>
 
-            <div style={{ marginTop: 24, textAlign: 'center', fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.55)' }}>
-              Tài khoản được cấp tự động. Vui lòng liên hệ Quản trị viên nếu bạn không đăng nhập được.
+            <div style={{ marginTop: 20, textAlign: 'center', fontSize: '0.88rem' }}>
+              {tab === 'login' ? (
+                <span style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+                  Chưa có tài khoản?{' '}
+                  <button
+                    type="button"
+                    onClick={() => switchTab('register')}
+                    style={{ background: 'none', border: 'none', color: '#38bdf8', cursor: 'pointer', fontWeight: 600, padding: 0, textDecoration: 'underline' }}
+                  >
+                    Đăng ký ngay
+                  </button>
+                </span>
+              ) : (
+                <span style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+                  Đã có tài khoản?{' '}
+                  <button
+                    type="button"
+                    onClick={() => switchTab('login')}
+                    style={{ background: 'none', border: 'none', color: '#38bdf8', cursor: 'pointer', fontWeight: 600, padding: 0, textDecoration: 'underline' }}
+                  >
+                    Đăng nhập
+                  </button>
+                </span>
+              )}
+            </div>
+
+            <div style={{ marginTop: 12, textAlign: 'center', fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.45)' }}>
+              {tab === 'login'
+                ? 'Tài khoản được bảo mật. Vui lòng nhập đúng họ tên và số điện thoại.'
+                : 'Hệ thống tự động liên kết tài khoản bằng Họ tên và Số điện thoại của bạn.'}
             </div>
           </form>
         </div>
