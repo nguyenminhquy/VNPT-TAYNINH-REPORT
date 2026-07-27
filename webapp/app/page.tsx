@@ -479,18 +479,44 @@ export default function Dashboard() {
                               ) : (
                                 <span className="status-badge error">❌ Chưa có dữ liệu</span>
                               )}
-                              <div className="file-input-wrapper">
-                                <button className="btn-upload">
-                                  {uploadingKey === source.key ? (
-                                    <><Loader2 size={18} className="spin-anim" /> Đang tải lên...</>
-                                  ) : (
-                                    dbSource?.blob_url ? 'Tải file lên mới' : 'Tải file lên'
-                                  )}
-                                </button>
-                                <input type="file" accept=".xlsx" onChange={(e) => {
-                                  const file = e.target.files?.[0];
-                                  if (file) handleUpload(source.key, file);
-                                }} />
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%' }}>
+                                {dbSource?.blob_url && (
+                                  <a
+                                    href={dbSource.blob_url}
+                                    download={source.filename}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                      gap: 6,
+                                      padding: '10px 14px',
+                                      borderRadius: 8,
+                                      background: '#10b981',
+                                      color: '#fff',
+                                      fontWeight: 600,
+                                      fontSize: '0.9rem',
+                                      textDecoration: 'none',
+                                      boxShadow: '0 2px 6px rgba(16, 185, 129, 0.2)',
+                                    }}
+                                  >
+                                    ⬇️ Tải Excel ({source.owner})
+                                  </a>
+                                )}
+                                <div className="file-input-wrapper">
+                                  <button className="btn-upload" style={{ width: '100%' }}>
+                                    {uploadingKey === source.key ? (
+                                      <><Loader2 size={18} className="spin-anim" /> Đang tải lên...</>
+                                    ) : (
+                                      dbSource?.blob_url ? '🔄 Tải file lên mới' : '⬆️ Tải file lên'
+                                    )}
+                                  </button>
+                                  <input type="file" accept=".xlsx" onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (file) handleUpload(source.key, file);
+                                  }} />
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -511,8 +537,41 @@ export default function Dashboard() {
                           if (!report) return null;
                           return (
                             <div className="fade-in">
-                              <h2 className="section-title" style={{ fontSize: '2rem' }}>{report.title}</h2>
-                              <p className="section-subtitle" style={{ marginBottom: 24 }}>{report.kicker}</p>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16, marginBottom: 24 }}>
+                                <div>
+                                  <h2 className="section-title" style={{ fontSize: '2rem', marginBottom: 6 }}>{report.title}</h2>
+                                  <p className="section-subtitle">{report.kicker}</p>
+                                </div>
+                                {(() => {
+                                  const dbSource = reportSources.find((s: any) => s.key === activeReportKey);
+                                  if (!dbSource?.blob_url) return null;
+                                  const sourceInfo = REPORT_SOURCES.find(s => s.key === activeReportKey);
+                                  return (
+                                    <a
+                                      href={dbSource.blob_url}
+                                      download={sourceInfo?.filename || `${activeReportKey}.xlsx`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      style={{
+                                        background: 'linear-gradient(135deg, #10b981, #059669)',
+                                        color: '#fff',
+                                        textDecoration: 'none',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: 8,
+                                        padding: '10px 18px',
+                                        borderRadius: 10,
+                                        fontWeight: 700,
+                                        fontSize: '0.95rem',
+                                        boxShadow: '0 4px 12px rgba(16, 185, 129, 0.25)',
+                                        transition: 'all 0.2s',
+                                      }}
+                                    >
+                                      ⬇️ Tải file Excel ({sourceInfo?.owner || 'Nguồn'})
+                                    </a>
+                                  );
+                                })()}
+                              </div>
                               <p className="content-text" style={{ fontSize: '1.1rem', marginBottom: 40 }}>{report.summary}</p>
                               
                               {report.table && report.table.rows && report.table.rows.length > 0 && (
