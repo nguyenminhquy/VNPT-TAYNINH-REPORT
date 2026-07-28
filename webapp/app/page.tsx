@@ -501,7 +501,7 @@ export default function Dashboard() {
                                       boxShadow: '0 2px 6px rgba(16, 185, 129, 0.2)',
                                     }}
                                   >
-                                    ⬇️ Tải Excel ({source.owner})
+                                    ⬇️ Tải xuống file Excel ({source.owner})
                                   </a>
                                 )}
                                 <div className="file-input-wrapper">
@@ -567,7 +567,7 @@ export default function Dashboard() {
                                         transition: 'all 0.2s',
                                       }}
                                     >
-                                      ⬇️ Tải file Excel ({sourceInfo?.owner || 'Nguồn'})
+                                      ⬇️ Tải xuống file Excel ({sourceInfo?.owner || 'Nguồn'})
                                     </a>
                                   );
                                 })()}

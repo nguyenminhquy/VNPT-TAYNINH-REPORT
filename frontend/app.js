@@ -13,7 +13,7 @@
     ispeed: { owner: "Quốc", groupLabel: "Vận hành" },
     "5s": { owner: "Tân", groupLabel: "Vận hành" },
     xlsc: { owner: "Tuấn", groupLabel: "Vận hành" },
-    appendix: { owner: "Phụ lục", groupLabel: "Bổ sung" },
+    appendix: { owner: "Lê Ngọc Hân", groupLabel: "Bổ sung" },
   };
 
   const reportUploadConfig = [
@@ -24,7 +24,7 @@
     { id: "ispeed", menuLabel: "i-Speed", description: "Đo kiểm tốc độ mạng", label: "BÁO CÁO ISPEED_QUOC", owner: "Quốc", filename: "5. BÁO CÁO ISPEED_QUOC.xlsx" },
     { id: "5s", menuLabel: "5S nhà trạm", description: "Tiến độ hiện trường", label: "BÁO CÁO 5S NHÀ TRẠM_TÂN", owner: "Tân", filename: "6. BÁO CÁO 5S NHÀ TRẠM_TÂN.xlsx" },
     { id: "xlsc", menuLabel: "XLSC", description: "Xử lý sự cố", label: "BÁO CÁO XLSC_TUẤN", owner: "Tuấn", filename: "7.BÁO CÁO XLSC_TUẤN.xlsx" },
-    { id: "appendix", menuLabel: "Phụ lục 1", description: "Giải trình sự cố trạm", label: "PHỤ LỤC 1", owner: "Phụ lục", filename: "PHỤ LỤC 1.xlsx" },
+    { id: "appendix", menuLabel: "Phụ lục 1", description: "Giải trình sự cố trạm", label: "PHỤ LỤC 1", owner: "Lê Ngọc Hân", filename: "8.PHỤ LỤC 1_HÂN.xlsx" },
   ];
 
   const dataEntryState = {

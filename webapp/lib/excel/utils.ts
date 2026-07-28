@@ -113,10 +113,11 @@ export function cellText(
  */
 export function loadSheet(
   workbookBuffer: Buffer,
-  sheetName: string
+  sheetName: string,
+  fallbackToFirst: boolean = true
 ): WorkSheet {
   const wb = XLSX.read(workbookBuffer, { type: 'buffer', cellDates: true });
-  const sheet = wb.Sheets[sheetName];
+  const sheet = wb.Sheets[sheetName] || (fallbackToFirst && wb.SheetNames.length > 0 ? wb.Sheets[wb.SheetNames[0]] : undefined);
   if (!sheet) {
     const available = wb.SheetNames.join(', ');
     throw new Error(
@@ -131,12 +132,13 @@ export function loadSheet(
  */
 export function loadSheets(
   workbookBuffer: Buffer,
-  sheetNames: string[]
+  sheetNames: string[],
+  fallbackToFirst: boolean = true
 ): Record<string, WorkSheet> {
   const wb = XLSX.read(workbookBuffer, { type: 'buffer', cellDates: true });
   const result: Record<string, WorkSheet> = {};
   for (const name of sheetNames) {
-    const sheet = wb.Sheets[name];
+    const sheet = wb.Sheets[name] || (fallbackToFirst && wb.SheetNames.length > 0 ? wb.Sheets[wb.SheetNames[0]] : undefined);
     if (!sheet) {
       const available = wb.SheetNames.join(', ');
       throw new Error(

@@ -931,27 +931,38 @@ def build_xlsc_report() -> dict[str, Any]:
 
 
 def build_appendix_report() -> dict[str, Any]:
-    filename = "PHỤ LỤC 1.xlsx"
-    df = load_sheet(filename, "Báo Cáo Sự Cố Trạm")
+    filename = "8.PHỤ LỤC 1_HÂN.xlsx"
+    try:
+        df = load_sheet(filename, 0)
+    except Exception:
+        df = load_sheet("PHỤ LỤC 1.xlsx", 0)
+
+    col1_h = str(df.iat[1, 1] if len(df) > 1 and df.shape[1] > 1 else "").strip().lower()
+    if "sự cố" in col1_h or "su co" in col1_h:
+        c_station, c_time, c_dur, c_cause, c_fix, c_status = 2, 3, 4, 5, 7, 10
+    else:
+        c_station, c_time, c_dur, c_cause, c_fix, c_status = 1, 2, 3, 4, 6, 9
 
     incidents = []
     causes = Counter()
     statuses = Counter()
-    for row_index in range(3, len(df)):
-        station = text(df.iat[row_index, 1])
-        duration = number(df.iat[row_index, 3])
-        cause = text(df.iat[row_index, 4])
+    for row_index in range(2, len(df)):
+        if row_index >= len(df) or c_station >= df.shape[1]:
+            continue
+        station = text(df.iat[row_index, c_station])
+        duration = number(df.iat[row_index, c_dur])
+        cause = text(df.iat[row_index, c_cause])
         if station and duration is not None:
             causes[cause] += 1
-            statuses[text(df.iat[row_index, 9])] += 1
+            statuses[text(df.iat[row_index, c_status])] += 1
             incidents.append(
                 {
                     "Tên NE": station,
-                    "Thời gian sự cố": text(df.iat[row_index, 2]),
+                    "Thời gian sự cố": text(df.iat[row_index, c_time]),
                     "MLL (phút)": whole(duration),
                     "Nguyên nhân": cause,
-                    "Khắc phục": text(df.iat[row_index, 6]),
-                    "Trạng thái": text(df.iat[row_index, 9]),
+                    "Khắc phục": text(df.iat[row_index, c_fix]),
+                    "Trạng thái": text(df.iat[row_index, c_status]),
                     "durationValue": duration,
                 }
             )
@@ -1076,7 +1087,7 @@ def build_dashboard_data() -> dict[str, Any]:
         {"name": "5. BÁO CÁO ISPEED_QUOC.xlsx", "tag": "i-Speed"},
         {"name": "6. BÁO CÁO 5S NHÀ TRẠM_TÂN.xlsx", "tag": "5S"},
         {"name": "7.BÁO CÁO XLSC_TUẤN.xlsx", "tag": "XLSC"},
-        {"name": "PHỤ LỤC 1.xlsx", "tag": "Phụ lục"},
+        {"name": "8.PHỤ LỤC 1_HÂN.xlsx", "tag": "Phụ lục"},
     ]
 
     return {

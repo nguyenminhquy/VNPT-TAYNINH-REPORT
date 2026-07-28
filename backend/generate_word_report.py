@@ -41,7 +41,7 @@ FILES = {
     "ispeed": "5. BÁO CÁO ISPEED_QUOC.xlsx",
     "5s": "6. BÁO CÁO 5S NHÀ TRẠM_TÂN.xlsx",
     "xlsc": "7.BÁO CÁO XLSC_TUẤN.xlsx",
-    "appendix": "PHỤ LỤC 1.xlsx",
+    "appendix": "8.PHỤ LỤC 1_HÂN.xlsx",
 }
 
 
@@ -557,14 +557,45 @@ def update_xlsc(document: DocumentType, sources: dict[str, Any]) -> None:
 
 
 def update_appendix(document: DocumentType, sources: dict[str, Any]) -> None:
-    sheet = sources["appendix"]["Báo Cáo Sự Cố Trạm"]
-    data_rows = [
-        row
-        for row in range(5, sheet.max_row + 1)
-        if str(sheet.cell(row=row, column=1).value or "").strip().isdigit()
+    wb = sources["appendix"]
+    sheet = wb.worksheets[0] if hasattr(wb, "worksheets") and len(wb.worksheets) > 0 else wb["Báo Cáo Sự Cố Trạm"]
+
+    def is_valid_stt(val: Any) -> bool:
+        if val is None:
+            return False
+        s = str(val).strip()
+        if not s:
+            return False
+        try:
+            return float(s) > 0
+        except ValueError:
+            return False
+
+    all_rows = list(sheet.iter_rows(values_only=False))
+    data_indices = [
+        i for i, row in enumerate(all_rows)
+        if len(row) > 0 and is_valid_stt(row[0].value)
     ]
-    last_row = max(data_rows, default=4)
-    matrix = worksheet_matrix(sheet, 4, last_row, 1, 10)
+    if not data_indices:
+        return
+
+    min_idx = min(data_indices)
+    max_idx = max(data_indices)
+
+    col2_header = str(all_rows[min_idx - 1][1].value or "").strip().lower() if min_idx > 0 and len(all_rows[min_idx - 1]) > 1 else ""
+    if "sự cố" in col2_header or "su co" in col2_header:
+        target_cols = [0, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    else:
+        target_cols = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+    matrix = []
+    for idx in range(min_idx, max_idx + 1):
+        row_cells = all_rows[idx]
+        matrix.append([
+            format_cell(row_cells[c]) if c < len(row_cells) else ""
+            for c in target_cols
+        ])
+
     table = document.tables[22]
     resize_table_rows(table, len(matrix))
     write_table_matrix(table, matrix)

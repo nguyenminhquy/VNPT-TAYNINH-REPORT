@@ -40,20 +40,28 @@ export function parseAPPENDIX(buffer: Buffer): ReportBlock {
   const sheet = loadSheet(buffer, 'Báo Cáo Sự Cố Trạm');
   const maxRow = getSheetMaxRow(sheet);
 
+  const col1Header = txt(cellValue(sheet, 2, 1)).toLowerCase();
+  const isNewFormat = col1Header.includes('sự cố') || col1Header.includes('su co');
+  const cStation = isNewFormat ? 2 : 1;
+  const cTime = isNewFormat ? 3 : 2;
+  const cDur = isNewFormat ? 4 : 3;
+  const cCause = isNewFormat ? 5 : 4;
+  const cFix = isNewFormat ? 7 : 6;
+  const cStatus = isNewFormat ? 10 : 9;
+
   const incidents: AppendixIncident[] = [];
 
   for (let r = 3; r <= maxRow; r++) {
-    // Python rows 4+ → r=3+
-    const station = txt(cellValue(sheet, r, 1)); // col2
-    if (!station) continue;
+    const station = txt(cellValue(sheet, r, cStation));
+    if (!station || station === 'Tổng' || station.toLowerCase().startsWith('stt')) continue;
 
     incidents.push({
       station,
-      time: cellText(sheet, r, 2),     // col3
-      duration: cellText(sheet, r, 3), // col4
-      cause: txt(cellValue(sheet, r, 4)),  // col5
-      fix: txt(cellValue(sheet, r, 6)),    // col7
-      status: txt(cellValue(sheet, r, 9)), // col10
+      time: cellText(sheet, r, cTime),
+      duration: cellText(sheet, r, cDur),
+      cause: txt(cellValue(sheet, r, cCause)),
+      fix: txt(cellValue(sheet, r, cFix)),
+      status: txt(cellValue(sheet, r, cStatus)),
     });
   }
 
