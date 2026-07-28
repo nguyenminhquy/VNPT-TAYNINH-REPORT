@@ -173,9 +173,7 @@ export default function LoginPage() {
         <p className={styles.heroSubtitle}>
           Hệ thống Quản lý &amp; Tổng hợp Báo cáo Tự động hóa
         </p>
-        <p className={styles.heroDesc}>
-          Tối ưu hóa quy trình giám sát chỉ tiêu KPI, tự động hóa xử lý sự cố Chuyên đề 5 và xuất báo cáo chuẩn Corporate nhanh chóng, chính xác trên quê hương núi Bà Đen / Đà Lạt.
-        </p>
+
 
         <div className={styles.heroFooter}>
           <div className={styles.statItem}>
