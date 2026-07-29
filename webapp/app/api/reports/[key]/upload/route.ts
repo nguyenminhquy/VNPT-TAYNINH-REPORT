@@ -212,21 +212,42 @@ export async function POST(
       );
     }
 
-    // ── Cập nhật report_sources ───────────────────────────────────────────────
+    // ── Cập nhật hoặc Thêm mới report_sources ─────────────────────────────────
     const uploadedBy = (session.user as { id?: string })?.id ?? null;
     const uploadedAt = new Date().toISOString();
 
-    const { data: updatedSource, error: updateError } = await supabaseAdmin
-      .from('report_sources')
-      .update({
-        blob_url: blobResult.url,
-        file_size: file.size,
-        uploaded_by: uploadedBy,
-        uploaded_at: uploadedAt,
-      })
-      .eq('key', key)
-      .select()
-      .single();
+    let updatedSource;
+    let updateError;
+
+    if (currentSource) {
+      const res = await supabaseAdmin
+        .from('report_sources')
+        .update({
+          blob_url: blobResult.url,
+          file_size: file.size,
+          uploaded_by: uploadedBy,
+          uploaded_at: uploadedAt,
+        })
+        .eq('key', key)
+        .select()
+        .single();
+      updatedSource = res.data;
+      updateError = res.error;
+    } else {
+      const res = await supabaseAdmin
+        .from('report_sources')
+        .insert({
+          key: key,
+          blob_url: blobResult.url,
+          file_size: file.size,
+          uploaded_by: uploadedBy,
+          uploaded_at: uploadedAt,
+        })
+        .select()
+        .single();
+      updatedSource = res.data;
+      updateError = res.error;
+    }
 
     if (updateError) {
       console.error('[upload] update source error:', updateError);
