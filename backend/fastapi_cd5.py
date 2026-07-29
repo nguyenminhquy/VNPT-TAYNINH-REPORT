@@ -195,20 +195,27 @@ async def export_word(request: Request):
 
     # Tải từng file từ Blob URL về data sample/
     import httpx
-    async with httpx.AsyncClient(timeout=60.0) as client:
+    import asyncio
+    
+    async def download_file(client, url, filepath, key):
+        try:
+            resp = await client.get(url)
+            resp.raise_for_status()
+            filepath.write_bytes(resp.content)
+        except Exception as e:
+            raise HTTPException(
+                status_code=502,
+                detail=f"Không thể tải file '{key}' từ Vercel Blob: {str(e)}"
+            )
+
+    async with httpx.AsyncClient(timeout=120.0) as client:
+        tasks = []
         for key, filename in EXCEL_KEYS.items():
             url = blob_urls.get(key)
             if not url:
                 raise HTTPException(status_code=422, detail=f"Thiếu URL cho key: {key}")
-            try:
-                resp = await client.get(url)
-                resp.raise_for_status()
-                (DATA_DIR / filename).write_bytes(resp.content)
-            except Exception as e:
-                raise HTTPException(
-                    status_code=502,
-                    detail=f"Không thể tải file '{key}' từ Vercel Blob: {str(e)}"
-                )
+            tasks.append(download_file(client, url, DATA_DIR / filename, key))
+        await asyncio.gather(*tasks)
 
     # Tạo file output tạm
     EXPORT_DIR = ROOT / "exports"
@@ -278,20 +285,27 @@ async def export_word_monthly(request: Request):
     }
 
     import httpx
-    async with httpx.AsyncClient(timeout=60.0) as client:
+    import asyncio
+    
+    async def download_file(client, url, filepath, key):
+        try:
+            resp = await client.get(url)
+            resp.raise_for_status()
+            filepath.write_bytes(resp.content)
+        except Exception as e:
+            raise HTTPException(
+                status_code=502,
+                detail=f"Không thể tải file '{key}': {str(e)}"
+            )
+
+    async with httpx.AsyncClient(timeout=120.0) as client:
+        tasks = []
         for key, filename in EXCEL_KEYS.items():
             url = blob_urls.get(key)
             if not url:
                 raise HTTPException(status_code=422, detail=f"Thiếu URL cho key: {key}")
-            try:
-                resp = await client.get(url)
-                resp.raise_for_status()
-                (DATA_DIR / filename).write_bytes(resp.content)
-            except Exception as e:
-                raise HTTPException(
-                    status_code=502,
-                    detail=f"Không thể tải file '{key}': {str(e)}"
-                )
+            tasks.append(download_file(client, url, DATA_DIR / filename, key))
+        await asyncio.gather(*tasks)
 
     EXPORT_DIR = ROOT / "exports"
     EXPORT_DIR.mkdir(parents=True, exist_ok=True)
