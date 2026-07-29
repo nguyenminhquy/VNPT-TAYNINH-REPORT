@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { supabaseAdmin } from '@/lib/supabase';
-import { REPORT_SOURCES } from '@/lib/reports';
+import { REPORT_SOURCES, MONTHLY_REPORT_SOURCES } from '@/lib/reports';
 import { buildDashboardData } from '@/lib/excel/aggregator';
 import { put, del } from '@vercel/blob';
 import * as XLSX from 'xlsx';
@@ -35,8 +35,12 @@ export async function processAllReports(): Promise<{
     return { success: false, message: 'Chưa có nguồn báo cáo nào' };
   }
 
-  // Kiểm tra xem tất cả 8 nguồn đã có blob_url chưa
-  const missingBlob = sources.filter(
+  // Kiểm tra xem tất cả 8 nguồn (báo cáo tuần) đã có blob_url chưa
+  const weeklySources = sources.filter((s: Record<string, unknown>) => 
+    REPORT_SOURCES.some(rs => rs.key === s.key)
+  );
+
+  const missingBlob = weeklySources.filter(
     (s: Record<string, unknown>) => !s.blob_url,
   );
   if (missingBlob.length > 0) {
@@ -45,14 +49,14 @@ export async function processAllReports(): Promise<{
       .join(', ');
     return {
       success: false,
-      message: `Chưa đủ dữ liệu. Còn thiếu: ${missingKeys}`,
+      message: `Chưa đủ dữ liệu Tuần. Còn thiếu: ${missingKeys}`,
     };
   }
 
-  // Fetch từng blob về Buffer
+  // Fetch từng blob về Buffer (chỉ lấy 8 nguồn tuần)
   const buffers: Record<string, Buffer> = {};
 
-  for (const source of sources as Array<Record<string, string>>) {
+  for (const source of weeklySources as Array<Record<string, string>>) {
     try {
       const response = await fetch(source.blob_url);
       if (!response.ok) {
@@ -110,7 +114,7 @@ export async function POST(
     const { key } = params;
 
     // ── Validate key có trong danh sách nguồn không ─────────────────────────
-    if (!REPORT_SOURCES.some(s => s.key === key)) {
+    if (!MONTHLY_REPORT_SOURCES.some(s => s.key === key)) {
       return NextResponse.json(
         { error: `Key "${key}" không hợp lệ` },
         { status: 400 },
@@ -264,19 +268,21 @@ export async function POST(
       uploaded_at: uploadedAt,
     });
 
-    // ── Thử tổng hợp nếu đủ tất cả 8 nguồn ──────────────────────────────────
+    // ── Thử tổng hợp nếu đủ tất cả 8 nguồn tuần ──────────────────────────────
     let processResult: { success: boolean; message: string; generated_at?: string } | null = null;
 
     const { data: allSources } = await supabaseAdmin
       .from('report_sources')
-      .select('blob_url');
+      .select('blob_url, key');
 
-    const totalSources = allSources?.length ?? 0;
-    const readySources = allSources?.filter(
-      (s: Record<string, unknown>) => !!s.blob_url,
-    ).length ?? 0;
+    const weeklySourcesDB = allSources?.filter(s => 
+      REPORT_SOURCES.some(rs => rs.key === s.key)
+    ) || [];
 
-    if (totalSources >= 8 && readySources === totalSources) {
+    const totalSources = weeklySourcesDB.length;
+    const readySources = weeklySourcesDB.filter(s => !!s.blob_url).length;
+
+    if (totalSources === 8 && readySources === 8) {
       processResult = await processAllReports();
       if (!processResult.success) {
         console.warn('[upload] processAllReports failed:', processResult.message);
