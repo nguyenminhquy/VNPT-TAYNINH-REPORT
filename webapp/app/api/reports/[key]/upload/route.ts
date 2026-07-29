@@ -260,7 +260,7 @@ export async function POST(
         // ignore
       }
       return NextResponse.json(
-        { error: 'Lỗi cập nhật thông tin nguồn báo cáo' },
+        { error: `Lỗi DB: ${updateError.message || ''} - ${updateError.details || ''}` },
         { status: 500 },
       );
     }
