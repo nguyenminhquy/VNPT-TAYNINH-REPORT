@@ -276,16 +276,17 @@ def update_mbb_fbb_mytv(document: DocumentType, sources: dict[str, Any]) -> None
     for row in common[1:]:
         row[2] = decimal(row[2])
         row[3] = decimal(row[3])
-    write_table_matrix(document.tables[1], common)
+    t16 = find_table_by_tag(document, "(OMC_HUNG)", offset=-2)
+    if t16:
+        write_table_matrix(t16, common)
 
     comparison = worksheet_matrix(mbb["So sánh các tỉnh"], 3, 7, 1, 3)
-    write_table_matrix(document.tables[2], comparison)
+    t17 = find_table_by_tag(document, "(OMC_HUNG)", offset=-1)
+    if t17:
+        write_table_matrix(t17, comparison)
 
     mbb_detail = worksheet_matrix(mbb["Kết quả chi tiết"], 4, 12, 1, 8)
-    write_table_matrix(document.tables[3], mbb_detail, start_row=3)
-
     fbb_detail = worksheet_matrix(fbb["Thông tin chung"], 2, 17, 1, 8)
-    write_table_matrix(document.tables[3], fbb_detail, start_row=13)
 
     mytv_rows = raw_matrix(mytv["Sheet1"], 3, 16, 1, 8)
     mytv_detail: list[list[str]] = []
@@ -303,39 +304,12 @@ def update_mbb_fbb_mytv(document: DocumentType, sources: dict[str, Any]) -> None
                 clean(row[7]),
             ]
         )
-    write_table_matrix(document.tables[3], mytv_detail, start_row=30)
-
-    qos_explanation = worksheet_matrix(mbb["Giải trình QoS"], 4, 10, 1, 4)
-    qoe_explanation = worksheet_matrix(mbb["Giải trình QoE"], 4, 8, 1, 4)
-    plan_sheet_name = next(name for name in mbb.sheetnames if name.startswith("Dự kiến tuần"))
-    plan = worksheet_matrix(mbb[plan_sheet_name], 3, 9, 1, 4)
-    feedback = worksheet_matrix(mbb["Phản ánh khách hàng (PAKH)"], 4, 10, 1, 3)
-    write_table_matrix(document.tables[4], qos_explanation)
-    write_table_matrix(document.tables[5], qoe_explanation)
-    write_table_matrix(document.tables[6], plan)
-    write_table_matrix(document.tables[7], feedback)
-
-    qos_sheet = fbb["Chi tiết QoS FBB"]
-    # FBB in monthly has a different structure, skipping for now
-
-    plan_week_match = re.search(r"(\d+)$", plan_sheet_name)
-    if plan_week_match:
-        replace_paragraph(
-            document.paragraphs[18],
-            f"Công việc dự kiến tuần {plan_week_match.group(1)}:",
-        )
-
-    feedback_cutoff = next(
-        (clean(row[1]) for row in feedback[1:] if "đến" in clean(row[1]).lower()),
-        "",
-    )
-    cutoff_match = re.search(r"(\d{1,2}/\d{1,2}/\d{4})", feedback_cutoff)
-    if cutoff_match:
-        cutoff = datetime.strptime(cutoff_match.group(1), "%d/%m/%Y")
-        replace_paragraph(
-            document.paragraphs[20],
-            f"Thời gian lấy báo cáo: 01/{cutoff.month:02d}/{cutoff.year} – {cutoff:%d/%m/%Y}",
-        )
+        
+    t18 = find_table_by_tag(document, "(OMC_HUNG)", offset=0)
+    if t18:
+        write_table_matrix(t18, mbb_detail, start_row=3)
+        write_table_matrix(t18, fbb_detail, start_row=14)
+        write_table_matrix(t18, mytv_detail, start_row=31)
 
 
 def mll_table_matrix(sheet: Any) -> tuple[list[list[str]], dict[str, Any]]:
