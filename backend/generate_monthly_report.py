@@ -24,7 +24,9 @@ DATA_DIR = ROOT / "data sample"
 # Ưu tiên template.docx chuẩn trong /app/templates (Docker) hoặc root/templates, fallback sang file tên cũ
 _CUR_DIR = Path(__file__).resolve().parent
 _TEMPLATE_CANDIDATES = [
+    _CUR_DIR / "templates" / "TTHT-BÁO CÁO THÁNG 7_UPDATE.docx",
     ROOT / "templates" / "TTHT-BÁO CÁO THÁNG 7_UPDATE.docx",
+    ROOT / "webapp" / "templates" / "TTHT-BÁO CÁO THÁNG 7_UPDATE.docx",
 ]
 TEMPLATE_FILE = next((p for p in _TEMPLATE_CANDIDATES if p.is_file()), _TEMPLATE_CANDIDATES[0])
 EXPORT_DIR = ROOT / "exports"
