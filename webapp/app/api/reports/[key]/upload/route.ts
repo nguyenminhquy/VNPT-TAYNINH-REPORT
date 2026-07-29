@@ -224,6 +224,7 @@ export async function POST(
         .from('report_sources')
         .update({
           blob_url: blobResult.url,
+          blob_pathname: blobResult.pathname || pathname,
           file_size: file.size,
           uploaded_by: uploadedBy,
           uploaded_at: uploadedAt,
@@ -240,7 +241,10 @@ export async function POST(
         .insert({
           key: key,
           label: sourceMeta?.label ?? key,
+          owner: sourceMeta?.owner ?? 'Unknown',
+          filename: sourceMeta?.filename ?? `${key}.xlsx`,
           blob_url: blobResult.url,
+          blob_pathname: blobResult.pathname || pathname,
           file_size: file.size,
           uploaded_by: uploadedBy,
           uploaded_at: uploadedAt,
@@ -276,14 +280,16 @@ export async function POST(
     }
 
     // ── Ghi lịch sử upload ────────────────────────────────────────────────────
+    const histSourceMeta = MONTHLY_REPORT_SOURCES.find(s => s.key === key);
     await supabaseAdmin.from('upload_history').insert({
-      report_key: key,
+      source_key: key,
+      source_label: histSourceMeta?.label ?? key,
       file_name: fileName,
       file_size: file.size,
-      blob_url: blobResult.url,
       uploaded_by: uploadedBy,
       uploader_name: session.user?.name ?? 'unknown',
       uploaded_at: uploadedAt,
+      status: 'success'
     });
 
     // ── Thử tổng hợp nếu đủ tất cả 8 nguồn tuần ──────────────────────────────
