@@ -244,7 +244,6 @@ export async function POST(
           owner: sourceMeta?.owner ?? 'Unknown',
           filename: sourceMeta?.filename ?? `${key}.xlsx`,
           tag: sourceMeta?.tag ?? 'Khác',
-          color: sourceMeta?.color ?? '#000000',
           blob_url: blobResult.url,
           blob_pathname: blobResult.pathname || pathname,
           file_size: file.size,
