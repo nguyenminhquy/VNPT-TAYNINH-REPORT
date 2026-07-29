@@ -64,6 +64,10 @@ export const REPORT_SOURCES = [
     tag: "Phụ lục",
     color: "#737373",
   },
+] as const;
+
+export const MONTHLY_REPORT_SOURCES = [
+  ...REPORT_SOURCES,
   {
     key: "omc_tam",
     label: "HIỆN TRẠNG THIẾT BỊ",
@@ -82,8 +86,8 @@ export const REPORT_SOURCES = [
   },
 ] as const;
 
-export type ReportKey = (typeof REPORT_SOURCES)[number]["key"];
+export type ReportKey = (typeof MONTHLY_REPORT_SOURCES)[number]["key"];
 
 export const REPORT_MAP = Object.fromEntries(
-  REPORT_SOURCES.map((s) => [s.key, s])
-) as Record<ReportKey, (typeof REPORT_SOURCES)[number]>;
+  MONTHLY_REPORT_SOURCES.map((s) => [s.key, s])
+) as Record<ReportKey, (typeof MONTHLY_REPORT_SOURCES)[number]>;

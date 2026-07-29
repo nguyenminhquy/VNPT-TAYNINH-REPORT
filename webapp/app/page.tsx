@@ -3,7 +3,7 @@
 import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { REPORT_SOURCES, type ReportKey } from "@/lib/reports";
+import { REPORT_SOURCES, MONTHLY_REPORT_SOURCES, type ReportKey } from "@/lib/reports";
 import { Loader2, Plus, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 import ShiftHandover from "@/components/ShiftHandover";
@@ -21,7 +21,7 @@ export default function Dashboard() {
   
   const [reportSources, setReportSources] = useState<any[]>([]);
   const [cacheData, setCacheData] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState<"overview" | "details" | "special5" | "petition" | "handover" | "inspection" | "generator" | "schedule">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "details" | "monthly_details" | "special5" | "petition" | "handover" | "inspection" | "generator" | "schedule">("overview");
   const [activeReportKey, setActiveReportKey] = useState<string | null>("upload");
   const [isExporting, setIsExporting] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -322,6 +322,23 @@ export default function Dashboard() {
               </div>
             )}
           </div>
+          <div className="nav-item-group">
+            <button className={`nav-item ${activeTab === 'monthly_details' ? 'active' : ''}`} onClick={() => setActiveTab('monthly_details')}>
+              <span style={{fontSize: '1.2rem'}}>📅</span> Báo cáo hàng tháng
+            </button>
+            {activeTab === 'monthly_details' && cacheData && (
+              <div className="submenu fade-in">
+                <button className={`submenu-item ${activeReportKey === 'upload' ? 'active' : ''}`} onClick={() => setActiveReportKey('upload')}>
+                  📁 Quản lý nguồn dữ liệu
+                </button>
+                {[...cacheData.data.serviceReports, ...cacheData.data.operationReports].map(report => (
+                  <button key={report.id} className={`submenu-item ${activeReportKey === report.id ? 'active' : ''}`} onClick={() => setActiveReportKey(report.id)}>
+                    {report.title}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           <button className={`nav-item ${activeTab === 'special5' ? 'active' : ''}`} onClick={() => setActiveTab('special5')}>
             <span style={{fontSize: '1.2rem'}}>📋</span> Báo cáo chuyên đề 5
           </button>
@@ -381,8 +398,10 @@ export default function Dashboard() {
             </div>
             <h1 className="header-title" style={{ fontSize: '1.6rem', fontWeight: 800, color: '#0f172a', display: 'flex', alignItems: 'center', gap: 12, margin: 0 }}>
               {activeTab === 'overview' && '📊 Tổng quan Hệ thống'}
-              {activeTab === 'details' && activeReportKey === 'upload' && '📁 Quản lý Nguồn Dữ Liệu'}
+              {activeTab === 'details' && activeReportKey === 'upload' && '📁 Quản lý Nguồn Dữ Liệu Tuần'}
               {activeTab === 'details' && activeReportKey !== 'upload' && '📝 Báo cáo hàng tuần'}
+              {activeTab === 'monthly_details' && activeReportKey === 'upload' && '📁 Quản lý Nguồn Dữ Liệu Tháng'}
+              {activeTab === 'monthly_details' && activeReportKey !== 'upload' && '📅 Báo cáo hàng tháng'}
               {activeTab === 'special5' && '📋 Báo cáo chuyên đề 5'}
               {activeTab === 'petition' && '📄 Tạo Tờ Trình'}
               {activeTab === 'handover' && '📓 Sổ Giao Ca Trực Bản Doanh'}
@@ -397,7 +416,7 @@ export default function Dashboard() {
             </h1>
           </div>
           <div className="header-actions" style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-               {activeTab === 'details' && activeReportKey === 'upload' && (
+               {(activeTab === 'details' || activeTab === 'monthly_details') && activeReportKey === 'upload' && (
                   <button className="btn-action btn-outline" onClick={handleProcess} disabled={isProcessing}>
                     {isProcessing ? <Loader2 size={18} className="spin-anim" /> : '🔄'} 
                     {isProcessing ? 'Đang xử lý...' : 'Xử lý lại dữ liệu'}
@@ -408,16 +427,20 @@ export default function Dashboard() {
                     {isExportingToTrinh ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
                     {isExportingToTrinh ? 'Đang tạo Word...' : 'Xuất Tờ Trình (Word)'}
                   </button>
-               ) : (activeTab === 'handover' || activeTab === 'inspection' || activeTab === 'generator' || activeTab === 'schedule') ? null : (
+               ) : (activeTab === 'handover' || activeTab === 'inspection' || activeTab === 'generator' || activeTab === 'schedule' || activeTab === 'overview' || activeTab === 'special5') ? null : (
                   <div style={{ display: 'flex', gap: 10 }}>
-                    <button className="btn-export" onClick={handleExportWord} disabled={isExporting || !cacheData}>
-                      {isExporting ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
-                      {isExporting ? 'Đang tạo...' : 'Xuất Báo Cáo Tuần'}
-                    </button>
-                    <button className="btn-export" onClick={handleExportMonthlyWord} disabled={isExporting || !cacheData} style={{ background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)' }}>
-                      {isExporting ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
-                      {isExporting ? 'Đang tạo...' : 'Xuất Báo Cáo Tháng'}
-                    </button>
+                    {activeTab === 'details' && (
+                      <button className="btn-export" onClick={handleExportWord} disabled={isExporting || !cacheData}>
+                        {isExporting ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
+                        {isExporting ? 'Đang tạo...' : 'Xuất Báo Cáo Tuần'}
+                      </button>
+                    )}
+                    {activeTab === 'monthly_details' && (
+                      <button className="btn-export" onClick={handleExportMonthlyWord} disabled={isExporting || !cacheData} style={{ background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)' }}>
+                        {isExporting ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
+                        {isExporting ? 'Đang tạo...' : 'Xuất Báo Cáo Tháng'}
+                      </button>
+                    )}
                   </div>
                )}
                <div style={{ height: 32, width: 1, background: '#cbd5e1', margin: '0 4px' }}></div>
@@ -587,6 +610,162 @@ export default function Dashboard() {
                                   const dbSource = reportSources.find((s: any) => s.key === activeReportKey);
                                   if (!dbSource?.blob_url) return null;
                                   const sourceInfo = REPORT_SOURCES.find(s => s.key === activeReportKey);
+                                  return (
+                                    <a
+                                      href={dbSource.blob_url}
+                                      download={sourceInfo?.filename || `${activeReportKey}.xlsx`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      style={{
+                                        background: 'linear-gradient(135deg, #10b981, #059669)',
+                                        color: '#fff',
+                                        textDecoration: 'none',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: 8,
+                                        padding: '10px 18px',
+                                        borderRadius: 10,
+                                        fontWeight: 700,
+                                        fontSize: '0.95rem',
+                                        boxShadow: '0 4px 12px rgba(16, 185, 129, 0.25)',
+                                        transition: 'all 0.2s',
+                                      }}
+                                    >
+                                      ⬇️ Tải xuống file Excel ({sourceInfo?.owner || 'Nguồn'})
+                                    </a>
+                                  );
+                                })()}
+                              </div>
+                              <p className="content-text" style={{ fontSize: '1.1rem', marginBottom: 40 }}>{report.summary}</p>
+                              
+                              {report.table && report.table.rows && report.table.rows.length > 0 && (
+                                <div style={{ marginBottom: 48 }}>
+                                  <h3 className="section-title" style={{ fontSize: '1.3rem', marginBottom: 20 }}>{report.table.title}</h3>
+                                  <div className="table-container">
+                                    <table className="data-table">
+                                      <thead>
+                                        <tr>
+                                          {report.table.columns.map((col: string, i: number) => <th key={i}>{col}</th>)}
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {report.table.rows.map((row: any, i: number) => (
+                                          <tr key={i}>
+                                            {report.table.columns.map((col: string, j: number) => <td key={j}>{row[col]}</td>)}
+                                          </tr>
+                                        ))}
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          )
+                        })()}
+                      </div>
+                    )}
+                  </div>
+               )}
+             </div>
+           )}
+
+           {/* TAB MONTHLY DETAILS */}
+           {activeTab === 'monthly_details' && (
+             <div className="fade-in">
+               {activeReportKey === 'upload' ? (
+                 <>
+                   <div style={{ marginBottom: 32 }}>
+                     <h2 className="section-title">Quản lý Nguồn dữ liệu (Báo cáo Tháng)</h2>
+                     <p className="content-text">Tải lên 10 file Excel báo cáo thành phần để hệ thống bắt đầu tổng hợp báo cáo tháng.</p>
+                   </div>
+                   <div className="upload-grid">
+                      {MONTHLY_REPORT_SOURCES.map((source) => {
+                        const dbSource = reportSources.find((s) => s.key === source.key);
+                        return (
+                          <div key={source.key} className="upload-card">
+                            <div className="upload-card-header">
+                              <div className="upload-card-title">{source.label}</div>
+                              <div className="upload-card-subtitle">{source.filename}</div>
+                              <div className="upload-card-subtitle" style={{ marginTop: 8 }}>Phụ trách: <strong>{source.owner}</strong></div>
+                            </div>
+                            <div className="upload-card-status">
+                              {dbSource?.blob_url ? (
+                                <>
+                                  <span className="status-badge success">✅ Đã có dữ liệu</span>
+                                  <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: 16 }}>
+                                    <div>Lúc: {new Date(dbSource.uploaded_at).toLocaleString('vi-VN')}</div>
+                                  </div>
+                                </>
+                              ) : (
+                                <span className="status-badge error">❌ Chưa có dữ liệu</span>
+                              )}
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%' }}>
+                                {dbSource?.blob_url && (
+                                  <a
+                                    href={dbSource.blob_url}
+                                    download={source.filename}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                      gap: 6,
+                                      padding: '10px 14px',
+                                      borderRadius: 8,
+                                      background: '#10b981',
+                                      color: '#fff',
+                                      fontWeight: 600,
+                                      fontSize: '0.9rem',
+                                      textDecoration: 'none',
+                                      boxShadow: '0 2px 6px rgba(16, 185, 129, 0.2)',
+                                    }}
+                                  >
+                                    ⬇️ Tải xuống file Excel ({source.owner})
+                                  </a>
+                                )}
+                                <div className="file-input-wrapper">
+                                  <button className="btn-upload" style={{ width: '100%' }}>
+                                    {uploadingKey === source.key ? (
+                                      <><Loader2 size={18} className="spin-anim" /> Đang tải lên...</>
+                                    ) : (
+                                      dbSource?.blob_url ? '🔄 Tải file lên mới' : '⬆️ Tải file lên'
+                                    )}
+                                  </button>
+                                  <input type="file" accept=".xlsx" onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (file) handleUpload(source.key, file);
+                                  }} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                   </div>
+                 </>
+               ) : (
+                  <div>
+                    {!cacheData ? (
+                      <div className="card-glass" style={{ textAlign: 'center', padding: '100px 0' }}>
+                        <h2 className="section-title">Chưa có dữ liệu</h2>
+                      </div>
+                    ) : (
+                      <div className="card-glass">
+                        {(() => {
+                          const report = [...cacheData.data.serviceReports, ...cacheData.data.operationReports].find((r: any) => r.id === activeReportKey);
+                          if (!report) return null;
+                          return (
+                            <div className="fade-in">
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16, marginBottom: 24 }}>
+                                <div>
+                                  <h2 className="section-title" style={{ fontSize: '2rem', marginBottom: 6 }}>{report.title}</h2>
+                                  <p className="section-subtitle">{report.kicker}</p>
+                                </div>
+                                {(() => {
+                                  const dbSource = reportSources.find((s: any) => s.key === activeReportKey);
+                                  if (!dbSource?.blob_url) return null;
+                                  const sourceInfo = MONTHLY_REPORT_SOURCES.find(s => s.key === activeReportKey);
                                   return (
                                     <a
                                       href={dbSource.blob_url}
