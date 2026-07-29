@@ -276,14 +276,8 @@ def update_mbb_fbb_mytv(document: DocumentType, sources: dict[str, Any]) -> None
     for row in common[1:]:
         row[2] = decimal(row[2])
         row[3] = decimal(row[3])
-    t16 = find_table_by_tag(document, "(OMC_HUNG)", offset=-2)
-    if t16:
-        write_table_matrix(t16, common)
 
     comparison = worksheet_matrix(mbb["So sánh các tỉnh"], 3, 7, 1, 3)
-    t17 = find_table_by_tag(document, "(OMC_HUNG)", offset=-1)
-    if t17:
-        write_table_matrix(t17, comparison)
 
     mbb_detail = worksheet_matrix(mbb["Kết quả chi tiết"], 4, 12, 1, 8)
     fbb_detail = worksheet_matrix(fbb["Thông tin chung"], 2, 17, 1, 8)
@@ -305,8 +299,24 @@ def update_mbb_fbb_mytv(document: DocumentType, sources: dict[str, Any]) -> None
             ]
         )
         
-    t18 = find_table_by_tag(document, "(OMC_HUNG)", offset=0)
+    t18 = None
+    t18_idx = -1
+    for idx, table in enumerate(document.tables):
+        for row in table.rows:
+            for cell in row.cells:
+                if "Mạng di động(OMC_HUNG)" in cell.text:
+                    t18 = table
+                    t18_idx = idx
+                    break
+            if t18: break
+        if t18: break
+            
     if t18:
+        if t18_idx >= 2:
+            write_table_matrix(document.tables[t18_idx - 2], common)
+        if t18_idx >= 1:
+            write_table_matrix(document.tables[t18_idx - 1], comparison)
+        
         write_table_matrix(t18, mbb_detail, start_row=3)
         write_table_matrix(t18, fbb_detail, start_row=14)
         write_table_matrix(t18, mytv_detail, start_row=31)
