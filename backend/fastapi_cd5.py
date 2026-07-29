@@ -238,6 +238,88 @@ async def export_word(request: Request):
         }
     )
 
+# ─── ENDPOINT: Xuất Báo cáo tháng dạng Word ───────────────────────────────────
+
+@app.post("/export-word-monthly", summary="Tạo báo cáo tháng .docx từ 10 file Excel")
+async def export_word_monthly(request: Request):
+    try:
+        body = await request.json()
+    except Exception:
+        raise HTTPException(status_code=400, detail="Body JSON không hợp lệ.")
+
+    blob_urls: Dict[str, str] = body.get("blobUrls", {})
+    REQUIRED_KEYS = ["mbb", "fbb", "mytv", "mll", "ispeed", "5s", "xlsc", "appendix", "omc_tam", "omc_nhi"]
+    missing = [k for k in REQUIRED_KEYS if k not in blob_urls or not blob_urls[k]]
+    if missing:
+        raise HTTPException(
+            status_code=422,
+            detail=f"Chưa đủ file Excel. Còn thiếu: {', '.join(missing)}"
+        )
+
+    import sys
+    sys.path.insert(0, str(Path(__file__).parent))
+    import generate_monthly_report as gmr
+
+    ROOT = Path(__file__).resolve().parents[1]
+    DATA_DIR = ROOT / "data sample"
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+    EXCEL_KEYS = {
+        "mbb":      "1. BÁO CÁO MBB_HUNG.xlsx",
+        "fbb":      "2. BÁO CÁO FBB_BAO.xlsx",
+        "mytv":     "3. BÁO CÁO MYTV_TÂN.xlsx",
+        "mll":      "4. BÁO CÁO MLL_KHANH.xlsx",
+        "ispeed":   "5. BÁO CÁO ISPEED_QUOC.xlsx",
+        "5s":       "6. BÁO CÁO 5S NHÀ TRẠM_TÂN.xlsx",
+        "xlsc":     "7.BÁO CÁO XLSC_TUẤN.xlsx",
+        "appendix": "8.PHỤ LỤC 1_HÂN.xlsx",
+        "omc_tam":  "9.HIỆN TRẠNG THIẾT BỊ_TÂM.xlsx",
+        "omc_nhi":  "10. BÁO CÁO BSC_NHI.xlsx"
+    }
+
+    import httpx
+    async with httpx.AsyncClient(timeout=60.0) as client:
+        for key, filename in EXCEL_KEYS.items():
+            url = blob_urls.get(key)
+            if not url:
+                raise HTTPException(status_code=422, detail=f"Thiếu URL cho key: {key}")
+            try:
+                resp = await client.get(url)
+                resp.raise_for_status()
+                (DATA_DIR / filename).write_bytes(resp.content)
+            except Exception as e:
+                raise HTTPException(
+                    status_code=502,
+                    detail=f"Không thể tải file '{key}': {str(e)}"
+                )
+
+    EXPORT_DIR = ROOT / "exports"
+    EXPORT_DIR.mkdir(parents=True, exist_ok=True)
+    output_path = EXPORT_DIR / "Bao_cao_VNPT_thang_export.docx"
+
+    try:
+        result = gmr.generate(output=output_path)
+    except FileNotFoundError as e:
+        raise HTTPException(status_code=500, detail=f"Không tìm thấy template Word: {str(e)}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Lỗi tạo báo cáo Word: {str(e)}")
+
+    if not output_path.exists():
+        raise HTTPException(status_code=500, detail="File Word không được tạo ra.")
+
+    docx_bytes = output_path.read_bytes()
+    filename_out = "Bao_cao_VNPT_thang.docx"
+
+    return Response(
+        content=docx_bytes,
+        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        headers={
+            "Content-Disposition": f'attachment; filename="{filename_out}"',
+            "Content-Length": str(len(docx_bytes)),
+        }
+    )
+
+
 
 if __name__ == "__main__":
     print("=== Khởi động FastAPI Server cho Báo Cáo Chuyên Đề 5 ===")

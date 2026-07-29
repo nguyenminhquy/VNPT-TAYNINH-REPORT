@@ -64,6 +64,22 @@ export const REPORT_SOURCES = [
     tag: "Phụ lục",
     color: "#737373",
   },
+  {
+    key: "omc_tam",
+    label: "HIỆN TRẠNG THIẾT BỊ",
+    owner: "Tâm",
+    filename: "9.HIỆN TRẠNG THIẾT BỊ_TÂM.xlsx",
+    tag: "Thiết bị",
+    color: "#8B5CF6",
+  },
+  {
+    key: "omc_nhi",
+    label: "BÁO CÁO BSC",
+    owner: "Nhi",
+    filename: "10. BÁO CÁO BSC_NHI.xlsx",
+    tag: "BSC",
+    color: "#EC4899",
+  },
 ] as const;
 
 export type ReportKey = (typeof REPORT_SOURCES)[number]["key"];

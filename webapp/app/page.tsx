@@ -175,6 +175,59 @@ export default function Dashboard() {
     setIsExporting(false);
   };
 
+  const handleExportMonthlyWord = async () => {
+    setIsExporting(true);
+    const exportToast = toast.loading("Đang tạo báo cáo Tháng...");
+    try {
+      const blobUrls: Record<string, string> = {};
+      for (const row of reportSources) {
+        if (row.blob_url) {
+          blobUrls[row.key] = row.blob_url;
+        }
+      }
+      
+      if (Object.keys(blobUrls).length < 10) {
+        toast.error("Chưa đủ 10 file Excel. Vui lòng tải lên đầy đủ.", { id: exportToast });
+        setIsExporting(false);
+        return;
+      }
+
+      const apiRes = await fetch("/api/export-word-monthly", { 
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ blobUrls })
+      });
+
+      if (!apiRes.ok) {
+        const errText = await apiRes.text();
+        toast.error(`Lỗi tạo Word (${apiRes.status}): ${errText}`, { id: exportToast });
+        setIsExporting(false);
+        return;
+      }
+
+      const wordBlob = await apiRes.blob();
+      const formData = new FormData();
+      formData.append("file", wordBlob, "monthly_report.docx");
+
+      const saveRes = await fetch("/api/export-word-save", {
+        method: "POST",
+        body: formData
+      });
+
+      const json = await saveRes.json();
+      if (saveRes.ok && json.blobUrl) {
+        toast.success("Xuất báo cáo Tháng thành công!", { id: exportToast });
+        window.open(json.blobUrl, "_blank");
+      } else {
+        toast.error(json.error || "Lỗi khi lưu file Word", { id: exportToast });
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("Lỗi mạng khi xuất Word", { id: exportToast });
+    }
+    setIsExporting(false);
+  };
+
   const handleExportToTrinh = async () => {
     setIsExportingToTrinh(true);
     const exportToast = toast.loading("Đang tạo file Tờ Trình...");
@@ -356,10 +409,16 @@ export default function Dashboard() {
                     {isExportingToTrinh ? 'Đang tạo Word...' : 'Xuất Tờ Trình (Word)'}
                   </button>
                ) : (activeTab === 'handover' || activeTab === 'inspection' || activeTab === 'generator' || activeTab === 'schedule') ? null : (
-                  <button className="btn-export" onClick={handleExportWord} disabled={isExporting || !cacheData}>
-                    {isExporting ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
-                    {isExporting ? 'Đang tạo Word...' : 'Xuất báo cáo Word'}
-                  </button>
+                  <div style={{ display: 'flex', gap: 10 }}>
+                    <button className="btn-export" onClick={handleExportWord} disabled={isExporting || !cacheData}>
+                      {isExporting ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
+                      {isExporting ? 'Đang tạo...' : 'Xuất Báo Cáo Tuần'}
+                    </button>
+                    <button className="btn-export" onClick={handleExportMonthlyWord} disabled={isExporting || !cacheData} style={{ background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)' }}>
+                      {isExporting ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
+                      {isExporting ? 'Đang tạo...' : 'Xuất Báo Cáo Tháng'}
+                    </button>
+                  </div>
                )}
                <div style={{ height: 32, width: 1, background: '#cbd5e1', margin: '0 4px' }}></div>
                <div className="user-profile" style={{ 
@@ -404,7 +463,7 @@ export default function Dashboard() {
                       <div style={{ background: 'var(--bg-gradient)', padding: 32, borderRadius: 20, border: '1px solid rgba(0,0,0,0.04)', display: 'flex', gap: 40 }}>
                         <div>
                           <div className="metric-label">Tổng nguồn Excel</div>
-                          <div className="metric-value">8<span style={{ color: 'var(--text-muted)', fontSize: '1.2rem' }}>/8</span></div>
+                          <div className="metric-value">{reportSources.filter((s: any) => s.blob_url).length}<span style={{ color: 'var(--text-muted)', fontSize: '1.2rem' }}>/10</span></div>
                         </div>
                         <div>
                           <div className="metric-label">Cập nhật lần cuối</div>
