@@ -224,6 +224,7 @@ export async function POST(
         .from('report_sources')
         .update({
           blob_url: blobResult.url,
+          blob_pathname: blobResult.pathname || pathname,
           file_size: file.size,
           uploaded_by: uploadedBy,
           uploaded_at: uploadedAt,
@@ -243,7 +244,9 @@ export async function POST(
           owner: sourceMeta?.owner ?? 'Unknown',
           filename: sourceMeta?.filename ?? `${key}.xlsx`,
           tag: sourceMeta?.tag ?? 'Khác',
+          color: sourceMeta?.color ?? '#000000',
           blob_url: blobResult.url,
+          blob_pathname: blobResult.pathname || pathname,
           file_size: file.size,
           uploaded_by: uploadedBy,
           uploaded_at: uploadedAt,
