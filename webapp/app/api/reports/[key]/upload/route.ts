@@ -203,7 +203,6 @@ export async function POST(
     try {
       blobResult = await put(pathname, fileBuffer, {
         access: 'public',
-        token: process.env.BLOB_READ_WRITE_TOKEN,
       });
     } catch (blobErr: any) {
       console.error('[upload] Vercel Blob error:', blobErr);
@@ -233,9 +232,7 @@ export async function POST(
       console.error('[upload] update source error:', updateError);
       // Cố gắng xóa blob vừa upload để tránh rác
       try {
-        await del(blobResult.url, {
-          token: process.env.BLOB_READ_WRITE_TOKEN,
-        });
+        await del(blobResult.url);
       } catch {
         // ignore
       }
@@ -248,9 +245,7 @@ export async function POST(
     // ── Xóa blob cũ nếu tồn tại SAU KHI update DB thành công ─────────────────
     if (currentSource?.blob_url && currentSource.blob_url !== blobResult.url) {
       try {
-        await del(currentSource.blob_url, {
-          token: process.env.BLOB_READ_WRITE_TOKEN,
-        });
+        await del(currentSource.blob_url);
       } catch (delErr) {
         // Không block flow nếu xóa blob cũ thất bại
         console.warn('[upload] failed to delete old blob:', delErr);
