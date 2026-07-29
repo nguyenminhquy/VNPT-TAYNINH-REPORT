@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     const data = await req.json();
     const { docNumber, docDate, title, to, baseClause, content, proposal, recipients, author, manager } = data;
 
-    const templatePath = path.join(process.cwd(), 'templates', 'ToTrinh_Template.docx');
+    const templatePath = path.join(process.cwd(), 'templates', 'To_trinh.docx');
     if (!fs.existsSync(templatePath)) {
       return NextResponse.json({ error: 'Template file not found' }, { status: 500 });
     }
@@ -16,30 +16,48 @@ export async function POST(req: Request) {
     const docBuffer = fs.readFileSync(templatePath);
     const doc = new DocxModifier(docBuffer);
 
-    // Replace placeholders
-    if (docNumber) doc.replaceTextInEntireDocument('{{SO_TO_TRINH}}', docNumber);
-    if (docDate) doc.replaceTextInEntireDocument('{{NGAY_THANG}}', docDate);
-    if (title) doc.replaceTextInEntireDocument('{{TIEU_DE}}', title);
-    if (to) doc.replaceTextInEntireDocument('{{KINH_GUI}}', to);
-    if (baseClause) doc.replaceTextInEntireDocument('{{CAN_CU}}', baseClause);
-    if (content) doc.replaceTextInEntireDocument('{{NOI_DUNG}}', content);
-    if (proposal) doc.replaceTextInEntireDocument('{{DE_XUAT}}', proposal);
-    if (recipients) doc.replaceTextInEntireDocument('{{NOI_NHAN}}', recipients);
-    if (author) doc.replaceTextInEntireDocument('{{NGUOI_LAP}}', author);
-    if (manager) doc.replaceTextInEntireDocument('{{NGUOI_KY}}', manager);
+    // Replace document number
+    if (docNumber) {
+      doc.replaceParagraphByTextMatch(/Số: .*\/.*/, `Số: ${docNumber}`);
+    }
 
-    // Clean up any remaining placeholders just in case
-    doc.replaceTextInEntireDocument('{{SO_TO_TRINH}}', '');
-    doc.replaceTextInEntireDocument('{{NGAY_THANG}}', '');
-    doc.replaceTextInEntireDocument('{{TIEU_DE}}', '');
-    doc.replaceTextInEntireDocument('{{KINH_GUI}}', '');
-    doc.replaceTextInEntireDocument('{{CAN_CU}}', '');
-    doc.replaceTextInEntireDocument('{{NOI_DUNG}}', '');
-    doc.replaceTextInEntireDocument('{{DE_XUAT}}', '');
-    doc.replaceTextInEntireDocument('{{NOI_NHAN}}', '');
-    doc.replaceTextInEntireDocument('{{NGUOI_LAP}}', '');
-    doc.replaceTextInEntireDocument('{{NGUOI_KY}}', '');
+    // Replace date
+    if (docDate) {
+      doc.replaceParagraphByTextMatch(/Tây Ninh, ngày.*/, `Tây Ninh, ngày ${docDate}`);
+      doc.replaceTextInEntireDocument(/Tây Ninh, ngày.*/, `Tây Ninh, ngày ${docDate}`);
+    }
 
+    // Replace title
+    if (title) {
+      doc.replaceParagraphByTextMatch(/Về việc ….*/, `Về việc ${title}`);
+    }
+
+    // Replace base clause and to
+    if (to || baseClause) {
+      const newTo = to ? `Kính gửi: ${to}\n\n` : '';
+      const newBaseClause = baseClause ? baseClause : 'Căn cứ tờ trình số 1937/TTr-TTHT  ngày 17/06/2026 của Trung tâm Hạ tầng V/v xét duyệt tăng nhân viên cho Tổ Khai thác hệ thống đã được Giám đốc Viễn thông Tây Ninh phê duyệt;';
+      doc.replaceParagraphByTextMatch(/Căn cứ tờ trình số 1937.*/, `${newTo}${newBaseClause}`);
+    }
+    
+    // Replace content
+    if (content) {
+      doc.replaceParagraphByTextMatch(/Để tạo điều kiện thuận lợi.*/, content);
+    }
+
+    // Replace proposal
+    if (proposal) {
+      doc.replaceParagraphByTextMatch(/Tổ Khai thác Hệ thống kính đề nghị.*/, proposal);
+    }
+
+    // Replace manager
+    if (manager) {
+      doc.replaceParagraphByTextMatch(/Nguyễn Hoàng Hưng/, manager);
+    }
+
+    // Replace author
+    if (author) {
+      doc.replaceParagraphByTextMatch(/Nguyễn Thành Luân/, author);
+    }
 
     const outputBuffer = doc.getBuffer();
 
