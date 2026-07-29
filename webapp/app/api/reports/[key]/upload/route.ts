@@ -234,10 +234,15 @@ export async function POST(
       updatedSource = res.data;
       updateError = res.error;
     } else {
+      const sourceMeta = MONTHLY_REPORT_SOURCES.find(s => s.key === key);
       const res = await supabaseAdmin
         .from('report_sources')
         .insert({
           key: key,
+          label: sourceMeta?.label ?? key,
+          owner: sourceMeta?.owner ?? 'Unknown',
+          filename: sourceMeta?.filename ?? `${key}.xlsx`,
+          tag: sourceMeta?.tag ?? 'Khác',
           blob_url: blobResult.url,
           file_size: file.size,
           uploaded_by: uploadedBy,
