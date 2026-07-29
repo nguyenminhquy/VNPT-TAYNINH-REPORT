@@ -29,18 +29,20 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [dateInfo, setDateInfo] = useState<{currentWeek: number; currentYear: number} | null>(null);
 
-  // Petition form state
-  const [petitionForm, setPetitionForm] = useState({
-    docNumber: '1975/ĐN-TTHT-KTHT',
-    docDate: 'tháng 07 năm 2026',
-    baseClause: 'Căn cứ tờ trình số 1937/TTr-TTHT ngày 17/06/2026 của Trung tâm Hạ tầng V/v xét duyệt tăng nhân viên cho Tổ Khai thác hệ thống đã được Giám đốc Viễn thông Tây Ninh phê duyệt;',
-    manager: 'Nguyễn Hoàng Hưng',
-    author: 'Nguyễn Thành Luân',
-    users: [
-      { name: '', hrm: '', cccd: '', phone: '', dob: '', email: '', title: 'Tổ Khai thác Hệ thống – Kỹ thuật viên', systems: 'Mail eoffice, ONEBSS, APP PHĐB, ĐHVT TNH' }
-    ]
+  // Tờ trình form state
+  const [toTrinhForm, setToTrinhForm] = useState({
+    docNumber: '...',
+    docDate: 'ngày ... tháng ... năm ...',
+    title: '...',
+    to: '...',
+    baseClause: 'Căn cứ...',
+    content: '...',
+    proposal: '...',
+    recipients: 'Như trên\nLưu VT',
+    author: '...',
+    manager: '...'
   });
-  const [isExportingPetition, setIsExportingPetition] = useState(false);
+  const [isExportingToTrinh, setIsExportingToTrinh] = useState(false);
   const [currentTimeStr, setCurrentTimeStr] = useState<string>('');
 
   useEffect(() => {
@@ -65,7 +67,7 @@ export default function Dashboard() {
     // Auto fill date
     const dStr = String(now.getDate()).padStart(2, '0');
     const mStr = String(now.getMonth() + 1).padStart(2, '0');
-    setPetitionForm(prev => ({
+    setToTrinhForm(prev => ({
       ...prev,
       docDate: `ngày ${dStr} tháng ${mStr} năm ${now.getFullYear()}`
     }));
@@ -173,14 +175,14 @@ export default function Dashboard() {
     setIsExporting(false);
   };
 
-  const handleExportPetition = async () => {
-    setIsExportingPetition(true);
-    const exportToast = toast.loading("Đang tạo file Đề nghị cấp tài khoản...");
+  const handleExportToTrinh = async () => {
+    setIsExportingToTrinh(true);
+    const exportToast = toast.loading("Đang tạo file Tờ Trình...");
     try {
-      const res = await fetch("/api/export-petition", {
+      const res = await fetch("/api/export-totrinh", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(petitionForm)
+        body: JSON.stringify(toTrinhForm)
       });
       if (res.ok) {
         const blob = await res.blob();
@@ -188,7 +190,7 @@ export default function Dashboard() {
         const a = document.createElement("a");
         a.href = url;
         const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-        a.download = `De_nghi_cap_user_${today}.docx`;
+        a.download = `To_trinh_${today}.docx`;
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -200,7 +202,7 @@ export default function Dashboard() {
     } catch (e) {
       toast.error("Lỗi mạng khi xuất file", { id: exportToast });
     }
-    setIsExportingPetition(false);
+    setIsExportingToTrinh(false);
   };
 
   const handleProcess = async () => {
@@ -221,27 +223,7 @@ export default function Dashboard() {
     setIsProcessing(false);
   };
 
-  const handleAddUser = () => {
-    setPetitionForm(prev => ({
-      ...prev,
-      users: [...prev.users, { name: '', hrm: '', cccd: '', phone: '', dob: '', email: '', title: prev.users[0]?.title || '', systems: prev.users[0]?.systems || '' }]
-    }));
-  };
-
-  const handleRemoveUser = (index: number) => {
-    setPetitionForm(prev => ({
-      ...prev,
-      users: prev.users.filter((_, i) => i !== index)
-    }));
-  };
-
-  const handleUserChange = (index: number, field: string, value: string) => {
-    setPetitionForm(prev => {
-      const newUsers = [...prev.users];
-      newUsers[index] = { ...newUsers[index], [field]: value };
-      return { ...prev, users: newUsers };
-    });
-  };
+  // Removed handleAddUser, handleRemoveUser, handleUserChange as they are no longer needed for To Trinh
 
   if (loading || status === "loading") {
     return (
@@ -291,7 +273,7 @@ export default function Dashboard() {
             <span style={{fontSize: '1.2rem'}}>📋</span> Báo cáo chuyên đề 5
           </button>
           <button className={`nav-item ${activeTab === 'petition' ? 'active' : ''}`} onClick={() => setActiveTab('petition')}>
-            <span style={{fontSize: '1.2rem'}}>👤</span> Đề nghị cấp tài khoản
+            <span style={{fontSize: '1.2rem'}}>📄</span> Tạo Tờ Trình
           </button>
           <button className={`nav-item ${activeTab === 'handover' ? 'active' : ''}`} onClick={() => setActiveTab('handover')}>
             <span style={{fontSize: '1.2rem'}}>📓</span> Sổ Giao Ca
@@ -349,7 +331,7 @@ export default function Dashboard() {
               {activeTab === 'details' && activeReportKey === 'upload' && '📁 Quản lý Nguồn Dữ Liệu'}
               {activeTab === 'details' && activeReportKey !== 'upload' && '📝 Báo cáo hàng tuần'}
               {activeTab === 'special5' && '📋 Báo cáo chuyên đề 5'}
-              {activeTab === 'petition' && '👤 Đề nghị cấp tài khoản'}
+              {activeTab === 'petition' && '📄 Tạo Tờ Trình'}
               {activeTab === 'handover' && '📓 Sổ Giao Ca Trực Bản Doanh'}
               {activeTab === 'inspection' && '📋 Nhật Ký Kiểm Tra Định Kỳ Hạ Tầng'}
               {activeTab === 'generator' && '⚡ Nhật Ký Kiểm Tra Máy Phát Điện'}
@@ -369,9 +351,9 @@ export default function Dashboard() {
                   </button>
                )}
                {activeTab === 'petition' ? (
-                  <button className="btn-export" onClick={handleExportPetition} disabled={isExportingPetition}>
-                    {isExportingPetition ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
-                    {isExportingPetition ? 'Đang tạo Word...' : 'Xuất Đề nghị (Word)'}
+                  <button className="btn-export" onClick={handleExportToTrinh} disabled={isExportingToTrinh}>
+                    {isExportingToTrinh ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
+                    {isExportingToTrinh ? 'Đang tạo Word...' : 'Xuất Tờ Trình (Word)'}
                   </button>
                ) : (activeTab === 'handover' || activeTab === 'inspection' || activeTab === 'generator' || activeTab === 'schedule') ? null : (
                   <button className="btn-export" onClick={handleExportWord} disabled={isExporting || !cacheData}>
@@ -608,88 +590,52 @@ export default function Dashboard() {
            {/* TAB SPECIAL5 */}
            {activeTab === 'special5' && <Special5Report />}
 
-           {/* TAB PETITION */}
+           {/* TAB PETITION -> TO TRINH */}
            {activeTab === 'petition' && (
              <div className="fade-in">
                 <div className="card-glass" style={{ padding: '32px 40px', marginBottom: 24 }}>
-                  <h2 className="section-title" style={{ marginBottom: 24 }}>Thông tin chung</h2>
+                  <h2 className="section-title" style={{ marginBottom: 24 }}>Thông tin Tờ Trình</h2>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
                     <div>
-                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Số Đề nghị</label>
-                      <input type="text" value={petitionForm.docNumber} onChange={e => setPetitionForm(p => ({ ...p, docNumber: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Số Tờ Trình</label>
+                      <input type="text" value={toTrinhForm.docNumber} onChange={e => setToTrinhForm(p => ({ ...p, docNumber: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
                     </div>
                     <div>
                       <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Ngày tháng (Ví dụ: ngày 24 tháng 07 năm 2026)</label>
-                      <input type="text" value={petitionForm.docDate} onChange={e => setPetitionForm(p => ({ ...p, docDate: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      <input type="text" value={toTrinhForm.docDate} onChange={e => setToTrinhForm(p => ({ ...p, docDate: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
                     </div>
                     <div style={{ gridColumn: '1 / -1' }}>
-                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Căn cứ pháp lý</label>
-                      <textarea value={petitionForm.baseClause} onChange={e => setPetitionForm(p => ({ ...p, baseClause: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 60 }} />
+                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Về việc (Tiêu đề)</label>
+                      <input type="text" value={toTrinhForm.title} onChange={e => setToTrinhForm(p => ({ ...p, title: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                    </div>
+                    <div style={{ gridColumn: '1 / -1' }}>
+                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Kính gửi</label>
+                      <input type="text" value={toTrinhForm.to} onChange={e => setToTrinhForm(p => ({ ...p, to: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                    </div>
+                    <div style={{ gridColumn: '1 / -1' }}>
+                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Căn cứ pháp lý / Tình hình</label>
+                      <textarea value={toTrinhForm.baseClause} onChange={e => setToTrinhForm(p => ({ ...p, baseClause: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 60 }} />
+                    </div>
+                    <div style={{ gridColumn: '1 / -1' }}>
+                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Nội dung chi tiết</label>
+                      <textarea value={toTrinhForm.content} onChange={e => setToTrinhForm(p => ({ ...p, content: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 120 }} />
+                    </div>
+                    <div style={{ gridColumn: '1 / -1' }}>
+                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Đề xuất / Kiến nghị</label>
+                      <textarea value={toTrinhForm.proposal} onChange={e => setToTrinhForm(p => ({ ...p, proposal: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 80 }} />
                     </div>
                     <div>
-                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Người Ký duyệt (Lãnh đạo)</label>
-                      <input type="text" value={petitionForm.manager} onChange={e => setPetitionForm(p => ({ ...p, manager: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Người Phê duyệt</label>
+                      <input type="text" value={toTrinhForm.manager} onChange={e => setToTrinhForm(p => ({ ...p, manager: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
                     </div>
                     <div>
-                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Người Đề nghị (Tổ trưởng)</label>
-                      <input type="text" value={petitionForm.author} onChange={e => setPetitionForm(p => ({ ...p, author: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Người Lập (Người Đề nghị)</label>
+                      <input type="text" value={toTrinhForm.author} onChange={e => setToTrinhForm(p => ({ ...p, author: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
                     </div>
-                  </div>
-                </div>
-
-                <div className="card-glass" style={{ padding: '32px 40px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-                    <h2 className="section-title" style={{ margin: 0 }}>Danh sách Cấp quyền</h2>
-                    <button onClick={handleAddUser} className="btn-action btn-outline" style={{ padding: '8px 16px', fontSize: '0.9rem' }}>
-                      <Plus size={16} /> Thêm nhân viên
-                    </button>
-                  </div>
-
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-                    {petitionForm.users.map((user, index) => (
-                      <div key={index} style={{ padding: 24, borderRadius: 12, border: '1px solid rgba(0,0,0,0.05)', background: '#f8fafc', position: 'relative' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
-                          <h3 style={{ margin: 0, fontSize: '1.1rem', color: 'var(--primary-color)' }}>Nhân viên #{index + 1}</h3>
-                            <button onClick={() => handleRemoveUser(index)} style={{ background: 'transparent', border: 'none', color: 'var(--error-text)', cursor: 'pointer' }}>
-                              <Trash2 size={18} />
-                            </button>
-                        </div>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16 }}>
-                          <div>
-                            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4 }}>Họ và tên</label>
-                            <input type="text" value={user.name} onChange={e => handleUserChange(index, 'name', e.target.value)} style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #cbd5e1' }} />
-                          </div>
-                          <div>
-                            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4 }}>Mã HRM</label>
-                            <input type="text" value={user.hrm} onChange={e => handleUserChange(index, 'hrm', e.target.value)} style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #cbd5e1' }} />
-                          </div>
-                          <div>
-                            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4 }}>CCCD</label>
-                            <input type="text" value={user.cccd} onChange={e => handleUserChange(index, 'cccd', e.target.value)} style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #cbd5e1' }} />
-                          </div>
-                          <div>
-                            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4 }}>Số ĐT</label>
-                            <input type="text" value={user.phone} onChange={e => handleUserChange(index, 'phone', e.target.value)} style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #cbd5e1' }} />
-                          </div>
-                          <div>
-                            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4 }}>Ngày sinh</label>
-                            <input type="text" placeholder="DD/MM/YYYY" value={user.dob} onChange={e => handleUserChange(index, 'dob', e.target.value)} style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #cbd5e1' }} />
-                          </div>
-                          <div>
-                            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4 }}>Email</label>
-                            <input type="email" value={user.email} onChange={e => handleUserChange(index, 'email', e.target.value)} style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #cbd5e1' }} />
-                          </div>
-                          <div style={{ gridColumn: '1 / -1' }}>
-                            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4 }}>Tổ / Chức danh</label>
-                            <input type="text" value={user.title} onChange={e => handleUserChange(index, 'title', e.target.value)} style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #cbd5e1' }} />
-                          </div>
-                          <div style={{ gridColumn: '1 / -1' }}>
-                            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4 }}>Hệ thống cần cấp (Ghi chú)</label>
-                            <input type="text" value={user.systems} onChange={e => handleUserChange(index, 'systems', e.target.value)} style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #cbd5e1' }} />
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                    <div style={{ gridColumn: '1 / -1' }}>
+                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Nơi nhận</label>
+                      <textarea value={toTrinhForm.recipients} onChange={e => setToTrinhForm(p => ({ ...p, recipients: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 60 }} />
+                    </div>
                   </div>
                 </div>
              </div>
