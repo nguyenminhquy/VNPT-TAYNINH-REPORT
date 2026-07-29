@@ -318,8 +318,8 @@ def update_mbb_fbb_mytv(document: DocumentType, sources: dict[str, Any]) -> None
             write_table_matrix(document.tables[t18_idx - 1], comparison)
         
         write_table_matrix(t18, mbb_detail, start_row=3)
-        write_table_matrix(t18, fbb_detail, start_row=14)
-        write_table_matrix(t18, mytv_detail, start_row=31)
+        write_table_matrix(t18, fbb_detail, start_row=13)
+        write_table_matrix(t18, mytv_detail, start_row=30)
 
 
 def mll_table_matrix(sheet: Any) -> tuple[list[list[str]], dict[str, Any]]:
