@@ -3,7 +3,7 @@
 import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { REPORT_SOURCES, MONTHLY_REPORT_SOURCES, type ReportKey } from "@/lib/reports";
+import { REPORT_SOURCES, MONTHLY_REPORT_SOURCES, WEEKLY_MLL_SOURCES, type ReportKey } from "@/lib/reports";
 import { Loader2, Plus, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 import ShiftHandover from "@/components/ShiftHandover";
@@ -21,7 +21,7 @@ export default function Dashboard() {
   
   const [reportSources, setReportSources] = useState<any[]>([]);
   const [cacheData, setCacheData] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState<"overview" | "details" | "monthly_details" | "special5" | "petition" | "handover" | "inspection" | "generator" | "schedule">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "details" | "monthly_details" | "weekly_mll" | "special5" | "petition" | "handover" | "inspection" | "generator" | "schedule">("overview");
   const [activeReportKey, setActiveReportKey] = useState<string | null>("upload");
   const [isExporting, setIsExporting] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -228,6 +228,59 @@ export default function Dashboard() {
     setIsExporting(false);
   };
 
+  const handleExportWeeklyMll = async () => {
+    setIsExporting(true);
+    const exportToast = toast.loading("Đang tạo báo cáo MLL Tuần...");
+    try {
+      const blobUrls: Record<string, string> = {};
+      for (const row of reportSources) {
+        if (row.blob_url) {
+          blobUrls[row.key] = row.blob_url;
+        }
+      }
+      
+      if (!blobUrls['weekly1'] || !blobUrls['weekly2']) {
+        toast.error("Chưa đủ 2 file Excel. Vui lòng tải lên đầy đủ.", { id: exportToast });
+        setIsExporting(false);
+        return;
+      }
+
+      const apiRes = await fetch("/api/export-word-weekly", { 
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ blobUrls })
+      });
+
+      if (!apiRes.ok) {
+        const errText = await apiRes.text();
+        toast.error(`Lỗi tạo Word (${apiRes.status}): ${errText}`, { id: exportToast });
+        setIsExporting(false);
+        return;
+      }
+
+      const wordBlob = await apiRes.blob();
+      const formData = new FormData();
+      formData.append("file", wordBlob, "Mất_liên_lạc_Tuần.docx");
+
+      const saveRes = await fetch("/api/export-word-save", {
+        method: "POST",
+        body: formData
+      });
+
+      const json = await saveRes.json();
+      if (saveRes.ok && json.blobUrl) {
+        toast.success("Xuất báo cáo MLL Tuần thành công!", { id: exportToast });
+        window.open(json.blobUrl, "_blank");
+      } else {
+        toast.error(json.error || "Lỗi khi lưu file Word", { id: exportToast });
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("Lỗi mạng khi xuất Word", { id: exportToast });
+    }
+    setIsExporting(false);
+  };
+
   const handleExportToTrinh = async () => {
     setIsExportingToTrinh(true);
     const exportToast = toast.loading("Đang tạo file Tờ Trình...");
@@ -339,6 +392,9 @@ export default function Dashboard() {
               </div>
             )}
           </div>
+          <button className={`nav-item ${activeTab === 'weekly_mll' ? 'active' : ''}`} onClick={() => { setActiveTab('weekly_mll'); setActiveReportKey('upload'); }}>
+            <span style={{fontSize: '1.2rem'}}>📞</span> Mất liên lạc hàng tuần
+          </button>
           <button className={`nav-item ${activeTab === 'special5' ? 'active' : ''}`} onClick={() => setActiveTab('special5')}>
             <span style={{fontSize: '1.2rem'}}>📋</span> Báo cáo chuyên đề 5
           </button>
@@ -402,6 +458,7 @@ export default function Dashboard() {
               {activeTab === 'details' && activeReportKey !== 'upload' && '📝 Báo cáo hàng tuần'}
               {activeTab === 'monthly_details' && activeReportKey === 'upload' && '📁 Quản lý Nguồn Dữ Liệu Tháng'}
               {activeTab === 'monthly_details' && activeReportKey !== 'upload' && '📅 Báo cáo hàng tháng'}
+              {activeTab === 'weekly_mll' && '📞 Báo cáo Mất liên lạc hàng tuần'}
               {activeTab === 'special5' && '📋 Báo cáo chuyên đề 5'}
               {activeTab === 'petition' && '📄 Tạo Tờ Trình'}
               {activeTab === 'handover' && '📓 Sổ Giao Ca Trực Bản Doanh'}
@@ -439,6 +496,12 @@ export default function Dashboard() {
                       <button className="btn-export" onClick={handleExportMonthlyWord} disabled={isExporting || !cacheData} style={{ background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)' }}>
                         {isExporting ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
                         {isExporting ? 'Đang tạo...' : 'Xuất Báo Cáo Tháng'}
+                      </button>
+                    )}
+                    {activeTab === 'weekly_mll' && (
+                      <button className="btn-export" onClick={handleExportWeeklyMll} disabled={isExporting} style={{ background: 'linear-gradient(135deg, #F25022, #D83B01)' }}>
+                        {isExporting ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
+                        {isExporting ? 'Đang tạo...' : 'Xuất Báo Cáo MLL Tuần'}
                       </button>
                     )}
                   </div>
@@ -822,6 +885,81 @@ export default function Dashboard() {
                     )}
                   </div>
                )}
+             </div>
+           )}
+
+           {/* TAB WEEKLY MLL */}
+           {activeTab === 'weekly_mll' && (
+             <div className="fade-in">
+               <div style={{ marginBottom: 32 }}>
+                 <h2 className="section-title">Quản lý Nguồn dữ liệu (MLL Tuần)</h2>
+                 <p className="content-text">Tải lên 2 file Excel báo cáo thành phần để hệ thống tạo báo cáo.</p>
+               </div>
+               <div className="upload-grid">
+                  {WEEKLY_MLL_SOURCES.map((source) => {
+                    const dbSource = reportSources.find((s) => s.key === source.key);
+                    return (
+                      <div key={source.key} className="upload-card">
+                        <div className="upload-card-header">
+                          <div className="upload-card-title">{source.label}</div>
+                          <div className="upload-card-subtitle">{source.filename}</div>
+                          <div className="upload-card-subtitle" style={{ marginTop: 8 }}>Phụ trách: <strong>{source.owner}</strong></div>
+                        </div>
+                        <div className="upload-card-status">
+                          {dbSource?.blob_url ? (
+                            <>
+                              <span className="status-badge success">✅ Đã có dữ liệu</span>
+                              <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: 16 }}>
+                                <div>Lúc: {new Date(dbSource.uploaded_at).toLocaleString('vi-VN')}</div>
+                              </div>
+                            </>
+                          ) : (
+                            <span className="status-badge error">❌ Chưa có dữ liệu</span>
+                          )}
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%' }}>
+                            {dbSource?.blob_url && (
+                              <a
+                                href={dbSource.blob_url}
+                                download={source.filename}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  gap: 6,
+                                  padding: '10px 14px',
+                                  borderRadius: 8,
+                                  background: '#10b981',
+                                  color: '#fff',
+                                  fontWeight: 600,
+                                  fontSize: '0.9rem',
+                                  textDecoration: 'none',
+                                  boxShadow: '0 2px 6px rgba(16, 185, 129, 0.2)',
+                                }}
+                              >
+                                ⬇️ Tải xuống file Excel
+                              </a>
+                            )}
+                            <div className="file-input-wrapper">
+                              <button className="btn-upload" style={{ width: '100%' }}>
+                                {uploadingKey === source.key ? (
+                                  <><Loader2 size={18} className="spin-anim" /> Đang tải lên...</>
+                                ) : (
+                                  dbSource?.blob_url ? '🔄 Tải file lên mới' : '⬆️ Tải file lên'
+                                )}
+                              </button>
+                              <input type="file" accept=".xlsx" onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) handleUpload(source.key, file);
+                              }} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+               </div>
              </div>
            )}
 

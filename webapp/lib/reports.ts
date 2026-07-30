@@ -86,8 +86,29 @@ export const MONTHLY_REPORT_SOURCES = [
   },
 ] as const;
 
-export type ReportKey = (typeof MONTHLY_REPORT_SOURCES)[number]["key"];
+export const WEEKLY_MLL_SOURCES = [
+  {
+    key: "weekly1",
+    label: "Chi Tiết MLL Tuần",
+    owner: "Khanh",
+    filename: "BC_CHITIET_MLL_082026.xlsx",
+    tag: "MLL1",
+    color: "#F25022",
+  },
+  {
+    key: "weekly2",
+    label: "TG MLL các TB (3G4G5G)",
+    owner: "Khanh",
+    filename: "C1.4. Thời gian MLL các thiết bị di động (3G4G5G)_Tuan29.xlsx",
+    tag: "MLL2",
+    color: "#F25022",
+  },
+] as const;
+
+export type ReportKey = 
+  | (typeof MONTHLY_REPORT_SOURCES)[number]["key"]
+  | (typeof WEEKLY_MLL_SOURCES)[number]["key"];
 
 export const REPORT_MAP = Object.fromEntries(
-  MONTHLY_REPORT_SOURCES.map((s) => [s.key, s])
-) as Record<ReportKey, (typeof MONTHLY_REPORT_SOURCES)[number]>;
+  [...MONTHLY_REPORT_SOURCES, ...WEEKLY_MLL_SOURCES].map((s) => [s.key, s])
+) as Record<ReportKey, any>;
