@@ -20,8 +20,8 @@ from generate_monthly_report import (
 _CUR_DIR = Path(__file__).resolve().parent
 _ROOT = _CUR_DIR.resolve().parents[1]
 _WEEKLY_TEMPLATE_CANDIDATES = [
-    _CUR_DIR / "templates" / "MAT_LIEN_LAC" / "BÁO CÁO MẤT LIÊN LẠC TUẦN.docx",
-    _ROOT / "templates" / "MAT_LIEN_LAC" / "BÁO CÁO MẤT LIÊN LẠC TUẦN.docx",
+    _CUR_DIR / "templates" / "MAT_LIEN_LAC" / "TTHT_BC_KTHT_MLL.docx",
+    _ROOT / "templates" / "MAT_LIEN_LAC" / "TTHT_BC_KTHT_MLL.docx",
 ]
 WEEKLY_TEMPLATE = next((p for p in _WEEKLY_TEMPLATE_CANDIDATES if p.is_file()), _WEEKLY_TEMPLATE_CANDIDATES[0])
 
