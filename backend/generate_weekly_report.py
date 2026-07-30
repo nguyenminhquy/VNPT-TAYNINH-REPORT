@@ -55,34 +55,87 @@ def load_weekly_sources(blob_urls: Dict[str, str]) -> Dict[str, Any]:
         sources[key] = load_workbook(dest, data_only=True, read_only=True)
     return sources
 
-# ---------------------------------------------------------------------------
-# Update Word document with data from the two Excel sources
-# ---------------------------------------------------------------------------
+def extract_table_by_tag(sheet: Any, tag: str) -> list[list[Any]]:
+    start_r, start_c = -1, -1
+    for r in range(1, sheet.max_row + 1):
+        for c in range(1, sheet.max_column + 1):
+            val = sheet.cell(row=r, column=c).value
+            if val and isinstance(val, str) and tag in val:
+                start_r = r
+                start_c = c
+                break
+        if start_r != -1:
+            break
+            
+    if start_r == -1:
+        return []
+        
+    max_c = start_c
+    while max_c <= sheet.max_column and sheet.cell(row=start_r, column=max_c).value is not None:
+        max_c += 1
+    max_c -= 1
+    
+    # In some templates, tag is on a single cell row before the table.
+    # In others, tag is in the header row.
+    # We will extract starting from the row with the tag, going down.
+    # If the user has empty rows, we should stop at the first completely empty row.
+    max_r = start_r
+    while max_r <= sheet.max_row:
+        # Check if the whole row is empty from start_c to max_c
+        is_empty = True
+        for c in range(start_c, max_c + 1):
+            if sheet.cell(row=max_r, column=c).value is not None:
+                is_empty = False
+                break
+        if is_empty and max_r > start_r:
+            break
+        max_r += 1
+    max_r -= 1
+    
+    matrix = []
+    # Start extracting from the row below the tag if the tag row only contains the tag
+    # If the tag is part of the header (i.e. other columns in that row have values), include it.
+    tag_row_has_other_values = False
+    for c in range(start_c + 1, max_c + 1):
+        if sheet.cell(row=start_r, column=c).value is not None:
+            tag_row_has_other_values = True
+            break
+            
+    start_extract_row = start_r if tag_row_has_other_values else start_r + 1
+    if start_extract_row > max_r:
+        return []
+        
+    for r in range(start_extract_row, max_r + 1):
+        row_data = []
+        for c in range(start_c, max_c + 1):
+            val = sheet.cell(row=r, column=c).value
+            row_data.append("" if val is None else val)
+        matrix.append(row_data)
+        
+    return matrix
+
+
 def update_weekly_report(document: DocumentType, sources: Dict[str, Any]) -> None:
-    """Populate tables B1‑B7 in the weekly template.
-
-    * ``weekly1`` provides data for tables B1‑B4.
-    * ``weekly2`` provides data for tables B5‑B7.
-    """
-    # Locate tables by tag "(B1)" … "(B7)"
-    tables = []
-    for i in range(1, 8):
-        tbl = find_table_by_tag(document, f"(B{i})")
-        if tbl is None:
-            raise RuntimeError(f"Could not locate table with tag (B{i}) in template.")
-        tables.append(tbl)
-
-    # First Excel → tables 0‑3 (B1‑B4)
+    """Populate tables in the weekly template by matching tags."""
+    import re
+    
+    text = chr(10).join([p.text for p in document.paragraphs] + [c.text for t in document.tables for r in t.rows for c in r.cells])
+    tags = list(set(re.findall(r'\(B\d.*?\)', text)))
+    
     sheet1 = sources["weekly1"].active
-    matrix1 = raw_matrix(sheet1, 1, sheet1.max_row, 1, sheet1.max_column)
-    for tbl in tables[:4]:
-        write_table_matrix(tbl, matrix1, start_row=0)
-
-    # Second Excel → tables 4‑6 (B5‑B7)
     sheet2 = sources["weekly2"].active
-    matrix2 = raw_matrix(sheet2, 1, sheet2.max_row, 1, sheet2.max_column)
-    for tbl in tables[4:]:
-        write_table_matrix(tbl, matrix2, start_row=0)
+    
+    for tag in tags:
+        tbl = find_table_by_tag(document, tag)
+        if tbl is None:
+            continue
+            
+        matrix = extract_table_by_tag(sheet1, tag)
+        if not matrix:
+            matrix = extract_table_by_tag(sheet2, tag)
+            
+        if matrix:
+            write_table_matrix(tbl, matrix, start_row=0)
 
 # ---------------------------------------------------------------------------
 # Public API – generate the report and return the Path
