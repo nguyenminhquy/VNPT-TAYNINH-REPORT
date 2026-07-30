@@ -125,7 +125,7 @@ def load_sources() -> dict[str, Any]:
 
     sources: dict[str, Any] = {}
     for key, filename in FILES.items():
-        sources[key] = load_workbook(DATA_DIR / filename, data_only=True, read_only=True)
+        sources[key] = load_workbook(DATA_DIR / filename, data_only=True)
     return sources
 
 

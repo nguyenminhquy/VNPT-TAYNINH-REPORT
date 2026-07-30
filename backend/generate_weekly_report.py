@@ -56,7 +56,7 @@ def load_weekly_sources(blob_urls: Dict[str, str]) -> Dict[str, Any]:
         dest = data_dir / filename
         # Download synchronously
         urllib.request.urlretrieve(url, str(dest))
-        sources[key] = load_workbook(dest, data_only=True, read_only=True)
+        sources[key] = load_workbook(dest, data_only=True)
     return sources
 
 def extract_table_by_tag(sheet: Any, tag: str) -> list[list[Any]]:
