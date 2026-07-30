@@ -29,17 +29,10 @@ EXPORT_DIR = _ROOT / "exports"
 EXPORT_DIR.mkdir(parents=True, exist_ok=True)
 
 # ---------------------------------------------------------------------------
-# Helper – download Excel blobs (mirrors logic in fastapi_cd5.py)
+# Helper – download Excel blobs synchronously
 # ---------------------------------------------------------------------------
-import httpx
-import asyncio
+import urllib.request
 from datetime import datetime
-
-async def _download_excel(blob_url: str, dest: Path, key: str):
-    async with httpx.AsyncClient(timeout=120.0) as client:
-        resp = await client.get(blob_url)
-        resp.raise_for_status()
-        dest.write_bytes(resp.content)
 
 # ---------------------------------------------------------------------------
 # Core – load sources
@@ -57,8 +50,8 @@ def load_weekly_sources(blob_urls: Dict[str, str]) -> Dict[str, Any]:
         if not url:
             raise ValueError(f"Missing Blob URL for {key}")
         dest = data_dir / filename
-        # Run async download in a fresh event loop
-        asyncio.run(_download_excel(url, dest, key))
+        # Download synchronously
+        urllib.request.urlretrieve(url, str(dest))
         sources[key] = load_workbook(dest, data_only=True, read_only=True)
     return sources
 
