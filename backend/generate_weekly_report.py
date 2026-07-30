@@ -60,6 +60,10 @@ def load_weekly_sources(blob_urls: Dict[str, str]) -> Dict[str, Any]:
     return sources
 
 def extract_table_by_tag(sheet: Any, tag: str) -> list[list[Any]]:
+    if getattr(sheet, "max_row", None) is None:
+        # Prevent TypeError if sheet is empty or not properly loaded
+        return []
+        
     start_r, start_c = -1, -1
     for r in range(1, sheet.max_row + 1):
         for c in range(1, sheet.max_column + 1):
