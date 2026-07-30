@@ -18,7 +18,11 @@ from generate_monthly_report import (
 # Configuration – template discovery
 # ---------------------------------------------------------------------------
 _CUR_DIR = Path(__file__).resolve().parent
-_ROOT = _CUR_DIR.resolve().parents[1]
+try:
+    _ROOT = _CUR_DIR.resolve().parents[1]
+except IndexError:
+    _ROOT = _CUR_DIR
+
 _WEEKLY_TEMPLATE_CANDIDATES = [
     _CUR_DIR / "templates" / "MAT_LIEN_LAC" / "TTHT_BC_KTHT_MLL.docx",
     _ROOT / "templates" / "MAT_LIEN_LAC" / "TTHT_BC_KTHT_MLL.docx",

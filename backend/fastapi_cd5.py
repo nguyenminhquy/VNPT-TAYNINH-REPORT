@@ -299,7 +299,11 @@ async def export_word_monthly(request: Request):
     sys.path.insert(0, str(Path(__file__).parent))
     import generate_monthly_report as gmr
 
-    ROOT = Path(__file__).resolve().parents[1]
+    try:
+        ROOT = Path(__file__).resolve().parents[1]
+    except IndexError:
+        ROOT = Path(__file__).resolve().parent
+
     DATA_DIR = ROOT / "data sample"
     DATA_DIR.mkdir(parents=True, exist_ok=True)
 

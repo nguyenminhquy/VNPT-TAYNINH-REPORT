@@ -19,7 +19,11 @@ from openpyxl import load_workbook
 from openpyxl.cell.cell import Cell
 
 
-ROOT = Path(__file__).resolve().parents[1]
+try:
+    ROOT = Path(__file__).resolve().parents[1]
+except IndexError:
+    ROOT = Path(__file__).resolve().parent
+
 DATA_DIR = ROOT / "data sample"
 # Ưu tiên template.docx chuẩn trong /app/templates (Docker) hoặc root/templates, fallback sang file tên cũ
 _CUR_DIR = Path(__file__).resolve().parent
