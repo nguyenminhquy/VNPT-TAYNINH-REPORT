@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { supabaseAdmin } from '@/lib/supabase';
-import { REPORT_SOURCES, MONTHLY_REPORT_SOURCES } from '@/lib/reports';
+import { REPORT_SOURCES, REPORT_MAP } from '@/lib/reports';
 import { buildDashboardData } from '@/lib/excel/aggregator';
 import { put, del } from '@vercel/blob';
 import * as XLSX from 'xlsx';
@@ -114,7 +114,7 @@ export async function POST(
     const { key } = params;
 
     // ── Validate key có trong danh sách nguồn không ─────────────────────────
-    if (!MONTHLY_REPORT_SOURCES.some(s => s.key === key)) {
+    if (!(key in REPORT_MAP)) {
       return NextResponse.json(
         { error: `Key "${key}" không hợp lệ` },
         { status: 400 },
@@ -235,7 +235,7 @@ export async function POST(
       updatedSource = res.data;
       updateError = res.error;
     } else {
-      const sourceMeta = MONTHLY_REPORT_SOURCES.find(s => s.key === key);
+      const sourceMeta = REPORT_MAP[key as keyof typeof REPORT_MAP];
       const res = await supabaseAdmin
         .from('report_sources')
         .insert({
@@ -280,7 +280,7 @@ export async function POST(
     }
 
     // ── Ghi lịch sử upload ────────────────────────────────────────────────────
-    const histSourceMeta = MONTHLY_REPORT_SOURCES.find(s => s.key === key);
+    const histSourceMeta = REPORT_MAP[key as keyof typeof REPORT_MAP];
     await supabaseAdmin.from('upload_history').insert({
       source_key: key,
       source_label: histSourceMeta?.label ?? key,
