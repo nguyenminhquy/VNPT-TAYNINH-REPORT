@@ -244,6 +244,38 @@ async def export_word(request: Request):
             "Content-Length": str(len(docx_bytes)),
         }
     )
+@app.post("/export-word-weekly", summary="Tạo báo cáo tuần mất liên lạc .docx từ 2 file Excel")
+async def export_word_weekly(request: Request):
+    """
+    Nhận JSON body: { blobUrls: { weekly1, weekly2 } }
+    Tải 2 file Excel, gọi generate_weekly_report.export_weekly, trả về .docx.
+    """
+    try:
+        body = await request.json()
+    except Exception:
+        raise HTTPException(status_code=400, detail="Body JSON không hợp lệ.")
+    blob_urls: Dict[str, str] = body.get("blobUrls", {})
+    required = ["weekly1", "weekly2"]
+    missing = [k for k in required if k not in blob_urls or not blob_urls[k]]
+    if missing:
+        raise HTTPException(
+            status_code=422,
+            detail=f"Chưa đủ file Excel. Còn thiếu: {', '.join(missing)}",
+        )
+    import sys
+    sys.path.insert(0, str(Path(__file__).parent))
+    import generate_weekly_report as gwr
+    out_path = gwr.export_weekly(blob_urls)
+    docx_bytes = out_path.read_bytes()
+    filename_out = out_path.name
+    return Response(
+        content=docx_bytes,
+        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        headers={
+            "Content-Disposition": f'attachment; filename="{filename_out}"',
+            "Content-Length": str(len(docx_bytes)),
+        },
+    )
 
 # ─── ENDPOINT: Xuất Báo cáo tháng dạng Word ───────────────────────────────────
 
