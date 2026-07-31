@@ -15,6 +15,23 @@ import "./dashboard.css";
 import VnptLogo from "@/components/VnptLogo";
 import Footer from "@/components/Footer";
 
+const PETITION_TEMPLATES = [
+  { id: '01_Mau_Bao_cao', name: 'Mẫu Báo cáo' },
+  { id: '02_Mau_To_trinh', name: 'Mẫu Tờ trình' },
+  { id: '03a_Mau_Cong_van_gui_tu_2_don_vi_tro_len', name: 'Mẫu Công văn gửi từ 2 đơn vị trở lên' },
+  { id: '03b_Mau_Cong_van_gui_1_don_vi', name: 'Mẫu Công văn gửi 1 đơn vị' },
+  { id: '04_Mau_Thong_bao', name: 'Mẫu Thông báo' },
+  { id: '05_Mau_Quyet_dinh_quy_dinh_truc_tiep', name: 'Mẫu Quyết định quy định trực tiếp' },
+  { id: '06_Mau_Quyet_dinh_ban_hanh_quy_che_quy_dinh', name: 'Mẫu Quyết định ban hành quy chế, quy định' },
+  { id: '07_Mau_Van_ban_khac_ban_hanh_kem_Quyet_dinh', name: 'Mẫu Văn bản khác ban hành kèm Quyết định' },
+  { id: '08_Mau_Van_ban_phe_duyet_kem_Quyet_dinh', name: 'Mẫu Văn bản phê duyệt kèm Quyết định' },
+  { id: '09_Mau_Giay_uy_quyen', name: 'Mẫu Giấy ủy quyền' },
+  { id: '10_Mau_Chi_thi', name: 'Mẫu Chỉ thị' },
+  { id: '11_Mau_Giay_trieu_tap', name: 'Mẫu Giấy triệu tập' },
+  { id: '12_Mau_Ban_sao_van_ban_dien_tu', name: 'Mẫu Bản sao văn bản điện tử' },
+  { id: '13_Mau_Giay_moi', name: 'Mẫu Giấy mời' },
+];
+
 export default function Dashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -398,9 +415,24 @@ export default function Dashboard() {
           <button className={`nav-item ${activeTab === 'special5' ? 'active' : ''}`} onClick={() => setActiveTab('special5')}>
             Báo cáo chuyên đề 5
           </button>
-          <button className={`nav-item ${activeTab === 'petition' ? 'active' : ''}`} onClick={() => setActiveTab('petition')}>
-            Tạo Tờ Trình
-          </button>
+          <div className="nav-item-group">
+            <button className={`nav-item ${activeTab === 'petition' ? 'active' : ''}`} onClick={() => { setActiveTab('petition'); if (activeTab !== 'petition') setActiveReportKey('02_Mau_To_trinh'); }}>
+              Tạo Tờ Trình
+            </button>
+            {activeTab === 'petition' && (
+              <div className="submenu fade-in">
+                {PETITION_TEMPLATES.map(template => (
+                  <button 
+                    key={template.id} 
+                    className={`submenu-item ${activeReportKey === template.id ? 'active' : ''}`} 
+                    onClick={() => setActiveReportKey(template.id)}
+                  >
+                    {template.name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           <button className={`nav-item ${activeTab === 'handover' ? 'active' : ''}`} onClick={() => setActiveTab('handover')}>
             Sổ Giao Ca
           </button>
@@ -482,7 +514,7 @@ export default function Dashboard() {
                {activeTab === 'petition' ? (
                   <button className="btn-export" onClick={handleExportToTrinh} disabled={isExportingToTrinh}>
                     {isExportingToTrinh ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
-                    {isExportingToTrinh ? 'Đang tạo Word...' : 'Xuất Tờ Trình (Word)'}
+                    {isExportingToTrinh ? 'Đang tạo Word...' : `Xuất ${PETITION_TEMPLATES.find(t => t.id === activeReportKey)?.name || 'Tờ Trình'} (Word)`}
                   </button>
                ) : (activeTab === 'handover' || activeTab === 'inspection' || activeTab === 'generator' || activeTab === 'schedule' || activeTab === 'overview' || activeTab === 'special5') ? null : (
                   <div style={{ display: 'flex', gap: 10 }}>
@@ -970,7 +1002,7 @@ export default function Dashboard() {
            {activeTab === 'petition' && (
              <div className="fade-in">
                 <div className="card-glass" style={{ padding: '32px 40px', marginBottom: 24 }}>
-                  <h2 className="section-title" style={{ marginBottom: 24 }}>Thông tin Tờ Trình</h2>
+                  <h2 className="section-title" style={{ marginBottom: 24 }}>Thông tin {PETITION_TEMPLATES.find(t => t.id === activeReportKey)?.name || 'Tờ Trình'}</h2>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
                     <div>
                       <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Số Tờ Trình</label>
