@@ -48,8 +48,8 @@ export default function Dashboard() {
 
   // Tờ trình form state
   const [toTrinhForm, setToTrinhForm] = useState({
-    docNumber: '...',
-    docDate: 'ngày ... tháng ... năm ...',
+    docNumber: '',
+    docDate: '',
     title: '...',
     to: '...',
     baseClause: 'Căn cứ...',
@@ -81,13 +81,7 @@ export default function Dashboard() {
     const week = Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
     setDateInfo({ currentWeek: week, currentYear: d.getUTCFullYear() });
     
-    // Auto fill date
-    const dStr = String(now.getDate()).padStart(2, '0');
-    const mStr = String(now.getMonth() + 1).padStart(2, '0');
-    setToTrinhForm(prev => ({
-      ...prev,
-      docDate: `ngày ${dStr} tháng ${mStr} năm ${now.getFullYear()}`
-    }));
+    // Removed auto fill date as per user request
 
     return () => clearInterval(timer);
   }, []);
@@ -1005,11 +999,11 @@ export default function Dashboard() {
                   <h2 className="section-title" style={{ marginBottom: 24 }}>Thông tin {PETITION_TEMPLATES.find(t => t.id === activeReportKey)?.name || 'Tờ Trình'}</h2>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
                     <div>
-                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Số Tờ Trình</label>
+                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Số, Ký hiệu</label>
                       <input type="text" value={toTrinhForm.docNumber} onChange={e => setToTrinhForm(p => ({ ...p, docNumber: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
                     </div>
                     <div>
-                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Ngày tháng (Ví dụ: ngày 24 tháng 07 năm 2026)</label>
+                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Ngày, tháng, năm (Ví dụ: ngày 24 tháng 07 năm 2026)</label>
                       <input type="text" value={toTrinhForm.docDate} onChange={e => setToTrinhForm(p => ({ ...p, docDate: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
                     </div>
                     <div style={{ gridColumn: '1 / -1' }}>
