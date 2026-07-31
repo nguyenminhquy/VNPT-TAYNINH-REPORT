@@ -236,11 +236,12 @@ async def export_word(request: Request):
     week = result.get("week", "")
     filename_out = f"Bao_cao_VNPT{f'_tuan_{week}' if week else ''}.docx"
 
+    from urllib.parse import quote
     return Response(
         content=docx_bytes,
         media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         headers={
-            "Content-Disposition": f'attachment; filename="{filename_out}"',
+            "Content-Disposition": f"attachment; filename*=UTF-8''{quote(filename_out)}",
             "Content-Length": str(len(docx_bytes)),
         }
     )
@@ -268,11 +269,12 @@ async def export_word_weekly(request: Request):
     out_path = gwr.export_weekly(blob_urls)
     docx_bytes = out_path.read_bytes()
     filename_out = out_path.name
+    from urllib.parse import quote
     return Response(
         content=docx_bytes,
         media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         headers={
-            "Content-Disposition": f'attachment; filename="{filename_out}"',
+            "Content-Disposition": f"attachment; filename*=UTF-8''{quote(filename_out)}",
             "Content-Length": str(len(docx_bytes)),
         },
     )
@@ -360,11 +362,12 @@ async def export_word_monthly(request: Request):
     docx_bytes = output_path.read_bytes()
     filename_out = "Bao_cao_VNPT_thang.docx"
 
+    from urllib.parse import quote
     return Response(
         content=docx_bytes,
         media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         headers={
-            "Content-Disposition": f'attachment; filename="{filename_out}"',
+            "Content-Disposition": f"attachment; filename*=UTF-8''{quote(filename_out)}",
             "Content-Length": str(len(docx_bytes)),
         }
     )
