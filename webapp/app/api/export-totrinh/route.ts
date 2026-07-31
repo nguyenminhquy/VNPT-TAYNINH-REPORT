@@ -17,46 +17,48 @@ export async function POST(req: Request) {
     const doc = new DocxModifier(docBuffer);
 
     // Replace document number
-    if (docNumber) {
-      doc.replaceParagraphByTextMatch(/Số: .*\/.*/, `Số: ${docNumber}`);
+    if (docNumber !== undefined) {
+      const displayDocNumber = docNumber.trim() ? docNumber : '...../.............';
+      doc.replaceParagraphByTextMatch(/Số: .*\/.*/, `Số: ${displayDocNumber}`);
     }
 
     // Replace date
-    if (docDate) {
-      doc.replaceParagraphByTextMatch(/Tây Ninh, ngày.*/, `Tây Ninh, ngày ${docDate}`);
-      doc.replaceTextInEntireDocument(/Tây Ninh, ngày.*/, `Tây Ninh, ngày ${docDate}`);
+    if (docDate !== undefined) {
+      const displayDate = docDate.trim() ? docDate : '..... tháng ..... năm 20....';
+      doc.replaceParagraphByTextMatch(/Tây Ninh, ngày.*/, `Tây Ninh, ngày ${displayDate}`);
+      doc.replaceTextInEntireDocument(/Tây Ninh, ngày.*/, `Tây Ninh, ngày ${displayDate}`);
     }
 
     // Replace title
-    if (title) {
-      doc.replaceParagraphByTextMatch(/Về việc ….*/, `Về việc ${title}`);
+    if (title !== undefined) {
+      doc.replaceParagraphByTextMatch(/Về việc ….*/, `Về việc ${title.trim() ? title : '..........................................................'}`);
     }
 
     // Replace base clause and to
-    if (to || baseClause) {
-      const newTo = to ? `Kính gửi: ${to}\n\n` : '';
-      const newBaseClause = baseClause ? baseClause : 'Căn cứ tờ trình số 1937/TTr-TTHT  ngày 17/06/2026 của Trung tâm Hạ tầng V/v xét duyệt tăng nhân viên cho Tổ Khai thác hệ thống đã được Giám đốc Viễn thông Tây Ninh phê duyệt;';
+    if (to !== undefined || baseClause !== undefined) {
+      const newTo = to && to.trim() ? `Kính gửi: ${to}\n\n` : 'Kính gửi: .......................................\n\n';
+      const newBaseClause = baseClause && baseClause.trim() ? baseClause : 'Căn cứ ............................................................................................................;';
       doc.replaceParagraphByTextMatch(/Căn cứ tờ trình số 1937.*/, `${newTo}${newBaseClause}`);
     }
     
     // Replace content
-    if (content) {
-      doc.replaceParagraphByTextMatch(/Để tạo điều kiện thuận lợi.*/, content);
+    if (content !== undefined) {
+      doc.replaceParagraphByTextMatch(/Để tạo điều kiện thuận lợi.*/, content.trim() ? content : '........................................................................................................................');
     }
 
     // Replace proposal
-    if (proposal) {
-      doc.replaceParagraphByTextMatch(/Tổ Khai thác Hệ thống kính đề nghị.*/, proposal);
+    if (proposal !== undefined) {
+      doc.replaceParagraphByTextMatch(/Tổ Khai thác Hệ thống kính đề nghị.*/, proposal.trim() ? proposal : '........................................................................................................................');
     }
 
     // Replace manager
-    if (manager) {
-      doc.replaceParagraphByTextMatch(/Nguyễn Hoàng Hưng/, manager);
+    if (manager !== undefined) {
+      doc.replaceParagraphByTextMatch(/Nguyễn Hoàng Hưng/, manager.trim() ? manager : '..............................');
     }
 
     // Replace author
-    if (author) {
-      doc.replaceParagraphByTextMatch(/Nguyễn Thành Luân/, author);
+    if (author !== undefined) {
+      doc.replaceParagraphByTextMatch(/Nguyễn Thành Luân/, author.trim() ? author : '..............................');
     }
 
     const outputBuffer = doc.getBuffer();
