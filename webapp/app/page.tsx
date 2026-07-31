@@ -356,16 +356,16 @@ export default function Dashboard() {
         </div>
         <nav className="sidebar-nav">
           <button className={`nav-item ${activeTab === 'overview' ? 'active' : ''}`} onClick={() => setActiveTab('overview')}>
-            <span style={{fontSize: '1.2rem'}}>📊</span> Tổng quan
+            Tổng quan
           </button>
           <div className="nav-item-group">
             <button className={`nav-item ${activeTab === 'details' ? 'active' : ''}`} onClick={() => setActiveTab('details')}>
-              <span style={{fontSize: '1.2rem'}}>📝</span> Báo cáo hàng tuần
+              Báo cáo hàng tuần
             </button>
             {activeTab === 'details' && cacheData && (
               <div className="submenu fade-in">
                 <button className={`submenu-item ${activeReportKey === 'upload' ? 'active' : ''}`} onClick={() => setActiveReportKey('upload')}>
-                  📁 Quản lý nguồn dữ liệu
+                  Quản lý nguồn dữ liệu
                 </button>
                 {[...cacheData.data.serviceReports, ...cacheData.data.operationReports].map(report => (
                   <button key={report.id} className={`submenu-item ${activeReportKey === report.id ? 'active' : ''}`} onClick={() => setActiveReportKey(report.id)}>
@@ -377,12 +377,12 @@ export default function Dashboard() {
           </div>
           <div className="nav-item-group">
             <button className={`nav-item ${activeTab === 'monthly_details' ? 'active' : ''}`} onClick={() => setActiveTab('monthly_details')}>
-              <span style={{fontSize: '1.2rem'}}>📅</span> Báo cáo hàng tháng
+              Báo cáo hàng tháng
             </button>
             {activeTab === 'monthly_details' && cacheData && (
               <div className="submenu fade-in">
                 <button className={`submenu-item ${activeReportKey === 'upload' ? 'active' : ''}`} onClick={() => setActiveReportKey('upload')}>
-                  📁 Quản lý nguồn dữ liệu
+                  Quản lý nguồn dữ liệu
                 </button>
                 {[...cacheData.data.serviceReports, ...cacheData.data.operationReports].map(report => (
                   <button key={report.id} className={`submenu-item ${activeReportKey === report.id ? 'active' : ''}`} onClick={() => setActiveReportKey(report.id)}>
@@ -393,25 +393,25 @@ export default function Dashboard() {
             )}
           </div>
           <button className={`nav-item ${activeTab === 'weekly_mll' ? 'active' : ''}`} onClick={() => { setActiveTab('weekly_mll'); setActiveReportKey('upload'); }}>
-            <span style={{fontSize: '1.2rem'}}>📞</span> Mất liên lạc hàng tuần
+            Mất liên lạc hàng tuần
           </button>
           <button className={`nav-item ${activeTab === 'special5' ? 'active' : ''}`} onClick={() => setActiveTab('special5')}>
-            <span style={{fontSize: '1.2rem'}}>📋</span> Báo cáo chuyên đề 5
+            Báo cáo chuyên đề 5
           </button>
           <button className={`nav-item ${activeTab === 'petition' ? 'active' : ''}`} onClick={() => setActiveTab('petition')}>
-            <span style={{fontSize: '1.2rem'}}>📄</span> Tạo Tờ Trình
+            Tạo Tờ Trình
           </button>
           <button className={`nav-item ${activeTab === 'handover' ? 'active' : ''}`} onClick={() => setActiveTab('handover')}>
-            <span style={{fontSize: '1.2rem'}}>📓</span> Sổ Giao Ca
+            Sổ Giao Ca
           </button>
           <button className={`nav-item ${activeTab === 'inspection' ? 'active' : ''}`} onClick={() => setActiveTab('inspection')}>
-            <span style={{fontSize: '1.2rem'}}>📋</span> Nhật Ký Kiểm Tra
+            Nhật Ký Kiểm Tra
           </button>
           <button className={`nav-item ${activeTab === 'generator' ? 'active' : ''}`} onClick={() => setActiveTab('generator')}>
-            <span style={{fontSize: '1.2rem'}}>⚡</span> Nhật Ký MPD
+            Nhật Ký MPD
           </button>
           <button className={`nav-item ${activeTab === 'schedule' ? 'active' : ''}`} onClick={() => setActiveTab('schedule')}>
-            <span style={{fontSize: '1.2rem'}}>📅</span> Lịch Trực Tuần
+            Lịch Trực Tuần
           </button>
         </nav>
         <div className="sidebar-footer">
