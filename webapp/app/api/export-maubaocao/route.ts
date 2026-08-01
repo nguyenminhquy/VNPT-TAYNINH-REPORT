@@ -33,7 +33,7 @@ export async function POST(req: Request) {
 
     // Replace role
     if (role !== undefined) {
-      doc.replaceTextInEntireDocument(/.*GIÁM ĐỐC.*\(\s*5\s*\).*/, (role.trim() ? role : 'GIÁM ĐỐC').replace(/\n/g, '\\n'));
+      doc.replaceTextInEntireDocument(/^GIÁM ĐỐC\s*$/, (role.trim() ? role : 'GIÁM ĐỐC').replace(/\n/g, '\\n'));
     }
 
     // Replace signerName
