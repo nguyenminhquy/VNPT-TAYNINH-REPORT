@@ -8,7 +8,9 @@ export async function POST(req: Request) {
     const data = await req.json();
     const { title, content, role, signerName, unit6, author7, eoffice8 } = data;
 
-    const templatePath = path.join(process.cwd(), 'templates', 'TOTRINH', '01_Mau_Bao_cao.docx');
+    const isPGD = role && role.includes('PHÓ GIÁM ĐỐC');
+    const templateFileName = isPGD ? '01_Mau_Bao_cao_PGD.docx' : '01_Mau_Bao_cao.docx';
+    const templatePath = path.join(process.cwd(), 'templates', 'TOTRINH', templateFileName);
     if (!fs.existsSync(templatePath)) {
       return NextResponse.json({ error: 'Template file not found' }, { status: 500 });
     }
