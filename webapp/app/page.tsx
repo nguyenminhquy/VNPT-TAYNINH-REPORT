@@ -1081,14 +1081,7 @@ export default function Dashboard() {
                     </div>
                   ) : activeReportKey === '02_Mau_To_trinh' || !activeReportKey ? (
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-                      <div>
-                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Số, Ký hiệu</label>
-                        <input type="text" value={toTrinhForm.docNumber} onChange={e => setToTrinhForm(p => ({ ...p, docNumber: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
-                      </div>
-                      <div>
-                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Ngày, tháng, năm (Ví dụ: ngày 24 tháng 07 năm 2026)</label>
-                        <input type="text" value={toTrinhForm.docDate} onChange={e => setToTrinhForm(p => ({ ...p, docDate: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
-                      </div>
+
                       <div style={{ gridColumn: '1 / -1' }}>
                         <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Về việc (Tiêu đề)</label>
                         <input type="text" value={toTrinhForm.title} onChange={e => setToTrinhForm(p => ({ ...p, title: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
