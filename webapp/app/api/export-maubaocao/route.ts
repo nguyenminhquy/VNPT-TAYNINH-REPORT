@@ -18,6 +18,9 @@ export async function POST(req: Request) {
 
     // User has manually updated the template with the correct unit headers, so we no longer need to replace them.
 
+    // Remove the "Ghi chú" instructional table at the end of the document
+    doc.removeTableByTextMatch(/Ghi chú:\s*Các phần ghi/);
+
     // Replace title
     if (title !== undefined) {
       doc.replaceTextInEntireDocument(/.*Về việc.*\(\s*3\s*\).*/, `Về việc ${title.trim() ? title : '........................................................'}`);

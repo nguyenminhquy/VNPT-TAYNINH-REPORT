@@ -113,6 +113,32 @@ export class DocxModifier {
     }
   }
 
+  replaceParagraphByTextMatch(regex: RegExp, newText: string) {
+    const paragraphs = Array.from(this.doc.getElementsByTagName('w:p')) as Element[];
+    
+    for (const p of paragraphs) {
+      const text = this.getElementText(p);
+      if (regex.test(text)) {
+        this.replaceElementText(p, newText);
+        return; // Replace only the first occurrence
+      }
+    }
+  }
+
+  removeTableByTextMatch(regex: RegExp) {
+    const tables = Array.from(this.doc.getElementsByTagName('w:tbl')) as Element[];
+    for (const tbl of tables) {
+      const text = this.getElementText(tbl);
+      if (regex.test(text)) {
+        tbl.parentNode?.removeChild(tbl);
+      }
+    }
+  }
+
+  getElementText(el: Element): string {
+    return el.textContent || '';
+  }
+
   replaceCell(cell: Element, text: string) {
     const paragraphs = cell.getElementsByTagName('w:p');
     if (paragraphs.length === 0) {
