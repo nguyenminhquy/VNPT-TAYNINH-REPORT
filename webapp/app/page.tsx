@@ -50,14 +50,14 @@ export default function Dashboard() {
   const [toTrinhForm, setToTrinhForm] = useState({
     docNumber: '',
     docDate: '',
-    title: '...',
-    to: '...',
-    baseClause: 'Căn cứ...',
-    content: '...',
-    proposal: '...',
-    recipients: 'Như trên\nLưu VT',
-    author: '...',
-    manager: '...',
+    title: '',
+    to: '',
+    baseClause: '',
+    content: '',
+    proposal: '',
+    recipients: '',
+    author: '',
+    manager: '',
     role: 'GIÁM ĐỐC'
   });
 
