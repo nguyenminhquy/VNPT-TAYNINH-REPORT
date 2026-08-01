@@ -113,17 +113,6 @@ export class DocxModifier {
     }
   }
 
-  replaceParagraphByTextMatch(regex: RegExp, newText: string) {
-    const paragraphs = Array.from(this.doc.getElementsByTagName('w:p')) as Element[];
-    
-    for (const p of paragraphs) {
-      const text = this.getElementText(p);
-      if (regex.test(text)) {
-        this.replaceElementText(p, newText);
-        return; // Replace only the first occurrence
-      }
-    }
-  }
 
   removeTableByTextMatch(regex: RegExp) {
     const tables = Array.from(this.doc.getElementsByTagName('w:tbl')) as Element[];
