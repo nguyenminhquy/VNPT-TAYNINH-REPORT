@@ -1185,8 +1185,7 @@ export default function Dashboard() {
                         <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Chức danh phê duyệt</label>
                         <select value={form3a.role} onChange={e => setForm3a(p => ({ ...p, role: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }}>
                           <option value="GIÁM ĐỐC">Giám đốc</option>
-                          <option value="KT. GIÁM ĐỐC
-PHÓ GIÁM ĐỐC">KT. Giám đốc / Phó Giám đốc</option>
+                          <option value="KT. GIÁM ĐỐC&#10;PHÓ GIÁM ĐỐC">KT. Giám đốc / Phó Giám đốc</option>
                         </select>
                       </div>
                       <div>

@@ -24,9 +24,13 @@ export async function POST(req: Request) {
       doc.replaceTextInEntireDocument(/.*\(\s*3\s*\).*/, title.trim() ? title : '..........................................................');
     }
 
+    // Remove the bullet points for Kính gửi
+    doc.removeParagraphByTextMatch(/^-.*[…\.]{5,}/);
+
     // Replace Kính gửi
     if (to !== undefined) {
-      doc.replaceTextInEntireDocument(/^Kính gửi:.*/, `Kính gửi: ${to.trim() ? to : '.......................................'}`);
+      const toValue = to.trim() ? to.replace(/\n/g, '\\n') : '.......................................';
+      doc.replaceTextInEntireDocument(/^Kính gửi:.*/, `Kính gửi:\\n${toValue}`);
     }
 
     // Replace content (4)

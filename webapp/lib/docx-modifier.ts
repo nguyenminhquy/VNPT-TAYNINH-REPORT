@@ -179,6 +179,16 @@ export class DocxModifier {
     return null;
   }
 
+  removeParagraphByTextMatch(regex: RegExp) {
+    const paragraphs = Array.from(this.doc.getElementsByTagName('w:p')) as Element[];
+    for (const p of paragraphs) {
+      const text = this.getElementText(p);
+      if (regex.test(text)) {
+        p.parentNode?.removeChild(p);
+      }
+    }
+  }
+
   replaceParagraphByTextMatch(searchStr: string | RegExp, newText: string): boolean {
     const paragraphs = this.getParagraphs();
     return this.replaceInParagraphs(paragraphs, searchStr, newText);
