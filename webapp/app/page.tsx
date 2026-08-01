@@ -59,6 +59,17 @@ export default function Dashboard() {
     author: '...',
     manager: '...'
   });
+
+  // Mẫu Báo Cáo form state
+  const [baoCaoForm, setBaoCaoForm] = useState({
+    title: '',
+    content: '',
+    role: 'GIÁM ĐỐC',
+    signerName: '',
+    unit6: '',
+    author7: '',
+    eoffice8: '',
+  });
   const [isExportingToTrinh, setIsExportingToTrinh] = useState(false);
   const [currentTimeStr, setCurrentTimeStr] = useState<string>('');
 
@@ -290,6 +301,38 @@ export default function Dashboard() {
       toast.error("Lỗi mạng khi xuất Word", { id: exportToast });
     }
     setIsExporting(false);
+    setIsExporting(false);
+  };
+
+  const handleExportMauBaoCao = async () => {
+    setIsExportingToTrinh(true);
+    const exportToast = toast.loading("Đang tạo file Mẫu Báo Cáo...");
+    try {
+      const res = await fetch("/api/export-maubaocao", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(baoCaoForm)
+      });
+      if (res.ok) {
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+        a.download = `Mau_Bao_Cao_${today}.docx`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        toast.success("Tạo Mẫu Báo Cáo thành công!", { id: exportToast });
+      } else {
+        const errText = await res.text();
+        toast.error(`Lỗi tạo Mẫu Báo Cáo (${res.status}): ${errText}`, { id: exportToast });
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Lỗi mạng khi xuất Word", { id: exportToast });
+    }
+    setIsExportingToTrinh(false);
   };
 
   const handleExportToTrinh = async () => {
@@ -506,7 +549,10 @@ export default function Dashboard() {
                   </button>
                )}
                {activeTab === 'petition' ? (
-                  <button className="btn-export" onClick={handleExportToTrinh} disabled={isExportingToTrinh}>
+                  <button className="btn-export" onClick={() => {
+                    if (activeReportKey === '01_Mau_Bao_cao') handleExportMauBaoCao();
+                    else handleExportToTrinh();
+                  }} disabled={isExportingToTrinh}>
                     {isExportingToTrinh ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
                     {isExportingToTrinh ? 'Đang tạo Word...' : `Xuất ${PETITION_TEMPLATES.find(t => t.id === activeReportKey)?.name || 'Tờ Trình'} (Word)`}
                   </button>
@@ -997,48 +1043,89 @@ export default function Dashboard() {
              <div className="fade-in">
                 <div className="card-glass" style={{ padding: '32px 40px', marginBottom: 24 }}>
                   <h2 className="section-title" style={{ marginBottom: 24 }}>Thông tin {PETITION_TEMPLATES.find(t => t.id === activeReportKey)?.name || 'Tờ Trình'}</h2>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-                    <div>
-                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Số, Ký hiệu</label>
-                      <input type="text" value={toTrinhForm.docNumber} onChange={e => setToTrinhForm(p => ({ ...p, docNumber: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                  
+                  {activeReportKey === '01_Mau_Bao_cao' ? (
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+                       <div style={{ gridColumn: '1 / -1' }}>
+                         <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Trích yếu nội dung (Tiêu đề) - Về việc...</label>
+                         <input type="text" value={baoCaoForm.title} onChange={e => setBaoCaoForm(p => ({ ...p, title: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                       </div>
+                       <div style={{ gridColumn: '1 / -1' }}>
+                         <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Nội dung văn bản</label>
+                         <textarea value={baoCaoForm.content} onChange={e => setBaoCaoForm(p => ({ ...p, content: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 120 }} />
+                       </div>
+                       <div>
+                         <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Chức vụ người ký</label>
+                         <select value={baoCaoForm.role} onChange={e => setBaoCaoForm(p => ({ ...p, role: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }}>
+                           <option value="GIÁM ĐỐC">GIÁM ĐỐC</option>
+                           <option value="KT. GIÁM ĐỐC&#10;PHÓ GIÁM ĐỐC">KT. GIÁM ĐỐC - PHÓ GIÁM ĐỐC</option>
+                         </select>
+                       </div>
+                       <div>
+                         <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Họ và tên người ký</label>
+                         <input type="text" value={baoCaoForm.signerName} onChange={e => setBaoCaoForm(p => ({ ...p, signerName: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                       </div>
+                       <div>
+                         <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Đơn vị chủ trì (Ví dụ: TTHT)</label>
+                         <input type="text" value={baoCaoForm.unit6} onChange={e => setBaoCaoForm(p => ({ ...p, unit6: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                       </div>
+                       <div>
+                         <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Người soạn thảo (Ví dụ: NTLuan)</label>
+                         <input type="text" value={baoCaoForm.author7} onChange={e => setBaoCaoForm(p => ({ ...p, author7: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                       </div>
+                       <div style={{ gridColumn: '1 / -1' }}>
+                         <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Số eOffice (Để trống nếu không có)</label>
+                         <input type="text" value={baoCaoForm.eoffice8} onChange={e => setBaoCaoForm(p => ({ ...p, eoffice8: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                       </div>
                     </div>
-                    <div>
-                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Ngày, tháng, năm (Ví dụ: ngày 24 tháng 07 năm 2026)</label>
-                      <input type="text" value={toTrinhForm.docDate} onChange={e => setToTrinhForm(p => ({ ...p, docDate: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                  ) : activeReportKey === '02_Mau_To_trinh' || !activeReportKey ? (
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Số, Ký hiệu</label>
+                        <input type="text" value={toTrinhForm.docNumber} onChange={e => setToTrinhForm(p => ({ ...p, docNumber: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Ngày, tháng, năm (Ví dụ: ngày 24 tháng 07 năm 2026)</label>
+                        <input type="text" value={toTrinhForm.docDate} onChange={e => setToTrinhForm(p => ({ ...p, docDate: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Về việc (Tiêu đề)</label>
+                        <input type="text" value={toTrinhForm.title} onChange={e => setToTrinhForm(p => ({ ...p, title: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Kính gửi</label>
+                        <input type="text" value={toTrinhForm.to} onChange={e => setToTrinhForm(p => ({ ...p, to: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Căn cứ pháp lý / Tình hình</label>
+                        <textarea value={toTrinhForm.baseClause} onChange={e => setToTrinhForm(p => ({ ...p, baseClause: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 60 }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Nội dung chi tiết</label>
+                        <textarea value={toTrinhForm.content} onChange={e => setToTrinhForm(p => ({ ...p, content: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 120 }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Đề xuất / Kiến nghị</label>
+                        <textarea value={toTrinhForm.proposal} onChange={e => setToTrinhForm(p => ({ ...p, proposal: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 80 }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Người Phê duyệt</label>
+                        <input type="text" value={toTrinhForm.manager} onChange={e => setToTrinhForm(p => ({ ...p, manager: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Người Lập (Người Đề nghị)</label>
+                        <input type="text" value={toTrinhForm.author} onChange={e => setToTrinhForm(p => ({ ...p, author: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Nơi nhận</label>
+                        <textarea value={toTrinhForm.recipients} onChange={e => setToTrinhForm(p => ({ ...p, recipients: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 60 }} />
+                      </div>
                     </div>
-                    <div style={{ gridColumn: '1 / -1' }}>
-                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Về việc (Tiêu đề)</label>
-                      <input type="text" value={toTrinhForm.title} onChange={e => setToTrinhForm(p => ({ ...p, title: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                  ) : (
+                    <div style={{ padding: '40px', textAlign: 'center', color: '#64748b' }}>
+                       Mẫu này đang được cập nhật, chưa hỗ trợ điền tự động. Vui lòng sử dụng Mẫu Báo cáo hoặc Mẫu Tờ trình.
                     </div>
-                    <div style={{ gridColumn: '1 / -1' }}>
-                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Kính gửi</label>
-                      <input type="text" value={toTrinhForm.to} onChange={e => setToTrinhForm(p => ({ ...p, to: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
-                    </div>
-                    <div style={{ gridColumn: '1 / -1' }}>
-                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Căn cứ pháp lý / Tình hình</label>
-                      <textarea value={toTrinhForm.baseClause} onChange={e => setToTrinhForm(p => ({ ...p, baseClause: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 60 }} />
-                    </div>
-                    <div style={{ gridColumn: '1 / -1' }}>
-                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Nội dung chi tiết</label>
-                      <textarea value={toTrinhForm.content} onChange={e => setToTrinhForm(p => ({ ...p, content: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 120 }} />
-                    </div>
-                    <div style={{ gridColumn: '1 / -1' }}>
-                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Đề xuất / Kiến nghị</label>
-                      <textarea value={toTrinhForm.proposal} onChange={e => setToTrinhForm(p => ({ ...p, proposal: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 80 }} />
-                    </div>
-                    <div>
-                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Người Phê duyệt</label>
-                      <input type="text" value={toTrinhForm.manager} onChange={e => setToTrinhForm(p => ({ ...p, manager: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
-                    </div>
-                    <div>
-                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Người Lập (Người Đề nghị)</label>
-                      <input type="text" value={toTrinhForm.author} onChange={e => setToTrinhForm(p => ({ ...p, author: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
-                    </div>
-                    <div style={{ gridColumn: '1 / -1' }}>
-                      <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Nơi nhận</label>
-                      <textarea value={toTrinhForm.recipients} onChange={e => setToTrinhForm(p => ({ ...p, recipients: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 60 }} />
-                    </div>
-                  </div>
+                  )}
                 </div>
              </div>
            )}
