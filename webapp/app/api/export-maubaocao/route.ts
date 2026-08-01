@@ -18,35 +18,35 @@ export async function POST(req: Request) {
 
     // Replace title
     if (title !== undefined) {
-      doc.replaceParagraphByTextMatch(/Về việc\.* \(3\) \.*/, `Về việc ${title.trim() ? title : '........................................................'}`);
+      doc.replaceTextInEntireDocument(/.*Về việc.*\(\s*3\s*\).*/, `Về việc ${title.trim() ? title : '........................................................'}`);
     }
 
     // Replace content
     if (content !== undefined) {
-      doc.replaceParagraphByTextMatch(/\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\(4\)\.\.\.\.\.\./, content.trim() ? content : '........................................................................................................................');
+      doc.replaceTextInEntireDocument(/.*\(\s*4\s*\).*/, (content.trim() ? content : '........................................................................................................................').replace(/\n/g, '\\n'));
     }
 
     // Replace role
     if (role !== undefined) {
-      doc.replaceParagraphByTextMatch(/GIÁM ĐỐC \(5\)/, role.trim() ? role : 'GIÁM ĐỐC');
+      doc.replaceTextInEntireDocument(/.*GIÁM ĐỐC.*\(\s*5\s*\).*/, (role.trim() ? role : 'GIÁM ĐỐC').replace(/\n/g, '\\n'));
     }
 
     // Replace signerName
     if (signerName !== undefined) {
-      doc.replaceParagraphByTextMatch(/Họ và tên/, signerName.trim() ? signerName : '..............................');
+      doc.replaceTextInEntireDocument(/.*Họ và tên.*/, signerName.trim() ? signerName : '..............................');
     }
 
     // Replace unit and author
     if (unit6 !== undefined || author7 !== undefined) {
       const u6 = unit6?.trim() ? unit6 : '.....';
       const a7 = author7?.trim() ? author7 : '.....';
-      doc.replaceParagraphByTextMatch(/- Lưu: VT, \.\.\.\(6\)\. A\. XX\(7\)\./, `- Lưu: VT, ${u6}. A. ${a7}.`);
+      doc.replaceTextInEntireDocument(/.*-\s*Lưu: VT,.*\(\s*6\s*\).*A\..*\(\s*7\s*\).*/, `- Lưu: VT, ${u6}. A. ${a7}.`);
     }
 
     // Replace eoffice
     if (eoffice8 !== undefined) {
       const e8 = eoffice8?.trim() ? eoffice8 : '.....';
-      doc.replaceParagraphByTextMatch(/Số eOffice: \.\.\(8\)\.\.-VBKS/, `Số eOffice: ${e8}-VBKS`);
+      doc.replaceTextInEntireDocument(/.*Số eOffice:.*\(\s*8\s*\).*/, `Số eOffice: ${e8}-VBKS`);
     }
 
     const outputBuffer = doc.getBuffer();
