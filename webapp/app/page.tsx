@@ -38,7 +38,7 @@ export default function Dashboard() {
   
   const [reportSources, setReportSources] = useState<any[]>([]);
   const [cacheData, setCacheData] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState<"overview" | "details" | "monthly_details" | "weekly_mll" | "special5" | "petition" | "handover" | "inspection" | "generator" | "schedule" | "form3a">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "details" | "monthly_details" | "weekly_mll" | "special5" | "petition" | "handover" | "inspection" | "generator" | "schedule">("overview");
   const [activeReportKey, setActiveReportKey] = useState<string | null>("upload");
   const [isExporting, setIsExporting] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -565,6 +565,7 @@ export default function Dashboard() {
                {activeTab === 'petition' ? (
                   <button className="btn-export" onClick={() => {
                     if (activeReportKey === '01_Mau_Bao_cao') handleExportMauBaoCao();
+                    else if (activeReportKey === '03a_Mau_Cong_van_gui_tu_2_don_vi_tro_len') handleExport3a();
                     else handleExportToTrinh();
                   }} disabled={isExportingToTrinh}>
                     {isExportingToTrinh ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
@@ -1092,7 +1093,7 @@ export default function Dashboard() {
                          <input type="text" value={baoCaoForm.eoffice8} onChange={e => setBaoCaoForm(p => ({ ...p, eoffice8: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
                        </div>
                     </div>
-                  ) : activeReportKey === '02_Mau_To_trinh' || !activeReportKey ? (
+                  ) : activeReportKey === '02_Mau_To_trinh' ? (
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
 
                       <div style={{ gridColumn: '1 / -1' }}>
@@ -1135,6 +1136,46 @@ export default function Dashboard() {
                         <textarea value={toTrinhForm.recipients} onChange={e => setToTrinhForm(p => ({ ...p, recipients: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 60 }} />
                       </div>
                     </div>
+                  ) : activeReportKey === '03a_Mau_Cong_van_gui_tu_2_don_vi_tro_len' ? (
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Về việc (Tiêu đề)</label>
+                        <input type="text" value={form3a.title} onChange={e => setForm3a(p => ({ ...p, title: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Kính gửi (mỗi đơn vị một dòng)</label>
+                        <textarea value={form3a.to} onChange={e => setForm3a(p => ({ ...p, to: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 60 }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Nội dung chi tiết</label>
+                        <textarea value={form3a.content} onChange={e => setForm3a(p => ({ ...p, content: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 120 }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Chức danh phê duyệt</label>
+                        <select value={form3a.role} onChange={e => setForm3a(p => ({ ...p, role: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }}>
+                          <option value="GIÁM ĐỐC">Giám đốc</option>
+                          <option value="KT. GIÁM ĐỐC
+PHÓ GIÁM ĐỐC">KT. Giám đốc / Phó Giám đốc</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Tên Người Ký</label>
+                        <input type="text" value={form3a.signerName} onChange={e => setForm3a(p => ({ ...p, signerName: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Đơn vị lưu (Ví dụ: HT)</label>
+                        <input type="text" value={form3a.unit6} onChange={e => setForm3a(p => ({ ...p, unit6: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Ký hiệu Người lập (Ví dụ: NTL)</label>
+                        <input type="text" value={form3a.author7} onChange={e => setForm3a(p => ({ ...p, author7: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Số eOffice (Để trống nếu không có)</label>
+                        <input type="text" value={form3a.eoffice8} onChange={e => setForm3a(p => ({ ...p, eoffice8: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                    </div>
+
                   ) : (
                     <div style={{ padding: '40px', textAlign: 'center', color: '#64748b' }}>
                        Mẫu này đang được cập nhật, chưa hỗ trợ điền tự động. Vui lòng sử dụng Mẫu Báo cáo hoặc Mẫu Tờ trình.
