@@ -23,36 +23,36 @@ export async function POST(req: Request) {
       doc.replaceTextInEntireDocument(/^GIÁM ĐỐC\s*$/, (role.trim() ? role : 'GIÁM ĐỐC').replace(/\n/g, '\\n'));
     }
 
-    // Replace title
+    // Replace title (3)
     if (title !== undefined) {
-      doc.replaceParagraphByTextMatch(/Về việc ….*/, title.trim() ? title : 'Về việc ..........................................................');
+      doc.replaceTextInEntireDocument(/.*\(\s*3\s*\).*/, title.trim() ? title : '..........................................................');
     }
 
-    // Replace base clause and to
-    if (to !== undefined || baseClause !== undefined) {
-      const newTo = to && to.trim() ? `Kính gửi: ${to}\n\n` : 'Kính gửi: .......................................\n\n';
-      const newBaseClause = baseClause && baseClause.trim() ? baseClause : 'Căn cứ ............................................................................................................;';
-      doc.replaceParagraphByTextMatch(/Căn cứ tờ trình số 1937.*/, `${newTo}${newBaseClause}`);
-    }
-    
-    // Replace content
-    if (content !== undefined) {
-      doc.replaceParagraphByTextMatch(/Để tạo điều kiện thuận lợi.*/, content.trim() ? content : '........................................................................................................................');
+    // Replace to (Kính trình)
+    if (to !== undefined) {
+      doc.replaceTextInEntireDocument(/.*Kính trình.*/, `Kính trình: ${to.trim() ? to : '......................................................................'}`);
     }
 
-    // Replace proposal
-    if (proposal !== undefined) {
-      doc.replaceParagraphByTextMatch(/Tổ Khai thác Hệ thống kính đề nghị.*/, proposal.trim() ? proposal : '........................................................................................................................');
+    // Replace (5) with baseClause + content + proposal
+    if (baseClause !== undefined || content !== undefined || proposal !== undefined) {
+      const parts = [];
+      if (baseClause?.trim()) parts.push(baseClause.trim());
+      if (content?.trim()) parts.push(content.trim());
+      if (proposal?.trim()) parts.push(proposal.trim());
+      
+      const combined = parts.length > 0 ? parts.join('\n\n') : '................................................ (5) ...................................................................';
+      doc.replaceTextInEntireDocument(/.*\(\s*5\s*\).*/, combined.replace(/\n/g, '\\n'));
     }
 
-    // Replace manager
+    // Replace manager (Họ Và Tên)
     if (manager !== undefined) {
-      doc.replaceParagraphByTextMatch(/Nguyễn Hoàng Hưng/, manager.trim() ? manager : '..............................');
+      doc.replaceTextInEntireDocument(/.*Họ Và Tên.*/i, manager.trim() ? manager : '..............................');
     }
 
-    // Replace author
+    // Replace author (XX(8))
     if (author !== undefined) {
-      doc.replaceParagraphByTextMatch(/Nguyễn Thành Luân/, author.trim() ? author : '..............................');
+      const a = author.trim() ? author : 'XX';
+      doc.replaceTextInEntireDocument(/.*Lưu: VT.*\(\s*8\s*\).*/, `- Lưu: VT, ..... A. ${a}.`);
     }
 
     const outputBuffer = doc.getBuffer();
