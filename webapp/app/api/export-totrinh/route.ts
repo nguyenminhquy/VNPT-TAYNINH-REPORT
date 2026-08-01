@@ -6,15 +6,22 @@ import * as path from 'path';
 export async function POST(req: Request) {
   try {
     const data = await req.json();
-    const { docNumber, docDate, title, to, baseClause, content, proposal, recipients, author, manager } = data;
+    const { docNumber, docDate, title, to, baseClause, content, proposal, recipients, author, manager, role } = data;
 
-    const templatePath = path.join(process.cwd(), 'templates', 'To_trinh.docx');
+    const isPGD = role && role.includes('PHÓ GIÁM ĐỐC');
+    const templateFileName = isPGD ? '02_Mau_To_trinh_PGD.docx' : '02_Mau_To_trinh.docx';
+    const templatePath = path.join(process.cwd(), 'templates', 'TOTRINH', templateFileName);
     if (!fs.existsSync(templatePath)) {
       return NextResponse.json({ error: 'Template file not found' }, { status: 500 });
     }
 
     const docBuffer = fs.readFileSync(templatePath);
     const doc = new DocxModifier(docBuffer);
+
+    // Replace role
+    if (role !== undefined) {
+      doc.replaceTextInEntireDocument(/^GIÁM ĐỐC\s*$/, (role.trim() ? role : 'GIÁM ĐỐC').replace(/\n/g, '\\n'));
+    }
 
     // Replace document number
     if (docNumber !== undefined) {
@@ -31,7 +38,7 @@ export async function POST(req: Request) {
 
     // Replace title
     if (title !== undefined) {
-      doc.replaceParagraphByTextMatch(/Về việc ….*/, `Về việc ${title.trim() ? title : '..........................................................'}`);
+      doc.replaceParagraphByTextMatch(/Về việc ….*/, title.trim() ? title : 'Về việc ..........................................................');
     }
 
     // Replace base clause and to

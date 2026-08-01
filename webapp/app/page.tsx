@@ -57,7 +57,8 @@ export default function Dashboard() {
     proposal: '...',
     recipients: 'Như trên\nLưu VT',
     author: '...',
-    manager: '...'
+    manager: '...',
+    role: 'GIÁM ĐỐC'
   });
 
   // Mẫu Báo Cáo form state
@@ -1109,10 +1110,17 @@ export default function Dashboard() {
                         <textarea value={toTrinhForm.proposal} onChange={e => setToTrinhForm(p => ({ ...p, proposal: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 80 }} />
                       </div>
                       <div>
-                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Người Phê duyệt</label>
-                        <input type="text" value={toTrinhForm.manager} onChange={e => setToTrinhForm(p => ({ ...p, manager: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Chức danh phê duyệt</label>
+                        <select value={toTrinhForm.role} onChange={e => setToTrinhForm(p => ({ ...p, role: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }}>
+                           <option value="GIÁM ĐỐC">GIÁM ĐỐC</option>
+                           <option value="KT. GIÁM ĐỐC&#10;PHÓ GIÁM ĐỐC">KT. GIÁM ĐỐC - PHÓ GIÁM ĐỐC</option>
+                        </select>
                       </div>
                       <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Tên Người Phê duyệt</label>
+                        <input type="text" value={toTrinhForm.manager} onChange={e => setToTrinhForm(p => ({ ...p, manager: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
                         <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Người Lập (Người Đề nghị)</label>
                         <input type="text" value={toTrinhForm.author} onChange={e => setToTrinhForm(p => ({ ...p, author: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
                       </div>
