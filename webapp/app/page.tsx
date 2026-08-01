@@ -318,6 +318,37 @@ export default function Dashboard() {
     setIsExporting(false);
   };
 
+  const handleExport3a = async () => {
+    setIsExportingToTrinh(true);
+    const exportToast = toast.loading("Đang xuất Mẫu 3a...");
+    try {
+      const res = await fetch("/api/export-3a", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form3a)
+      });
+      if (!res.ok) {
+        toast.error("Lỗi tạo Word", { id: exportToast });
+        setIsExportingToTrinh(false);
+        return;
+      }
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Cong_van_3a.docx";
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      toast.success("Xuất Mẫu 3a thành công!", { id: exportToast });
+    } catch (e) {
+      toast.error("Lỗi mạng", { id: exportToast });
+    } finally {
+      setIsExportingToTrinh(false);
+    }
+  };
+
   const handleExportMauBaoCao = async () => {
     setIsExportingToTrinh(true);
     const exportToast = toast.loading("Đang tạo file Mẫu Báo Cáo...");
