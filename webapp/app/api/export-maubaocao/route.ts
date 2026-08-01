@@ -16,10 +16,7 @@ export async function POST(req: Request) {
     const docBuffer = fs.readFileSync(templatePath);
     const doc = new DocxModifier(docBuffer);
 
-    // Replace unit headers (the template has them split across 3 paragraphs: TẬP ĐOÀN / BƯU CHÍNH VIỄN THÔNG / VIỄN THÔNG TÂY NINH)
-    doc.replaceTextInEntireDocument(/.*VIỄN THÔNG TÂY NINH.*/, ''); // clear the third line
-    doc.replaceTextInEntireDocument(/.*BƯU CHÍNH VIỄN THÔNG.*/, 'TRUNG TÂM HẠ TẦNG'); // replace second line
-    doc.replaceTextInEntireDocument(/.*TẬP ĐOÀN.*/, 'VIỄN THÔNG TÂY NINH'); // replace first line
+    // User has manually updated the template with the correct unit headers, so we no longer need to replace them.
 
     // Replace title
     if (title !== undefined) {
