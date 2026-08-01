@@ -38,7 +38,7 @@ export default function Dashboard() {
   
   const [reportSources, setReportSources] = useState<any[]>([]);
   const [cacheData, setCacheData] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState<"overview" | "details" | "monthly_details" | "weekly_mll" | "special5" | "petition" | "handover" | "inspection" | "generator" | "schedule">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "details" | "monthly_details" | "weekly_mll" | "special5" | "petition" | "handover" | "inspection" | "generator" | "schedule" | "form3a">("overview");
   const [activeReportKey, setActiveReportKey] = useState<string | null>("upload");
   const [isExporting, setIsExporting] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -59,6 +59,19 @@ export default function Dashboard() {
     author: '',
     manager: '',
     role: 'GIÁM ĐỐC'
+  });
+
+  
+  // Mẫu 3a form state
+  const [form3a, setForm3a] = useState({
+    title: '',
+    to: '',
+    content: '',
+    role: 'GIÁM ĐỐC',
+    signerName: '',
+    unit6: '',
+    author7: '',
+    eoffice8: ''
   });
 
   // Mẫu Báo Cáo form state
