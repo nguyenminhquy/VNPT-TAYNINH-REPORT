@@ -72,7 +72,6 @@ export class DocxModifier {
       el.removeChild(el.firstChild);
     }
 
-    // Split text by newline to support multiline text
     const lines = text.split('\\n');
     
     // First line goes into the current paragraph
@@ -83,35 +82,19 @@ export class DocxModifier {
     if (rPr) {
       newRun.appendChild(rPr.cloneNode(true));
     }
-    const newText = this.doc.createElement('w:t');
-    newText.appendChild(this.doc.createTextNode(lines[0] || ''));
-    newRun.appendChild(newText);
-    el.appendChild(newRun);
-
-    // For subsequent lines, create new paragraphs and insert them after the current one
-    let currentP = el;
-    for (let i = 1; i < lines.length; i++) {
-      const newP = this.doc.createElement('w:p');
-      if (pPr) {
-        newP.appendChild(pPr.cloneNode(true));
+    
+    for (let i = 0; i < lines.length; i++) {
+      if (i > 0) {
+        newRun.appendChild(this.doc.createElement('w:br'));
       }
-      const newRun2 = this.doc.createElement('w:r');
-      if (rPr) {
-        newRun2.appendChild(rPr.cloneNode(true));
-      }
-      const newText2 = this.doc.createElement('w:t');
-      newText2.appendChild(this.doc.createTextNode(lines[i]));
-      newRun2.appendChild(newText2);
-      newP.appendChild(newRun2);
-      
-      if (currentP.nextSibling) {
-        currentP.parentNode?.insertBefore(newP, currentP.nextSibling);
-      } else {
-        currentP.parentNode?.appendChild(newP);
-      }
-      currentP = newP;
+      const newText = this.doc.createElement('w:t');
+      newText.appendChild(this.doc.createTextNode(lines[i]));
+      newRun.appendChild(newText);
     }
+    
+    el.appendChild(newRun);
   }
+
 
 
   removeTableByTextMatch(regex: RegExp) {
