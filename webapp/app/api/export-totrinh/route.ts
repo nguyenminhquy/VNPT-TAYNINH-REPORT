@@ -24,6 +24,7 @@ export async function POST(req: Request) {
     }
 
     // Replace title
+    if (title !== undefined) {
       doc.replaceParagraphByTextMatch(/Về việc ….*/, title.trim() ? title : 'Về việc ..........................................................');
     }
 
