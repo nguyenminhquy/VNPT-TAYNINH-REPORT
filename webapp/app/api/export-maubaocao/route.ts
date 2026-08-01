@@ -16,6 +16,10 @@ export async function POST(req: Request) {
     const docBuffer = fs.readFileSync(templatePath);
     const doc = new DocxModifier(docBuffer);
 
+    // Replace unit headers
+    doc.replaceTextInEntireDocument(/.*VIỄN THÔNG TÂY NINH.*/, 'TRUNG TÂM HẠ TẦNG');
+    doc.replaceTextInEntireDocument(/.*TẬP ĐOÀN BƯU CHÍNH VIỄN THÔNG.*/, 'VIỄN THÔNG TÂY NINH');
+
     // Replace title
     if (title !== undefined) {
       doc.replaceTextInEntireDocument(/.*Về việc.*\(\s*3\s*\).*/, `Về việc ${title.trim() ? title : '........................................................'}`);
