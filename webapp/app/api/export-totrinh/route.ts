@@ -23,21 +23,7 @@ export async function POST(req: Request) {
       doc.replaceTextInEntireDocument(/^GIÁM ĐỐC\s*$/, (role.trim() ? role : 'GIÁM ĐỐC').replace(/\n/g, '\\n'));
     }
 
-    // Replace document number
-    if (docNumber !== undefined) {
-      const displayDocNumber = docNumber.trim() ? docNumber : '...../.............';
-      doc.replaceParagraphByTextMatch(/Số: .*\/.*/, `Số: ${displayDocNumber}`);
-    }
-
-    // Replace date
-    if (docDate !== undefined) {
-      const displayDate = docDate.trim() ? docDate : '..... tháng ..... năm 20....';
-      doc.replaceParagraphByTextMatch(/Tây Ninh, ngày.*/, `Tây Ninh, ngày ${displayDate}`);
-      doc.replaceTextInEntireDocument(/Tây Ninh, ngày.*/, `Tây Ninh, ngày ${displayDate}`);
-    }
-
     // Replace title
-    if (title !== undefined) {
       doc.replaceParagraphByTextMatch(/Về việc ….*/, title.trim() ? title : 'Về việc ..........................................................');
     }
 
