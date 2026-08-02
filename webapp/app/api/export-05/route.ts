@@ -40,43 +40,56 @@ export async function POST(req: Request) {
     // And below that is `GIÁM ĐỐC`. We will replace `GIÁM ĐỐC(4)` with `GIÁM ĐỐC`.
     doc.replaceTextInEntireDocument(/.*GIÁM ĐỐC\s*\(\s*4\s*\).*/i, 'GIÁM ĐỐC');
 
-    // Replace bases (5)
+    // Get bases array
+    let basesArray: string[] = [];
     if (bases !== undefined) {
-      let basesArray: string[] = [];
       if (Array.isArray(bases)) {
-        basesArray = bases;
+        basesArray = bases.filter(b => b.trim());
       } else if (typeof bases === 'string' && bases.trim()) {
-        basesArray = bases.split(/\r?\n|\\n/);
-      }
-      if (basesArray.length > 0) {
-        doc.replaceParagraphWithMultiple(/.*\(\s*5\s*\).*/, basesArray);
-      } else {
-        doc.replaceParagraphWithMultiple(/.*\(\s*5\s*\).*/, ['Căn cứ ...............................................(5) .......................................................']);
+        basesArray = bases.split(/\r?\n|\\n/).filter(b => b.trim());
       }
     }
 
-    // Replace article1 (6)
+    // Get articles array
+    let articlesArray: string[] = [];
     if (article1 !== undefined) {
-      let articlesArray: string[] = [];
       if (Array.isArray(article1)) {
-        articlesArray = article1;
+        articlesArray = article1.filter(a => a.trim());
       } else if (typeof article1 === 'string' && article1.trim()) {
-        articlesArray = article1.split(/\r?\n|\\n/);
-      }
-      if (articlesArray.length > 0) {
-        doc.replaceParagraphWithMultiple(/.*\(\s*6\s*\).*/, articlesArray);
-      } else {
-        doc.replaceParagraphWithMultiple(/.*\(\s*6\s*\).*/, ['Điều 1. ................................................ (6) ......................................................']);
+        articlesArray = article1.split(/\r?\n|\\n/).filter(a => a.trim());
       }
     }
+
+    // Fill Bases exactly into template placeholders
+    // First placeholder: (5)
+    if (basesArray.length > 0) {
+      doc.replaceTextInEntireDocument(/.*\(\s*5\s*\).*/, `Căn cứ ${basesArray[0].replace(/^- Căn cứ |- Căn cứ|Căn cứ /i, '').replace(/;$/, '')};`);
+    } else {
+      doc.replaceTextInEntireDocument(/.*\(\s*5\s*\).*/, 'Căn cứ ...............................................(5) .......................................................');
+    }
     
-    // Clean up template boilerplate paragraphs for Căn cứ and Điều
-    doc.removeParagraphByTextMatch(/^\.+;?$/);
-    doc.removeParagraphByTextMatch(/^Căn cứ\.+;?$/);
-    doc.removeParagraphByTextMatch(/^Điều 2\.\s*\.+$/);
-    doc.removeParagraphByTextMatch(/^Điều \.\.\.\s*\.+$/);
-    doc.removeParagraphByTextMatch(/^\.+$/);
-    doc.removeParagraphByTextMatch(/^\.+\/\.$/);
+    // Second placeholder: Căn cứ...............;
+    if (basesArray.length > 1) {
+      doc.replaceTextInEntireDocument(/^Căn cứ\.+;?$/, `Căn cứ ${basesArray[1].replace(/^- Căn cứ |- Căn cứ|Căn cứ /i, '').replace(/;$/, '')};`);
+    }
+
+    // Fill Articles exactly into template placeholders
+    // First placeholder: Điều 1 (6)
+    if (articlesArray.length > 0) {
+      doc.replaceTextInEntireDocument(/.*\(\s*6\s*\).*/, `Điều 1. ${articlesArray[0].replace(/^Điều 1\. /i, '')}`);
+    } else {
+      doc.replaceTextInEntireDocument(/.*\(\s*6\s*\).*/, 'Điều 1. ................................................ (6) ......................................................');
+    }
+
+    // Second placeholder: Điều 2
+    if (articlesArray.length > 1) {
+      doc.replaceTextInEntireDocument(/^Điều 2\.\s*\.+$/, `Điều 2. ${articlesArray[1].replace(/^Điều 2\. /i, '')}`);
+    }
+
+    // Third placeholder: Điều ...
+    if (articlesArray.length > 2) {
+      doc.replaceTextInEntireDocument(/^Điều \.\.\.\s*\.+$/, `Điều 3. ${articlesArray[2].replace(/^Điều 3\. /i, '')}`);
+    }
 
 
     // Replace role (7) if present
