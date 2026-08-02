@@ -34,7 +34,10 @@ export async function POST(req: Request) {
 
     // Replace content (4)
     if (content !== undefined) {
-      doc.replaceTextInEntireDocument(/.*\(\s*4\s*\).*/, content.trim() ? content.replace(/\n/g, '\\n') : '................................................ (4) ...................................................................');
+      const contentStr = content.trim().replace(/\n/g, '\n');
+      if (contentStr) {
+        doc.replaceTextInEntireDocument(/\(\s*4\s*\)/, contentStr);
+      }
     }
 
     // Replace role (5) if present
