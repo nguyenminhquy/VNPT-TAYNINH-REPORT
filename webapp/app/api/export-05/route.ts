@@ -42,13 +42,32 @@ export async function POST(req: Request) {
 
     // Replace bases (5)
     if (bases !== undefined) {
-      doc.replaceTextInEntireDocument(/.*\(\s*5\s*\).*/, bases.trim() ? bases.replace(/\n/g, '\\n') : 'Căn cứ ...............................................(5) .......................................................');
+      const basesArray = Array.isArray(bases) ? bases : (bases ? [bases] : []);
+      if (basesArray.length > 0) {
+        doc.replaceParagraphWithMultiple(/.*\(\s*5\s*\).*/, basesArray);
+      } else {
+        doc.replaceParagraphWithMultiple(/.*\(\s*5\s*\).*/, ['Căn cứ ...............................................(5) .......................................................']);
+      }
     }
 
     // Replace article1 (6)
     if (article1 !== undefined) {
-      doc.replaceTextInEntireDocument(/.*\(\s*6\s*\).*/, article1.trim() ? article1.replace(/\n/g, '\\n') : 'Điều 1. ................................................ (6) ......................................................');
+      const articlesArray = Array.isArray(article1) ? article1 : (article1 ? [article1] : []);
+      if (articlesArray.length > 0) {
+        doc.replaceParagraphWithMultiple(/.*\(\s*6\s*\).*/, articlesArray);
+      } else {
+        doc.replaceParagraphWithMultiple(/.*\(\s*6\s*\).*/, ['Điều 1. ................................................ (6) ......................................................']);
+      }
     }
+    
+    // Clean up template boilerplate paragraphs for Căn cứ and Điều
+    doc.removeParagraphByTextMatch(/^\.+;?$/);
+    doc.removeParagraphByTextMatch(/^Căn cứ\.+;?$/);
+    doc.removeParagraphByTextMatch(/^Điều 2\.\s*\.+$/);
+    doc.removeParagraphByTextMatch(/^Điều \.\.\.\s*\.+$/);
+    doc.removeParagraphByTextMatch(/^\.+$/);
+    doc.removeParagraphByTextMatch(/^\.+\/\.$/);
+
 
     // Replace role (7) if present
     if (role !== undefined) {
