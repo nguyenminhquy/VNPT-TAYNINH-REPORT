@@ -18,6 +18,7 @@ import Footer from "@/components/Footer";
 const PETITION_TEMPLATES = [
   { id: '01_Mau_Bao_cao', name: 'Mẫu Báo cáo' },
   { id: '02_Mau_To_trinh', name: 'Mẫu Tờ trình' },
+  { id: '03b_Mau_Cong_van_gui_1_don_vi', name: 'Mẫu Công văn gửi 1 đơn vị' },
   { id: '03a_Mau_Cong_van_gui_tu_2_don_vi_tro_len', name: 'Mẫu Công văn gửi từ 2 đơn vị trở lên' },
   { id: '03b_Mau_Cong_van_gui_1_don_vi', name: 'Mẫu Công văn gửi 1 đơn vị' },
   { id: '04_Mau_Thong_bao', name: 'Mẫu Thông báo' },
@@ -63,6 +64,16 @@ export default function Dashboard() {
 
   
   // Mẫu 3a form state
+  const [form3b, setForm3b] = useState({
+    title: '',
+    to: '',
+    content: '',
+    role: 'GIÁM ĐỐC',
+    signerName: '',
+    unit6: '',
+    author7: '',
+    eoffice8: ''
+  });
   const [form3a, setForm3a] = useState({
     title: '',
     to: '',
@@ -316,6 +327,29 @@ export default function Dashboard() {
     }
     setIsExporting(false);
     setIsExporting(false);
+  };
+
+  const handleExport3b = async () => {
+    try {
+      const response = await fetch('/api/export-3b', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form3b)
+      });
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Cong_van_3b.docx';
+        a.click();
+      } else {
+        alert('Có lỗi xảy ra khi tạo file Word');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Lỗi kết nối');
+    }
   };
 
   const handleExport3a = async () => {
@@ -597,6 +631,7 @@ export default function Dashboard() {
                   <button className="btn-export" onClick={() => {
                     if (activeReportKey === '01_Mau_Bao_cao') handleExportMauBaoCao();
                     else if (activeReportKey === '03a_Mau_Cong_van_gui_tu_2_don_vi_tro_len') handleExport3a();
+                    else if (activeReportKey === '03b_Mau_Cong_van_gui_1_don_vi') handleExport3b();
                     else handleExportToTrinh();
                   }} disabled={isExportingToTrinh}>
                     {isExportingToTrinh ? <Loader2 size={18} className="spin-anim" /> : '📄'} 
@@ -1167,6 +1202,45 @@ export default function Dashboard() {
                         <textarea value={toTrinhForm.recipients} onChange={e => setToTrinhForm(p => ({ ...p, recipients: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 60 }} />
                       </div>
                     </div>
+                  ) : activeReportKey === '03b_Mau_Cong_van_gui_1_don_vi' ? (
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Về việc (Tiêu đề)</label>
+                        <input type="text" value={form3b.title} onChange={e => setForm3b(p => ({ ...p, title: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Kính gửi (mỗi đơn vị một dòng)</label>
+                        <textarea value={form3b.to} onChange={e => setForm3b(p => ({ ...p, to: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 60 }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Nội dung chi tiết</label>
+                        <textarea value={form3b.content} onChange={e => setForm3b(p => ({ ...p, content: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 120 }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Chức danh phê duyệt</label>
+                        <select value={form3b.role} onChange={e => setForm3b(p => ({ ...p, role: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }}>
+                          <option value="GIÁM ĐỐC">Giám đốc</option>
+                          <option value="KT. GIÁM ĐỐC&#10;PHÓ GIÁM ĐỐC">KT. Giám đốc / Phó Giám đốc</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Tên Người Ký</label>
+                        <input type="text" value={form3b.signerName} onChange={e => setForm3b(p => ({ ...p, signerName: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Đơn vị lưu (Ví dụ: HT)</label>
+                        <input type="text" value={form3b.unit6} onChange={e => setForm3b(p => ({ ...p, unit6: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Ký hiệu Người lập (Ví dụ: NTL)</label>
+                        <input type="text" value={form3b.author7} onChange={e => setForm3b(p => ({ ...p, author7: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Số eOffice (Để trống nếu không có)</label>
+                        <input type="text" value={form3b.eoffice8} onChange={e => setForm3b(p => ({ ...p, eoffice8: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                    </div>
+
                   ) : activeReportKey === '03a_Mau_Cong_van_gui_tu_2_don_vi_tro_len' ? (
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
                       <div style={{ gridColumn: '1 / -1' }}>
