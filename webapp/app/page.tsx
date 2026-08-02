@@ -18,12 +18,8 @@ import Footer from "@/components/Footer";
 const PETITION_TEMPLATES = [
   { id: '01_Mau_Bao_cao', name: 'Mẫu Báo cáo' },
   { id: '02_Mau_To_trinh', name: 'Mẫu Tờ trình' },
-  { id: '03b_Mau_Cong_van_gui_1_don_vi', name: 'Mẫu Công văn gửi 1 đơn vị' },
-  { id: '05_Mau_Quyet_dinh_quy_dinh_truc_tiep', name: 'Mẫu Quyết định' },
-  { id: '04_Mau_Thong_bao', name: 'Mẫu Thông báo' },
   { id: '03a_Mau_Cong_van_gui_tu_2_don_vi_tro_len', name: 'Mẫu Công văn gửi từ 2 đơn vị trở lên' },
   { id: '03b_Mau_Cong_van_gui_1_don_vi', name: 'Mẫu Công văn gửi 1 đơn vị' },
-  { id: '05_Mau_Quyet_dinh_quy_dinh_truc_tiep', name: 'Mẫu Quyết định' },
   { id: '04_Mau_Thong_bao', name: 'Mẫu Thông báo' },
   { id: '05_Mau_Quyet_dinh_quy_dinh_truc_tiep', name: 'Mẫu Quyết định quy định trực tiếp' },
   { id: '06_Mau_Quyet_dinh_ban_hanh_quy_che_quy_dinh', name: 'Mẫu Quyết định ban hành quy chế, quy định' },
