@@ -19,9 +19,11 @@ const PETITION_TEMPLATES = [
   { id: '01_Mau_Bao_cao', name: 'Mẫu Báo cáo' },
   { id: '02_Mau_To_trinh', name: 'Mẫu Tờ trình' },
   { id: '03b_Mau_Cong_van_gui_1_don_vi', name: 'Mẫu Công văn gửi 1 đơn vị' },
+  { id: '05_Mau_Quyet_dinh_quy_dinh_truc_tiep', name: 'Mẫu Quyết định' },
   { id: '04_Mau_Thong_bao', name: 'Mẫu Thông báo' },
   { id: '03a_Mau_Cong_van_gui_tu_2_don_vi_tro_len', name: 'Mẫu Công văn gửi từ 2 đơn vị trở lên' },
   { id: '03b_Mau_Cong_van_gui_1_don_vi', name: 'Mẫu Công văn gửi 1 đơn vị' },
+  { id: '05_Mau_Quyet_dinh_quy_dinh_truc_tiep', name: 'Mẫu Quyết định' },
   { id: '04_Mau_Thong_bao', name: 'Mẫu Thông báo' },
   { id: '05_Mau_Quyet_dinh_quy_dinh_truc_tiep', name: 'Mẫu Quyết định quy định trực tiếp' },
   { id: '06_Mau_Quyet_dinh_ban_hanh_quy_che_quy_dinh', name: 'Mẫu Quyết định ban hành quy chế, quy định' },
@@ -74,6 +76,15 @@ export default function Dashboard() {
     unit6: '',
     author7: '',
     eoffice8: ''
+  });
+  const [form5, setForm5] = useState({
+    title: '',
+    bases: '',
+    article1: '',
+    role: 'GIÁM ĐỐC',
+    signerName: '',
+    unit8: '',
+    author9: ''
   });
   const [form4, setForm4] = useState({
     title: '',
@@ -352,6 +363,29 @@ export default function Dashboard() {
         const a = document.createElement('a');
         a.href = url;
         a.download = 'Cong_van_3b.docx';
+        a.click();
+      } else {
+        alert('Có lỗi xảy ra khi tạo file Word');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Lỗi kết nối');
+    }
+  };
+
+  const handleExport5 = async () => {
+    try {
+      const response = await fetch('/api/export-05', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form5)
+      });
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Quyet_dinh_05.docx';
         a.click();
       } else {
         alert('Có lỗi xảy ra khi tạo file Word');
@@ -665,6 +699,7 @@ export default function Dashboard() {
                     if (activeReportKey === '01_Mau_Bao_cao') handleExportMauBaoCao();
                     else if (activeReportKey === '03a_Mau_Cong_van_gui_tu_2_don_vi_tro_len') handleExport3a();
                     else if (activeReportKey === '04_Mau_Thong_bao') handleExport4();
+                    else if (activeReportKey === '05_Mau_Quyet_dinh_quy_dinh_truc_tiep') handleExport5();
                     else if (activeReportKey === '03b_Mau_Cong_van_gui_1_don_vi') handleExport3b();
                     else handleExportToTrinh();
                   }} disabled={isExportingToTrinh}>
@@ -1275,6 +1310,40 @@ export default function Dashboard() {
                       </div>
                     </div>
 
+                  ) : activeReportKey === '05_Mau_Quyet_dinh_quy_dinh_truc_tiep' ? (
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Về việc (Tiêu đề)</label>
+                        <input type="text" value={form5.title} onChange={e => setForm5(p => ({ ...p, title: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Căn cứ (5)</label>
+                        <textarea value={form5.bases} onChange={e => setForm5(p => ({ ...p, bases: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 80 }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Nội dung Điều 1 (6)</label>
+                        <textarea value={form5.article1} onChange={e => setForm5(p => ({ ...p, article1: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 120 }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Chức danh phê duyệt</label>
+                        <select value={form5.role} onChange={e => setForm5(p => ({ ...p, role: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }}>
+                          <option value="GIÁM ĐỐC">Giám đốc</option>
+                          <option value="KT. GIÁM ĐỐC&#10;PHÓ GIÁM ĐỐC">KT. Giám đốc / Phó Giám đốc</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Tên Người Ký</label>
+                        <input type="text" value={form5.signerName} onChange={e => setForm5(p => ({ ...p, signerName: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Nơi nhận (Lưu VT, ...)</label>
+                        <input type="text" value={form5.unit8} onChange={e => setForm5(p => ({ ...p, unit8: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Người soạn thảo</label>
+                        <input type="text" value={form5.author9} onChange={e => setForm5(p => ({ ...p, author9: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                    </div>
                   ) : activeReportKey === '04_Mau_Thong_bao' ? (
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
                       <div style={{ gridColumn: '1 / -1' }}>
