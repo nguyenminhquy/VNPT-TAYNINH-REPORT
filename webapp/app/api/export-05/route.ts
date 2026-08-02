@@ -42,7 +42,12 @@ export async function POST(req: Request) {
 
     // Replace bases (5)
     if (bases !== undefined) {
-      const basesArray = Array.isArray(bases) ? bases : (bases ? [bases] : []);
+      let basesArray: string[] = [];
+      if (Array.isArray(bases)) {
+        basesArray = bases;
+      } else if (typeof bases === 'string' && bases.trim()) {
+        basesArray = bases.split(/\r?\n|\\n/);
+      }
       if (basesArray.length > 0) {
         doc.replaceParagraphWithMultiple(/.*\(\s*5\s*\).*/, basesArray);
       } else {
@@ -52,7 +57,12 @@ export async function POST(req: Request) {
 
     // Replace article1 (6)
     if (article1 !== undefined) {
-      const articlesArray = Array.isArray(article1) ? article1 : (article1 ? [article1] : []);
+      let articlesArray: string[] = [];
+      if (Array.isArray(article1)) {
+        articlesArray = article1;
+      } else if (typeof article1 === 'string' && article1.trim()) {
+        articlesArray = article1.split(/\r?\n|\\n/);
+      }
       if (articlesArray.length > 0) {
         doc.replaceParagraphWithMultiple(/.*\(\s*6\s*\).*/, articlesArray);
       } else {
