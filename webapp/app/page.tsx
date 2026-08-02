@@ -91,6 +91,16 @@ export default function Dashboard() {
     author7: '',
     eoffice8: ''
   });
+  const [form9, setForm9] = useState({
+    nguoiUyQuyen: '',
+    nguoiDuocUyQuyen: '',
+    noiDungUyQuyen: '',
+    role: 'GIÁM ĐỐC',
+    signerName: '',
+    unit8: '',
+    author9: ''
+  });
+
   const [form3a, setForm3a] = useState({
     title: '',
     to: '',
@@ -397,6 +407,36 @@ export default function Dashboard() {
     } catch (error) {
       console.error(error);
       alert('Lỗi kết nối');
+    }
+  };
+
+  const handleExport9 = async () => {
+    try {
+      const payload = {
+        ...form9,
+        role: form9.role.includes('GIÁM ĐỐC') ? form9.role : 'GIÁM ĐỐC'
+      };
+      
+      const response = await fetch('/api/export-09', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) throw new Error('Export failed');
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Giay_uy_quyen_09_${new Date().getTime()}.docx`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Export error:', error);
+      toast.error('Có lỗi xảy ra khi xuất file Mẫu 09');
     }
   };
 
