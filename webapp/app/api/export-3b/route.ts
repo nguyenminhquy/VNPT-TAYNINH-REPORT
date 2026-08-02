@@ -19,9 +19,16 @@ export async function POST(req: Request) {
     const docBuffer = fs.readFileSync(templatePath);
     const doc = new DocxModifier(docBuffer);
 
-    // Replace title (3)
     if (title !== undefined) {
-      doc.replaceTextInEntireDocument(/.*\(\s*3\s*\).*/, title.trim() ? title : '..........................................................');
+      let t = title.trim();
+      if (t) {
+        if (!/^V\/v\s/i.test(t)) {
+          t = 'V/v ' + t;
+        }
+      } else {
+        t = 'V/v ..........................................................';
+      }
+      doc.replaceTextInEntireDocument(/.*\(\s*3\s*\).*/, t);
     }
 
     // Replace Kính gửi recipient (first purely dotted line)
