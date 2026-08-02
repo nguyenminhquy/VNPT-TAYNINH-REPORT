@@ -24,13 +24,19 @@ export async function POST(req: Request) {
       doc.replaceTextInEntireDocument(/.*\(\s*3\s*\).*/, title.trim() ? title : '..........................................................');
     }
 
-    // Remove the bullet points for Kính gửi
-    doc.removeParagraphByTextMatch(/^-.*[…\.]{5,}/);
-
-    // Replace Kính gửi
+    // Replace Kính gửi recipients in the dotted lines
     if (to !== undefined) {
-      const toValue = to.trim() ? to.replace(/\n/g, '\\n') : '.......................................';
-      doc.replaceTextInEntireDocument(/^Kính gửi:.*/, `Kính gửi:\\n${toValue}`);
+      const recipients = to.split('\n').map(r => r.trim()).filter(r => r);
+      if (recipients.length > 0) {
+        for (let i = 0; i < recipients.length; i++) {
+          const isLast = i === recipients.length - 1;
+          const punctuation = isLast ? '.' : ';';
+          let rName = recipients[i].replace(/^-\\s*/, '');
+          doc.replaceTextInEntireDocument(/^-.*[…\\.]{5,}.*/, `- ${rName}${punctuation}`);
+        }
+        // Remove any unused dotted lines
+        doc.removeParagraphByTextMatch(/^-.*[…\\.]{5,}.*/);
+      }
     }
 
     // Replace content (4)
