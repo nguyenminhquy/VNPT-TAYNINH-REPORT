@@ -23,29 +23,25 @@ export async function POST(req: Request) {
     if (title !== undefined) {
       let t = title.trim();
       if (t) {
-        if (!/^Về\s/i.test(t)) {
-          t = 'Về ' + t;
+        if (/^Về\s/i.test(t)) {
+          t = t.substring(3).trim();
         }
-      } else {
-        t = 'Về ........………...... (3) .............................';
+        doc.replaceTextInEntireDocument(/\(\s*3\s*\)/, t);
       }
-      doc.replaceTextInEntireDocument(/.*\(\s*3\s*\).*/, t);
     }
 
     // Replace content (4)
     if (content !== undefined) {
-      // Get content array to handle newlines
-      let contentArray: string[] = [];
+      let contentStr = '';
       if (Array.isArray(content)) {
-        contentArray = content.filter((a: string) => a.trim());
-      } else if (typeof content === 'string' && content.trim()) {
-        contentArray = content.split(/\r?\n|\\n/).filter((a: string) => a.trim());
+        contentStr = content.join('\n');
+      } else if (typeof content === 'string') {
+        contentStr = content;
       }
-
-      if (contentArray.length > 0) {
-        doc.replaceTextInEntireDocument(/.*\(\s*4\s*\).*/, contentArray[0]);
-      } else {
-        doc.replaceTextInEntireDocument(/.*\(\s*4\s*\).*/, '................................................ (4) ...................................................................');
+      
+      contentStr = contentStr.trim().replace(/\n/g, '\n');
+      if (contentStr) {
+        doc.replaceTextInEntireDocument(/\(\s*4\s*\)/, contentStr);
       }
     }
 
