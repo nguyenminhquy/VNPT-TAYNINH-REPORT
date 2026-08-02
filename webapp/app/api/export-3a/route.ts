@@ -26,7 +26,7 @@ export async function POST(req: Request) {
 
     // Replace Kính gửi recipients in the dotted lines
     if (to !== undefined) {
-      const recipients = to.split('\n').map(r => r.trim()).filter(r => r);
+      const recipients = String(to).split('\n').map((r: string) => r.trim()).filter((r: string) => r);
       if (recipients.length > 0) {
         for (let i = 0; i < recipients.length; i++) {
           const isLast = i === recipients.length - 1;
