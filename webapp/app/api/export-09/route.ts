@@ -6,7 +6,7 @@ import * as path from 'path';
 export async function POST(req: Request) {
   try {
     const data = await req.json();
-    const { nguoiUyQuyen, nguoiDuocUyQuyen, noiDungUyQuyen, role, signerName, unit8, author9 } = data;
+    const { nguoiUyQuyen, nguoiDuocUyQuyen, bases, articles, role, signerName, unit8, author9 } = data;
 
     const templatePath = path.join(process.cwd(), 'templates', 'TOTRINH', '09_Mau_Giay_uy_quyen.docx');
     
@@ -27,18 +27,25 @@ export async function POST(req: Request) {
       doc.replaceTextInEntireDocument(/.*\(\s*4\s*\).*/, nguoiDuocUyQuyen.trim() ? `Ông (bà): ${nguoiDuocUyQuyen}` : 'Ông (bà): ................................................(4)....................................................');
     }
 
-    // (5) Nội dung ủy quyền
-    if (noiDungUyQuyen !== undefined) {
-      // Get noiDungUyQuyen array to handle newlines
-      let noiDungArray: string[] = [];
-      if (Array.isArray(noiDungUyQuyen)) {
-        noiDungArray = noiDungUyQuyen.filter((a: string) => a.trim());
-      } else if (typeof noiDungUyQuyen === 'string' && noiDungUyQuyen.trim()) {
-        noiDungArray = noiDungUyQuyen.split(/\r?\n|\\n/).filter((a: string) => a.trim());
+    // (5) Căn cứ và Nội dung ủy quyền
+    if (bases !== undefined || articles !== undefined) {
+      let fullContent = '';
+      
+      const filteredBases = Array.isArray(bases) ? bases.filter(b => b.trim()) : [];
+      if (filteredBases.length > 0) {
+        fullContent += filteredBases.map(b => `- ${b}`).join('\n') + '\n\n';
       }
 
-      if (noiDungArray.length > 0) {
-        doc.replaceTextInEntireDocument(/.*\(\s*5\s*\).*/, noiDungArray[0]);
+      const filteredArticles = Array.isArray(articles) ? articles.filter(a => a.trim()) : [];
+      if (filteredArticles.length > 0) {
+        fullContent += filteredArticles.map((a, i) => `Điều ${i + 1}. ${a}`).join('\n\n');
+      }
+
+      if (fullContent) {
+        doc.replaceTextInEntireDocument(/.*\(\s*5\s*\).*/, fullContent);
+        // Remove the hardcoded dot lines preceding (5) if we have real content
+        doc.removeParagraphByTextMatch(/^…{1,}\.{3,}/);
+        doc.removeParagraphByTextMatch(/^\.{5,}/); 
       } else {
         doc.replaceTextInEntireDocument(/.*\(\s*5\s*\).*/, '..........................................................(5)..................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................../.');
       }

@@ -1,0 +1,44 @@
+TT | QoS, QoE | Thành phần | Điểm thành phần | Tổng (VB: 22/QĐ-VNPT-TNH ngày 08/01/2026) | Tổng (VB: 22/QĐ-VNPT-TNH ngày 08/01/2026) | Tổng (VB: 22/QĐ-VNPT-TNH ngày 08/01/2026) | Tổng (VB: 22/QĐ-VNPT-TNH ngày 08/01/2026)
+TT | QoS, QoE | Thành phần | Điểm thành phần | Điểm tổng | (%) | Đánh giá Đạt/Không đạt | Xếp hạng 34 tỉnh
+I | Mạng di động(OMC_HUNG) | Mạng di động(OMC_HUNG) | Mạng di động(OMC_HUNG) | Mạng di động(OMC_HUNG) | Mạng di động(OMC_HUNG) | Mạng di động(OMC_HUNG) | Mạng di động(OMC_HUNG)
+1 | MBB QoS | Độ sẵn sàng tài nguyên mạng (2G Cell Availability/ 3G Cell Occupancy/ 4G RB Utilization) | 0 / 99.17(↑0.04)/ 98.48(↓0.08) | 5 | 98.26 (↓0.01) | Đạt | 21 (↓1)
+1 | MBB QoS | Khả năng truy cập (2G Call Setup SS Rate/ 3G HSPA Accessibility/ ERAB SS Rate) | 0 / 98.64(↓0.04)/ 99.17(↓0.01) | 5 | 98.26 (↓0.01) | Đạt | 21 (↓1)
+1 | MBB QoS | Khả năng duy trì (2G Call Completion Rate/ 3G Call Completion Rate/ 4G E-UTRAN Retainability) | 0 / 97.27(↓0.02)/ 99.31(↓0.02) | 5 | 98.26 (↓0.01) | Đạt | 21 (↓1)
+1 | MBB QoS | Tính toàn vẹn dịch vụ (3G CQI/ 4G CQI) | 98.83(↑0.05) / 96.23(↔) | 5 | 98.26 (↓0.01) | Đạt | 21 (↓1)
+1 | MBB QoS | Chất lượng vùng phủ sóng (3G - Quality of coverage/ 4G - Quality of coverage) | Không có số liệu | 5 | 98.26 (↓0.01) | Đạt | 21 (↓1)
+2 | MBB QoE | Tốc độ download | 97.05(↔) | 5 | 98.21 (↑0.01) | Đạt | 31 (↔)
+2 | MBB QoE | Trễ | 99.88(↔) | 5 | 98.21 (↑0.01) | Đạt | 31 (↔)
+2 | MBB QoE | Rung pha | 99.98(↔) | 5 | 98.21 (↑0.01) | Đạt | 31 (↔)
+2 | MBB QoE | Tỷ lệ mất gói tin | 99.99(↔) | 5 | 98.21 (↑0.01) | Đạt | 31 (↔)
+II | Mạng BRCĐ(OMC_BAO) | Mạng BRCĐ(OMC_BAO) | Mạng BRCĐ(OMC_BAO) | Mạng BRCĐ(OMC_BAO) | Mạng BRCĐ(OMC_BAO) | Mạng BRCĐ(OMC_BAO) | Mạng BRCĐ(OMC_BAO)
+1 | FBB QoS | Tỷ lệ cáp quang thuê bao chưa đạt chất lượng | 96.64 |    5 |   98.64 | Không đạt | 25
+1 | FBB QoS | Tỷ lệ nghẽn thuê bao BRCĐ | 99.81 |    5 |   98.64 | Không đạt | 25
+1 | FBB QoS | Tỷ lệ nghẽn kết nối MAN-E | 100 |    5 |   98.64 | Không đạt | 25
+1 | FBB QoS | Tỷ lệ nghẽn kết nối VN2 | 100 |    5 |   98.64 | Không đạt | 25
+1 | FBB QoS | Độ khả dụng mạng truy nhập | 99.99 |    5 |   98.64 | Không đạt | 25
+1 | FBB QoS | Độ khả dụng mạng MAN-E | 100 |    5 |   98.64 | Không đạt | 25
+2 | FBB QoE | Tỷ lệ tốc độ download | 100 | 5 | 99.29 | Đạt | 6
+2 | FBB QoE | Tỷ lệ tốc độ upload | 100 | 5 | 99.29 | Đạt | 6
+2 | FBB QoE | Trễ Trong Nước - Trung vị | 98 | 5 | 99.29 | Đạt | 6
+2 | FBB QoE | Trễ local DNS | 98.54 | 5 | 99.29 | Đạt | 6
+2 | FBB QoE | Rung pha Trong Nước - Trung vị | 99.35 | 5 | 99.29 | Đạt | 6
+2 | FBB QoE | Tỷ lệ mất gói Trong Nước | 99.32 | 5 | 99.29 | Đạt | 6
+2 | FBB QoE | Trễ Quốc tế - Trung vị | 98.68 | 5 | 99.29 | Đạt | 6
+2 | FBB QoE | Rung pha Quốc tế - Trung vị | 99.2 | 5 | 99.29 | Đạt | 6
+2 | FBB QoE | Tỷ lệ mất gói Quốc tế | 99.45 | 5 | 99.29 | Đạt | 6
+2 | FBB QoE | Tỷ lệ mẫu đo FBB QoE | 98.59 | 5 | 99.29 | Đạt | 6
+III | MyTV(OMC_TAN) | MyTV(OMC_TAN) | MyTV(OMC_TAN) | MyTV(OMC_TAN) | MyTV(OMC_TAN) | MyTV(OMC_TAN) | MyTV(OMC_TAN)
+1 | MyTV QoS | Độ trễ (OTT Live/TVoD) | 99.83/99.97 | 5 | 99.14 | Đạt | 23
+1 | MyTV QoS | Rung pha (OTT Live/TVoD) | 97.48/99.92 | 5 | 99.14 | Đạt | 23
+1 | MyTV QoS | Tỷ lệ mất gói (OTT Live/TVoD) | 97.95/100 | 5 | 99.14 | Đạt | 23
+1 | MyTV QoS | Tỷ lệ nghẽn kết nối | 100 | 5 | 99.14 | Đạt | 23
+2 | MyTV QoE | Tỷ lệ mất hình (Mẫu đạt/Tổng số mẫu) | 100 | 5 | 100 | Đạt | 1
+2 | MyTV QoE | Tỷ lệ mất tiếng (Mẫu đạt/Tổng số mẫu) | 100 | 5 | 100 | Đạt | 1
+2 | MyTV QoE | Độ lệch hình/tiếng (Mẫu đạt/Tổng số mẫu) | 100 | 5 | 100 | Đạt | 1
+2 | MyTV QoE | Băng thông trung bình (Mẫu đạt/Tổng số mẫu) | 100 | 5 | 100 | Đạt | 1
+2 | MyTV QoE | Thời gian gián đoạn (Mẫu đạt/Tổng số mẫu) | 100 | 5 | 100 | Đạt | 1
+2 | MyTV QoE | Tỷ lệ mẫu đo đạt chất lượng hình TVoD | 100 | 5 | 100 | Đạt | 1
+2 | MyTV QoE | Tỷ lệ mẫu đo đạt chất lượng tiếng TVoD | 100 | 5 | 100 | Đạt | 1
+2 | MyTV QoE | Tỷ lệ mẫu đo đạt độ lệch hình/tiếng TVoD | 100 | 5 | 100 | Đạt | 1
+2 | MyTV QoE | Tỷ lệ mẫu đo đạt yêu cầu băng thông trung bình TVoD | 100 | 5 | 100 | Đạt | 1
+2 | MyTV QoE | Tỷ lệ mẫu đo đạt yêu cầu thời gian gián đoạn TVoD | 100 | 5 | 100 | Đạt | 1

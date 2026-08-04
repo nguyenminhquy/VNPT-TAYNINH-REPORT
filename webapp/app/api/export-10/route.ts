@@ -6,7 +6,7 @@ import * as path from 'path';
 export async function POST(req: Request) {
   try {
     const data = await req.json();
-    const { title, content, role, signerName, unit6, author7, eoffice8 } = data;
+    const { title, bases, articles, role, signerName, unit6, author7, eoffice8 } = data;
 
     const isPGD = role && role.includes('PHÓ GIÁM ĐỐC');
     const templateFileName = isPGD ? '10_Mau_Chi_thi_PGD.docx' : '10_Mau_Chi_thi.docx';
@@ -30,19 +30,32 @@ export async function POST(req: Request) {
       }
     }
 
-    // Replace content (4)
-    if (content !== undefined) {
-      let contentStr = '';
-      if (Array.isArray(content)) {
-        contentStr = content.join('\n');
-      } else if (typeof content === 'string') {
-        contentStr = content;
+    // Replace bases and articles (4)
+    if (bases !== undefined || articles !== undefined) {
+      let fullContent = '';
+      
+      const filteredBases = Array.isArray(bases) ? bases.filter(b => b.trim()) : [];
+      if (filteredBases.length > 0) {
+        fullContent += filteredBases.map(b => `- ${b}`).join('\n') + '\n\n';
+      }
+
+      const filteredArticles = Array.isArray(articles) ? articles.filter(a => a.trim()) : [];
+      if (filteredArticles.length > 0) {
+        fullContent += filteredArticles.map((a, i) => `Điều ${i + 1}. ${a}`).join('\n\n');
+      }
+
+      if (!fullContent) {
+        // Fallback to dotted lines if both are empty
+        fullContent = '................................................(4)...................................................................\n.................................................................................................................................\n..........................................................................................................\n1. .....................................................................................................................\n.................................................................................................................................\n..................................................................................................\n2. .....................................................................................................................\n..................................................................................................................................................................\n.................................................................................................................................';
       }
       
-      contentStr = contentStr.trim().replace(/\n/g, '\n');
-      if (contentStr) {
-        doc.replaceTextInEntireDocument(/\(\s*4\s*\)/, contentStr);
-      }
+      // We will replace (4) with fullContent. Note: the template needs to be updated to have only (4).
+      // We will do our best to remove lines starting with 1. or 2. using regex in DocxModifier if they exist.
+      doc.replaceTextInEntireDocument(/\(\s*4\s*\)/, fullContent);
+      doc.removeParagraphByTextMatch(/^1\.\s*\.\.\./);
+      doc.removeParagraphByTextMatch(/^2\.\s*\.\.\./);
+      doc.removeParagraphByTextMatch(/^…{3,}/); // Remove extra dotted paragraphs
+      doc.removeParagraphByTextMatch(/^\.{4,}/);
     }
 
     // Replace role (5) if present

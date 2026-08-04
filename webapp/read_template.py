@@ -3,7 +3,7 @@ import os
 import sys
 
 sys.stdout.reconfigure(encoding='utf-8')
-doc_path = r'c:\Users\quyng\Documents\TOOL TỔNG HỢP BÁO CÁO\VNPT REPORT\templates\To_trinh.docx'
+doc_path = sys.argv[1]
 doc = docx.Document(doc_path)
 
 print("---PARAGRAPHS---")

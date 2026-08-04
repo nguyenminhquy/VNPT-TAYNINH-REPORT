@@ -1,0 +1,133 @@
+Table 0: VIỄN THÔNG TÂY NINH TRUNG TÂM HẠ TẦNG 
+---
+Table 1: STT
+---
+Table 2: STT
+---
+Table 3: STT
+---
+Table 4: STT
+---
+Table 5: STT
+---
+Table 6: STT
+---
+Table 7: STT
+---
+Table 8: STT
+---
+Table 9: STT
+---
+Table 10: STT
+---
+Table 11: STT
+---
+Table 12: STT
+---
+Table 13: STT
+---
+Table 14: Tên KPIs
+---
+Table 15: Tháng
+---
+Table 16: STT
+---
+Table 17: Tỉnh
+---
+Table 18: TT
+---
+Table 19: Khu vực
+---
+Table 20: Khu vực
+---
+Table 21: Nguyên nhân
+---
+Table 22: Ngày
+---
+Table 23: STT
+---
+Table 24: STT
+---
+Table 25: STT
+---
+Table 26: STT
+---
+Table 27: STT
+---
+Table 28: THỜI GIAN MẤT LIÊN LẠC MẠNG DI ĐỘNG LŨY KẾ THEO TT
+---
+Table 29: Tỷ lệ xử lý sự cố hệ thống di động đúng hạn 120 ph
+---
+Table 30: Tỷ lệ xử lý sự cố hệ thống di động đúng hạn 120 ph
+---
+Table 31: BÁO CÁO TIẾN ĐỘ 5S NHÀ TRẠM - QUÝ 3/2026
+---
+Table 32: BÁO CÁO TIẾN ĐỘ 5S AP/OTB - TUẦN 30/2026
+---
+Table 33: BÁO CÁO TIẾN ĐỘ VỆ SINH MÁY LẠNH - QUÝ 3/2026
+---
+Table 34: Tổ Hạ tầng
+---
+Table 35: Tổ Hạ tầng
+---
+Table 36: STT
+---
+Table 37: STT
+---
+Table 38: STT
+---
+Table 39: STT
+---
+Table 40: STT
+---
+Table 41: STT
+---
+Table 42: Tổ Hạ tầng
+---
+Table 43: Tổ Hạ tầng
+---
+Table 44: STT
+---
+Table 45: STT
+---
+Table 46: Tổ Hạ tầng
+---
+Table 47: Tổ Hạ tầng
+---
+Table 48: STT
+---
+Table 49: Nhóm phân hệ
+---
+Table 50: XLSC MANE - TÂY NINH (01-07-2026 - 22-07-2026)
+---
+Table 51: XLSC ACCESS - TÂY NINH (01-07-2026 - 22-07-2026)
+---
+Table 52: XLSC VÔ TUYẾN - TÂY NINH (01-07-2026 - 22-07-2026)
+---
+Table 53: STT
+---
+Table 54: STT
+---
+Table 55: STT
+---
+Table 56: STT
+---
+Table 57: STT
+---
+Table 58: Hãng Switch
+---
+Table 59: Hãng sản xuất
+---
+Table 60: Tên Tổ Hạ tầng
+---
+Table 61: STT
+---
+Table 62:  Nơi nhận: - GĐ, PGĐ TTHT (b/c); - Tổ Khai thác H
+---
+Table 63: STT
+---
+Table 64: MANE—2 phiếu quá hạn
+---
+Table 65: ACCESS — 15 phiếu quá hạn
+---
+Table 66: VÔ TUYẾN — 57 phiếu quá hạn

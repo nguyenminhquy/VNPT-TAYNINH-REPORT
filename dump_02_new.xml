@@ -1,0 +1,1655 @@
+<?xml version="1.0" ?>
+<w:document xmlns:wpc="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas" xmlns:cx="http://schemas.microsoft.com/office/drawing/2014/chartex" xmlns:cx1="http://schemas.microsoft.com/office/drawing/2015/9/8/chartex" xmlns:cx2="http://schemas.microsoft.com/office/drawing/2015/10/21/chartex" xmlns:cx3="http://schemas.microsoft.com/office/drawing/2016/5/9/chartex" xmlns:cx4="http://schemas.microsoft.com/office/drawing/2016/5/10/chartex" xmlns:cx5="http://schemas.microsoft.com/office/drawing/2016/5/11/chartex" xmlns:cx6="http://schemas.microsoft.com/office/drawing/2016/5/12/chartex" xmlns:cx7="http://schemas.microsoft.com/office/drawing/2016/5/13/chartex" xmlns:cx8="http://schemas.microsoft.com/office/drawing/2016/5/14/chartex" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:aink="http://schemas.microsoft.com/office/drawing/2016/ink" xmlns:am3d="http://schemas.microsoft.com/office/drawing/2017/model3d" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:oel="http://schemas.microsoft.com/office/2019/extlst" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" xmlns:w15="http://schemas.microsoft.com/office/word/2012/wordml" xmlns:w16cei="http://schemas.microsoft.com/office/word/2026/wordml/cei" xmlns:w16cex="http://schemas.microsoft.com/office/word/2018/wordml/cex" xmlns:w16cid="http://schemas.microsoft.com/office/word/2016/wordml/cid" xmlns:w16="http://schemas.microsoft.com/office/word/2018/wordml" xmlns:w16du="http://schemas.microsoft.com/office/word/2023/wordml/word16du" xmlns:w16sdtdh="http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash" xmlns:w16sdtfl="http://schemas.microsoft.com/office/word/2024/wordml/sdtformatlock" xmlns:w16se="http://schemas.microsoft.com/office/word/2015/wordml/symex" xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup" xmlns:wpi="http://schemas.microsoft.com/office/word/2010/wordprocessingInk" xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" mc:Ignorable="w14 w15 w16se w16cid w16 w16cex w16sdtdh w16sdtfl w16du wp14">
+	<w:body>
+		<w:tbl>
+			<w:tblPr>
+				<w:tblW w:w="9435" w:type="dxa"/>
+				<w:tblInd w:w="-113" w:type="dxa"/>
+				<w:tblLayout w:type="fixed"/>
+				<w:tblLook w:val="0000" w:firstRow="0" w:lastRow="0" w:firstColumn="0" w:lastColumn="0" w:noHBand="0" w:noVBand="0"/>
+			</w:tblPr>
+			<w:tblGrid>
+				<w:gridCol w:w="9435"/>
+			</w:tblGrid>
+			<w:tr w:rsidR="00AB526D" w14:paraId="2A3523A9" w14:textId="77777777" w:rsidTr="00BA1E42">
+				<w:trPr>
+					<w:cantSplit/>
+				</w:trPr>
+				<w:tc>
+					<w:tcPr>
+						<w:tcW w:w="9435" w:type="dxa"/>
+					</w:tcPr>
+					<w:p w14:paraId="7F23A99D" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+						<w:pPr>
+							<w:spacing w:after="200" w:line="276" w:lineRule="auto"/>
+						</w:pPr>
+					</w:p>
+					<w:tbl>
+						<w:tblPr>
+							<w:tblW w:w="9412" w:type="dxa"/>
+							<w:tblLayout w:type="fixed"/>
+							<w:tblCellMar>
+								<w:left w:w="85" w:type="dxa"/>
+								<w:right w:w="85" w:type="dxa"/>
+							</w:tblCellMar>
+							<w:tblLook w:val="0000" w:firstRow="0" w:lastRow="0" w:firstColumn="0" w:lastColumn="0" w:noHBand="0" w:noVBand="0"/>
+						</w:tblPr>
+						<w:tblGrid>
+							<w:gridCol w:w="3742"/>
+							<w:gridCol w:w="5670"/>
+						</w:tblGrid>
+						<w:tr w:rsidR="000F57D8" w:rsidRPr="007159BB" w14:paraId="3BF1C6F3" w14:textId="77777777" w:rsidTr="00D159EC">
+							<w:trPr>
+								<w:cantSplit/>
+								<w:trHeight w:val="735"/>
+							</w:trPr>
+							<w:tc>
+								<w:tcPr>
+									<w:tcW w:w="3742" w:type="dxa"/>
+								</w:tcPr>
+								<w:p w14:paraId="2C8DD8F4" w14:textId="77777777" w:rsidR="00BA1E42" w:rsidRPr="00BA1E42" w:rsidRDefault="00D63A5D" w:rsidP="00D63A5D">
+									<w:pPr>
+										<w:jc w:val="center"/>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+									</w:pPr>
+									<w:r w:rsidRPr="00BA1E42">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t xml:space="preserve">VIỄN THÔNG </w:t>
+									</w:r>
+									<w:r w:rsidR="008007B7" w:rsidRPr="00BA1E42">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t>TÂY NINH</w:t>
+									</w:r>
+								</w:p>
+								<w:p w14:paraId="39F8AED9" w14:textId="45C965E8" w:rsidR="00D63A5D" w:rsidRPr="00845BB4" w:rsidRDefault="00BA1E42" w:rsidP="00D63A5D">
+									<w:pPr>
+										<w:jc w:val="center"/>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:sz w:val="24"/>
+											<w:szCs w:val="24"/>
+										</w:rPr>
+									</w:pPr>
+									<w:r>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:bCs/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t xml:space="preserve">TRUNG TÂM HẠ TẦNG </w:t>
+									</w:r>
+									<w:r w:rsidR="00D63A5D">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:bCs/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t xml:space="preserve"> </w:t>
+									</w:r>
+								</w:p>
+								<w:p w14:paraId="145899EB" w14:textId="115B732C" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="004027BB" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:jc w:val="center"/>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:sz w:val="26"/>
+										</w:rPr>
+									</w:pPr>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:noProof/>
+											<w:sz w:val="26"/>
+											<w:lang w:val="en-US"/>
+										</w:rPr>
+										<mc:AlternateContent>
+											<mc:Choice Requires="wps">
+												<w:drawing>
+													<wp:anchor distT="0" distB="0" distL="114300" distR="114300" simplePos="0" relativeHeight="251673088" behindDoc="0" locked="0" layoutInCell="1" allowOverlap="1" wp14:anchorId="4F3A3C71" wp14:editId="45095054">
+														<wp:simplePos x="0" y="0"/>
+														<wp:positionH relativeFrom="column">
+															<wp:posOffset>741045</wp:posOffset>
+														</wp:positionH>
+														<wp:positionV relativeFrom="paragraph">
+															<wp:posOffset>3175</wp:posOffset>
+														</wp:positionV>
+														<wp:extent cx="800100" cy="0"/>
+														<wp:effectExtent l="0" t="0" r="0" b="0"/>
+														<wp:wrapNone/>
+														<wp:docPr id="40" name="Line 579"/>
+														<wp:cNvGraphicFramePr>
+															<a:graphicFrameLocks xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"/>
+														</wp:cNvGraphicFramePr>
+														<a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+															<a:graphicData uri="http://schemas.microsoft.com/office/word/2010/wordprocessingShape">
+																<wps:wsp>
+																	<wps:cNvCnPr>
+																		<a:cxnSpLocks noChangeShapeType="1"/>
+																	</wps:cNvCnPr>
+																	<wps:spPr bwMode="auto">
+																		<a:xfrm>
+																			<a:off x="0" y="0"/>
+																			<a:ext cx="800100" cy="0"/>
+																		</a:xfrm>
+																		<a:prstGeom prst="line">
+																			<a:avLst/>
+																		</a:prstGeom>
+																		<a:noFill/>
+																		<a:ln w="9525">
+																			<a:solidFill>
+																				<a:srgbClr val="000000"/>
+																			</a:solidFill>
+																			<a:round/>
+																			<a:headEnd/>
+																			<a:tailEnd/>
+																		</a:ln>
+																		<a:extLst>
+																			<a:ext uri="{909E8E84-426E-40DD-AFC4-6F175D3DCCD1}">
+																				<a14:hiddenFill xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main">
+																					<a:noFill/>
+																				</a14:hiddenFill>
+																			</a:ext>
+																		</a:extLst>
+																	</wps:spPr>
+																	<wps:bodyPr/>
+																</wps:wsp>
+															</a:graphicData>
+														</a:graphic>
+														<wp14:sizeRelH relativeFrom="page">
+															<wp14:pctWidth>0</wp14:pctWidth>
+														</wp14:sizeRelH>
+														<wp14:sizeRelV relativeFrom="page">
+															<wp14:pctHeight>0</wp14:pctHeight>
+														</wp14:sizeRelV>
+													</wp:anchor>
+												</w:drawing>
+											</mc:Choice>
+											<mc:Fallback>
+												<w:pict>
+													<v:line w14:anchorId="22C52AF9" id="Line 579" o:spid="_x0000_s1026" style="position:absolute;z-index:251673088;visibility:visible;mso-wrap-style:square;mso-width-percent:0;mso-height-percent:0;mso-wrap-distance-left:9pt;mso-wrap-distance-top:0;mso-wrap-distance-right:9pt;mso-wrap-distance-bottom:0;mso-position-horizontal:absolute;mso-position-horizontal-relative:text;mso-position-vertical:absolute;mso-position-vertical-relative:text;mso-width-percent:0;mso-height-percent:0;mso-width-relative:page;mso-height-relative:page" from="58.35pt,.25pt" to="121.35pt,.25pt" o:gfxdata="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&#10;"/>
+												</w:pict>
+											</mc:Fallback>
+										</mc:AlternateContent>
+									</w:r>
+								</w:p>
+							</w:tc>
+							<w:tc>
+								<w:tcPr>
+									<w:tcW w:w="5670" w:type="dxa"/>
+									<w:tcBorders>
+										<w:bottom w:val="nil"/>
+									</w:tcBorders>
+								</w:tcPr>
+								<w:p w14:paraId="2615931B" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:jc w:val="center"/>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:sz w:val="26"/>
+										</w:rPr>
+									</w:pPr>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:sz w:val="26"/>
+										</w:rPr>
+										<w:t xml:space="preserve">CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT </w:t>
+									</w:r>
+									<w:smartTag w:uri="urn:schemas-microsoft-com:office:smarttags" w:element="country-region">
+										<w:smartTag w:uri="urn:schemas-microsoft-com:office:smarttags" w:element="place">
+											<w:r w:rsidRPr="007159BB">
+												<w:rPr>
+													<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+													<w:b/>
+													<w:sz w:val="26"/>
+												</w:rPr>
+												<w:t>NAM</w:t>
+											</w:r>
+										</w:smartTag>
+									</w:smartTag>
+								</w:p>
+								<w:p w14:paraId="24B93845" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="00555C43" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:jc w:val="center"/>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+									</w:pPr>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:hint="eastAsia"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t>Đ</w:t>
+									</w:r>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t>ộc</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t xml:space="preserve"> </w:t>
+									</w:r>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t>lập</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t xml:space="preserve"> - </w:t>
+									</w:r>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t>Tự</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t xml:space="preserve"> do - </w:t>
+									</w:r>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t>Hạnh</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t xml:space="preserve"> </w:t>
+									</w:r>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t>phúc</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+								</w:p>
+								<w:p w14:paraId="70B07127" w14:textId="56104E15" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="004027BB" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:jc w:val="center"/>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:sz w:val="26"/>
+										</w:rPr>
+									</w:pPr>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:noProof/>
+											<w:sz w:val="26"/>
+											<w:lang w:val="en-US"/>
+										</w:rPr>
+										<mc:AlternateContent>
+											<mc:Choice Requires="wps">
+												<w:drawing>
+													<wp:anchor distT="0" distB="0" distL="114300" distR="114300" simplePos="0" relativeHeight="251674112" behindDoc="0" locked="0" layoutInCell="1" allowOverlap="1" wp14:anchorId="082DA3A8" wp14:editId="125EB346">
+														<wp:simplePos x="0" y="0"/>
+														<wp:positionH relativeFrom="column">
+															<wp:posOffset>774700</wp:posOffset>
+														</wp:positionH>
+														<wp:positionV relativeFrom="paragraph">
+															<wp:posOffset>29845</wp:posOffset>
+														</wp:positionV>
+														<wp:extent cx="1943100" cy="0"/>
+														<wp:effectExtent l="0" t="0" r="0" b="0"/>
+														<wp:wrapNone/>
+														<wp:docPr id="39" name="Line 580"/>
+														<wp:cNvGraphicFramePr>
+															<a:graphicFrameLocks xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"/>
+														</wp:cNvGraphicFramePr>
+														<a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+															<a:graphicData uri="http://schemas.microsoft.com/office/word/2010/wordprocessingShape">
+																<wps:wsp>
+																	<wps:cNvCnPr>
+																		<a:cxnSpLocks noChangeShapeType="1"/>
+																	</wps:cNvCnPr>
+																	<wps:spPr bwMode="auto">
+																		<a:xfrm>
+																			<a:off x="0" y="0"/>
+																			<a:ext cx="1943100" cy="0"/>
+																		</a:xfrm>
+																		<a:prstGeom prst="line">
+																			<a:avLst/>
+																		</a:prstGeom>
+																		<a:noFill/>
+																		<a:ln w="9525">
+																			<a:solidFill>
+																				<a:srgbClr val="000000"/>
+																			</a:solidFill>
+																			<a:round/>
+																			<a:headEnd/>
+																			<a:tailEnd/>
+																		</a:ln>
+																		<a:extLst>
+																			<a:ext uri="{909E8E84-426E-40DD-AFC4-6F175D3DCCD1}">
+																				<a14:hiddenFill xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main">
+																					<a:noFill/>
+																				</a14:hiddenFill>
+																			</a:ext>
+																		</a:extLst>
+																	</wps:spPr>
+																	<wps:bodyPr/>
+																</wps:wsp>
+															</a:graphicData>
+														</a:graphic>
+														<wp14:sizeRelH relativeFrom="page">
+															<wp14:pctWidth>0</wp14:pctWidth>
+														</wp14:sizeRelH>
+														<wp14:sizeRelV relativeFrom="page">
+															<wp14:pctHeight>0</wp14:pctHeight>
+														</wp14:sizeRelV>
+													</wp:anchor>
+												</w:drawing>
+											</mc:Choice>
+											<mc:Fallback>
+												<w:pict>
+													<v:line w14:anchorId="34DD0B40" id="Line 580" o:spid="_x0000_s1026" style="position:absolute;z-index:251674112;visibility:visible;mso-wrap-style:square;mso-width-percent:0;mso-height-percent:0;mso-wrap-distance-left:9pt;mso-wrap-distance-top:0;mso-wrap-distance-right:9pt;mso-wrap-distance-bottom:0;mso-position-horizontal:absolute;mso-position-horizontal-relative:text;mso-position-vertical:absolute;mso-position-vertical-relative:text;mso-width-percent:0;mso-height-percent:0;mso-width-relative:page;mso-height-relative:page" from="61pt,2.35pt" to="214pt,2.35pt" o:gfxdata="UEsDBBQABgAIAAAAIQC2gziS/gAAAOEBAAATAAAAW0NvbnRlbnRfVHlwZXNdLnhtbJSRQU7DMBBF&#10;90jcwfIWJU67QAgl6YK0S0CoHGBkTxKLZGx5TGhvj5O2G0SRWNoz/78nu9wcxkFMGNg6quQqL6RA&#10;0s5Y6ir5vt9lD1JwBDIwOMJKHpHlpr69KfdHjyxSmriSfYz+USnWPY7AufNIadK6MEJMx9ApD/oD&#10;OlTrorhX2lFEilmcO2RdNtjC5xDF9pCuTyYBB5bi6bQ4syoJ3g9WQ0ymaiLzg5KdCXlKLjvcW893&#10;SUOqXwnz5DrgnHtJTxOsQfEKIT7DmDSUCaxw7Rqn8787ZsmRM9e2VmPeBN4uqYvTtW7jvijg9N/y&#10;JsXecLq0q+WD6m8AAAD//wMAUEsDBBQABgAIAAAAIQA4/SH/1gAAAJQBAAALAAAAX3JlbHMvLnJl&#10;bHOkkMFqwzAMhu+DvYPRfXGawxijTi+j0GvpHsDYimMaW0Yy2fr2M4PBMnrbUb/Q94l/f/hMi1qR&#10;JVI2sOt6UJgd+ZiDgffL8ekFlFSbvV0oo4EbChzGx4f9GRdb25HMsYhqlCwG5lrLq9biZkxWOiqY&#10;22YiTra2kYMu1l1tQD30/bPm3wwYN0x18gb45AdQl1tp5j/sFB2T0FQ7R0nTNEV3j6o9feQzro1i&#10;OWA14Fm+Q8a1a8+Bvu/d/dMb2JY5uiPbhG/ktn4cqGU/er3pcvwCAAD//wMAUEsDBBQABgAIAAAA&#10;IQBQI6TExAEAAGwDAAAOAAAAZHJzL2Uyb0RvYy54bWysU8Fu2zAMvQ/YPwi6N7bTZWiMOD2k6y7Z&#10;FqDdBzCSbAuVRUFSYufvR6lJ2m23YT4Iokg+Pj7Sq/tpMOyofNBoG17NSs6UFSi17Rr+8/nx5o6z&#10;EMFKMGhVw08q8Pv1xw+r0dVqjj0aqTwjEBvq0TW8j9HVRRFErwYIM3TKkrNFP0Ak03eF9DAS+mCK&#10;eVl+Lkb00nkUKgR6fXh18nXGb1sl4o+2DSoy03DiFvPp87lPZ7FeQd15cL0WZxrwDywG0JaKXqEe&#10;IAI7eP0X1KCFx4BtnAkcCmxbLVTugbqpyj+6eerBqdwLiRPcVabw/2DF9+POMy0bfrvkzMJAM9pq&#10;q9jiLoszulBTzMbufGpPTPbJbVG8BGZx04PtVCb5fHKUWCU5i99SkhEcldiP31BSDBwiZqWm1g8J&#10;kjRgUx7I6ToQNUUm6LFafrqtSpqbuPgKqC+Jzof4VeHA0qXhhlhnYDhuQ0xEoL6EpDoWH7Uxed7G&#10;srHhy8V8kRMCGi2TM4UF3+03xrMjpI3JX+6KPO/DPB6szGC9AvnlfI+gzeudiht7FiP1nxYy1HuU&#10;p52/iEQjzSzP65d25r2ds99+kvUvAAAA//8DAFBLAwQUAAYACAAAACEAlOrbHtoAAAAHAQAADwAA&#10;AGRycy9kb3ducmV2LnhtbEyPwU7DMBBE70j8g7VIXCrqYCqoQpwKAblxoYC4buMliYjXaey2ga9n&#10;6QWOT7OaeVusJt+rPY2xC2zhcp6BIq6D67ix8PpSXSxBxYTssA9MFr4owqo8PSkwd+HAz7Rfp0ZJ&#10;CcccLbQpDbnWsW7JY5yHgViyjzB6TIJjo92IByn3vTZZdq09diwLLQ5031L9ud55C7F6o231Patn&#10;2ftVE8hsH54e0drzs+nuFlSiKf0dw6++qEMpTpuwYxdVL2yM/JIsLG5ASb4wS+HNkXVZ6P/+5Q8A&#10;AAD//wMAUEsBAi0AFAAGAAgAAAAhALaDOJL+AAAA4QEAABMAAAAAAAAAAAAAAAAAAAAAAFtDb250&#10;ZW50X1R5cGVzXS54bWxQSwECLQAUAAYACAAAACEAOP0h/9YAAACUAQAACwAAAAAAAAAAAAAAAAAv&#10;AQAAX3JlbHMvLnJlbHNQSwECLQAUAAYACAAAACEAUCOkxMQBAABsAwAADgAAAAAAAAAAAAAAAAAu&#10;AgAAZHJzL2Uyb0RvYy54bWxQSwECLQAUAAYACAAAACEAlOrbHtoAAAAHAQAADwAAAAAAAAAAAAAA&#10;AAAeBAAAZHJzL2Rvd25yZXYueG1sUEsFBgAAAAAEAAQA8wAAACUFAAAAAA==&#10;"/>
+												</w:pict>
+											</mc:Fallback>
+										</mc:AlternateContent>
+									</w:r>
+								</w:p>
+							</w:tc>
+						</w:tr>
+						<w:tr w:rsidR="000F57D8" w:rsidRPr="007159BB" w14:paraId="31A52606" w14:textId="77777777" w:rsidTr="00D159EC">
+							<w:trPr>
+								<w:cantSplit/>
+							</w:trPr>
+							<w:tc>
+								<w:tcPr>
+									<w:tcW w:w="3742" w:type="dxa"/>
+								</w:tcPr>
+								<w:p w14:paraId="456A33C4" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="00555C43" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:keepNext/>
+										<w:spacing w:before="120"/>
+										<w:outlineLvl w:val="4"/>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+									</w:pPr>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+										<w:t xml:space="preserve">     </w:t>
+									</w:r>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+										<w:t>Số</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+										<w:t xml:space="preserve">:           </w:t>
+									</w:r>
+								</w:p>
+							</w:tc>
+							<w:tc>
+								<w:tcPr>
+									<w:tcW w:w="5670" w:type="dxa"/>
+									<w:tcBorders>
+										<w:bottom w:val="nil"/>
+									</w:tcBorders>
+								</w:tcPr>
+								<w:p w14:paraId="1650B7BA" w14:textId="68F1A848" w:rsidR="000F57D8" w:rsidRPr="00555C43" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:spacing w:before="120"/>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+									</w:pPr>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t xml:space="preserve">      </w:t>
+									</w:r>
+									<w:r w:rsidR="008007B7">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t>Tây Ninh</w:t>
+									</w:r>
+									<w:r w:rsidR="005023E1">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t xml:space="preserve">, </w:t>
+									</w:r>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t>ngày</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t xml:space="preserve">         </w:t>
+									</w:r>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t>tháng</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t xml:space="preserve">         </w:t>
+									</w:r>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t>n</w:t>
+									</w:r>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:hint="eastAsia"/>
+											<w:i/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t>ă</w:t>
+									</w:r>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t>m</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t xml:space="preserve">  </w:t>
+									</w:r>
+								</w:p>
+							</w:tc>
+						</w:tr>
+					</w:tbl>
+					<w:p w14:paraId="27B08AA6" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+						<w:pPr>
+							<w:tabs>
+								<w:tab w:val="left" w:pos="567"/>
+							</w:tabs>
+							<w:jc w:val="both"/>
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:sz w:val="24"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+						</w:pPr>
+					</w:p>
+					<w:p w14:paraId="3AC3CD4F" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+						<w:pPr>
+							<w:ind w:right="-1"/>
+							<w:jc w:val="center"/>
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:b/>
+							</w:rPr>
+						</w:pPr>
+						<w:r w:rsidRPr="007159BB">
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:b/>
+							</w:rPr>
+							<w:t xml:space="preserve">TỜ TRÌNH </w:t>
+						</w:r>
+					</w:p>
+					<w:p w14:paraId="04A822B9" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+						<w:pPr>
+							<w:keepNext/>
+							<w:ind w:right="-1"/>
+							<w:jc w:val="center"/>
+							<w:outlineLvl w:val="3"/>
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:b/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+						</w:pPr>
+						<w:r w:rsidRPr="007159BB">
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:b/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+							<w:t xml:space="preserve">............................... </w:t>
+						</w:r>
+						<w:r w:rsidRPr="007159BB">
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:b/>
+								<w:sz w:val="24"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+							<w:t>(</w:t>
+						</w:r>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:b/>
+								<w:sz w:val="24"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+							<w:t>3</w:t>
+						</w:r>
+						<w:r w:rsidRPr="007159BB">
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:b/>
+								<w:sz w:val="24"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+							<w:t xml:space="preserve">) </w:t>
+						</w:r>
+						<w:r w:rsidRPr="007159BB">
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:b/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+							<w:t>.............................</w:t>
+						</w:r>
+					</w:p>
+					<w:p w14:paraId="4148D093" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+						<w:pPr>
+							<w:jc w:val="center"/>
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:sz w:val="20"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+						</w:pPr>
+					</w:p>
+					<w:p w14:paraId="2176682D" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+						<w:pPr>
+							<w:jc w:val="center"/>
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+						</w:pPr>
+						<w:proofErr w:type="spellStart"/>
+						<w:r w:rsidRPr="007159BB">
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+							<w:t>Kính</w:t>
+						</w:r>
+						<w:proofErr w:type="spellEnd"/>
+						<w:r w:rsidRPr="007159BB">
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+							<w:t xml:space="preserve"> </w:t>
+						</w:r>
+						<w:proofErr w:type="spellStart"/>
+						<w:r w:rsidRPr="007159BB">
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+							<w:t>trình</w:t>
+						</w:r>
+						<w:proofErr w:type="spellEnd"/>
+						<w:r w:rsidRPr="007159BB">
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+							<w:t>: ………………………………………………….</w:t>
+						</w:r>
+					</w:p>
+					<w:p w14:paraId="568758D8" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+						<w:pPr>
+							<w:jc w:val="center"/>
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+						</w:pPr>
+					</w:p>
+					<w:tbl>
+						<w:tblPr>
+							<w:tblW w:w="0" w:type="auto"/>
+							<w:tblBorders>
+								<w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+								<w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+								<w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+								<w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+								<w:insideH w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+								<w:insideV w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+							</w:tblBorders>
+							<w:tblLayout w:type="fixed"/>
+							<w:tblLook w:val="01E0" w:firstRow="1" w:lastRow="1" w:firstColumn="1" w:lastColumn="1" w:noHBand="0" w:noVBand="0"/>
+						</w:tblPr>
+						<w:tblGrid>
+							<w:gridCol w:w="9287"/>
+						</w:tblGrid>
+						<w:tr w:rsidR="000F57D8" w:rsidRPr="007159BB" w14:paraId="7F76CA6C" w14:textId="77777777" w:rsidTr="00D159EC">
+							<w:trPr>
+								<w:trHeight w:val="2268"/>
+							</w:trPr>
+							<w:tc>
+								<w:tcPr>
+									<w:tcW w:w="9287" w:type="dxa"/>
+								</w:tcPr>
+								<w:p w14:paraId="21682FC9" w14:textId="2CD125A5" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:jc w:val="center"/>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+									</w:pPr>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+										<w:t> </w:t>
+									</w:r>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+										<w:t>Phê</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+										<w:t xml:space="preserve"> </w:t>
+									</w:r>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+										<w:t>duyệt</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+										<w:t xml:space="preserve"> </w:t>
+									</w:r>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+										<w:t>của</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+										<w:t xml:space="preserve"> </w:t>
+									</w:r>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+										<w:t>Lãnh</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+										<w:t xml:space="preserve"> </w:t>
+									</w:r>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+										<w:t>đạo</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+										<w:t>:</w:t>
+									</w:r>
+								</w:p>
+								<w:p w14:paraId="34FDF947" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+									</w:pPr>
+								</w:p>
+								<w:p w14:paraId="0E50E8AB" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+									</w:pPr>
+								</w:p>
+								<w:p w14:paraId="50FAB3B9" w14:textId="37D314C4" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+									</w:pPr>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+										<w:t xml:space="preserve"> </w:t>
+									</w:r>
+								</w:p>
+								<w:p w14:paraId="3CCDA49D" w14:textId="405FC663" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="004027BB" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:jc w:val="center"/>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:iCs/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+									</w:pPr>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:noProof/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+										<mc:AlternateContent>
+											<mc:Choice Requires="wps">
+												<w:drawing>
+													<wp:anchor distT="0" distB="0" distL="114300" distR="114300" simplePos="0" relativeHeight="251675136" behindDoc="0" locked="0" layoutInCell="1" allowOverlap="1" wp14:anchorId="0D08FC00" wp14:editId="354A8827">
+														<wp:simplePos x="0" y="0"/>
+														<wp:positionH relativeFrom="column">
+															<wp:posOffset>-1739900</wp:posOffset>
+														</wp:positionH>
+														<wp:positionV relativeFrom="paragraph">
+															<wp:posOffset>137160</wp:posOffset>
+														</wp:positionV>
+														<wp:extent cx="9525" cy="485775"/>
+														<wp:effectExtent l="0" t="0" r="0" b="0"/>
+														<wp:wrapNone/>
+														<wp:docPr id="36" name="AutoShape 581"/>
+														<wp:cNvGraphicFramePr>
+															<a:graphicFrameLocks xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"/>
+														</wp:cNvGraphicFramePr>
+														<a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+															<a:graphicData uri="http://schemas.microsoft.com/office/word/2010/wordprocessingShape">
+																<wps:wsp>
+																	<wps:cNvCnPr>
+																		<a:cxnSpLocks noChangeShapeType="1"/>
+																	</wps:cNvCnPr>
+																	<wps:spPr bwMode="auto">
+																		<a:xfrm flipH="1">
+																			<a:off x="0" y="0"/>
+																			<a:ext cx="9525" cy="485775"/>
+																		</a:xfrm>
+																		<a:prstGeom prst="straightConnector1">
+																			<a:avLst/>
+																		</a:prstGeom>
+																		<a:noFill/>
+																		<a:ln w="9525">
+																			<a:solidFill>
+																				<a:srgbClr val="000000"/>
+																			</a:solidFill>
+																			<a:round/>
+																			<a:headEnd/>
+																			<a:tailEnd type="triangle" w="med" len="med"/>
+																		</a:ln>
+																		<a:extLst>
+																			<a:ext uri="{909E8E84-426E-40DD-AFC4-6F175D3DCCD1}">
+																				<a14:hiddenFill xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main">
+																					<a:noFill/>
+																				</a14:hiddenFill>
+																			</a:ext>
+																		</a:extLst>
+																	</wps:spPr>
+																	<wps:bodyPr/>
+																</wps:wsp>
+															</a:graphicData>
+														</a:graphic>
+														<wp14:sizeRelH relativeFrom="page">
+															<wp14:pctWidth>0</wp14:pctWidth>
+														</wp14:sizeRelH>
+														<wp14:sizeRelV relativeFrom="page">
+															<wp14:pctHeight>0</wp14:pctHeight>
+														</wp14:sizeRelV>
+													</wp:anchor>
+												</w:drawing>
+											</mc:Choice>
+											<mc:Fallback>
+												<w:pict>
+													<v:shapetype w14:anchorId="3AA8A76B" id="_x0000_t32" coordsize="21600,21600" o:spt="32" o:oned="t" path="m,l21600,21600e" filled="f">
+														<v:path arrowok="t" fillok="f" o:connecttype="none"/>
+														<o:lock v:ext="edit" shapetype="t"/>
+													</v:shapetype>
+													<v:shape id="AutoShape 581" o:spid="_x0000_s1026" type="#_x0000_t32" style="position:absolute;margin-left:-137pt;margin-top:10.8pt;width:.75pt;height:38.25pt;flip:x;z-index:251675136;visibility:visible;mso-wrap-style:square;mso-width-percent:0;mso-height-percent:0;mso-wrap-distance-left:9pt;mso-wrap-distance-top:0;mso-wrap-distance-right:9pt;mso-wrap-distance-bottom:0;mso-position-horizontal:absolute;mso-position-horizontal-relative:text;mso-position-vertical:absolute;mso-position-vertical-relative:text;mso-width-percent:0;mso-height-percent:0;mso-width-relative:page;mso-height-relative:page" o:gfxdata="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&#10;BQAAAAA=&#10;">
+														<v:stroke endarrow="block"/>
+													</v:shape>
+												</w:pict>
+											</mc:Fallback>
+										</mc:AlternateContent>
+									</w:r>
+								</w:p>
+								<w:p w14:paraId="3830DDCC" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+									</w:pPr>
+								</w:p>
+								<w:p w14:paraId="45B9AEE1" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+											<w:szCs w:val="28"/>
+											<w:lang w:val="en-GB"/>
+										</w:rPr>
+									</w:pPr>
+								</w:p>
+							</w:tc>
+						</w:tr>
+					</w:tbl>
+					<w:p w14:paraId="0B408587" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+						<w:pPr>
+							<w:jc w:val="both"/>
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+						</w:pPr>
+					</w:p>
+					<w:p w14:paraId="454F3BEC" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+						<w:pPr>
+							<w:tabs>
+								<w:tab w:val="left" w:pos="567"/>
+							</w:tabs>
+							<w:spacing w:before="120" w:line="288" w:lineRule="auto"/>
+							<w:jc w:val="both"/>
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+						</w:pPr>
+						<w:r w:rsidRPr="007159BB">
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+							<w:tab/>
+							<w:t>................................................</w:t>
+						</w:r>
+						<w:r w:rsidRPr="007159BB">
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:sz w:val="24"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+							<w:t xml:space="preserve"> (</w:t>
+						</w:r>
+						<w:r>
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:sz w:val="24"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+							<w:t>5</w:t>
+						</w:r>
+						<w:r w:rsidRPr="007159BB">
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:sz w:val="24"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+							<w:t xml:space="preserve">) </w:t>
+						</w:r>
+						<w:r w:rsidRPr="007159BB">
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+							<w:t>...................................................................</w:t>
+						</w:r>
+					</w:p>
+					<w:p w14:paraId="0BBAA933" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+						<w:pPr>
+							<w:tabs>
+								<w:tab w:val="left" w:pos="567"/>
+							</w:tabs>
+							<w:spacing w:line="288" w:lineRule="auto"/>
+							<w:jc w:val="both"/>
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+						</w:pPr>
+						<w:r w:rsidRPr="007159BB">
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+							<w:t>..............................................................................................</w:t>
+						</w:r>
+					</w:p>
+					<w:p w14:paraId="12F9C28D" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+						<w:pPr>
+							<w:tabs>
+								<w:tab w:val="left" w:pos="567"/>
+							</w:tabs>
+							<w:spacing w:before="120" w:line="288" w:lineRule="auto"/>
+							<w:jc w:val="both"/>
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+						</w:pPr>
+						<w:r w:rsidRPr="007159BB">
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+							<w:tab/>
+							<w:t>............................................................................................................./.</w:t>
+						</w:r>
+					</w:p>
+					<w:p w14:paraId="12A95778" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+						<w:pPr>
+							<w:tabs>
+								<w:tab w:val="left" w:pos="567"/>
+							</w:tabs>
+							<w:jc w:val="both"/>
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:sz w:val="24"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+						</w:pPr>
+						<w:r w:rsidRPr="007159BB">
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:sz w:val="24"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+							<w:t xml:space="preserve">            </w:t>
+						</w:r>
+					</w:p>
+					<w:tbl>
+						<w:tblPr>
+							<w:tblW w:w="0" w:type="auto"/>
+							<w:tblLayout w:type="fixed"/>
+							<w:tblLook w:val="0000" w:firstRow="0" w:lastRow="0" w:firstColumn="0" w:lastColumn="0" w:noHBand="0" w:noVBand="0"/>
+						</w:tblPr>
+						<w:tblGrid>
+							<w:gridCol w:w="3652"/>
+							<w:gridCol w:w="5670"/>
+						</w:tblGrid>
+						<w:tr w:rsidR="000F57D8" w:rsidRPr="007159BB" w14:paraId="6759E5AE" w14:textId="77777777" w:rsidTr="00D159EC">
+							<w:tc>
+								<w:tcPr>
+									<w:tcW w:w="3652" w:type="dxa"/>
+								</w:tcPr>
+								<w:p w14:paraId="058D4B92" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:i/>
+											<w:sz w:val="24"/>
+										</w:rPr>
+									</w:pPr>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:i/>
+											<w:sz w:val="24"/>
+										</w:rPr>
+										<w:t>N</w:t>
+									</w:r>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:hint="eastAsia"/>
+											<w:b/>
+											<w:i/>
+											<w:sz w:val="24"/>
+										</w:rPr>
+										<w:t>ơ</w:t>
+									</w:r>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:i/>
+											<w:sz w:val="24"/>
+										</w:rPr>
+										<w:t>i</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:i/>
+											<w:sz w:val="24"/>
+										</w:rPr>
+										<w:t xml:space="preserve"> nhận:</w:t>
+									</w:r>
+								</w:p>
+								<w:p w14:paraId="1898E3A1" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="22"/>
+										</w:rPr>
+									</w:pPr>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="22"/>
+										</w:rPr>
+										<w:t>- ...............;</w:t>
+									</w:r>
+								</w:p>
+								<w:p w14:paraId="3C6144D2" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="22"/>
+										</w:rPr>
+									</w:pPr>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="22"/>
+										</w:rPr>
+										<w:t>- ................;</w:t>
+									</w:r>
+								</w:p>
+								<w:p w14:paraId="7A9A0201" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="24"/>
+										</w:rPr>
+									</w:pPr>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="22"/>
+										</w:rPr>
+										<w:t>- L</w:t>
+									</w:r>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:hint="eastAsia"/>
+											<w:sz w:val="22"/>
+										</w:rPr>
+										<w:t>ư</w:t>
+									</w:r>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="22"/>
+										</w:rPr>
+										<w:t>u: VT, ...</w:t>
+									</w:r>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="24"/>
+										</w:rPr>
+										<w:t>(</w:t>
+									</w:r>
+									<w:r>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="24"/>
+										</w:rPr>
+										<w:t>7</w:t>
+									</w:r>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="24"/>
+										</w:rPr>
+										<w:t>)</w:t>
+									</w:r>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="22"/>
+										</w:rPr>
+										<w:t>. A.</w:t>
+									</w:r>
+									<w:r w:rsidR="00555C43">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="22"/>
+										</w:rPr>
+										<w:t xml:space="preserve"> </w:t>
+									</w:r>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="22"/>
+										</w:rPr>
+										<w:t>XX</w:t>
+									</w:r>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="24"/>
+										</w:rPr>
+										<w:t>(</w:t>
+									</w:r>
+									<w:r>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="24"/>
+										</w:rPr>
+										<w:t>8</w:t>
+									</w:r>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="24"/>
+										</w:rPr>
+										<w:t>)</w:t>
+									</w:r>
+									<w:r w:rsidR="00A95E40">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="24"/>
+										</w:rPr>
+										<w:t>..</w:t>
+									</w:r>
+								</w:p>
+								<w:p w14:paraId="014BD8C7" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="24"/>
+										</w:rPr>
+									</w:pPr>
+								</w:p>
+								<w:p w14:paraId="55C7F9DF" w14:textId="59C7CCE5" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+										</w:rPr>
+									</w:pPr>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:bCs/>
+											<w:sz w:val="24"/>
+											<w:szCs w:val="24"/>
+										</w:rPr>
+										<w:t>Số</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:bCs/>
+											<w:sz w:val="24"/>
+											<w:szCs w:val="24"/>
+										</w:rPr>
+										<w:t xml:space="preserve"> </w:t>
+									</w:r>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:bCs/>
+											<w:sz w:val="24"/>
+											<w:szCs w:val="24"/>
+										</w:rPr>
+										<w:t>eOffice</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:bCs/>
+											<w:sz w:val="24"/>
+											<w:szCs w:val="24"/>
+										</w:rPr>
+										<w:t>: ..(</w:t>
+									</w:r>
+									<w:r w:rsidR="002D55B3">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:bCs/>
+											<w:sz w:val="24"/>
+											<w:szCs w:val="24"/>
+										</w:rPr>
+										<w:t>9</w:t>
+									</w:r>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:bCs/>
+											<w:sz w:val="24"/>
+											<w:szCs w:val="24"/>
+										</w:rPr>
+										<w:t>)..-VB</w:t>
+									</w:r>
+									<w:r w:rsidR="000077FE">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:bCs/>
+											<w:sz w:val="24"/>
+											<w:szCs w:val="24"/>
+										</w:rPr>
+										<w:t>KS</w:t>
+									</w:r>
+								</w:p>
+							</w:tc>
+							<w:tc>
+								<w:tcPr>
+									<w:tcW w:w="5670" w:type="dxa"/>
+								</w:tcPr>
+								<w:p w14:paraId="73C9C6F6" w14:textId="2B8EB607" w:rsidR="000F57D8" w:rsidRPr="004760E5" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:ind w:right="-1"/>
+										<w:jc w:val="center"/>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:bCs/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+									</w:pPr>
+									<w:r w:rsidRPr="004760E5">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:bCs/>
+											<w:spacing w:val="-6"/>
+											<w:szCs w:val="28"/>
+										</w:rPr>
+										<w:t xml:space="preserve">GIÁM ĐỐC </w:t>
+									</w:r>
+								</w:p>
+								<w:p w14:paraId="1EE2C6B4" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:ind w:right="-1"/>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="20"/>
+										</w:rPr>
+									</w:pPr>
+								</w:p>
+								<w:p w14:paraId="7CED9A43" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:ind w:right="-1"/>
+										<w:jc w:val="center"/>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="20"/>
+										</w:rPr>
+									</w:pPr>
+								</w:p>
+								<w:p w14:paraId="4244095B" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:ind w:right="-1"/>
+										<w:jc w:val="center"/>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+										</w:rPr>
+									</w:pPr>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+										</w:rPr>
+										<w:t>(</w:t>
+									</w:r>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+										</w:rPr>
+										<w:t>Chữ</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+										</w:rPr>
+										<w:t xml:space="preserve"> </w:t>
+									</w:r>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+										</w:rPr>
+										<w:t>ký</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+										</w:rPr>
+										<w:t xml:space="preserve">, </w:t>
+									</w:r>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+										</w:rPr>
+										<w:t>dấu</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:i/>
+										</w:rPr>
+										<w:t>)</w:t>
+									</w:r>
+								</w:p>
+								<w:p w14:paraId="4727BC34" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:ind w:right="-1"/>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="20"/>
+										</w:rPr>
+									</w:pPr>
+								</w:p>
+								<w:p w14:paraId="5A6BF00E" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:ind w:right="-1"/>
+										<w:jc w:val="center"/>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:sz w:val="20"/>
+										</w:rPr>
+									</w:pPr>
+								</w:p>
+								<w:p w14:paraId="79E528C4" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+									<w:pPr>
+										<w:ind w:right="-1"/>
+										<w:jc w:val="center"/>
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+											<w:sz w:val="24"/>
+											<w:szCs w:val="24"/>
+										</w:rPr>
+									</w:pPr>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+										</w:rPr>
+										<w:t>Họ</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+										</w:rPr>
+										<w:t xml:space="preserve"> </w:t>
+									</w:r>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+										</w:rPr>
+										<w:t>Và</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+										</w:rPr>
+										<w:t xml:space="preserve"> </w:t>
+									</w:r>
+									<w:proofErr w:type="spellStart"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+											<w:b/>
+										</w:rPr>
+										<w:t>Tên</w:t>
+									</w:r>
+									<w:proofErr w:type="spellEnd"/>
+									<w:r w:rsidRPr="007159BB">
+										<w:rPr>
+											<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+										</w:rPr>
+										<w:t xml:space="preserve"> </w:t>
+									</w:r>
+								</w:p>
+							</w:tc>
+						</w:tr>
+					</w:tbl>
+					<w:p w14:paraId="7ECD356D" w14:textId="77777777" w:rsidR="000F57D8" w:rsidRPr="007159BB" w:rsidRDefault="000F57D8" w:rsidP="000F57D8">
+						<w:pPr>
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:sz w:val="24"/>
+								<w:lang w:val="en-GB"/>
+							</w:rPr>
+						</w:pPr>
+					</w:p>
+					<w:p w14:paraId="6C9BA5D1" w14:textId="77777777" w:rsidR="00AB526D" w:rsidRDefault="00AB526D" w:rsidP="00D159EC">
+						<w:pPr>
+							<w:pStyle w:val="BodyTextIndent"/>
+							<w:spacing w:after="0"/>
+							<w:ind w:firstLine="0"/>
+							<w:rPr>
+								<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+								<w:b/>
+							</w:rPr>
+						</w:pPr>
+					</w:p>
+				</w:tc>
+			</w:tr>
+		</w:tbl>
+		<w:p w14:paraId="5E789417" w14:textId="77777777" w:rsidR="007F2F74" w:rsidRDefault="007F2F74"/>
+		<w:sectPr w:rsidR="007F2F74" w:rsidSect="00B53303">
+			<w:headerReference w:type="default" r:id="rId7"/>
+			<w:footerReference w:type="even" r:id="rId8"/>
+			<w:footerReference w:type="default" r:id="rId9"/>
+			<w:pgSz w:w="11906" w:h="16838" w:code="9"/>
+			<w:pgMar w:top="694" w:right="1134" w:bottom="964" w:left="1701" w:header="680" w:footer="680" w:gutter="0"/>
+			<w:pgNumType w:start="1"/>
+			<w:cols w:space="720"/>
+			<w:titlePg/>
+		</w:sectPr>
+	</w:body>
+</w:document>

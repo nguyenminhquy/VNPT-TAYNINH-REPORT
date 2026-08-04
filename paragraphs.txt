@@ -1,0 +1,332 @@
+BÁO CÁO
+V/v sơ kết kết quả thực hiện nhiệm vụ tháng 7 năm 2026 và phương hướng, nhiệm vụ tháng 8 năm 2026
+Thực hiện chương trình công tác năm 2026, Trung tâm Hạ tầng báo cáo kết quả thực hiện nhiệm vụ tháng 7 năm 2026 và phương hướng, nhiệm vụ trọng tâm tháng 8 năm 2026 như sau:
+HIỆN TRẠNG THIẾT BỊ:(OMC_TAM) 
+Thiết bị MANE/CSG:
+Thiết bị OLT:
+Thiết bị L2SW:
+Thiết bị vô tuyến:
+Thiết bị 2G:
+Đã thực hiện tắt gần hết thiết bị trên toàn mạng. Còn lại 2 trạm MỘC BÀI 2 (2G_BCA014M_TNH), CHỢ ĐƯỜNG BIÊN (2G_BCA021M_TNH) thuộc THT Gò Dầu do:
+Hiện trạng 2 trạm đều không thỏa điều kiện tắt 2G của tập đoàn: lưu lượng Erl không thỏa < 3 Erl/ngày (7 ngày liên tiếp) 
+Về doanh thu thì trạm BCA021, BCA014 trong top 10
+Thiết bị 3G: nguồn dữ liệu RIMS
+Thiết bị 4G:
+Thiết bị 5G:
+Thiết bị DLU:
+THIẾT BỊ PHỤ TRỢ:
+MẠNG NGOẠI VI:
+THUÊ VÀ CHO THUÊ CSHT: ( Chưa biết nhân sự phụ trách ) 
+ KẾT QUẢ BSC THÁNG 7:(OMC_NHI) 
+Báo Cáo Kết Quả Xếp Hạng Tổ Hạ Tầng:
+Thời gian lập báo cáo: 01/07/2026 - 30/07/2026
+Căn cứ kết quả thực hiện các chỉ tiêu SXKD và chất lượng mạng lưới 6 tháng đầu năm, OMC tiến hành thống kê kết quả BSC và xếp hạng 07 Tổ Hạ tầng trên địa bàn như sau:
+Bảng Kết Quả Thực Hiện KPIs
+Bảng điểm BSC tháng 7 
+Đánh giá:
+Sử dụng tiết kiệm điện so với kỳ trước (Mục tiêu < 98%): Tổ HT Đức Hòa và Gò Dầu hoàn thành chỉ tiêu. Các tổ còn lại (Bến Lức, Kiến Tường, Tân An, Tân Châu, Tân Ninh, Tây Ninh) chưa đạt và cần cải thiện.
+Hệ số hàng tồn kho (Mục tiêu 1): Tất cả các tổ đều hoàn thành tốt chỉ tiêu (đạt 100%).
+Tỷ lệ phiếu thực hiện xử lý SC đúng hạn theo CĐ 5 (Mục tiêu >= 98%): Tổ HT Kiến Tường và Tân Ninh hoàn thành chỉ tiêu. Các tổ còn lại (Bến Lức, Đức Hòa, Gò Dầu, Tân An, Tân Châu, Tây Ninh) chưa hoàn thành chỉ tiêu đề ra và cần cải thiện.
+Đảm bảo năng lực hạ tầng mạng lưới BRCĐ (Mục tiêu < 2%): Tất cả các tổ đều hoàn thành tốt chỉ tiêu.
+Tỷ lệ TB BRCĐ/MyTV/TSLCD đang h.động có c.lượng đường dây kém (Mục tiêu <= 0,046%): Tất cả các tổ đều chưa đạt chỉ tiêu (tỷ lệ thực tế đều cao hơn mức cho phép) và cần tập trung cải thiện.
+Tỷ lệ PAKH về chất lượng mạng di động được xử lý đúng hạn (Mục tiêu >= 99,8%): Tất cả các tổ đều hoàn thành tốt chỉ tiêu.
+SL thuê bao hủy theo mục tiêu (Mục tiêu < 2,280 TB): Tất cả các tổ đều chưa hoàn thành chỉ tiêu (vượt mốc 100%) và cần cải thiện.
+Tỷ lệ TB BRCĐ bị gián đoạn dịch vụ (Mục tiêu <= 0,5%): Tổ HT Gò Dầu và Tân Ninh hoàn thành chỉ tiêu. Các tổ còn lại (Bến Lức, Đức Hòa, Kiến Tường, Tân An, Tân Châu, Tây Ninh) chưa đạt và cần cải thiện.
+Chất lượng hạ tầng VT-CNTT(QoS/QoE) (Mục tiêu >= 99%): Tất cả các tổ chưa hoàn thành chỉ tiêu đề ra và cần cải thiện.
+Thời gian MLL thiết bị di động (Mục tiêu <= 3 Phút/TB/tháng): Tất cả các tổ chưa hoàn thành chỉ tiêu đề ra và cần cải thiện.
+Tỷ lệ cung cấp & cấu hình tự động – dịch vụ BRCĐ (Mục tiêu > 90%): Tất cả các tổ đều hoàn thành tốt chỉ tiêu.
+KẾT QUẢ CHẤT LƯỢNG MẠNG:
+Chất lượng hạ tầng VT-CNTT (QoS/QoE):(OMC_HUNG) 
+ Mục tiêu:
+CLHTVT > 99%
+ Kết quả thực hiện:
+Thời gian lấy báo cáo: từ 01/07/2026 – 28/07/2026
+Nguồn dữ liệu: https://cts.vnpt.vn/Report/QoSEs/QoSEsCCL
+Kết quả chi tiết thực hiện:
+Giải trình nguyên nhân bị điểm kém:
+Chỉ số QoS MBB: (OMC_HUNG)
+Chỉ số QoE MBB(OMC_HUNG)
+Chỉ số QoS FBB: (OMC_BAO)
+Nghẽn BRCĐ
+Chỉ số theo Tổ Hạ tầng 
+Chỉ số theo Trung tâm Viễn thông:
+Tỷ lệ suy hao thuê bao theo Trung tâm Viễn thông
+           Nhận xét :
+Chỉ số QoS tỉnh chưa đạt mục tiêu, nguyên nhân chủ yếu do tỉ lệ suy hao cáp quang thuê bao.
+Nghẽn trên OLT Huawei Gò Đen.HU65 vào ngày 12/07/2026 làm suy giảm chỉ số của THT Bến Lức.
+          Giải pháp:
+Đôn đốc TTVT thực hiện xử lý suy hao thuê bao
+ Tách port > 50 thuê bao 
+ Mở rộng thêm 1 Uplink 10G cho Huawei Gò Đen.HU65 và cân tải lưu lượng
+Chỉ số QoE FBB(OMC_BAO)
+Chỉ số theo Tổ hạ tầng:
+Chỉ số theo Trung tâm Viễn thông:
+Thời gian MLL trạm vô tuyến (3G/4G/5G)(OMC_KHANH)
+Mục tiêu: 
+Thời gian MLL trung bình ≤ 3 phút 
+Không để MLL quá 120 phút/trạm
+Kết quả thực hiện:
+Nguồn dữ liệu: Hệ thống FMS (https://fms.vnpt.vn/new/reports/bcmlldkd2025)
+Tổng thời gian mất liên lạc trong tuần tháng 7 : 11,936 phút.
+MLL trung bình/1 BTS: 6.46 phút.
+Đánh giá thời gian mất liên lạc vô tuyến trung bình tháng 7  đầu năm :
+1/7 THT có thời gian mất liên lạc đáp ứng chỉ tiêu của VTT (≤3 phút).
+Thời gian mất liên lạc trung bình trên 1 trạm BTS cao nhất: THT Gò Dầu (12.44 phút/1 trạm), THT Tân An (9.87 phút/1 trạm), THT Kiến Tường (6.52 phút/1 trạm)
+Nguyên nhân:
+MLL do lỗi nguồn (25%)
+MLL do lỗi thiết bị (30%)
+MLL do lỗi truyền dẫn (45%)
+Giải pháp:
+Nguyên nhân chi tiết các trạm MLL trong tuần 30 năm 2026 và các đánh giá, giải pháp khắc phục (Theo phụ lục 01 đính kèm)
+Tỷ lệ xử lý sự cố MLL vô tuyến trên 120 phút(OMC_KHANH) 
+Mục tiêu: 
+Tỷ lệ ≥ 98%/tháng
+Kết quả thực hiện:
+Nguồn dữ liệu: Hệ thống FMS (https://fms.vnpt.vn/new/reports/bcmlldkd2025)
+CÔNG TÁC BẢO DƯỠNG: 
+Tiến độ 5S nhà trạm:(OMC_TAN)
+Thời gian lấy báo cáo: 01/07/2026 - 23/07/2026
+Nguồn dữ liệu: https://trungtamhatangtnh.io.vn:456/mvc/dashboard5s
+Tiến độ 5S AP/OTB:(OMC_TAN)
+Mục tiêu tháng: 100% AP/OTB theo từng chỉ tiêu của các THT theo văn bản số 766/VNPT-TNH-KTĐT.
+Thời gian lấy báo cáo: 23/07/2026
+Nguồn dữ liệu:
+https://dieuhanh.vienthongtayninh.vn/ChuanHoa/BaoCaoChuanHoaKetCuoiTheoDonVi
+Tiến độ vệ sinh máy lạnh: (OMC_TAN)
+Mục tiêu: 100% CSHT
+Thời gian lấy báo cáo: 23/07/2026
+Nguồn dữ liệu: https://trungtamhatangtnh.io.vn:456/mvc/VeSinhMayLanh_Dashboard
+  CÁC DỰ ÁN HẠ TẦNG, NGOẠI VI, THIẾT BỊ: (LÂM) 
+Dự án vô tuyến Cosite Pha 9 
+Thực hiện phát sóng 286 trạm Cosite Pha 9 từ PO1 đến PO4
+Dự án vô tuyến Newsite Pha 9 PO2 và PO3
+Thực hiện phát sóng 73 trạm Newsite Pha 9 từ PO2 đến PO3
+Dự án 54 trạm vô tuyến phát triển mới Pha 9 PO4:
+Đã khởi công xây dựng 46/54 trạm (85.19%)
+Các trạm chưa khởi công: 08/54 trạm:
++ 04 trạm LAN2023-207, LAN2023-309, LAN2023-211, LAN2023-212 chủ xã hội hóa đã kí hợp đồng đất, dự kiến tuần 29/2026 sẽ khởi công xây dựng.
++ 01 trạm LAN2023-310 chủ XHH chưa kí được hợp đồng đất do giá đất cao.
++ 01 trạm TNH2026-532 đang đàm phán với chủ XHH thuê trạm.
++ Chủ đầu tư đang tìm đất: 02 trạm TNH2026-500, TNH2026-503
+Phần hạ đồng hồ điện: đã nộp hồ sơ 32, đã hạ điện kế 19, trong tuần 28/2026 sẽ tiếp tục hạ điện kế các điểm còn lại.
+Sẵn sàng khảo sát để lắp đặt (TSSR): 18 điểm, đã khảo sát TSSR 12/18 điểm
+Sẵn sàng phát sóng trạm BTS: 14 điểm
+Bảng tổng hợp theo Tổ Hạ tầng:
+Bảng tổng hợp theo Huyện:
+Dự án vô tuyến Remote nâng độ cao 45 cơ sở hạ tầng
+04/45 vị trí đã ký hợp đồng với chủ xã hội hóa đầu tư xây dựng trụ anten, đã khảo sát vật tư (cáp quang, cáp điện) bao gồm:
+Vị trí CSHT_LAN_00658 (Tổ HT Bến Lức).
+Vị trí CSHT_LAN_00979 và CSHT_LAN_00985 (Tổ HT Kiến Tường).
+Vị trí CSHT_LAN_00672 (Tổ HT Tân An).
+41/45 vị trí còn lại đang tiến hành tìm kiếm và đàm phán vị trí đất.
+Dự án Vgreen
+Tiến độ dự án đang triển khai gồm:
+Đợt 1 BLC, ĐHA, TAN, KTG: 13 vị trí cho thuê với 32 tủ đổi pin 12 ngăn.
+Đợt 2 GDU, TNI, TCU: 21 vị trí cho thuê với 62 tủ đổi pin 06 ngăn.
+Dự án NLMT:
+Nhà thầu POSTEF - DVC
+Tiến độ dự án đang triển khai:
+Riêng 2 dự án lớn của nhà thầu POSTEF - DVC: Toà nhà VNPT Tây Ninh, Trạm Host Tây Ninh. Đã lắp đặt xong dàn khung trên mái và các tấm pin, đang tiếp tục đấu điện lưới.
+Nhà thầu Công ty Cổ phần Kỹ thuật Quốc Long
+Tiến độ dự án đang triển khai tới thời điểm ngày 08/7/2026 như sau:
+PHỐI HỢP VỚI CÁC ĐƠN VỊ TTVT(OMC_LUAN)
+Công tác tập huấn nâng cao năng lực kỹ thật TTVT
+Trong tháng 06:
+Biên soạn checklist xử lý các nội dung kiểm tra trước khi chuyển phiếu về Trung tâm Hạ tầng
+Tổ chức tập huấn xử lý KH VIP cho các 22 đơn vị TTVT khu vực; sau khi tham gia tập huấn, các nhân sự của TTVT có trách nhiệm triển khai, hướng dẫn lại cho toàn bộ nhân sự trong đơn vị.
+Công tác xử lý sự cố BRCĐ
+Khi phát sinh sự cố hoặc cần hỗ trợ kỹ thuật, liên hệ trực tiếp Trực ca 6969 để được tiếp nhận nhanh, tăng cường phối hợp giữa TTVT và các đơn vị liên quan trong quá trình xử lý, cập nhật tiến độ và phản hồi kết quả kịp thời.
+Kỹ thuật xử lý mang KH thực hiện kiểm tra, xử lý sự cố theo đúng checklist do P. KTĐT ban hành theo VB: 2739/VNPT-TNH-KTĐT V/v ban hành Checklist nội dung kiểm tra trước khi chuyển phiếu về Trung tâm Hạ tầng, đảm bảo đầy đủ các bước trước khi chuyển cấp hoặc yêu cầu hỗ trợ.
+Triển khai công cụ xử lý tự động trên App TNH PHĐB
+Căn cứ VB: 1589/VNPT-TNH-KTĐT V/v Tối ưu công tác phối hợp giữa NVKT và Tổ KTHT, số liệu thống kê kết quả xử lý tự động trên App TNH PHĐB từ ngày 01/04/2026 đến 31/06/2026, tổng số tác động xử lý tự động đạt 29.870 lượt. Kết quả cho thấy việc triển khai App tại các đơn vị đã có chuyển biến tích cực.
+CÁC CHƯƠNG TRÌNH TRỌNG TÂM KHÁC:
+Nâng cấp uplink, đấu trunk cho OLT/SW lưu lượng cao(OMC_DUY_TRUNG)
+Đợt 1: Hoàn thành trước 30/06/2026. (Đã hoàn thành 60% kế hoạch)
+Đợt 2: Hoàn thành trước 31/12/2026. (Thực hiện trong 6 tháng cuối năm)
+Kế hoạch tối ưu các S1, S2
+Căn cứ VB: 58/BC-TTHT-KTHT Về việc kế hoạch triển khai tối ưu các S1 và S2, Tối ưu S2 về S1 (gần nhất). 
+Tối ưu, sử dụng hiệu quả sợi quang
+Giảm cự ly S1 với S2 (gần nhất)
+Đấu chuyển thuê bao về AP gần nhất
+Đảm bảo đúng, đủ: 100% (cập nhật trên App PHĐB TNH); Trụ có treo AP/OTB cập nhật vô mục ghi chú để quản lý. (tối thiểu 3AP/1 NVKT/ 1TUẦN)
+Giảm thiểu sự cố do đứt/cháy cáp so với năm 2025 là 30%
+Hạn chế sự cố bị lặp lại. Có biện pháp xử lý các sự cố lặp lại phát sinh
+Nâng cao độ an toàn mạng lưới, khả năng dự phòng.
+TTHT đã phối hợp thực hiện chuyển, tối ưu 645 AP/Port gồm tổng cộng 29,224 thuê bao
+Kế hoạch tối ưu OLT(OMC_HAN)
+Theo VB: 2264/VNPT-TNH-KTĐT V/v triển khai thực hiện kế hoạch tối ưu thiết bị OLT năm 2026
+Mục đích: Đảm bảo hiệu suất khai thác hệ thống OLT, thu hồi vật tư phục vụ đầu tư mở rộng các OLT đầy tải và các khu vực phát triển mới.
+Chủ trì thực hiện mở thêm uplink OLT khi lưu lượng uplink OLT ≥ 65% vào giờ cao điểm. Đảm bảo băng thông và chống nghẽn uplink cho các thiết bị OLT.
+Chủ trì swap thiết bị OLT sang loại OLT có dung lượng lớn hơn; dồn dịch, cắt chuyển thuê bao theo kế hoạch, chi tiết theo Phụ lục kèm theo.
+Đợt 1: Hoàn thành trước 30/06/2026. (Đã hoàn thành 50% kế hoạch)
+Đợt 2: Hoàn thành trước 31/12/2026. (Thực hiện trong 6 tháng cuối năm)
+Thực hiện điều chuyển thiết bị OLT, phụ kiện (card điều khiển, card thuê bao PON, SFP Uplink, SFP PON…) giữa các Tổ Hạ tầng phục vụ công tác tối ưu thiết bị OLT.
+Kế hoạch tối ưu truyền dẫn
+Tiến độ thực hiện tách cáp ring MANE nhập trạm theo tổ Hạ tầng
+Các giải pháp trọng tâm cải thiện chất lượng mạng di động 06 tháng đầu năm:
+Thực hiện phát sóng 156 trạm Cosite Pha 9 PO1, PO2, PO3, PO4
+Thực hiện phát sóng newsite 45 trạm Pha 9 PO2, 28 trạm PO3 và 54 trạm PO4
+Đã thực hiện triển khai Remote nâng độ cao 04/45 cơ sở hạ tầng.
+Thực hiện SVĐ 717/VNPT NET2-KT về việc phối hợp rà soát số liệu đáp ứng Ran sharing 4G/5G với Mobifone năm 2026 khu vực miền Nam trong đó Tây Ninh danh sách 60 4G trạm sau rà soát nhu cầu cần 23 trạm, 23 trạm 5G sau rà soát nhu cầu cần 10 trạm.
+Đề xuất về việc hỗ trợ 22 trạm chia sẻ MORAN MobiFone host Cần Đước, Cần Giuộc năm 2026 đã trình KTĐT số 517/VNPT-TNH-KTĐT
+Thực hiện SVĐ 1098/VNPT NET-KT về việc thông báo phối hợp triển khai kế
+hoạch phát triển mạng di động năm 2026-2027, sau rà soát đề xuất tổng 116 trạm 4G gồm 100 trạm Macro và 16 trạm Remote, 315 trạm 5G.
+Thực hiện văn bản 2651/VNPT-TNH-KTDT về việc báo cáo rà soát đề xuất số trạm vô
+tuyến liên quan việc quy hoạch, cập nhật điều chỉnh quy hoạch 2026-2030, sau rà soát TTHT đề xuất 29 CSHT phục vụ tuyến đường và KCN, KTĐT đề xuất 27 trạm, tổng 56 trạm.
+Thực hiện thử nghiệm 03 trạm 5G 700: BCA008, KTU011, KTU005.
+Theo dõi, triển khai SVĐ 942/VNPT NET-KTM về việc tinh giản, tắt sóng trạm 3G trên mạng di động Vinaphone – đợt 1, Tây Ninh thỏa rule được 1040 cell đã thực hiện tắt và theo dõi không có phản ánh khách hàng.
+Theo dõi, triển khai SVĐ 1809/VNPT NET-KTM về việc triển khai tinh giản, tắt sóng trạm 3G trên mạng di động Vinaphone – đợt 2, Tây Ninh thỏa rule được 106 site đã thực hiện off mềm và theo dõi phản ánh khách hàng.
+Thực hiện SVĐ 2275 và 537/VNPT NET2 – KT về việc bổ sung L900 để đảm bảo vùng phủ sau khi tắt 83 trạm 2G – hiện tại chỉ còn 2 trạm biên giới Mộc Bài chưa thỏa rule: 2G-BCA021M-TNH, 2G-BCA014M-TNH. 
+Thực hiện SVĐ 573/VNPT NET2-KT về việc triển khai GPKT Remote sector 3G/4G xử lý sóng kém tuyến đường kv xã Thủ Thừa và Đức Huệ, tỉnh Tây Ninh. 
+Thay thế các L2SW Alcatel cũ sang L2SW VFT dự phòng
+Đánh giá: Hoàn thành 100% kế hoạch đề ra.
+Báo cáo công tác chuyển đổi số (CĐS)
+Trong 6 tháng đầu năm, đã xây dựng và đưa vào sử dụng 8 nhóm phân hệ chính trên hệ thống, thay thế một phần quy trình kiểm tra, báo cáo thủ công (giấy tờ, ảnh chụp rời rạc qua Zalo) bằng công cụ số hóa tập trung, có ứng dụng di động cho nhân viên hiện trường. Cụ thể:
+ Kết quả phiếu XLSC MANE(OMC_TUAN)
+Tổng quan
+Kỳ báo cáo: 01/07/2026 – 22/07/2026
+Tổng phiếu giao: 125 phiếu
+Hoàn thành: 125/125 phiếu (100%)
+Hoàn thành đúng hạn: 123 phiếu
+Hoàn thành quá hạn: 2 phiếu
+Tỉ lệ đúng hạn: 98.40%
+Phiếu tồn quá hạn: 0 phiếu
+Nguồn dữ liệu: 
+https://onebss.vnpt.vn/#/qlsc/tientrinh-xuly-suco
+https://tts.vnpt.vn/#/thong-ke/baocao-tonghop-xlsc-brcd-toantrinh-cd5
+Chi tiết theo tổ Hạ tầng
+Nhận xét
+Phiếu XLSC MANE hoàn thành 100.00% phiếu giao (125/125 phiếu), không có phiếu tồn quá hạn.
+Tổ Hạ tầng Tân An và Tổ Hạ tầng Bến Lức có phiếu hoàn thành quá hạn (mỗi tổ 1 phiếu quá hạn do nghiệm thu phiếu chậm).
+Tổ Hạ tầng Bến Lức có tỉ lệ phiếu hoàn thành đúng hạn thấp nhất (95.24%).
+Tổ Hạ tầng Kiến Tường không phát sinh phiếu XLSC MANE trong kỳ báo cáo.
+Giải pháp
+Tổ Khai thác tăng cường giám sát, đôn đốc các tổ Hạ tầng nghiệm thu phiếu.
+Nâng cao vai trò tổ trưởng Hạ tầng điều phối nhân viên tổ nghiệm thu phiếu đúng hạn.
+Tổ Khai thác chủ động theo dõi, nghiệm thu các phiếu sắp quá hạn.
+Định kỳ kiểm tra nghiệm thu phiếu vào các khung giờ đã nhắc hẹn trên các group zalo, đặc biệt khung giờ ban đêm trước 23h tối
+Kết quả phiếu XLSC Access(OMC_TUAN)
+ Tổng quan
+Kỳ báo cáo: 01/07/2026 – 22/07/2026
+Tổng phiếu giao: 675 phiếu
+Hoàn thành: 673/675 phiếu 
+Hoàn thành đúng hạn: 13 phiếu
+Hoàn thành quá hạn: 13 phiếu
+Tỉ lệ đúng hạn: 98.07%
+Phiếu tồn quá hạn: 2 phiếu
+Nguồn dữ liệu: 
+https://onebss.vnpt.vn/#/qlsc/tientrinh-xuly-suco
+https://tts.vnpt.vn/#/thong-ke/baocao-tonghop-xlsc-brcd-toantrinh-cd5
+ Chi tiết theo tổ Hạ tầng
+Nhận xét
+Phiếu XLSC ACCESS hoàn thành 99.70% phiếu giao (673/675 phiếu).
+13 phiếu hoàn thành quá hạn do nghiệm thu đóng phiếu chậm. Còn 2 phiếu tồn quá hạn (Tổ Hạ tầng Kiến Tường 1, Tổ Hạ tầng Tân Ninh 1) do không có phiếu trên hệ thống OneBSS, Tổ Khai thác liên hệ CĐS kiểm tra
+Tổ Hạ tầng Kiến Tường có số phiếu quá hạn nhiều nhất (6 phiếu) và tỉ lệ phiếu hoàn thành đúng hạn thấp nhất (93.33%).
+Tổ Hạ tầng Gò Dầu và Tổ Hạ tầng Tân Châu đạt tỉ lệ đúng hạn cao nhất (100.00%).
+Giải pháp
+Tổ Hạ tầng khi chủ động tối ưu mạng lưới, xử lý khắc phục sự cố cần theo dõi tin nhắn phiếu sự cố Access để kịp thời nghiệm thu phiếu.
+Nâng cao vai trò tổ trưởng Hạ tầng theo dõi và điều phối nhân viên tổ đóng phiếu đúng hạn.
+Tổ Khai thác chủ động theo dõi, phối hợp tổ Hạ tầng nghiệm thu các phiếu sắp quá hạn.
+Định kỳ kiểm tra nghiệm thu phiếu vào các khung giờ đã nhắc hẹn trên các group zalo, đặc biệt khung giờ ban đêm trước 23h tối.
+Kết quả phiếu XLSC vô tuyến(OMC_TUAN)
+ Tổng quan
+Kỳ báo cáo: 01/07/2026 – 22/07/2026
+Tổng phiếu giao: 1677 phiếu
+Hoàn thành: 1670/1677 phiếu 
+Hoàn thành đúng hạn: 1615 phiếu
+Hoàn thành quá hạn: 55 phiếu
+Tỉ lệ đúng hạn: 96.71%
+Phiếu tồn quá hạn: 5 phiếu
+Nguồn dữ liệu: 
+https://onebss.vnpt.vn/#/qlsc/tientrinh-xuly-suco
+https://tts.vnpt.vn/#/thong-ke/baocao-tonghop-xlsc-tvt-toanmang-new-cd5
+ Chi tiết theo tổ Hạ tầng
+ Nhận xét
+Phiếu XLSC Vô Tuyến hoàn thành đạt tỉ lệ 99.58% phiếu giao, còn 2 phiếu tồn quá hạn (Tổ Hạ tầng Gò Dầu 1, Tổ Hạ tầng Kiến Tường 1).
+Tổ Hạ tầng Kiến Tường có số phiếu quá hạn nhiều nhất (17 phiếu) và tỉ lệ hoàn thành đúng hạn thấp nhất (94.16%).
+Tổ Hạ tầng Tân Ninh có số phiếu quá hạn thấp nhất (2 phiếu); Tổ Hạ tầng Đức Hòa đạt tỉ lệ đúng hạn cao nhất (98.20%).
+Còn 2 phiếu tồn quá hạn (Tổ Hạ tầng Kiến Tường 1, Tổ Hạ tầng Tân Ninh 1) do không có phiếu trên hệ thống OneBSS, Tổ Khai thác liên hệ CĐS kiểm tra
+Giải pháp
+Tổ Khai thác tăng cường giám sát, đôn đốc các tổ Hạ tầng nghiệm thu phiếu.
+Hướng dẫn các bước thủ tục chuyển bước và nghiệm thu phiếu cho nhân viên tổ Hạ tầng.
+Nhắc nhở các nhân viên có thời gian nghiệm thu đóng phiếu quá hạn và kéo dài.
+Tổ Khai thác chủ động theo dõi, nghiệm thu các phiếu sắp quá hạn.
+Định kỳ kiểm tra nghiệm thu phiếu vào các khung giờ đã nhắc hẹn trên các group zalo, đặc biệt khung giờ ban đêm trước 23h tối.
+Kết quả phiếu XLSC Cell CLK(OMC_TUAN)
+Trong kỳ đã nhận 17 phiếu XLSC Cell CLK, đã xử lý 17/17 phiếu
+Kỳ báo cáo: 01/06/2026 – 30/06/2026
+Nguồn dữ liệu: 
+https://onebss.vnpt.vn/#/qlsc/tientrinh-xuly-suco
+Chi tiết các phiếu
+ Kết quả phiếu XLSC mạng ngoại vi(OMC_TUAN)
+Trong kỳ đã nhận 136 phiếu XLSC Mạng Ngoại Vi, đã xử lý khóa phiếu 136/136 phiếu, tất cả phiếu đúng hạn
+Kỳ báo cáo: 01/07/2026 – 30/07/2026
+Nguồn dữ liệu: 
+https://onebss.vnpt.vn/#/qlsc/tientrinh-xuly-suco
+KẾ HOẠCH 6 THÁNG CUỐI NĂM: 
+Kế hoạch tách cáp MANE nhập trạm:
+Chi tiết số lượng đã thực hiên cụ thể như sau:
+Khảo sát, đề xuất vật tư (SFP, Card) phục vụ như cầu mở rộng
+Tổng số thiết bị Switch: 835 thiết bị.
+Tổng số cổng SFP Switch: 11.772 cổng (theo ghi nhận hệ thống).
+Tổng số thiết bị OLT: 490 thiết bị.
+Tổng số cổng SFP GPON: 11.980 cổng (theo ghi nhận hệ thống).
+Tổng số OLT hỗ trợ XGS-PON: 159 thiết bị.
+Chi tiết hạ tầng Switch và vật tư SFP Switch
+Hệ thống Switch hiện nay được phân bổ qua 5 nhà sản xuất chính với năng lực đáp ứng tốc độ đa dạng từ 100M đến 10G.
+Thống kê theo hãng sản xuất:
+Phân tích đặc điểm vật tư: Dữ liệu cho thấy hãng VFT hiện là đối tác cung cấp thiết bị chủ đạo, chiếm gần 64% tổng số Switch trên mạng lưới. Tuy nhiên, xét về năng lực nâng cấp băng thông lớn, các dòng Switch của FiberHome và EdgeCore đang đóng vai trò then chốt khi tập trung phần lớn hạ tầng SFP 10000M (10G) toàn tỉnh (lần lượt là 99 và 89 cổng). Các hãng như VFT và ALU hiện tại chủ yếu phục vụ truy nhập tốc độ thấp hơn (100M/1G) và chưa ghi nhận năng lực 10G trên hệ thống hiện hành.
+Hạ tầng OLT và năng lực triển khai XGS-PON
+Hạ tầng OLT được đầu tư đồng bộ từ các hãng công nghệ hàng đầu, đảm bảo tính sẵn sàng cho lộ trình nâng cấp lên XGS-PON.
+Thống kê OLT theo hãng:
+Chi tiết Model hỗ trợ XGS-PON, hiện có 159 thiết bị OLT đủ điều kiện kỹ thuật để triển khai công nghệ XGS-PON, tập trung tại các model sau:
+Model ISAM7360 (Nokia): 49 OLT XGS; 407 cổng SFP XGS-PON.
+Model MA5800X7 (Huawei): 62 OLT XGS; 860 cổng SFP XGS-PON.
+Model ZTEC610 (ZTE): 38 OLT XGS; 315 cổng SFP XGS-PON.
+Model ZTEC650 (ZTE): 10 OLT XGS; 119 cổng SFP XGS-PON.
+Tình trạng khai thác vật tư SFP GPON
+Hiệu suất sử dụng vật tư SFP GPON hiện đang được duy trì ở mức cao, đáp ứng tốt nhu cầu phát triển thuê bao quang.
+Trạng thái sử dụng:
+Đang sử dụng: 10.397 cổng (Tỷ lệ: 86,8%)
+Chưa sử dụng: 1.583 cổng (Tỷ lệ: 13,2%)
+Lỗi dữ liệu: 0 cổng (Tỷ lệ: 0,0%)
+Phân loại theo loại SFP
+SFP GPON B+: 8.718 cổng
+SFP GPON C+: 1.965 cổng
+SFP XGS-PON: 1.701 cổng
+Loại khác: 3 cổng (Phát sinh tại dòng ZTEC320 và V5804)
+Thống kê hạ tầng theo đơn vị quản lý (7 Tổ Hạ tầng)
+Số liệu chi tiết về thiết bị và vật tư SFP được phân rã theo địa bàn quản lý của 7 Tổ hạ tầng như sau:
+Thực hiện rà soát tối ưu tắt L2SW:
+Tắt và thu hồi các L2SW hiệu suất thấp và phân bổ thay thế lại các L2SW đã cũ trên mạng lưới
+Thực hiện triển khai cấu hình thuê bao theo SN:
+Hiện trạng và Căn cứ triển khai
+Hiện trạng: Hệ thống đang thực hiện xác thực bằng tham số SLID tại cả hai Site Long An và Tây Ninh.
+Căn cứ: Thực hiện theo chỉ đạo của Tập đoàn tại văn bản số 3577/VNPT-CN (ngày 11/05/2026) và Thông báo kết luận số 4205/TB-VNPT-CN-TL (ngày 28/05/2026) về việc tự động hóa cấu hình toàn trình và chuyển đổi phương thức xác thực từ SLID sang GPON Number.
+VB: 2407/VNPT-TNH-KTĐT V/v Giao nhiệm vụ triển khai xác thực thuê bao FiberVNN trên OLT bằng GPON Number.
+Lộ trình triển khai
+Tổ KTHT dự kiến sẽ triển khai qua 3 Giai đoạn như sau:
+Giai đoạn 1: Tổ KTHT rà soát cấu hình hiện tại, xây dựng cấu hình chuẩn cho từng dòng OLT và đánh giá mức độ ảnh hưởng tới khách hàng. (Đã hoàn thành)
+Giai đoạn 2: Thay đổi cấu hình các công cụ khai thác (Nội bộ, BNM); xây dựng phương án dự phòng và đánh giá rủi ro khi vận hành.
+P.KTĐT hỗ trợ bổ sung thêm các API cung cấp cho Tổ KTHT phải kèm theo GPON Number của thuê bao chính xác 100%.
+Tổ KTHT quy hoạch cấu hình chuẩn cho từng loại dịch vụ đưa vào chạy thử, đồng thời giám sát hoạt động.
+Tiến hành chạy thử dịch vụ cấu hình mới. Pitlot tại 1 TTVT Tân Trụ. 
+Dự kiến Pitlot từ 06/07/2026 đến 31/07/2026.
+Giai đoạn 3: Triển khai chính thức trên toàn mạng lưới.
+Bắt đầu từ 01/08/2026. Chỉ triển khai khi Giai đoạn 2 đạt kết quả Tốt về dịch vụ và công tác vận hành.
+Đánh giá tác động kỹ thuật trên các dòng thiết bị 
+Qua kiểm thử, tác động đối với các dòng OLT khi chuyển sang xác thực bằng GPON Number (SN) như sau:
+Dòng không ảnh hưởng: Nokia ISAM7360 (130 OLT, hơn 165k thuê bao) do cấu hình hiện hữu đã tự động nhận diện SN.
+Dòng ảnh hưởng nhẹ (Mất IPWAN, ONT tự kết nối lại): Các dòng Huawei (MA5608T, MA5800X7, MA5801-GP8) cần chạy lệnh modify xác thực.
+Dòng ảnh hưởng trực tiếp (Phải xóa và tạo lại cấu hình Port Onu): Các dòng Dasan (V5804) và ZTE (C320, C610, C650). Việc này gây mất IPWAN và yêu cầu ONT phải kết nối lại để nhận IP mới.
+Đề xuất phương án triển khai chính thức
+Thuê bao lắp mới: Áp dụng ngay cấu hình xác thực bằng GPON Number (SN) từ đầu.
+Thuê bao hiện hữu: Chủ động thay đổi cấu hình xác thực GPON Number để đồng bộ hóa dữ liệu khi VTT đánh giá mức độ ảnh hưởng và yêu cầu thực hiện.
+Trên đây là báo cáo sơ kết kết quả thực hiện nhiệm vụ  tháng 7 năm 2026 của Trung tâm Hạ tầng. Kính trình Ban Giám đốc xem xét, chỉ đạo. 
+Trân trọng báo cáo./.
+PHỤ LỤC 01( OMC_HAN)
+GIẢI TRÌNH NGUYÊN NHÂN MẤT LIÊN LẠC TRẠM TRÊN 120 PHÚT TUẦN 30
+(Kèm theo Báo cáo số: 2302/BC-TTHT-KTHT, ngày /07/2026)
+PHỤ LỤC 02:(OMC_TUAN) 
+CHI TIẾT SỐ LƯỢNG PHIẾU QUÁ HẠN CĐ5
+TỔ KTHT - TRUNG TÂM HẠ TẦNG – TÂY NINH

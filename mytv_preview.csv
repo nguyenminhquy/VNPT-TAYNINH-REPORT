@@ -1,0 +1,25 @@
+,Column1,Column2,Column3,Column4,Column5,Column6,Column7,Column8
+0,STT,NỘI DUNG,CHỈ SỐ,,ĐIỂM THÀNH PHẦN,ĐIỂM TỔNG,%,XẾP HẠNG
+1,1,MyTV QoS,"04 chỉ số thành phần (SQI):
+- Độ trễ
+- Rung pha 
+- Tỷ lệ mất gói
+- Tỷ lệ nghẽn kết nối",Độ trễ (OTT Live/TVoD),99.93/99.96,5,98.15,30
+2,,,,Rung pha (OTT Live/TVoD),98.11/99.99,,,
+3,,,,Tỷ lệ mất gói (OTT Live/TVoD),94.97/97.24,,,
+4,,,,Tỷ lệ nghẽn kết nối,100,,,
+5,2,MyTV QoE,"10 chỉ số thành phần:
+- Tỷ lệ mất hình
+- Tỷ lệ mất tiếng
+- Độ lệch hình/tiếng
+- Băng thông trung bình
+- Thời gian gián đoạn
+- Tỷ lệ mẫu đo đạt chất lượng hình TVoD
+- Tỷ lệ mẫu đo đạt chất lượng tiếng TVoD
+- Tỷ lệ mẫu đo đạt độ lệch hình/tiếng TVoD
+- Tỷ lệ mẫu đo đạt yêu cầu băng thông trung bình TVoD
+- Tỷ lệ mẫu đo đạt yêu cầu thời gian gián đoạn TVoD",Tỷ lệ mất hình (Mẫu đạt/Tổng số mẫu),100,5,100,1
+6,,,,Tỷ lệ mất tiếng (Mẫu đạt/Tổng số mẫu),100,,,
+7,,,,Độ lệch hình/tiếng (Mẫu đạt/Tổng số mẫu),100,,,
+8,,,,Băng thông trung bình (Mẫu đạt/Tổng số mẫu),100,,,
+9,,,,Thời gian gián đoạn (Mẫu đạt/Tổng số mẫu),100,,,

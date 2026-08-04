@@ -74,7 +74,41 @@ export default function Dashboard() {
     author7: '',
     eoffice8: ''
   });
-  const [form10, setForm10] = useState({ title: '', content: '', role: 'GIÁM ĐỐC', signerName: '', unit6: '', author7: '', eoffice8: '' });
+  const [form10, setForm10] = useState({ 
+    title: '', 
+    bases: [''],
+    articles: [''],
+    role: 'GIÁM ĐỐC', 
+    signerName: '', 
+    unit6: '', 
+    author7: '', 
+    eoffice8: '' 
+  });
+  const [form11, setForm11] = useState({ 
+    title: '', 
+    bases: [''],
+    articles: [''],
+    role: 'GIÁM ĐỐC', 
+    signerName: '', 
+    unit6: '', 
+    author7: '', 
+    eoffice8: '' 
+  });
+  const [form13, setForm13] = useState({
+    title: '',
+    donViBanHanh: '',
+    nguoiDuocMoi: '',
+    tenCuocHop: '',
+    chuTri: '',
+    thoiGian: '',
+    diaDiem: '',
+    luuY: '',
+    role: 'GIÁM ĐỐC',
+    signerName: '',
+    unit10: '',
+    author11: '',
+    eoffice12: ''
+  });
   const [form5, setForm5] = useState({
     title: '',
     bases: [''],
@@ -96,7 +130,8 @@ export default function Dashboard() {
   const [form9, setForm9] = useState({
     nguoiUyQuyen: '',
     nguoiDuocUyQuyen: '',
-    noiDungUyQuyen: '',
+    bases: [''],
+    articles: [''],
     role: 'GIÁM ĐỐC',
     signerName: '',
     unit8: '',
@@ -431,6 +466,50 @@ export default function Dashboard() {
     } catch (error) {
       console.error(error);
       alert('Có lỗi xảy ra khi xuất file Mẫu 10');
+    }
+  };
+
+  const handleExport11 = async () => {
+    try {
+      const response = await fetch('/api/export-11', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form11),
+      });
+      if (!response.ok) throw new Error('Export failed');
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Giay_trieu_tap_11_${new Date().toISOString().slice(0, 10)}.docx`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error(error);
+      alert('Có lỗi xảy ra khi xuất file Mẫu 11');
+    }
+  };
+
+  const handleExport13 = async () => {
+    try {
+      const response = await fetch('/api/export-13', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form13),
+      });
+      if (!response.ok) throw new Error('Export failed');
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Giay_moi_13_${new Date().toISOString().slice(0, 10)}.docx`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error(error);
+      alert('Có lỗi xảy ra khi xuất file Mẫu 13');
     }
   };
 
@@ -1453,8 +1532,46 @@ export default function Dashboard() {
                         <input type="text" value={form10.title} onChange={e => setForm10(p => ({ ...p, title: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
                       </div>
                       <div style={{ gridColumn: '1 / -1' }}>
-                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Nội dung chi tiết</label>
-                        <textarea value={form10.content} onChange={e => setForm10(p => ({ ...p, content: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 120 }} />
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                          <label style={{ fontWeight: 600, color: 'var(--text-main)' }}>Căn cứ (4)</label>
+                          <button onClick={() => setForm10(p => ({ ...p, bases: [...p.bases, ''] }))} type="button" style={{ padding: '4px 8px', borderRadius: 4, background: '#e2e8f0', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: 13, color: '#334155' }}>+ Thêm Căn cứ</button>
+                        </div>
+                        {form10.bases.map((base, idx) => (
+                          <div key={idx} style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
+                            <textarea value={base} onChange={e => {
+                              const newBases = [...form10.bases];
+                              newBases[idx] = e.target.value;
+                              setForm10(p => ({ ...p, bases: newBases }));
+                            }} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 60 }} placeholder={`Nội dung căn cứ ${idx + 1}`} />
+                            {form10.bases.length > 1 && (
+                              <button onClick={() => {
+                                const newBases = form10.bases.filter((_, i) => i !== idx);
+                                setForm10(p => ({ ...p, bases: newBases }));
+                              }} type="button" style={{ padding: '0 14px', background: '#fee2e2', color: '#ef4444', border: 'none', borderRadius: 8, cursor: 'pointer', fontWeight: 600 }}>Xóa</button>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                          <label style={{ fontWeight: 600, color: 'var(--text-main)' }}>Các Điều</label>
+                          <button onClick={() => setForm10(p => ({ ...p, articles: [...p.articles, ''] }))} type="button" style={{ padding: '4px 8px', borderRadius: 4, background: '#e2e8f0', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: 13, color: '#334155' }}>+ Thêm Điều</button>
+                        </div>
+                        {form10.articles.map((article, idx) => (
+                          <div key={idx} style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
+                            <textarea value={article} onChange={e => {
+                              const newArticles = [...form10.articles];
+                              newArticles[idx] = e.target.value;
+                              setForm10(p => ({ ...p, articles: newArticles }));
+                            }} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 80 }} placeholder={`Nội dung Điều ${idx + 1}`} />
+                            {form10.articles.length > 1 && (
+                              <button onClick={() => {
+                                const newArticles = form10.articles.filter((_, i) => i !== idx);
+                                setForm10(p => ({ ...p, articles: newArticles }));
+                              }} type="button" style={{ padding: '0 14px', background: '#fee2e2', color: '#ef4444', border: 'none', borderRadius: 8, cursor: 'pointer', fontWeight: 600 }}>Xóa</button>
+                            )}
+                          </div>
+                        ))}
                       </div>
                       <div>
                         <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Chức danh phê duyệt</label>
@@ -1485,6 +1602,83 @@ export default function Dashboard() {
                         </button>
                       </div>
                     </div>
+                  ) : activeReportKey === '11_Mau_Giay_trieu_tap' ? (
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Về việc (Tiêu đề Hội nghị)</label>
+                        <input type="text" value={form11.title} onChange={e => setForm11(p => ({ ...p, title: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                          <label style={{ fontWeight: 600, color: 'var(--text-main)' }}>Căn cứ</label>
+                          <button onClick={() => setForm11(p => ({ ...p, bases: [...p.bases, ''] }))} type="button" style={{ padding: '4px 8px', borderRadius: 4, background: '#e2e8f0', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: 13, color: '#334155' }}>+ Thêm Căn cứ</button>
+                        </div>
+                        {form11.bases.map((base, idx) => (
+                          <div key={idx} style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
+                            <textarea value={base} onChange={e => {
+                              const newBases = [...form11.bases];
+                              newBases[idx] = e.target.value;
+                              setForm11(p => ({ ...p, bases: newBases }));
+                            }} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 60 }} placeholder={`Nội dung căn cứ ${idx + 1}`} />
+                            {form11.bases.length > 1 && (
+                              <button onClick={() => {
+                                const newBases = form11.bases.filter((_, i) => i !== idx);
+                                setForm11(p => ({ ...p, bases: newBases }));
+                              }} type="button" style={{ padding: '0 14px', background: '#fee2e2', color: '#ef4444', border: 'none', borderRadius: 8, cursor: 'pointer', fontWeight: 600 }}>Xóa</button>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                          <label style={{ fontWeight: 600, color: 'var(--text-main)' }}>Các Điều / Nội dung chi tiết</label>
+                          <button onClick={() => setForm11(p => ({ ...p, articles: [...p.articles, ''] }))} type="button" style={{ padding: '4px 8px', borderRadius: 4, background: '#e2e8f0', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: 13, color: '#334155' }}>+ Thêm Điều</button>
+                        </div>
+                        {form11.articles.map((article, idx) => (
+                          <div key={idx} style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
+                            <textarea value={article} onChange={e => {
+                              const newArticles = [...form11.articles];
+                              newArticles[idx] = e.target.value;
+                              setForm11(p => ({ ...p, articles: newArticles }));
+                            }} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 80 }} placeholder={`Nội dung Điều ${idx + 1}`} />
+                            {form11.articles.length > 1 && (
+                              <button onClick={() => {
+                                const newArticles = form11.articles.filter((_, i) => i !== idx);
+                                setForm11(p => ({ ...p, articles: newArticles }));
+                              }} type="button" style={{ padding: '0 14px', background: '#fee2e2', color: '#ef4444', border: 'none', borderRadius: 8, cursor: 'pointer', fontWeight: 600 }}>Xóa</button>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Chức danh phê duyệt</label>
+                        <select value={form11.role} onChange={e => setForm11(p => ({ ...p, role: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', height: '42px' }}>
+                          <option value="GIÁM ĐỐC">Giám đốc</option>
+                          <option value="KT. GIÁM ĐỐC&#10;PHÓ GIÁM ĐỐC">KT. Giám đốc / Phó Giám đốc</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Tên Người Ký</label>
+                        <input type="text" value={form11.signerName} onChange={e => setForm11(p => ({ ...p, signerName: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Đơn vị lưu (Ví dụ: HT)</label>
+                        <input type="text" value={form11.unit6} onChange={e => setForm11(p => ({ ...p, unit6: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Ký hiệu Người lập (Ví dụ: NTL)</label>
+                        <input type="text" value={form11.author7} onChange={e => setForm11(p => ({ ...p, author7: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Số eOffice (Để trống nếu không có)</label>
+                        <input type="text" value={form11.eoffice8} onChange={e => setForm11(p => ({ ...p, eoffice8: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1', marginTop: 20 }}>
+                        <button onClick={handleExport11} style={{ width: '100%', padding: '14px', background: '#0066cc', color: 'white', borderRadius: 8, border: 'none', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                          Xuất file Mẫu 11
+                        </button>
+                      </div>
+                    </div>
                   ) : activeReportKey === '09_Mau_Giay_uy_quyen' ? (
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
                       <div style={{ gridColumn: '1 / -1' }}>
@@ -1496,8 +1690,46 @@ export default function Dashboard() {
                         <input type="text" placeholder="Họ tên, chức vụ, đơn vị công tác..." value={form9.nguoiDuocUyQuyen} onChange={e => setForm9(p => ({ ...p, nguoiDuocUyQuyen: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
                       </div>
                       <div style={{ gridColumn: '1 / -1' }}>
-                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Nội dung ủy quyền (5)</label>
-                        <textarea placeholder="Nhập nội dung ủy quyền..." value={form9.noiDungUyQuyen} onChange={e => setForm9(p => ({ ...p, noiDungUyQuyen: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 120 }} />
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                          <label style={{ fontWeight: 600, color: 'var(--text-main)' }}>Căn cứ</label>
+                          <button onClick={() => setForm9(p => ({ ...p, bases: [...p.bases, ''] }))} type="button" style={{ padding: '4px 8px', borderRadius: 4, background: '#e2e8f0', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: 13, color: '#334155' }}>+ Thêm Căn cứ</button>
+                        </div>
+                        {form9.bases.map((base, idx) => (
+                          <div key={idx} style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
+                            <textarea value={base} onChange={e => {
+                              const newBases = [...form9.bases];
+                              newBases[idx] = e.target.value;
+                              setForm9(p => ({ ...p, bases: newBases }));
+                            }} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 60 }} placeholder={`Nội dung căn cứ ${idx + 1}`} />
+                            {form9.bases.length > 1 && (
+                              <button onClick={() => {
+                                const newBases = form9.bases.filter((_, i) => i !== idx);
+                                setForm9(p => ({ ...p, bases: newBases }));
+                              }} type="button" style={{ padding: '0 14px', background: '#fee2e2', color: '#ef4444', border: 'none', borderRadius: 8, cursor: 'pointer', fontWeight: 600 }}>Xóa</button>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                          <label style={{ fontWeight: 600, color: 'var(--text-main)' }}>Nội dung ủy quyền / Các Điều (5)</label>
+                          <button onClick={() => setForm9(p => ({ ...p, articles: [...p.articles, ''] }))} type="button" style={{ padding: '4px 8px', borderRadius: 4, background: '#e2e8f0', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: 13, color: '#334155' }}>+ Thêm Điều</button>
+                        </div>
+                        {form9.articles.map((article, idx) => (
+                          <div key={idx} style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
+                            <textarea value={article} onChange={e => {
+                              const newArticles = [...form9.articles];
+                              newArticles[idx] = e.target.value;
+                              setForm9(p => ({ ...p, articles: newArticles }));
+                            }} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 80 }} placeholder={`Nội dung ủy quyền ${idx + 1}`} />
+                            {form9.articles.length > 1 && (
+                              <button onClick={() => {
+                                const newArticles = form9.articles.filter((_, i) => i !== idx);
+                                setForm9(p => ({ ...p, articles: newArticles }));
+                              }} type="button" style={{ padding: '0 14px', background: '#fee2e2', color: '#ef4444', border: 'none', borderRadius: 8, cursor: 'pointer', fontWeight: 600 }}>Xóa</button>
+                            )}
+                          </div>
+                        ))}
                       </div>
                       <div>
                         <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Chức vụ người ủy quyền (6)</label>
@@ -1596,6 +1828,70 @@ export default function Dashboard() {
                       <div style={{ gridColumn: '1 / -1' }}>
                         <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Số eOffice (Để trống nếu không có)</label>
                         <input type="text" value={form3a.eoffice8} onChange={e => setForm3a(p => ({ ...p, eoffice8: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                    </div>
+
+                  ) : activeReportKey === '13_Mau_Giay_moi' ? (
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Trích yếu nội dung (3)</label>
+                        <input type="text" value={form13.title} onChange={e => setForm13(p => ({ ...p, title: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Tên đơn vị ban hành (4)</label>
+                        <input type="text" value={form13.donViBanHanh} onChange={e => setForm13(p => ({ ...p, donViBanHanh: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Người/Cơ quan được mời (5)</label>
+                        <input type="text" value={form13.nguoiDuocMoi} onChange={e => setForm13(p => ({ ...p, nguoiDuocMoi: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Tên cuộc họp/hội nghị (6)</label>
+                        <input type="text" value={form13.tenCuocHop} onChange={e => setForm13(p => ({ ...p, tenCuocHop: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Chủ trì</label>
+                        <input type="text" value={form13.chuTri} onChange={e => setForm13(p => ({ ...p, chuTri: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Thời gian</label>
+                        <input type="text" value={form13.thoiGian} onChange={e => setForm13(p => ({ ...p, thoiGian: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Địa điểm (7)</label>
+                        <input type="text" value={form13.diaDiem} onChange={e => setForm13(p => ({ ...p, diaDiem: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Lưu ý (8)</label>
+                        <input type="text" value={form13.luuY} onChange={e => setForm13(p => ({ ...p, luuY: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Chức danh phê duyệt (9)</label>
+                        <select value={form13.role} onChange={e => setForm13(p => ({ ...p, role: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', height: '42px' }}>
+                          <option value="GIÁM ĐỐC">Giám đốc</option>
+                          <option value="KT. GIÁM ĐỐC&#10;PHÓ GIÁM ĐỐC">KT. Giám đốc / Phó Giám đốc</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Tên Người Ký</label>
+                        <input type="text" value={form13.signerName} onChange={e => setForm13(p => ({ ...p, signerName: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Đơn vị lưu (10)</label>
+                        <input type="text" value={form13.unit10} onChange={e => setForm13(p => ({ ...p, unit10: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Ký hiệu Người lập (11)</label>
+                        <input type="text" value={form13.author11} onChange={e => setForm13(p => ({ ...p, author11: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Số eOffice (12)</label>
+                        <input type="text" value={form13.eoffice12} onChange={e => setForm13(p => ({ ...p, eoffice12: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1', marginTop: 20 }}>
+                        <button onClick={handleExport13} style={{ width: '100%', padding: '14px', background: '#0066cc', color: 'white', borderRadius: 8, border: 'none', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                          Xuất file Mẫu 13
+                        </button>
                       </div>
                     </div>
 
