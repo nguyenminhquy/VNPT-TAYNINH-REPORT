@@ -1832,8 +1832,28 @@ export default function Dashboard() {
                     </div>
 
                   ) : activeReportKey === '13_Mau_Giay_moi' ? (
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-                      <div style={{ gridColumn: '1 / -1' }}>
+                    <div>
+                      <div style={{ backgroundColor: '#f0f9ff', border: '1px solid #bae6fd', padding: '16px', borderRadius: '8px', marginBottom: '24px', fontSize: '0.9rem', color: '#0369a1' }}>
+                        <h4 style={{ margin: '0 0 10px 0', fontWeight: 'bold' }}>Ghi chú:</h4>
+                        <ul style={{ margin: 0, paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                          <li>Các phần ghi: số: ký hiệu, ngày, tháng, năm của văn bản (để trống để hệ thống tự cập nhật).</li>
+                          <li>Phần đề ký: để khoảng cách (thông thủy) từ chân dòng ghi chức vụ bên trên đến dòng ghi họ và tên của người ký văn bản bên dưới từ 4,5cm đến 5 cm</li>
+                          <li>(1) Ghi rõ tên đơn vị ban hành giấy mời.</li>
+                          <li>(2) Ghi địa danh.</li>
+                          <li>(3) Trích yếu nội dung cuộc họp.</li>
+                          <li>(4) Tên cơ đơn vị ban hành giấy mời.</li>
+                          <li>(5) Tên cơ quan, tổ chức hoặc họ và tên, chức vụ, đơn vị công tác của người được mời.</li>
+                          <li>(6) Tên (nội dung) của cuộc họp, hội thảo, hội nghị v.v..</li>
+                          <li>(7) Ghi địa điểm họp.</li>
+                          <li>(8) Các vấn đề lưu ý (nếu cần).</li>
+                          <li>(9) Quyền hạn, chức vụ của người ký (chữ in hoa, đứng, đậm). Trường hợp cấp Phó ký thay cấp Trưởng thì chọn <strong>KT. Giám đốc / Phó Giám đốc</strong>.</li>
+                          <li>(10) Chữ viết tắt tên đơn vị chủ trì soạn thảo và số lượng bản lưu.</li>
+                          <li>(11) Ký hiệu của người soạn thảo và số lượng bản phát hành.</li>
+                          <li>(12) Ghi số eOffice.</li>
+                        </ul>
+                      </div>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+                        <div style={{ gridColumn: '1 / -1' }}>
                         <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Trích yếu nội dung (3)</label>
                         <input type="text" value={form13.title} onChange={e => setForm13(p => ({ ...p, title: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
                       </div>
@@ -1893,6 +1913,7 @@ export default function Dashboard() {
                           Xuất file Mẫu 13
                         </button>
                       </div>
+                    </div>
                     </div>
 
                   ) : (
