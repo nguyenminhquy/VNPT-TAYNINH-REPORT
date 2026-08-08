@@ -1,0 +1,1738 @@
+[
+  {
+    "type": "paragraph",
+    "text": "BÁO CÁO"
+  },
+  {
+    "type": "paragraph",
+    "text": "V/v sơ kết kết quả thực hiện nhiệm vụ tháng 7 và"
+  },
+  {
+    "type": "paragraph",
+    "text": "phương hướng, nhiệm vụ tháng 8"
+  },
+  {
+    "type": "paragraph",
+    "text": "Thực hiện chương trình công tác năm 2026, Trung tâm Hạ tầng báo cáo kết quả thực hiện nhiệm vụ tháng 7 và phương hướng, nhiệm vụ trọng tâm tháng 8 năm 2026 như sau:"
+  },
+  {
+    "type": "heading",
+    "level": 1,
+    "text": "HIỆN TRẠNG THIẾT BỊ:"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B1_TAM)",
+    "original_text": "Thiết bị MANE/CSG(B1_TAM)"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B2_TAM)",
+    "original_text": "Thiết bị OLT: (B2_TAM)"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B3_TAM)",
+    "original_text": "Thiết bị L2SW:(B3_TAM)"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Thiết bị vô tuyến:"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Thiết bị 2G:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Đã thực hiện tắt gần hết thiết bị trên toàn mạng. Còn lại 2 trạm MỘC BÀI 2 (2G_BCA014M_TNH), CHỢ ĐƯỜNG BIÊN (2G_BCA021M_TNH) thuộc THT Gò Dầu do:"
+  },
+  {
+    "type": "list_item",
+    "text": "Hiện trạng 2 trạm đều không thỏa điều kiện tắt 2G của tập đoàn: lưu lượng Erl không thỏa < 3 Erl/ngày (7 ngày liên tiếp)"
+  },
+  {
+    "type": "list_item",
+    "text": "Về doanh thu thì trạm BCA021, BCA014 trong top 10"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B4_TAM)",
+    "original_text": "Thiết bị 3G(B4_TAM)"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B5_TAM)",
+    "original_text": "Thiết bị 4G(B5_TAM)"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B5G_TAM)",
+    "original_text": "Thiết bị 5G: (B5G_TAM)"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B6_TAM)",
+    "original_text": "Thiết bị DLU: (B6_TAM)"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B7_QUÝ)",
+    "original_text": "THIẾT BỊ PHỤ TRỢ: (B7_QUÝ)"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B8_BAO)",
+    "original_text": "MẠNG NGOẠI VI: (B8_BAO)"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B9_BAO)",
+    "original_text": "(B9_BAO)"
+  },
+  {
+    "type": "heading",
+    "level": 1,
+    "text": "THUÊ VÀ CHO THUÊ CSHT: ( TẠO )"
+  },
+  {
+    "type": "heading",
+    "level": 1,
+    "text": "KẾT QUẢ BSC THÁNG 7:"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Báo Cáo Kết Quả Xếp Hạng Tổ Hạ Tầng:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Thời gian lập báo cáo: 01/07/2026 - 31/07/2026"
+  },
+  {
+    "type": "paragraph",
+    "text": "Căn cứ kết quả thực hiện các chỉ tiêu SXKD và chất lượng mạng lưới tháng 7 , OMC tiến hành thống kê kết quả BSC và xếp hạng 07 Tổ Hạ tầng trên địa bàn như sau:"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B10_NHI)",
+    "original_text": "Bảng Kết Quả Thực Hiện KPIs(B10_NHI)"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B11_NHI)",
+    "original_text": "Bảng điểm BSC tháng 7 (B11_NHI)"
+  },
+  {
+    "type": "heading",
+    "level": 1,
+    "text": "KẾT QUẢ CHẤT LƯỢNG MẠNG:"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Chất lượng hạ tầng VT-CNTT (QoS/QoE):"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Mục tiêu:"
+  },
+  {
+    "type": "paragraph",
+    "text": "CLHTVT > 99%"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Kết quả thực hiện:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Thời gian lấy báo cáo: từ 01/07/2026 – 31/07/2026"
+  },
+  {
+    "type": "paragraph",
+    "text": "Nguồn dữ liệu: https://cts.vnpt.vn/Report/QoSEs/QoSEsCCLe"
+  },
+  {
+    "type": "heading",
+    "level": 4,
+    "text": "Kết quả chi tiết thực hiện:"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Giải trình nguyên nhân bị điểm kém:"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B15_HUNG)",
+    "original_text": "Chỉ số QoS MBB:(B15_HUNG)"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B16_HUNG)",
+    "original_text": "Chỉ số QoE MBB(B16_HUNG)"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B17_HUNG)",
+    "original_text": "Công việc dự kiến tuần 32  (B17_HUNG)"
+  },
+  {
+    "type": "heading",
+    "level": 4,
+    "text": "Kết quả xử lý Phản ánh khách hàng chất lượng mạng(PAKH)"
+  },
+  {
+    "type": "paragraph",
+    "text": "Thời gian lấy báo cáo: 01/07 –30/07"
+  },
+  {
+    "type": "paragraph",
+    "text": "Nguồn dữ liệu: https://tts.vnpt.vn/#/thong-ke/thongke-tonghop-phongban"
+  },
+  {
+    "type": "list_item",
+    "text": "Số lượng phản ánh khách hàng tiếp nhận đến 30/07/2026 tổng 41 PAKH."
+  },
+  {
+    "type": "list_item",
+    "text": "10 phản ánh tồn còn hạn xử lý – trong tuần 32 sẽ xử lý"
+  },
+  {
+    "type": "list_item",
+    "text": "07 phản ánh kĩ thuật liên hệ khách hàng sau khi phối hợp kiểm tra lại sim và đầu cuối đã sử dụng được dịch vụ."
+  },
+  {
+    "type": "list_item",
+    "text": "09 phản ánh khi liên hệ lại hỗ trợ xử lý thì KH đã sử dụng được dịch vụ (nhờ người thân điều chỉnh, đăng kí dịch vụ, ...)"
+  },
+  {
+    "type": "list_item",
+    "text": "06 điểm không liên hệ được với khách hàng, đã lưu ý lại số điện thoại để xử lý khi liên hệ lại được."
+  },
+  {
+    "type": "list_item",
+    "text": "06 đã phối hợp NET/NOC tunning, Crs xử lý PAKH đảm bảo chất lượng mạng khu vực"
+  },
+  {
+    "type": "list_item",
+    "text": "02 phản ánh khách hàng phản ánh trong khu vực công ty indoor sóng chập chờn, công ty không cho vào đo kiểm triển khai GPKT."
+  },
+  {
+    "type": "list_item",
+    "text": "01 phiếu trùng lắp thông tin đã xử lý, đã báo SOC2 xử lý."
+  },
+  {
+    "type": "heading",
+    "level": 4,
+    "text": "Chỉ số QoS FBB:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Chỉ số theo Tổ Hạ tầng:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Mục tiêu >= 99%"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B18_BAO)",
+    "original_text": "(B18_BAO)"
+  },
+  {
+    "type": "paragraph",
+    "text": "Chỉ số theo Trung tâm Viễn thông:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Mục tiêu >= 99%"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B19_BAO)",
+    "original_text": "(B19_BAO)"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tỷ lệ suy hao thuê bao theo Trung tâm Viễn thông"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B20_BAO)",
+    "original_text": "(B20_BAO)"
+  },
+  {
+    "type": "paragraph",
+    "text": "Nhận xét :"
+  },
+  {
+    "type": "paragraph",
+    "text": "Chỉ số QoS tỉnh chưa đạt mục tiêu, nguyên nhân chủ yếu do tỉ lệ suy hao cáp quang thuê bao."
+  },
+  {
+    "type": "paragraph",
+    "text": "Giải pháp:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Đôn đốc TTVT thực hiện xử lý suy hao thuê bao"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tách port > 50 thuê bao"
+  },
+  {
+    "type": "paragraph",
+    "text": "Mở rộng thêm 1 Uplink 10G cho Huawei Gò Đen.HU65 và cân tải lưu lượng"
+  },
+  {
+    "type": "heading",
+    "level": 4,
+    "text": "Chỉ số QoE FBB"
+  },
+  {
+    "type": "paragraph",
+    "text": "Chỉ số theo Tổ hạ tầng:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Mục tiêu >= 99%"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B21_BAO)",
+    "original_text": "(B21_BAO)"
+  },
+  {
+    "type": "paragraph",
+    "text": "Chỉ số theo Trung tâm Viễn thông:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Mục tiêu >= 99%"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B22_BAO)",
+    "original_text": "(B22_BAO)"
+  },
+  {
+    "type": "paragraph",
+    "text": "Nhận xét:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Chỉ số QoE tỉnh đạt mục tiêu."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Thời gian MLL trạm vô tuyến (3G/4G/5G)"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Mục tiêu:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Thời gian MLL trung bình ≤ 3 phút"
+  },
+  {
+    "type": "paragraph",
+    "text": "Không để MLL quá 120 phút/trạm"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Kết quả thực hiện:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Nguồn dữ liệu: Hệ thống FMS (https://fms.vnpt.vn/new/reports/bcmlldkd2025)"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tổng thời gian mất liên lạc: 11,936 phút."
+  },
+  {
+    "type": "paragraph",
+    "text": "MLL trung bình/1 BTS: 6.46 phút."
+  },
+  {
+    "type": "paragraph",
+    "text": "Chi tiết thời gian mất liên lạc theo THT:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Đánh giá thời gian mất liên lạc vô tuyến tháng 7 :"
+  },
+  {
+    "type": "paragraph",
+    "text": "5/7 THT có thời gian mất liên lạc đáp ứng chỉ tiêu của VTT (≤3 phút)."
+  },
+  {
+    "type": "paragraph",
+    "text": "Thời gian mất liên lạc trung bình trên 1 trạm BTS cao nhất: THT Gò Dầu (12.44 phút/1 trạm), THT Tân An (9.87 phút/1 trạm), THT Kiến Tường(6.52 phút/1 trạm)."
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Nguyên nhân:"
+  },
+  {
+    "type": "paragraph",
+    "text": "MLL do lỗi nguồn (25%)"
+  },
+  {
+    "type": "paragraph",
+    "text": "MLL do lỗi thiết bị (30%)"
+  },
+  {
+    "type": "paragraph",
+    "text": "MLL do lỗi truyền dẫn (45%)"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Giải pháp:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Nguyên nhân chi tiết các trạm MLL trong tuần 30 năm 2026 và các đánh giá, giải pháp khắc phục (Theo phụ lục 01 đính kèm)"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Tỷ lệ xử lý sự cố MLL vô tuyến trên 120 phút"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Mục tiêu:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tỷ lệ ≥ 98%/tháng"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Kết quả thực hiện:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Nguồn dữ liệu: Hệ thống FMS (https://fms.vnpt.vn/new/reports/bcmlldkd2025)"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tỷ lệ hoàn thành: 94.34%."
+  },
+  {
+    "type": "paragraph",
+    "text": "Đánh giá tỷ lệ xử lý sự cố đúng hạn tuần 30:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Bến Lức: 1 trạm mất liên lạc > 120 phút do thiết bị (3G_CDU038M_LAN)."
+  },
+  {
+    "type": "paragraph",
+    "text": "Gò Dầu: 1 trạm mất liên lạc > 120 phút do thiết bị (4G-GDA113M-TNH)."
+  },
+  {
+    "type": "paragraph",
+    "text": "Tân An: 1 trạm mất liên lạc > 120 phút do truyền dẫn (3G_CTH023M_LAN)."
+  },
+  {
+    "type": "list_item",
+    "text": "Chi tiết tỷ lệ xử lý sự cố đúng hạn tuần 31:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tỷ lệ hoàn thành: 83.33%."
+  },
+  {
+    "type": "paragraph",
+    "text": "Đánh giá tỷ lệ xử lý sự cố đúng hạn tuần 31:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Đức Hòa: 9 trạm mất liên lạc > 120 phút do truyền dẫn (UL_DHO060M_LAN, UL_DHO060M_LAN, 5G-DHO091M-LAN, UL_DHO055M_LAN, UL_DHO055M_LAN, UL_DHO124M_LAN, UL_DHO124M_LAN, UL_DHO091M_LAN, UL_DHO091M_LAN)."
+  },
+  {
+    "type": "paragraph",
+    "text": "Gò Dầu: 1 trạm mất liên lạc > 120 phút do truyền dẫn (4G-TBA130M-TNH)."
+  },
+  {
+    "type": "paragraph",
+    "text": "Kiến Tường: 2 trạm mất liên lạc > 120 phút do truyền dẫn (UL_THO024M_LAN)."
+  },
+  {
+    "type": "heading",
+    "level": 1,
+    "text": "CÔNG TÁC BẢO DƯỠNG:"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Tiến độ thực hiện đo kiểm SpeedTest/ Ispeed:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Mục tiêu tháng: 100%"
+  },
+  {
+    "type": "paragraph",
+    "text": "Thời gian lấy báo cáo: 01/07/2026 - 29/07/2026"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B23_QUOC)",
+    "original_text": "(B23_QUOC)"
+  },
+  {
+    "type": "paragraph",
+    "text": "Nhận xét:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Công tác đo kiểm i-Speed đã thực hiện 1627/1648 mẫu, đạt 99%/Tháng kế hoạch."
+  },
+  {
+    "type": "paragraph",
+    "text": "Công tác đo kiểm SpeedTest đã thực hiện 1619/1648 mẫu, đạt 98%/Tháng kế hoạch."
+  },
+  {
+    "type": "paragraph",
+    "text": "Kết quả mẫu đo 5G SpeedTest đã thực hiện 653/1008 mẫu, đạt 40,33%%/Tổng mẫu đã đo"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Tiến độ 5S nhà trạm:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Thời gian lấy số liệu : 01/07/2026 - 29/07/2026"
+  },
+  {
+    "type": "paragraph",
+    "text": "Thời gian báo cáo : 30/07/2026"
+  },
+  {
+    "type": "paragraph",
+    "text": "Mục tiêu quý:100% CSHT theo văn bản số 114/VNPT-TNH-KTĐT."
+  },
+  {
+    "type": "paragraph",
+    "text": "Nguồn dữ liệu: https://trungtamhatangtnh.io.vn:456/mvc/dashboard5s"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B24_TAN)",
+    "original_text": "(B24_TAN)"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Tiến độ 5S AP/OTB:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Mục tiêu tháng: 100% AP/OTB theo từng chỉ tiêu của các THT theo văn bản số 766/VNPT-TNH-KTĐT."
+  },
+  {
+    "type": "paragraph",
+    "text": "Thời gian báo cáo: 30/07/2026"
+  },
+  {
+    "type": "paragraph",
+    "text": "Thời gian lấy số liệu: 01/07/2026-29/07/2026"
+  },
+  {
+    "type": "paragraph",
+    "text": "Nguồn dữ liệu:"
+  },
+  {
+    "type": "paragraph",
+    "text": "https://dieuhanh.vienthongtayninh.vn/ChuanHoa/BaoCaoChuanHoaKetCuoiTheoDonVi"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B25_TAN)",
+    "original_text": "(B25_TAN)"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Tiến độ vệ sinh máy lạnh:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Mục tiêu: 100% CSHT"
+  },
+  {
+    "type": "paragraph",
+    "text": "Thời gian lấy số liệu: 01/07/2026-29/07/2026"
+  },
+  {
+    "type": "paragraph",
+    "text": "Thời gian báo cáo: 30/07/2026"
+  },
+  {
+    "type": "paragraph",
+    "text": "Nguồn dữ liệu: https://trungtamhatangtnh.io.vn:456/mvc/VeSinhMayLanh_Dashboard"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B26_TAN)",
+    "original_text": "(B26_TAN)"
+  },
+  {
+    "type": "heading",
+    "level": 1,
+    "text": "CÁC DỰ ÁN HẠ TẦNG, NGOẠI VI, THIẾT BỊ:"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Dự án vô tuyến 45 CSHT REMOTE nâng độ cao"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Thông tin tiến độ"
+  },
+  {
+    "type": "paragraph",
+    "text": "Đã khởi công xây dựng 04/45 trạm (8,89%)."
+  },
+  {
+    "type": "paragraph",
+    "text": "Đã nghiệm thu CSHT: 03/04 trạm."
+  },
+  {
+    "type": "paragraph",
+    "text": "Các trạm chưa khởi công: 41/45 trạm."
+  },
+  {
+    "type": "paragraph",
+    "text": "Có đất, có chủ đầu tư: 03/41 trạm. 01 vị trí TBA700B-TNH: đang chuẩn bị hồ sơ ký hợp đồng thuê BTS, tọa độ 106.358315/11.064887.01 vị trí BLU704B-LAN: Tổ hạ tầng đang đàm phán về việc xây dựng anten tự đứng trên mái nhà hiện hữu của trạm.01 vị trí DHU702B-LAN: chủ xã hội hóa đang đàm phán xây dựng trạm Remote Sector thành trạm Macro, mức giá thuê 6,5 triệu đồng/tháng; chủ xã hội hóa chưa chốt tọa độ đất triển khai."
+  },
+  {
+    "type": "paragraph",
+    "text": "Giá cho thuê cao: 01 vị trí DHO706B-LAN. Chủ đầu tư muốn mức giá thuê 6 triệu đồng/tháng cho CSHT Remote; chủ xã hội hóa chờ chốt giá thuê và dự kiến ký hợp đồng thuê đất trong tuần 32/2026."
+  },
+  {
+    "type": "paragraph",
+    "text": "Đang tìm kiếm đất/chủ đầu tư: 29/41 trạm."
+  },
+  {
+    "type": "paragraph",
+    "text": "Đang tìm chủ đầu tư trạm có sẵn: 08/41 trạm."
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Phần hạ đồng hồ điện"
+  },
+  {
+    "type": "paragraph",
+    "text": "Đã nộp hồ sơ: 01 vị trí TAN702B-LAN."
+  },
+  {
+    "type": "paragraph",
+    "text": "Đã hạ điện kế: 01 vị trí CDU702B-LAN."
+  },
+  {
+    "type": "paragraph",
+    "text": "Dùng điện kế hiện hữu: 02 vị trí TTH701B-LAN và THO702B-LAN."
+  },
+  {
+    "type": "paragraph",
+    "text": "Tóm tắt các mốc chính"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Dự án điện năng lượng mặt trời- Nhà thầu DVC-Postef"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Dự án NLMT đợt 1_ 2 – Nhà thầu DVC-Postef(11 trạm)"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Dư án NLMT đợt 3- Nhà thầu DVC-POSTEF(18 trạm)"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Dự án Vgreen"
+  },
+  {
+    "type": "paragraph",
+    "text": "Số liệu theo dõi trên group Zalo, kỹ thuật QL trạm: Khảo sát VNPT Tây Ninh, Thi công lắp đặt TĐP _ Vgreen_VNPT Kv Tây Ninh"
+  },
+  {
+    "type": "paragraph",
+    "text": "Thời gian lấy thông tin báo cáo 05/08/2026"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Tiến độ tổng hợp dự án Vgreen"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Tiến độ lắp đặt tủ đổi pin site Long An cũ"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Tiến độ lắp đặt tủ đổi pin site Tây Ninh cũ"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Báo cáo tổng hợp tiến độ dự án Newsite 2026"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Tổng quan tiến độ triển khai"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Cơ cấu loại anten triển khai"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Các điểm nghẽn chính"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Giá thuê điện ngoài"
+  },
+  {
+    "type": "paragraph",
+    "text": "Có 8 trạm thuê điện ngoài. Cơ cấu giá thuê như sau:"
+  },
+  {
+    "type": "paragraph",
+    "text": "(*) Chỉ tính các trạm có dữ liệu giá thuê."
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Kế hoạch hành động trọng tâm"
+  },
+  {
+    "type": "heading",
+    "level": 1,
+    "text": "CÁC CHƯƠNG TRÌNH TRỌNG TÂM KHÁC:"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Nâng cấp và bảo an OLT và SW"
+  },
+  {
+    "type": "list_item",
+    "text": "Đợt 1: Hoàn thành trước 30/06/2026. (Đã hoàn thành 60% kế hoạch)"
+  },
+  {
+    "type": "list_item",
+    "text": "Đợt 2: Hoàn thành trước 31/12/2026. (Thực hiện trong 6 tháng cuối năm)"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Kế hoạch tối ưu các S1, S2"
+  },
+  {
+    "type": "paragraph",
+    "text": "Căn cứ VB: 58/BC-TTHT-KTHT Về việc kế hoạch triển khai tối ưu các S1 và S2, Tối ưu S2 về S1 (gần nhất)."
+  },
+  {
+    "type": "list_item",
+    "text": "Tối ưu, sử dụng hiệu quả sợi quang"
+  },
+  {
+    "type": "list_item",
+    "text": "Giảm cự ly S1 với S2 (gần nhất)"
+  },
+  {
+    "type": "list_item",
+    "text": "Đấu chuyển thuê bao về AP gần nhất"
+  },
+  {
+    "type": "list_item",
+    "text": "Đảm bảo đúng, đủ: 100% (cập nhật trên App PHĐB TNH); Trụ có treo AP/OTB cập nhật vô mục ghi chú để quản lý. (tối thiểu 3AP/1 NVKT/ 1TUẦN)"
+  },
+  {
+    "type": "list_item",
+    "text": "Giảm thiểu sự cố do đứt/cháy cáp so với năm 2025 là 30%"
+  },
+  {
+    "type": "list_item",
+    "text": "Hạn chế sự cố bị lặp lại. Có biện pháp xử lý các sự cố lặp lại phát sinh"
+  },
+  {
+    "type": "list_item",
+    "text": "Nâng cao độ an toàn mạng lưới, khả năng dự phòng."
+  },
+  {
+    "type": "paragraph",
+    "text": "TTHT đã phối hợp thực hiện chuyển, tối ưu 645 AP/Port gồm tổng cộng 29,224 thuê bao"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Kế hoạch tối ưu OLT:"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Tiến độ hoàn thành kế hoạch"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Tiến độ thực hiện theo tổ hạ tầng"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Kế hoạch theo tổ hạ tầng và đợt"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Phân loại theo công việc cần thực hiện"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Khó khăn và vướng mắt chính của các điểm OLT chưa hoàn thành"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Kế hoạch thực hiện và kết quả theo đợt"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Chuyển đổi xác thực từ SLID sang GPON Number (SN)"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Căn cứ triển khai"
+  },
+  {
+    "type": "paragraph",
+    "text": "VB 3577/VNPT-CN ngày 11/05/2026."
+  },
+  {
+    "type": "paragraph",
+    "text": "TB 4205/TB-VNPT-CN-TL ngày 28/05/2026."
+  },
+  {
+    "type": "paragraph",
+    "text": "VB 2407/VNPT-TNH-KTĐT về triển khai xác thực GPON Number."
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Mục tiêu"
+  },
+  {
+    "type": "paragraph",
+    "text": "Chuyển xác thực từ SLID sang GPON Number."
+  },
+  {
+    "type": "paragraph",
+    "text": "Đồng bộ dữ liệu với OLT."
+  },
+  {
+    "type": "paragraph",
+    "text": "Tự động hóa toàn trình."
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Kết quả triển khai"
+  },
+  {
+    "type": "paragraph",
+    "text": "03 chương trình đã triển khai."
+  },
+  {
+    "type": "paragraph",
+    "text": "12+ nghiệp vụ được tự động hóa."
+  },
+  {
+    "type": "paragraph",
+    "text": "100% hỗ trợ xác thực GPON Number (SN)."
+  },
+  {
+    "type": "paragraph",
+    "text": "Đã hoàn thành giai đwoạn kiểm thử nội bộ."
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Các chương trình đã triển khai"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Các nghiệp vụ tự động (12+)"
+  },
+  {
+    "type": "paragraph",
+    "text": "Lắp đặt mới."
+  },
+  {
+    "type": "paragraph",
+    "text": "Chấm dứt sử dụng."
+  },
+  {
+    "type": "paragraph",
+    "text": "Khóa / Mở dịch vụ."
+  },
+  {
+    "type": "paragraph",
+    "text": "Hủy port cũ – Hợp đồng lắp đặt mới."
+  },
+  {
+    "type": "paragraph",
+    "text": "Đổi port mới – Hợp đồng lắp đặt mới."
+  },
+  {
+    "type": "paragraph",
+    "text": "Cấu hình mới IMS – Chuyển đổi cáp đồng sang IMS."
+  },
+  {
+    "type": "paragraph",
+    "text": "Hủy port cũ – Danh bạ."
+  },
+  {
+    "type": "paragraph",
+    "text": "Đổi port mới – Danh bạ."
+  },
+  {
+    "type": "paragraph",
+    "text": "Dịch chuyển."
+  },
+  {
+    "type": "paragraph",
+    "text": "Xóa cổng cũ – Dịch chuyển."
+  },
+  {
+    "type": "paragraph",
+    "text": "Hủy port cũ – Hợp đồng dịch chuyển."
+  },
+  {
+    "type": "paragraph",
+    "text": "Đổi port mới – Hợp đồng dịch chuyển."
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "So sánh giải pháp"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Kiến nghị:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Duy trì đồng thời OMC và BNM."
+  },
+  {
+    "type": "paragraph",
+    "text": "Ưu tiên chương trình OMC trong vận hành bình thường."
+  },
+  {
+    "type": "paragraph",
+    "text": "BNM sử dụng như phương án dự phòng."
+  },
+  {
+    "type": "paragraph",
+    "text": "Thường xuyên đối soát dữ liệu theo GPON Number (SN)."
+  },
+  {
+    "type": "paragraph",
+    "text": "Tiếp tục mở rộng kịch bản, duy trì cơ chế ghi log."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Kế hoạch thực hiện tối ưu thiết bị truyền dẫn"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Tiến độ thực hiện tối ưu truyền dẫn đợt 1"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Tiến độ thực hiện tắt thiết bị 2G năm 2026"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Kế hoạch sản xuất kinh doanh năm 2026"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Báo cáo công tác chuyển đổi số (CĐS)"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Chuyển đổi số"
+  },
+  {
+    "type": "heading",
+    "level": 4,
+    "text": "Xây dựng và nâng cấp hệ thống:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Xây dựng hệ thống quản lý cơ sở hạ tầng:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Đã lên mô hình và đang thực hiện làm mới xây dựng cơ sở dữ liệu về cơ sở hạ tầng trực quan hơn."
+  },
+  {
+    "type": "paragraph",
+    "text": "Đang thực hiện triển khai hệ thống dashboard quản lý cơ sở hạ tầng, dựa trên cơ sở dữ liệu mới."
+  },
+  {
+    "type": "paragraph",
+    "text": "Có hiển thị số lượng tăng giảm cơ sở hạ tầng theo tháng; hiển thị số lượng phân loại từng loại trạm, theo khu vực, theo tổ Hạ tầng."
+  },
+  {
+    "type": "paragraph",
+    "text": "a) Thống kê số lượng trạm theo Tổ quản lý:"
+  },
+  {
+    "type": "paragraph",
+    "text": "b) Phân loại trạm theo công nghệ / loại hình:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Xây dựng hệ thống quản lý điện năng:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Đang thực hiện xây dựng hệ thống quản lý điện năng theo tháng; theo ngày, lịch cúp điện, hệ thống dashboard quản trị điện năng, hệ thống gửi tin nhắn SMS thông báo cho nhân viên khi có điện tăng bất thường trong ngày."
+  },
+  {
+    "type": "paragraph",
+    "text": "Xây dựng hệ thống quản lý các thiết bị phụ trợ:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Đã cập nhật thêm tính năng xuất excel thì xuất tất cả thông tin các thiết bị phụ trợ theo từng sheet."
+  },
+  {
+    "type": "paragraph",
+    "text": "Giao diện quản lý danh mục nhà trạm và các thiết bị phụ trợ (Máy lạnh, Accu, Tủ nguồn, Máy nổ) trực quan trên hệ thống."
+  },
+  {
+    "type": "paragraph",
+    "text": "Giao diện Hệ thống Quản lý Thiết bị Phụ trợ tại các Nhà trạm"
+  },
+  {
+    "type": "paragraph",
+    "text": "c) Thống kê thiết bị phụ trợ tại nhà trạm:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Xây dựng hệ thống quản lý vật tư sửa chữa:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Đã thực hiện và đang triển khai với kết quả như sau:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tổng số lượng vật tư: 61"
+  },
+  {
+    "type": "paragraph",
+    "text": "Số tờ trình: 14 tờ"
+  },
+  {
+    "type": "paragraph",
+    "text": "Triển khai giao diện quản lý chi tiết danh mục vật tư sửa chữa, tra cứu mã trạm, số tờ trình, loại vật tư đề xuất và tình trạng thiết bị."
+  },
+  {
+    "type": "paragraph",
+    "text": "Giao diện Quản lý Danh mục Vật tư Sửa chữa và Tờ trình Import"
+  },
+  {
+    "type": "paragraph",
+    "text": "Xây dựng hệ thống Smart-BTS:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tuần này không có báo cáo (lý do anh Vinh đi nghiệm thu nguyên tuần)."
+  },
+  {
+    "type": "paragraph",
+    "text": "Thu thập dữ liệu:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Nguồn thu thập dữ liệu: Trích xuất/tích hợp dữ liệu từ hệ thống RIMS; Tiếp nhận dữ liệu từ Tổ khai thác hệ thống; Tiếp nhận dữ liệu báo cáo gửi về từ các địa bàn."
+  },
+  {
+    "type": "paragraph",
+    "text": "Tiến độ thực hiện: Đang trong quá trình kiểm tra, rà soát tính chính xác của dữ liệu thu thập trước khi đưa vào luồng xử lý chung."
+  },
+  {
+    "type": "paragraph",
+    "text": "Chuẩn hóa dữ liệu:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Công việc đang thực hiện: Đang triển khai chuẩn hóa cơ sở dữ liệu hạ tầng từ các nguồn thu thập nêu trên."
+  },
+  {
+    "type": "paragraph",
+    "text": "Kế hoạch tiếp theo: Dự kiến sẽ tiếp tục chuẩn hóa dữ liệu chi tiết cho nhóm các thiết bị phụ trợ."
+  },
+  {
+    "type": "paragraph",
+    "text": "Điều hành dữ liệu:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Trực quan hóa dữ liệu (Dashboard): Đã xây dựng và đưa vào vận hành các Dashboard điều hành bao gồm:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Dashboard quản lý 5S: Theo dõi tiến độ thực hiện 5S lũy kế theo tuần của toàn Trung tâm và từng Tổ Hạ tầng (kỳ Tuần 5 hiện tại đạt 46% lũy kế / 45% yêu cầu với 765/1659 trạm đã làm)."
+  },
+  {
+    "type": "paragraph",
+    "text": "Dashboard Theo dõi Tiến độ Thực hiện 5S Toàn Trung tâm theo Tuần"
+  },
+  {
+    "type": "paragraph",
+    "text": "Thống kê lũy kế tiến độ thực hiện 5S theo Tổ Hạ tầng (đến Tuần 5 hiện tại):"
+  },
+  {
+    "type": "paragraph",
+    "text": "Dashboard quản lý thiết bị phụ trợ: Trực quan hóa số lượng và hiện trạng thiết bị phụ trợ nhà trạm."
+  },
+  {
+    "type": "paragraph",
+    "text": "Dashboard theo dõi chi phí / tiền điện: Trích xuất dữ liệu chi tiết từ các hệ thống điều hành tiêu thụ điện năng:"
+  },
+  {
+    "type": "paragraph",
+    "text": "a) Báo cáo Dashboard Quản lý Hóa đơn Điện lực & Biến động tiêu thụ theo tháng (Tháng 06/2026):"
+  },
+  {
+    "type": "paragraph",
+    "text": "Chỉ số KPIs nổi bật: Tổng số CSHT quản lý 1.732 trạm; Điện năng tiêu thụ 2.815.535 kWh (giảm 6.12% so với tháng trước; tăng 0.8% so với cùng kỳ); Tổng chi phí điện 6.576.396.917 VNĐ (giảm 5.72% so với tháng trước); CSHT tăng điện bất thường (>20% vs T-1) là 41 trạm; Lũy kế điện năng 16.809.592 kWh; Lũy kế chi phí điện 39.193.296.177 VNĐ."
+  },
+  {
+    "type": "paragraph",
+    "text": "Dashboard Điều hành Tiêu thụ Điện - KPIs Tháng nổi bật & Diễn biến lũy kế qua các tháng"
+  },
+  {
+    "type": "paragraph",
+    "text": "Top Tổ Hạ tầng Tiêu thụ Điện Cao nhất và Top Tổ Hạ tầng có Cảnh báo Bất thường Nhiều nhất"
+  },
+  {
+    "type": "paragraph",
+    "text": "Thống kê Top Tổ Hạ tầng có cảnh báo điện tăng bất thường nhiều nhất tháng 06/2026"
+  },
+  {
+    "type": "paragraph",
+    "text": "b) Báo cáo Dashboard Điều hành Tiêu thụ Điện ngày (Kỳ từ 01/07 - 31/07/2026):"
+  },
+  {
+    "type": "paragraph",
+    "text": "Biến động tổng hợp: Theo dõi 169 trạm:"
+  },
+  {
+    "type": "paragraph",
+    "text": "Trạm tăng điện: 64 trạm (Tăng 10–20%: 51 trạm, 20–30%: 5 trạm, 30%: 8 trạm)."
+  },
+  {
+    "type": "paragraph",
+    "text": "Trạm giảm điện: 105 trạm (Giảm 10–20%: 85 trạm, 20–30%: 12 trạm, 30%: 8 trạm)."
+  },
+  {
+    "type": "paragraph",
+    "text": "Toàn bộ danh sách 169 trạm điện có sản lượng thay đổi được trích xuất chi tiết tại Phụ lục 1 đính kèm báo cáo này."
+  },
+  {
+    "type": "paragraph",
+    "text": "Dashboard Điều hành Tiêu thụ Điện ngày (Thống kê Trạm thay đổi & Tổng hợp theo Tổ Hạ tầng)"
+  },
+  {
+    "type": "paragraph",
+    "text": "Thống kê Điện năng ngày theo Tổ Hạ tầng (Kỳ 01/07 - 31/07/2026)"
+  },
+  {
+    "type": "paragraph",
+    "text": "Khó khăn"
+  },
+  {
+    "type": "paragraph",
+    "text": "Dữ liệu hiện tại được thu thập từ nhiều nguồn khác nhau, chất lượng và định dạng chưa đồng bộ, đòi hỏi phải tiếp tục tốn thêm thời gian và nguồn lực để xử lý, chuẩn hóa."
+  },
+  {
+    "type": "paragraph",
+    "text": "Đề xuất"
+  },
+  {
+    "type": "paragraph",
+    "text": "Chưa có đề xuất mới trong kỳ báo cáo này."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Triển khai công cụ xử lý tự động trên App TNH Phối hợp địa bàn"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Kết quả phiếu XLSC MANE"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Tổng quan"
+  },
+  {
+    "type": "paragraph",
+    "text": "Kỳ báo cáo: 01/07/2026 – 31/07/2026"
+  },
+  {
+    "type": "paragraph",
+    "text": "Thời gian xuất báo cáo :01/08/2026"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tổng phiếu giao: 240 phiếu"
+  },
+  {
+    "type": "paragraph",
+    "text": "Hoàn thành: 240/240 phiếu (100%)"
+  },
+  {
+    "type": "paragraph",
+    "text": "Hoàn thành đúng hạn: 238 phiếu"
+  },
+  {
+    "type": "paragraph",
+    "text": "Hoàn thành quá hạn: 2 phiếu"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tỉ lệ đúng hạn: 99.17%"
+  },
+  {
+    "type": "paragraph",
+    "text": "Phiếu tồn quá hạn: 0 phiếu"
+  },
+  {
+    "type": "paragraph",
+    "text": "Nguồn dữ liệu:"
+  },
+  {
+    "type": "list_item",
+    "text": "https://onebss.vnpt.vn/#/qlsc/tientrinh-xuly-suco"
+  },
+  {
+    "type": "list_item",
+    "text": "https://tts.vnpt.vn/#/thong-ke/baocao-tonghop-xlsc-brcd-toantrinh-cd5"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B27_TUAN)",
+    "original_text": "Chi tiết theo tổ Hạ tầng(B27_TUAN)"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Nhận xét"
+  },
+  {
+    "type": "paragraph",
+    "text": "Phiếu XLSC MANE hoàn thành 99.17% phiếu giao (238/240 phiếu), không có phiếu tồn quá hạn."
+  },
+  {
+    "type": "paragraph",
+    "text": "Tổ Hạ tầng Tân An và Tổ Hạ tầng Bến Lức có 1 phiếu hoàn thành quá hạn."
+  },
+  {
+    "type": "paragraph",
+    "text": "Tổ Hạ tầng Tân An có tỉ lệ phiếu hoàn thành đúng hạn thấp nhất (97.30%)."
+  },
+  {
+    "type": "paragraph",
+    "text": "Tổ Hạ tầng Kiến Tường không phát sinh phiếu XLSC MANE trong kỳ báo cáo."
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Giải pháp"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tổ Khai thác tăng cường giám sát, đôn đốc các tổ Hạ tầng nghiệm thu phiếu."
+  },
+  {
+    "type": "paragraph",
+    "text": "Nâng cao vai trò tổ trưởng Hạ tầng điều phối nhân viên tổ nghiệm thu phiếu đúng hạn."
+  },
+  {
+    "type": "paragraph",
+    "text": "Tổ Khai thác chủ động theo dõi, nghiệm thu các phiếu sắp quá hạn."
+  },
+  {
+    "type": "paragraph",
+    "text": "Định kỳ kiểm tra nghiệm thu phiếu vào các khung giờ đã nhắc hẹn trên các group zalo, đặc biệt khung giờ ban đêm trước 23h tối"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Kết quả phiếu XLSC Access"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Tổng quan"
+  },
+  {
+    "type": "paragraph",
+    "text": "Kỳ báo cáo: 01/07/2026 – 31/07/2026"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tổng phiếu giao: 945 phiếu"
+  },
+  {
+    "type": "paragraph",
+    "text": "Hoàn thành: 945/945 phiếu"
+  },
+  {
+    "type": "paragraph",
+    "text": "Hoàn thành đúng hạn: 928 phiếu"
+  },
+  {
+    "type": "paragraph",
+    "text": "Hoàn thành quá hạn: 17 phiếu"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tỉ lệ đúng hạn: 98.20%"
+  },
+  {
+    "type": "paragraph",
+    "text": "Phiếu tồn quá hạn: 0 phiếu"
+  },
+  {
+    "type": "paragraph",
+    "text": "Nguồn dữ liệu:"
+  },
+  {
+    "type": "list_item",
+    "text": "https://onebss.vnpt.vn/#/qlsc/tientrinh-xuly-suco"
+  },
+  {
+    "type": "list_item",
+    "text": "https://tts.vnpt.vn/#/thong-ke/baocao-tonghop-xlsc-brcd-toantrinh-cd5"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B28_TUAN)",
+    "original_text": "Chi tiết theo tổ Hạ tầng(B28_TUAN)"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Nhận xét"
+  },
+  {
+    "type": "paragraph",
+    "text": "Phiếu XLSC ACCESS hoàn thành 98.20% phiếu giao (928/945 phiếu)."
+  },
+  {
+    "type": "paragraph",
+    "text": "17 phiếu hoàn thành quá hạn do nghiệm thu đóng phiếu chậm."
+  },
+  {
+    "type": "paragraph",
+    "text": "Tổ Hạ tầng Kiến Tường có số phiếu quá hạn nhiều nhất (7 phiếu) và tỉ lệ phiếu hoàn thành đúng hạn thấp nhất (95.39%)."
+  },
+  {
+    "type": "paragraph",
+    "text": "Tổ Hạ tầng Gò Dầu và Tổ Hạ tầng Tân Châu đạt tỉ lệ đúng hạn cao nhất (100.00%)."
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Giải pháp"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tổ Hạ tầng khi chủ động tối ưu mạng lưới, xử lý khắc phục sự cố cần theo dõi tin nhắn phiếu sự cố Access để kịp thời nghiệm thu phiếu."
+  },
+  {
+    "type": "paragraph",
+    "text": "Nâng cao vai trò tổ trưởng Hạ tầng theo dõi và điều phối nhân viên tổ đóng phiếu đúng hạn."
+  },
+  {
+    "type": "paragraph",
+    "text": "Tổ Khai thác chủ động theo dõi, phối hợp tổ Hạ tầng nghiệm thu các phiếu sắp quá hạn."
+  },
+  {
+    "type": "paragraph",
+    "text": "Định kỳ kiểm tra nghiệm thu phiếu vào các khung giờ đã nhắc hẹn trên các group zalo, đặc biệt khung giờ ban đêm trước 23h tối."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Kết quả phiếu XLSC vô tuyến"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Tổng quan"
+  },
+  {
+    "type": "paragraph",
+    "text": "Kỳ báo cáo: 01/07/2026 – 31/07/2026"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tổng phiếu giao: 2489 phiếu"
+  },
+  {
+    "type": "paragraph",
+    "text": "Hoàn thành: 2481/2489 phiếu"
+  },
+  {
+    "type": "paragraph",
+    "text": "Hoàn thành đúng hạn: 2408 phiếu"
+  },
+  {
+    "type": "paragraph",
+    "text": "Hoàn thành quá hạn: 73 phiếu"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tỉ lệ đúng hạn: 97.06%"
+  },
+  {
+    "type": "paragraph",
+    "text": "Phiếu tồn quá hạn: 0 phiếu"
+  },
+  {
+    "type": "paragraph",
+    "text": "Nguồn dữ liệu:"
+  },
+  {
+    "type": "list_item",
+    "text": "https://onebss.vnpt.vn/#/qlsc/tientrinh-xuly-suco"
+  },
+  {
+    "type": "list_item",
+    "text": "https://tts.vnpt.vn/#/thong-ke/baocao-tonghop-xlsc-tvt-toanmang-new-cd5"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B29_TUAN)",
+    "original_text": "Chi tiết theo tổ Hạ tầng(B29_TUAN)"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Nhận xét"
+  },
+  {
+    "type": "paragraph",
+    "text": "Phiếu XLSC Vô Tuyến hoàn thành đạt tỉ lệ 97.06% phiếu giao."
+  },
+  {
+    "type": "paragraph",
+    "text": "Tổ Hạ tầng Kiến Tường có số phiếu quá hạn nhiều nhất (18 phiếu) và tỉ lệ hoàn thành đúng hạn thấp nhất (95.63%)."
+  },
+  {
+    "type": "paragraph",
+    "text": "Tổ Hạ tầng Tân Ninh có số phiếu quá hạn thấp nhất (5 phiếu) và  đạt tỉ lệ đúng hạn cao nhất (96.67%)."
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Giải pháp"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tổ Khai thác tăng cường giám sát, đôn đốc các tổ Hạ tầng nghiệm thu phiếu."
+  },
+  {
+    "type": "paragraph",
+    "text": "Hướng dẫn các bước thủ tục chuyển bước và nghiệm thu phiếu cho nhân viên tổ Hạ tầng."
+  },
+  {
+    "type": "paragraph",
+    "text": "Nhắc nhở các nhân viên có thời gian nghiệm thu đóng phiếu quá hạn và kéo dài."
+  },
+  {
+    "type": "paragraph",
+    "text": "Tổ Khai thác chủ động theo dõi, nghiệm thu các phiếu sắp quá hạn."
+  },
+  {
+    "type": "paragraph",
+    "text": "Định kỳ kiểm tra nghiệm thu phiếu vào các khung giờ đã nhắc hẹn trên các group zalo, đặc biệt khung giờ ban đêm trước 23h tối."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Kết quả phiếu XLSC Cell CLK"
+  },
+  {
+    "type": "paragraph",
+    "text": "Trong tuần không ghi nhận sự cố Cell CLK"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Kết quả phiếu XLSC mạng ngoại vi"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Tổng quan"
+  },
+  {
+    "type": "paragraph",
+    "text": "Kỳ báo cáo: 01/07/2026 – 31/07/2026"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tổng phiếu giao: 228 phiếu (Tây Ninh: 21 | Long An: 207 )"
+  },
+  {
+    "type": "paragraph",
+    "text": "Hoàn thành: 226/228 phiếu"
+  },
+  {
+    "type": "paragraph",
+    "text": "Hoàn thành đúng hạn: 266 phiếu"
+  },
+  {
+    "type": "paragraph",
+    "text": "Hoàn thành quá hạn: 2 phiếu"
+  },
+  {
+    "type": "paragraph",
+    "text": "Tỉ lệ đúng hạn: 99.12%"
+  },
+  {
+    "type": "paragraph",
+    "text": "Phiếu tồn quá hạn: 2 phiếu"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B30_TUAN)",
+    "original_text": "Thống kê theo khu vực(B30_TUAN)"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Nhận xét"
+  },
+  {
+    "type": "paragraph",
+    "text": "Không phát sinh phiếu quá hạn."
+  },
+  {
+    "type": "paragraph",
+    "text": "Có  2 phiếu  xử lý quá hạn (tại Long An)."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Kết quả cấu hình tự động tháng 7"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Kết quả thực hiện"
+  },
+  {
+    "type": "paragraph",
+    "text": "Thời gian lấy báo cáo : 01/07/2026- 31/07/2026."
+  },
+  {
+    "type": "paragraph",
+    "text": "Thời gian xuất báo cáo : 05/08/2026."
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B31_QUY)",
+    "original_text": "(B31_QUY)"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Các nguyên nhân chính"
+  },
+  {
+    "type": "paragraph",
+    "text": "Ngày 09/07 xảy ra lỗi dòng thiết bị mới iGate 040NS-Ver2 chưa được ANSV định tuyến về server CPE nên không đổ được cấu hình tự động."
+  },
+  {
+    "type": "paragraph",
+    "text": "Ngày 17/07 xảy ra lỗi hạ tầng mạng lưới của VNPT IT nên ảnh hưởng tỷ lệ cấu hình tự động của cả nước (giảm xuống 96%) => hiện tại IT đã xử lý xong, theo dõi sau lỗi."
+  },
+  {
+    "type": "paragraph",
+    "text": "Ngày 25/07 TTVT Đức Hòa có triển khai lắp mới 40 thuê bao FTTH XGSPON cho khách hàng triển khai mô hình Phone Farm. Do số lượng triển khai lớn và khách hàng yêu cầu bàn giao gấp nên có 25 thuê bao thực hiện cấu hình nhân công."
+  },
+  {
+    "type": "paragraph",
+    "text": "Cấu hình tự động dòng thiết bị mới iGate 040NS-Ver2 vẫn tồn tại 02 lỗi: 1. Lỗi không đồng bộ trạng thái cấu hình giữa GNMS – Onegate - OneBSS, trên GNMS ghi nhận thành công nhưng Onegate gửi sang OneBSS lại không thành công; 2. Lỗi có 1 vài ONU nhận được ip quản lý nhưng lên được quản lý trên GNMS chậm => VNPT Net/Tech đã thực hiện xử lý, cần theo dõi thêm."
+  },
+  {
+    "type": "paragraph",
+    "text": "Một số trường hợp ONT nhận IP nhưng không lên được GNMS => VNPT Net/Tech xác định nguyên nhân do thiếu tham số trên thiết bị iGate GW040-NSv1, dự kiến 31/07 VNPT Tech phát hành firmware sửa lỗi. => Chưa thấy VNPT Net/Tech phát hành firmware."
+  },
+  {
+    "type": "paragraph",
+    "text": "Nghiệp vụ Thay thế ONT: Employee/OneBSS lỗi, hoạt động không ổn định khi thực hiện quy trình thay thế => VNPT IT báo đã hoàn thành tuy nhiên qua theo dõi đánh giá vẫn chưa lấy được wifi, pass pppoe; trong trường hợp không lấy được VNPT Net đang trao đổi đề xuất VNPT IT cần có thông báo để KTĐB nhập mới. VNPT IT dự kiến 31/07 hoàn thành."
+  },
+  {
+    "type": "paragraph",
+    "text": "Lỗi thao tác đến từ NVKT khi lắp đặt không tuân thủ đúng quy trình dẫn đến treo lệnh trên hệ thống CPE và không đổ được cấu hình tự động => Đã có ban hành hướng dẫn nhắc nhở các TTVT tuân thủ quy trình thực hiện để hạn chế phát sinh lỗi."
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Các vấn đề tồn tại cần xử lý"
+  },
+  {
+    "type": "heading",
+    "level": 1,
+    "text": "KẾ HOẠCH THÁNG 8 :"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Phân rã kế hoạch kế hoạch năm 2026"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Định hướng thực hiện tháng 8"
+  },
+  {
+    "type": "paragraph",
+    "text": "Triển khai hệ thống CEM phục vụ công tác giám sát và quản lý chất lượng mạng."
+  },
+  {
+    "type": "paragraph",
+    "text": "Hoàn thành cấu hình LLDP trên hệ thống thiết bị, phục vụ công tác quản lý, giám sát và chuẩn hóa dữ liệu hạ tầng."
+  },
+  {
+    "type": "paragraph",
+    "text": "Tập trung giảm thời gian mất liên lạc (MLL); nâng cao hiệu quả điều hành ứng cứu và rút ngắn thời gian xử lý sự cố."
+  },
+  {
+    "type": "paragraph",
+    "text": "Đẩy mạnh xử lý các tuyến GPON có chất lượng đường dây kém, giảm suy hao và nâng cao chất lượng dịch vụ thuê bao."
+  },
+  {
+    "type": "paragraph",
+    "text": "Tiếp tục tối ưu OLT, cân tải lưu lượng, chuyển Port PON và tối ưu tài nguyên mạng."
+  },
+  {
+    "type": "paragraph",
+    "text": "Hoàn thiện triển khai cấu hình tự động; nâng tỷ lệ cấu hình thành công và giảm tối đa các trường hợp phải cấu hình thủ công."
+  },
+  {
+    "type": "paragraph",
+    "text": "Triển khai đồng bộ Chuyên đề 5; chuẩn hóa quy trình điều hành và theo dõi KPI theo bộ chỉ số mới."
+  },
+  {
+    "type": "paragraph",
+    "text": "Chuẩn hóa dữ liệu hạ tầng, dữ liệu điều hành và hoàn thiện Dashboard phục vụ công tác giám sát, cảnh báo sớm."
+  },
+  {
+    "type": "paragraph",
+    "text": "Tăng cường kiểm tra nguồn điện, thiết bị dự phòng và vật tư thay thế nhằm giảm thời gian xử lý các sự cố thiết bị."
+  },
+  {
+    "type": "paragraph",
+    "text": "Phối hợp với các TTVT xử lý các chỉ tiêu chất lượng chưa đạt, đặc biệt là các chỉ tiêu về MLL, QoS/QoE, chất lượng đường dây GPON và tỷ lệ xử lý sự cố đúng hạn."
+  },
+  {
+    "type": "paragraph",
+    "text": "Tiếp tục ứng dụng AI và tự động hóa trong công tác giám sát, tổng hợp số liệu và điều hành mạng lưới nhằm nâng cao năng suất, hiệu quả và chất lượng vận hành."
+  },
+  {
+    "type": "paragraph",
+    "text": "Trên đây là báo cáo sơ kết kết quả thực hiện nhiệm vụ  tháng 7 năm 2026 của Trung tâm Hạ tầng. Kính trình Ban Giám đốc xem xét, chỉ đạo."
+  },
+  {
+    "type": "paragraph",
+    "text": "Trân trọng báo cáo./."
+  },
+  {
+    "type": "paragraph",
+    "text": "PHỤ LỤC 01:"
+  },
+  {
+    "type": "table_tag",
+    "tag": "(B32_HAN)",
+    "original_text": "GIẢI TRÌNH NGUYÊN NHÂN MẤT LIÊN LẠC TRẠM TRÊN 120 PHÚT TUẦN 31(B32_HAN)"
+  },
+  {
+    "type": "paragraph",
+    "text": "(Kèm theo Báo cáo số: 2302/BC-TTHT-KTHT, ngày /07/2026))"
+  },
+  {
+    "type": "paragraph",
+    "text": "PHỤ LỤC 02:"
+  },
+  {
+    "type": "paragraph",
+    "text": "CHI TIẾT SỐ LƯỢNG PHIẾU QUÁ HẠN CĐ5"
+  },
+  {
+    "type": "paragraph",
+    "text": "TỔ KTHT - TRUNG TÂM HẠ TẦNG – TÂY NINH"
+  }
+]
