@@ -4,7 +4,8 @@ import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { REPORT_SOURCES, MONTHLY_REPORT_SOURCES, WEEKLY_MLL_SOURCES, type ReportKey } from "@/lib/reports";
-import { Loader2, Plus, Trash2 } from "lucide-react";
+import Link from 'next/link';
+import { Loader2, Plus, Trash2, Calendar } from "lucide-react";
 import toast from "react-hot-toast";
 import ShiftHandover from "@/components/ShiftHandover";
 import InspectionLog from "@/components/InspectionLog";
@@ -763,6 +764,15 @@ export default function Dashboard() {
               </div>
             )}
           </div>
+          <button className={`nav-item ${activeTab === 'schedule' ? 'active' : ''}`} onClick={() => { setActiveTab('schedule'); setActiveReportKey('schedule'); }}>
+            <Calendar size={18} /> Quản lý Lịch
+          </button>
+          <div className="nav-divider" />
+          <Link href="/demo" style={{ textDecoration: 'none' }}>
+            <button className="nav-item" style={{ width: '100%', color: '#3b82f6' }}>
+              ✨ Demo Web Editor
+            </button>
+          </Link>
           <button className={`nav-item ${activeTab === 'handover' ? 'active' : ''}`} onClick={() => setActiveTab('handover')}>
             Sổ Giao Ca
           </button>

@@ -11,6 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
 from process_cd5 import process_cd5
+from generate_demo_report import generate_demo_report_from_json, DemoExportRequest
 
 app = FastAPI(
     title="VNPT Tây Ninh - Báo Cáo Chuyên Đề 5 API",
@@ -375,6 +376,23 @@ async def export_word_monthly(request: Request):
         }
     )
 
+@app.post("/demo-export", summary="Demo Web Editor Export")
+async def demo_export(request: DemoExportRequest):
+    try:
+        ROOT = Path(__file__).parent.parent
+        template_path = ROOT / "templates" / "BAO_CAO" / "BÁO CÁO MẪU.docx"
+        
+        output_io = generate_demo_report_from_json(request, str(template_path))
+        
+        return Response(
+            content=output_io.read(),
+            media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            headers={
+                "Content-Disposition": "attachment; filename*=UTF-8''BAO_CAO_DEMO.docx",
+            }
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 if __name__ == "__main__":
