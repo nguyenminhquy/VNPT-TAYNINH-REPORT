@@ -1028,29 +1028,7 @@ export default function Dashboard() {
                                   >
                                     📥 Tải file mẫu
                                   </a>
-      
-                                  <a
-                                    href={`/templates/${encodeURIComponent(source.filename)}`}
-                                    download={source.filename}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    style={{
-                                      display: 'flex',
-                                      alignItems: 'center',
-                                      justifyContent: 'center',
-                                      gap: 6,
-                                      padding: '10px 14px',
-                                      borderRadius: 8,
-                                      background: '#3b82f6',
-                                      color: '#fff',
-                                      fontWeight: 600,
-                                      fontSize: '0.9rem',
-                                      textDecoration: 'none',
-                                      boxShadow: '0 2px 6px rgba(59, 130, 246, 0.2)',
-                                    }}
-                                  >
-                                    📥 Tải file mẫu
-                                  </a>
+
                                   <div className="file-input-wrapper">
                                   <button className="btn-upload" style={{ width: '100%' }}>
                                     {uploadingKey === source.key ? (
@@ -1230,29 +1208,7 @@ export default function Dashboard() {
                                   >
                                     📥 Tải file mẫu
                                   </a>
-      
-                                  <a
-                                    href={`/templates/${encodeURIComponent(source.filename)}`}
-                                    download={source.filename}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    style={{
-                                      display: 'flex',
-                                      alignItems: 'center',
-                                      justifyContent: 'center',
-                                      gap: 6,
-                                      padding: '10px 14px',
-                                      borderRadius: 8,
-                                      background: '#3b82f6',
-                                      color: '#fff',
-                                      fontWeight: 600,
-                                      fontSize: '0.9rem',
-                                      textDecoration: 'none',
-                                      boxShadow: '0 2px 6px rgba(59, 130, 246, 0.2)',
-                                    }}
-                                  >
-                                    📥 Tải file mẫu
-                                  </a>
+
                                   <div className="file-input-wrapper">
                                   <button className="btn-upload" style={{ width: '100%' }}>
                                     {uploadingKey === source.key ? (
@@ -1408,28 +1364,6 @@ export default function Dashboard() {
                               </a>
                             )}
 
-                                  <a
-                                    href={`/templates/${encodeURIComponent(source.filename)}`}
-                                    download={source.filename}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    style={{
-                                      display: 'flex',
-                                      alignItems: 'center',
-                                      justifyContent: 'center',
-                                      gap: 6,
-                                      padding: '10px 14px',
-                                      borderRadius: 8,
-                                      background: '#3b82f6',
-                                      color: '#fff',
-                                      fontWeight: 600,
-                                      fontSize: '0.9rem',
-                                      textDecoration: 'none',
-                                      boxShadow: '0 2px 6px rgba(59, 130, 246, 0.2)',
-                                    }}
-                                  >
-                                    📥 Tải file mẫu
-                                  </a>
                                   <div className="file-input-wrapper">
                               <button className="btn-upload" style={{ width: '100%' }}>
                                 {uploadingKey === source.key ? (
