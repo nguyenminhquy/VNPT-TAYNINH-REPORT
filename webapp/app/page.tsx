@@ -40,7 +40,7 @@ export default function Dashboard() {
   
   const [reportSources, setReportSources] = useState<any[]>([]);
   const [cacheData, setCacheData] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState<"overview" | "details" | "monthly_details" | "weekly_mll" | "special5" | "petition" | "handover" | "inspection" | "generator" | "schedule" | "demo">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "details" | "monthly_details" | "weekly_mll" | "special5" | "petition" | "handover" | "inspection" | "generator" | "schedule">("overview");
   const [activeReportKey, setActiveReportKey] = useState<string | null>("upload");
   const [isExporting, setIsExporting] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -768,11 +768,6 @@ export default function Dashboard() {
             <Calendar size={18} /> Quản lý Lịch
           </button>
           <div className="nav-divider" />
-          <Link href="/demo" style={{ textDecoration: 'none' }}>
-            <button className={`nav-item ${activeTab === 'demo' ? 'active' : ''}`} style={{ width: '100%', color: '#3b82f6', display: 'flex', alignItems: 'flex-start' }}>
-              ✨ DEMO
-            </button>
-          </Link>
           <button className={`nav-item ${activeTab === 'handover' ? 'active' : ''}`} onClick={() => setActiveTab('handover')}>
             Sổ Giao Ca
           </button>
