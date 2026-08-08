@@ -35,18 +35,37 @@ export default function SmartPasteTable({ title, initialColumns, initialData }: 
     setIsModalOpen(false);
   };
 
-  const parseNumber = (val: string) => {
-    if (!val) return 0;
-    // Remove formatting like commas
-    const cleaned = val.replace(/,/g, '');
+  const parseNumber = (val: any) => {
+    if (val === null || val === undefined || val === '') return 0;
+    const strVal = val.toString().trim();
+    let cleaned = strVal.replace(/%/g, '').trim();
+    
+    // Handle Vietnamese number formats
+    if (cleaned.includes(',') && !cleaned.includes('.')) {
+      cleaned = cleaned.replace(/,/g, '.');
+    } else if (cleaned.includes('.') && cleaned.includes(',')) {
+      if (cleaned.lastIndexOf(',') > cleaned.lastIndexOf('.')) {
+        // VN format: 1.234,56
+        cleaned = cleaned.replace(/\./g, '').replace(',', '.');
+      } else {
+        // US format: 1,234.56
+        cleaned = cleaned.replace(/,/g, '');
+      }
+    }
+    
     const num = parseFloat(cleaned);
     return isNaN(num) ? 0 : num;
   };
 
+  const normalizeStr = (s: string) => {
+    return s.toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") // remove accents
+      .replace(/[^a-z0-9]/g, "");      // remove spaces and special chars
+  };
+
   const handleAnalyze = () => {
     setIsAnalyzing(true);
-    // Simple mock logic for analyzing TSV
-    // Assume rows are separated by newline, columns by tab
     const rows = pasteText.split(/\r?\n/).filter(r => r.trim());
     if (rows.length === 0) {
       alert("Không có dữ liệu hợp lệ!");
@@ -54,27 +73,53 @@ export default function SmartPasteTable({ title, initialColumns, initialData }: 
       return;
     }
 
-    const newChanges = [];
-    const headers = rows[0].split('\t').map(h => h.trim());
+    const newChanges: any[] = [];
+    const idKey = columns[0]?.key;
+    if (!idKey) {
+      setIsAnalyzing(false);
+      return;
+    }
+
+    const firstRowCells = rows[0].split('\t').map(c => c.trim());
+    const isFirstRowData = data.some(d => 
+      d[idKey] && normalizeStr(d[idKey].toString()) === normalizeStr(firstRowCells[0])
+    );
     
-    // Find matching columns in current table
-    const colMap: Record<number, string> = {};
-    headers.forEach((h, idx) => {
-      const match = columns.find(c => c.label.toLowerCase() === h.toLowerCase());
-      if (match) {
-        colMap[idx] = match.key;
+    let colMap: Record<number, string> = {};
+    let startIndex = 0;
+
+    if (isFirstRowData) {
+      // Paste content doesn't have headers
+      columns.forEach((c, idx) => {
+        colMap[idx] = c.key;
+      });
+      startIndex = 0;
+    } else {
+      // Paste content has headers
+      startIndex = 1;
+      firstRowCells.forEach((h, idx) => {
+        const normH = normalizeStr(h);
+        const match = columns.find(c => normalizeStr(c.label) === normH || normalizeStr(c.key) === normH);
+        if (match) {
+          colMap[idx] = match.key;
+        }
+      });
+      
+      // Fallback: map by position if fuzzy match failed but length is same
+      if (Object.keys(colMap).length <= 1 && firstRowCells.length === columns.length) {
+        columns.forEach((c, idx) => {
+          colMap[idx] = c.key;
+        });
       }
-    });
+    }
 
-    // We assume the first column is the "ID" or "Name" (e.g., THT)
-    const idKey = columns[0].key;
-
-    for (let i = 1; i < rows.length; i++) {
+    for (let i = startIndex; i < rows.length; i++) {
       const cells = rows[i].split('\t').map(c => c.trim());
       if (cells.length === 0) continue;
       
       const idVal = cells[0];
-      const existingRow = data.find(d => d[idKey] === idVal);
+      const normIdVal = normalizeStr(idVal);
+      const existingRow = data.find(d => d[idKey] && normalizeStr(d[idKey].toString()) === normIdVal);
       
       if (existingRow) {
         const changes: Record<string, { old: any, new: any }> = {};
@@ -97,14 +142,19 @@ export default function SmartPasteTable({ title, initialColumns, initialData }: 
 
         if (hasChanges) {
           newChanges.push({
-            id: idVal,
+            id: existingRow[idKey],
             changes
           });
         }
       }
     }
 
+    if (newChanges.length === 0) {
+      alert("Không tìm thấy thay đổi nào hoặc ID không khớp!");
+    }
+
     setPreviewChanges(newChanges);
+    setIsAnalyzing(false);
   };
 
   const applyChanges = () => {
