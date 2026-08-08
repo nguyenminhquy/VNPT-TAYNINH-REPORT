@@ -139,9 +139,10 @@ export const WEEKLY_MLL_SOURCES = [
 ] as const;
 
 export type ReportKey = 
+  | (typeof REPORT_SOURCES)[number]["key"]
   | (typeof MONTHLY_REPORT_SOURCES)[number]["key"]
   | (typeof WEEKLY_MLL_SOURCES)[number]["key"];
 
 export const REPORT_MAP = Object.fromEntries(
-  [...MONTHLY_REPORT_SOURCES, ...WEEKLY_MLL_SOURCES].map((s) => [s.key, s])
+  [...REPORT_SOURCES, ...MONTHLY_REPORT_SOURCES, ...WEEKLY_MLL_SOURCES].map((s) => [s.key, s])
 ) as Record<ReportKey, any>;
