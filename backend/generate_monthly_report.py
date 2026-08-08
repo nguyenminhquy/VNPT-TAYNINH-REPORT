@@ -39,13 +39,16 @@ FILES = {
     "mbb": "1. BÁO CÁO MBB_HUNG.xlsx",
     "fbb": "2. BÁO CÁO FBB_BAO.xlsx",
     "mytv": "3. BÁO CÁO MYTV_TÂN.xlsx",
-    "mll": "4. BÁO CÁO MLL_KHANH.xlsx",
     "ispeed": "5. BÁO CÁO ISPEED_QUOC.xlsx",
     "5s": "6. BÁO CÁO 5S NHÀ TRẠM_TÂN.xlsx",
     "xlsc": "7.BÁO CÁO XLSC_TUẤN.xlsx",
     "appendix": "8.PHỤ LỤC 1_HÂN.xlsx",
     "omc_tam": "9.HIỆN TRẠNG THIẾT BỊ_TÂM.xlsx",
-    "omc_nhi": "10. BÁO CÁO BSC_NHI.xlsx"
+    "omc_nhi": "10. BÁO CÁO BSC_NHI.xlsx",
+    "phutro_quy": "11. THIẾT BỊ PHỤ TRỢ_QUÝ.xlsx",
+    "ngoaivi_bao": "12. MẠNG NGOẠI VI_BẢO.xlsx",
+    "ngoaivi_tuan": "13. XLSC MẠNG NGOẠI VI_TUẤN.xlsx",
+    "cauhinh_quy": "14. CẤU HÌNH TỰ ĐỘNG_QUÝ.xlsx"
 }
 
 
@@ -257,74 +260,70 @@ def find_table_by_tag(document: DocumentType, tag: str, offset: int = 0) -> Any:
             table_idx += 1
     return None
 
-def remove_omc_tags(document: DocumentType) -> None:
+def remove_tags(document: DocumentType) -> None:
     import re
+    pattern = r'\([Bb]\d+G?(?:_[^\)]+)?\)'
     for paragraph in document.paragraphs:
-        if 'OMC_' in paragraph.text:
-            text = re.sub(r'\(OMC_[A-Z_]+\)', '', paragraph.text)
+        if re.search(pattern, paragraph.text):
+            text = re.sub(pattern, '', paragraph.text)
             replace_paragraph(paragraph, text.strip())
     for table in document.tables:
         for row in table.rows:
             for cell in row.cells:
                 for paragraph in cell.paragraphs:
-                    if 'OMC_' in paragraph.text:
-                        text = re.sub(r'\(OMC_[A-Z_]+\)', '', paragraph.text)
+                    if re.search(pattern, paragraph.text):
+                        text = re.sub(pattern, '', paragraph.text)
                         replace_paragraph(paragraph, text.strip())
 
 def update_mbb_fbb_mytv(document: DocumentType, sources: dict[str, Any]) -> None:
-    mbb = sources["mbb"]
-    fbb = sources["fbb"]
-    mytv = sources["mytv"]
+    mbb = sources.get("mbb")
+    fbb = sources.get("fbb")
+    mytv = sources.get("mytv")
 
-    common = worksheet_matrix(mbb["Kết quả chung"], 4, 6, 1, 4)
-    for row in common[1:]:
-        row[2] = decimal(row[2])
-        row[3] = decimal(row[3])
+    if mbb:
+        try:
+            common = worksheet_matrix(mbb["Kết quả chung"], 4, 6, 1, 4)
+            for row in common[1:]:
+                row[2] = decimal(row[2])
+                row[3] = decimal(row[3])
+            t15 = find_table_by_tag(document, "B15_HUNG")
+            if t15: write_table_matrix(t15, common)
+        except Exception: pass
 
-    comparison = worksheet_matrix(mbb["So sánh các tỉnh"], 3, 7, 1, 3)
+        try:
+            comparison = worksheet_matrix(mbb["So sánh các tỉnh"], 3, 7, 1, 3)
+            t16 = find_table_by_tag(document, "B16_HUNG")
+            if t16: write_table_matrix(t16, comparison)
+        except Exception: pass
 
-    mbb_detail = worksheet_matrix(mbb["Kết quả chi tiết"], 4, 12, 1, 8)
-    fbb_detail = worksheet_matrix(fbb["Thông tin chung"], 2, 17, 1, 8)
+        try:
+            mbb_detail = worksheet_matrix(mbb["Kết quả chi tiết"], 4, 12, 1, 8)
+            t17 = find_table_by_tag(document, "B17_HUNG")
+            if t17: write_table_matrix(t17, mbb_detail)
+        except Exception: pass
 
-    mytv_rows = raw_matrix(mytv["Sheet1"], 3, 16, 1, 8)
-    mytv_detail: list[list[str]] = []
-    for row in mytv_rows:
-        total = row[6]
-        mytv_detail.append(
-            [
-                clean(row[0]),
-                clean(row[1]),
-                clean(row[3]),
-                clean(row[4]),
-                clean(row[5]),
-                clean(total),
-                evaluate_target(total),
-                clean(row[7]),
-            ]
-        )
-        
-    t18 = None
-    t18_idx = -1
-    for idx, table in enumerate(document.tables):
-        for row in table.rows:
-            for cell in row.cells:
-                if "Mạng di động(OMC_HUNG)" in cell.text:
-                    t18 = table
-                    t18_idx = idx
-                    break
-            if t18: break
-        if t18: break
-            
-    if t18:
-        if t18_idx >= 2:
-            write_table_matrix(document.tables[t18_idx - 2], common)
-        if t18_idx >= 1:
-            write_table_matrix(document.tables[t18_idx - 1], comparison)
-        
-        write_table_matrix(t18, mbb_detail, start_row=3)
-        write_table_matrix(t18, fbb_detail, start_row=13)
-        write_table_matrix(t18, mytv_detail, start_row=30)
+    if fbb:
+        try:
+            fbb_detail = worksheet_matrix(fbb["Thông tin chung"], 2, 17, 1, 8)
+            t18 = find_table_by_tag(document, "B18_BAO")
+            if t18: write_table_matrix(t18, fbb_detail[0:3])
+            t19 = find_table_by_tag(document, "B19_BAO")
+            if t19: write_table_matrix(t19, fbb_detail[4:10])
+        except Exception: pass
 
+    if mytv:
+        try:
+            mytv_rows = raw_matrix(mytv["Sheet1"], 3, 16, 1, 8)
+            mytv_detail: list[list[str]] = []
+            for row in mytv_rows:
+                total = row[6]
+                mytv_detail.append([
+                    clean(row[0]), clean(row[1]), clean(row[3]), clean(row[4]),
+                    clean(row[5]), clean(total), evaluate_target(total), clean(row[7]),
+                ])
+            t14 = find_table_by_tag(document, "B14")
+            if t14: write_table_matrix(t14, mytv_detail)
+        except Exception: pass
 
 def mll_table_matrix(sheet: Any) -> tuple[list[list[str]], dict[str, Any]]:
     raw = raw_matrix(sheet, 2, 12, 1, 18)
@@ -363,48 +362,7 @@ def mll_table_matrix(sheet: Any) -> tuple[list[list[str]], dict[str, Any]]:
     return matrix, metrics
 
 
-def update_mll(document: DocumentType, sources: dict[str, Any]) -> str:
-    matrix, metrics = mll_table_matrix(sources["mll"]["BC MLL tuần"])
-    t = find_table_by_tag(document, "Thời gian MLL trạm vô tuyến (3G/4G/5G)(OMC_KHANH)")
-    if t:
-        replace_cell(t.rows[0].cells[0], matrix[0][0])
-        write_table_matrix(t, matrix[1:], start_row=3)
-
-    week = metrics["week"].group(1) if metrics["week"] else ""
-    replace_paragraph(document.paragraphs[36], f"Tổng thời gian mất liên lạc: {metrics['total']:,.0f} phút.")
-    replace_paragraph(document.paragraphs[37], f"MLL trung bình/1 BTS: {metrics['average']:.2f} phút.")
-
-    if week:
-        replace_paragraph(document.paragraphs[41], f"Đánh giá thời gian mất liên lạc vô tuyến tuần {week}:")
-        replace_paragraph(
-            document.paragraphs[50],
-            f"Nguyên nhân chi tiết các trạm MLL trong tuần {week} năm 2026 và các đánh giá, giải pháp khắc phục (Theo phụ lục 01 đính kèm)",
-        )
-        replace_paragraph(
-            document.paragraphs[121],
-            f"GIẢI TRÌNH NGUYÊN NHÂN MẤT LIÊN LẠC TRẠM TUẦN {week}",
-        )
-
-    achieved = sum(1 for _, average in metrics["teams"] if average <= 3.0)
-    replace_paragraph(
-        document.paragraphs[42],
-        f"{achieved}/7 THT có thời gian mất liên lạc đáp ứng chỉ tiêu của VTT (≤3 phút).",
-    )
-    highest = sorted(metrics["teams"], key=lambda item: item[1], reverse=True)[:3]
-    highest_text = ", ".join(f"THT {name} ({value:.2f} phút/1 trạm)" for name, value in highest)
-    replace_paragraph(
-        document.paragraphs[43],
-        "Thời gian mất liên lạc trung bình trên 1 trạm BTS cao nhất: " + highest_text + ".",
-    )
-
-    total = metrics["total"] or 1.0
-    replace_paragraph(document.paragraphs[45], f"MLL do lỗi nguồn ({metrics['cause_power'] / total:.0%})")
-    replace_paragraph(document.paragraphs[46], f"MLL do lỗi thiết bị ({metrics['cause_equipment'] / total:.0%})")
-    replace_paragraph(document.paragraphs[47], f"MLL do lỗi truyền dẫn ({metrics['cause_transmission'] / total:.0%})")
-    return week
-
-
-def update_ispeed(document: DocumentType, sources: dict[str, Any]) -> None:
+def update_mll(document: DocumentType, sources: dict[str, Any]) -> str:\n    return ""\n\ndef update_ispeed(document: DocumentType, sources: dict[str, Any]) -> None:
     sheet = sources["ispeed"]["Báo cáo"]
     raw = raw_matrix(sheet, 1, 9, 1, 11)
     matrix: list[list[str]] = []
@@ -427,7 +385,7 @@ def update_ispeed(document: DocumentType, sources: dict[str, Any]) -> None:
                 percent(row[10]),
             ]
         )
-    t = find_table_by_tag(document, "Đo kiểm i-Speed")
+    t = find_table_by_tag(document, "B23_QUOC")
     if t:
         write_table_matrix(t, matrix)
 
@@ -475,9 +433,9 @@ def update_5s(document: DocumentType, sources: dict[str, Any]) -> None:
     air_conditioning = format_5s_matrix(raw_matrix(sheet, 14, 23, 1, 6))
     ap_otb = format_5s_matrix(raw_matrix(sheet, 26, 35, 1, 6))
     
-    t_st = find_table_by_tag(document, "Tiến độ 5S nhà trạm:(OMC_TAN)")
-    t_ap = find_table_by_tag(document, "Tiến độ 5S AP/OTB:(OMC_TAN)")
-    t_ac = find_table_by_tag(document, "Tiến độ vệ sinh máy lạnh: (OMC_TAN)")
+    t_st = find_table_by_tag(document, "B24_TAN")
+    t_ap = find_table_by_tag(document, "B25_TAN")
+    t_ac = find_table_by_tag(document, "B26_TAN")
     if t_st: write_table_matrix(t_st, station)
     if t_ap: write_table_matrix(t_ap, ap_otb)
     if t_ac: write_table_matrix(t_ac, air_conditioning)
@@ -592,7 +550,7 @@ def update_tam_nhi(document: DocumentType, sources: dict[str, Any]) -> None:
             matrix = []
             for row in raw:
                 matrix.append([clean(row[0]), clean(row[1]), clean(row[2])])
-            t = find_table_by_tag(document, "KẾT QUẢ BSC THÁNG 7:(OMC_NHI)")
+            t = find_table_by_tag(document, "B10_NHI")
             if t:
                 write_table_matrix(t, matrix, start_row=1)
         except Exception as e:
@@ -686,7 +644,7 @@ def update_appendix(document: DocumentType, sources: dict[str, Any]) -> None:
             for c in target_cols
         ])
 
-    t = find_table_by_tag(document, "PHỤ LỤC 01( OMC_HAN)")
+    t = find_table_by_tag(document, "B32_HAN")
     if t:
         resize_table_rows(t, len(matrix))
         write_table_matrix(t, matrix)
@@ -818,7 +776,7 @@ def generate(output: Path | None = None) -> dict[str, Any]:
         update_xlsc(document, sources)
         update_appendix(document, sources)
         update_tam_nhi(document, sources)
-        remove_omc_tags(document)
+        remove_tags(document)
         replace_report_week(document, week)
         flattened_links = flatten_link_fields(document)
 

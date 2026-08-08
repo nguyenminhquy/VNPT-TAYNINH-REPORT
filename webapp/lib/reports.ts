@@ -21,7 +21,7 @@ export const REPORT_SOURCES = [
     label: "BÁO CÁO MyTV",
     owner: "Tân",
     filename: "3. BÁO CÁO MYTV_TÂN.xlsx",
-    tag: "MyTV",
+    tag: "B14",
     color: "#1E9BE9",
   },
   {
@@ -67,7 +67,7 @@ export const REPORT_SOURCES = [
 ] as const;
 
 export const MONTHLY_REPORT_SOURCES = [
-  ...REPORT_SOURCES,
+  ...REPORT_SOURCES.filter(s => s.key !== 'mll'),
   {
     key: "omc_tam",
     label: "HIỆN TRẠNG THIẾT BỊ",
@@ -84,7 +84,40 @@ export const MONTHLY_REPORT_SOURCES = [
     tag: "BSC",
     color: "#EC4899",
   },
+  {
+    key: "phutro_quy",
+    label: "THIẾT BỊ PHỤ TRỢ",
+    owner: "Quý",
+    filename: "11. THIẾT BỊ PHỤ TRỢ_QUÝ.xlsx",
+    tag: "Phụ trợ",
+    color: "#34D399",
+  },
+  {
+    key: "ngoaivi_bao",
+    label: "MẠNG NGOẠI VI",
+    owner: "Bảo",
+    filename: "12. MẠNG NGOẠI VI_BẢO.xlsx",
+    tag: "Ngoại vi",
+    color: "#0ea5e9",
+  },
+  {
+    key: "ngoaivi_tuan",
+    label: "XLSC MẠNG NGOẠI VI",
+    owner: "Tuấn",
+    filename: "13. XLSC MẠNG NGOẠI VI_TUẤN.xlsx",
+    tag: "XLSC Ngoại vi",
+    color: "#f59e0b",
+  },
+  {
+    key: "cauhinh_quy",
+    label: "CẤU HÌNH TỰ ĐỘNG",
+    owner: "Quý",
+    filename: "14. CẤU HÌNH TỰ ĐỘNG_QUÝ.xlsx",
+    tag: "Cấu hình",
+    color: "#6366f1",
+  }
 ] as const;
+
 
 export const WEEKLY_MLL_SOURCES = [
   {

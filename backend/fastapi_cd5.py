@@ -289,7 +289,7 @@ async def export_word_monthly(request: Request):
         raise HTTPException(status_code=400, detail="Body JSON không hợp lệ.")
 
     blob_urls: Dict[str, str] = body.get("blobUrls", {})
-    REQUIRED_KEYS = ["mbb", "fbb", "mytv", "mll", "ispeed", "5s", "xlsc", "appendix", "omc_tam", "omc_nhi"]
+    REQUIRED_KEYS = ["mbb", "fbb", "mytv", "ispeed", "5s", "xlsc", "appendix", "omc_tam", "omc_nhi", "phutro_quy", "ngoaivi_bao", "ngoaivi_tuan", "cauhinh_quy"]
     missing = [k for k in REQUIRED_KEYS if k not in blob_urls or not blob_urls[k]]
     if missing:
         raise HTTPException(
@@ -313,13 +313,16 @@ async def export_word_monthly(request: Request):
         "mbb":      "1. BÁO CÁO MBB_HUNG.xlsx",
         "fbb":      "2. BÁO CÁO FBB_BAO.xlsx",
         "mytv":     "3. BÁO CÁO MYTV_TÂN.xlsx",
-        "mll":      "4. BÁO CÁO MLL_KHANH.xlsx",
         "ispeed":   "5. BÁO CÁO ISPEED_QUOC.xlsx",
         "5s":       "6. BÁO CÁO 5S NHÀ TRẠM_TÂN.xlsx",
         "xlsc":     "7.BÁO CÁO XLSC_TUẤN.xlsx",
         "appendix": "8.PHỤ LỤC 1_HÂN.xlsx",
         "omc_tam":  "9.HIỆN TRẠNG THIẾT BỊ_TÂM.xlsx",
-        "omc_nhi":  "10. BÁO CÁO BSC_NHI.xlsx"
+        "omc_nhi":  "10. BÁO CÁO BSC_NHI.xlsx",
+        "phutro_quy": "11. THIẾT BỊ PHỤ TRỢ_QUÝ.xlsx",
+        "ngoaivi_bao": "12. MẠNG NGOẠI VI_BẢO.xlsx",
+        "ngoaivi_tuan": "13. XLSC MẠNG NGOẠI VI_TUẤN.xlsx",
+        "cauhinh_quy": "14. CẤU HÌNH TỰ ĐỘNG_QUÝ.xlsx"
     }
 
     import httpx

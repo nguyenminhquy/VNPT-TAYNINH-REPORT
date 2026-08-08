@@ -297,8 +297,8 @@ export default function Dashboard() {
         }
       }
       
-      if (Object.keys(blobUrls).length < 10) {
-        toast.error("Chưa đủ 10 file Excel. Vui lòng tải lên đầy đủ.", { id: exportToast });
+      if (Object.keys(blobUrls).length < 13) {
+        toast.error("Chưa đủ 13 file Excel. Vui lòng tải lên đầy đủ.", { id: exportToast });
         setIsExporting(false);
         return;
       }
