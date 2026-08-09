@@ -1,0 +1,166 @@
+.document-editor-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Take full height */
+  background-color: #f3f4f6; /* Light gray background */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background-color: white;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.editor-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.editor-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-action {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 1px solid #d1d5db;
+  background-color: white;
+  color: #374151;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-action:hover {
+  background-color: #f9fafb;
+}
+
+.btn-action.primary {
+  background-color: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.btn-action.primary:hover {
+  background-color: #1d4ed8;
+}
+
+.editor-toolbar {
+  display: flex;
+  padding: 8px 16px;
+  background-color: white;
+  border-bottom: 1px solid #e5e7eb;
+  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.editor-toolbar button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #4b5563;
+  transition: all 0.2s;
+}
+
+.editor-toolbar button:hover {
+  background-color: #f3f4f6;
+}
+
+.editor-toolbar button.active {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+.editor-toolbar button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 24px;
+  background-color: #d1d5db;
+  margin: 0 4px;
+}
+
+.editor-workspace {
+  flex: 1;
+  overflow-y: auto;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* A4 Paper Styling */
+.a4-paper {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 2cm 2cm; /* Standard margins */
+  background: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  margin: 0 auto;
+  outline: none;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 14pt;
+  line-height: 1.5;
+  color: #000;
+}
+
+/* Print styling */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .editor-workspace, .editor-workspace * {
+    visibility: visible;
+  }
+  .editor-workspace {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+  .a4-paper {
+    box-shadow: none;
+    margin: 0;
+    padding: 0; /* Let print dialog handle margins */
+    width: 100%;
+    min-height: 100%;
+  }
+}
+
+/* ProseMirror defaults */
+.ProseMirror p {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.ProseMirror h1, .ProseMirror h2, .ProseMirror h3 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.ProseMirror h1 { font-size: 18pt; }
+.ProseMirror h2 { font-size: 16pt; }
+.ProseMirror h3 { font-size: 14pt; }
