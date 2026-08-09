@@ -256,6 +256,54 @@ def find_table_by_tag(document: DocumentType, tag: str, offset: int = 0) -> Any:
             table_idx += 1
     return None
 
+def extract_dynamic_table(document: DocumentType, sheet: Any, tag: str, anchor_text: str = None, start_col_idx: int = 1, apply_formatting=None, word_start_row=None, row_offset=0) -> None:
+    t = find_table_by_tag(document, tag)
+    if not t: return
+    
+    num_cols = len(t.rows[0].cells)
+    
+    start_row = None
+    start_col = None
+    for row_idx, row in enumerate(sheet.iter_rows(values_only=True), 1):
+        for col_idx, cell in enumerate(row, 1):
+            if isinstance(cell, str):
+                if anchor_text and (anchor_text in cell or anchor_text.replace('â','a') in cell.replace('â','a')):
+                    start_row = row_idx
+                    start_col = start_col_idx
+                    break
+                elif not anchor_text and tag in cell:
+                    start_row = row_idx
+                    start_col = start_col_idx
+                    break
+        if start_row: break
+    
+    if not start_row: return
+    
+    start_row += row_offset
+        
+    matrix = []
+    for row_idx, row in enumerate(sheet.iter_rows(min_row=start_row, max_col=start_col + num_cols - 1, values_only=True), start_row):
+        if all(c is None or str(c).strip() == "" for c in row[start_col - 1 : start_col - 1 + num_cols]):
+            break
+        row_data = list(row[start_col - 1 : start_col - 1 + num_cols])
+        if apply_formatting:
+            row_data = apply_formatting(row_data, row_idx - start_row)
+        matrix.append(row_data)
+        
+    if word_start_row is None:
+        word_start_row = 1
+        for i in range(len(t.rows)):
+            row_text = " ".join(c.text for c in t.rows[i].cells)
+            if anchor_text and (anchor_text in row_text or anchor_text.replace('â','a') in row_text.replace('â','a')):
+                word_start_row = i
+                break
+                
+    try:
+        write_table_matrix(t, matrix, start_row=word_start_row)
+        print(f"Successfully wrote {tag} dynamically")
+    except Exception as e:
+        print(f"Error {tag}:", e)
+
 def remove_tags(document: DocumentType) -> None:
     import re
     pattern = r'\([Bb]\d+G?(?:_[^\)]+)?\)'
@@ -278,48 +326,38 @@ def update_mbb_fbb_mytv(document: DocumentType, sources: dict[str, Any]) -> None
 
     if mbb:
         try:
-            common = worksheet_matrix(mbb["Kết quả chung"], 4, 6, 1, 4)
-            for row in common[1:]:
-                row[2] = decimal(row[2])
-                row[3] = decimal(row[3])
-            t15 = find_table_by_tag(document, "B15_HUNG")
-            if t15: write_table_matrix(t15, common)
-        except Exception: pass
+            def fmt_b15(row, idx):
+                if idx > 0:
+                    row[2] = decimal(row[2]) if len(row) > 2 else row[2]
+                    row[3] = decimal(row[3]) if len(row) > 3 else row[3]
+                return row
+            extract_dynamic_table(document, mbb["Kết quả chung"], "B15_HUNG", "Toàn quốc", apply_formatting=fmt_b15, word_start_row=1)
+        except Exception as e: print("mbb 15:", e)
 
         try:
-            comparison = worksheet_matrix(mbb["So sánh các tỉnh"], 3, 7, 1, 3)
-            t16 = find_table_by_tag(document, "B16_HUNG")
-            if t16: write_table_matrix(t16, comparison)
-        except Exception: pass
+            extract_dynamic_table(document, mbb["So sánh các tỉnh"], "B16_HUNG", "Thanh Hóa", word_start_row=1)
+        except Exception as e: print("mbb 16:", e)
 
         try:
-            mbb_detail = worksheet_matrix(mbb["Kết quả chi tiết"], 4, 12, 1, 8)
-            t17 = find_table_by_tag(document, "B17_HUNG")
-            if t17: write_table_matrix(t17, mbb_detail)
-        except Exception: pass
+            extract_dynamic_table(document, mbb["Kết quả chi tiết"], "B17_HUNG", "MBB QoS", word_start_row=1)
+        except Exception as e: print("mbb 17:", e)
 
     if fbb:
         try:
-            fbb_detail = worksheet_matrix(fbb["Thông tin chung"], 2, 17, 1, 8)
-            t18 = find_table_by_tag(document, "B18_BAO")
-            if t18: write_table_matrix(t18, fbb_detail[0:3])
-            t19 = find_table_by_tag(document, "B19_BAO")
-            if t19: write_table_matrix(t19, fbb_detail[4:10])
-        except Exception: pass
+            extract_dynamic_table(document, fbb["Thông tin chung"], "B18_BAO", "FBB QoS", word_start_row=1)
+            extract_dynamic_table(document, fbb["Thông tin chung"], "B19_BAO", "FBB QoE", word_start_row=1)
+        except Exception as e: print("fbb:", e)
 
     if mytv:
         try:
-            mytv_rows = raw_matrix(mytv["Sheet1"], 3, 16, 1, 8)
-            mytv_detail: list[list[str]] = []
-            for row in mytv_rows:
-                total = row[6]
-                mytv_detail.append([
-                    clean(row[0]), clean(row[1]), clean(row[3]), clean(row[4]),
-                    clean(row[5]), clean(total), evaluate_target(total), clean(row[7]),
-                ])
-            t14 = find_table_by_tag(document, "B14")
-            if t14: write_table_matrix(t14, mytv_detail)
-        except Exception: pass
+            def fmt_mytv(row, idx):
+                if len(row) >= 8:
+                    total = row[6]
+                    return [clean(row[0]), clean(row[1]), clean(row[3]), clean(row[4]), clean(row[5]), clean(total), evaluate_target(total), clean(row[7])]
+                return row
+            extract_dynamic_table(document, mytv["Sheet1"], "B14", "MyTV QoS", start_col_idx=1, apply_formatting=fmt_mytv, word_start_row=1)
+            extract_dynamic_table(document, mytv["Sheet1"], "B21_TAN", "MyTV QoS", start_col_idx=1, apply_formatting=fmt_mytv, word_start_row=1)
+        except Exception as e: print("mytv:", e)
 
 def mll_table_matrix(sheet: Any) -> tuple[list[list[str]], dict[str, Any]]:
     raw = raw_matrix(sheet, 2, 12, 1, 18)
@@ -364,30 +402,16 @@ def update_mll(document: DocumentType, sources: dict[str, Any]) -> str:
 def update_ispeed(document: DocumentType, sources: dict[str, Any]) -> None:
     if "ispeed" not in sources: return
     try:
-        sheet = sources["ispeed"]["Báo cáo"]
-        raw = raw_matrix(sheet, 1, 9, 2, 11)
-        t = find_table_by_tag(document, "B22_QUOC")
-        if t: write_table_matrix(t, raw, start_row=1)
+        extract_dynamic_table(document, sources["ispeed"]["Báo cáo"], "B22_QUOC", "Tân Ninh", start_col_idx=2, word_start_row=1)
     except Exception as e:
         print("Error ispeed:", e)
 
 def update_5s(document: DocumentType, sources: dict[str, Any]) -> None:
     if "5s" not in sources: return
     try:
-        sheet = sources["5s"]["Sheet1"]
-        # In new document, we have B23_TAN, B24_TAN, B25_TAN
-        station = raw_matrix(sheet, 1, 10, 2, 6)
-        air_conditioning = raw_matrix(sheet, 14, 23, 2, 6)
-        ap_otb = raw_matrix(sheet, 26, 35, 2, 6)
-        
-        t23 = find_table_by_tag(document, "B23_TAN")
-        if t23: write_table_matrix(t23, station, start_row=1)
-        
-        t24 = find_table_by_tag(document, "B24_TAN")
-        if t24: write_table_matrix(t24, air_conditioning, start_row=1)
-        
-        t25 = find_table_by_tag(document, "B25_TAN")
-        if t25: write_table_matrix(t25, ap_otb, start_row=1)
+        extract_dynamic_table(document, sources["5s"]["Sheet1"], "B23_TAN", "5S NHÀ TRẠM", start_col_idx=1, word_start_row=1, row_offset=2)
+        extract_dynamic_table(document, sources["5s"]["Sheet1"], "B24_TAN", "MÁY LẠNH", start_col_idx=1, word_start_row=1, row_offset=2)
+        extract_dynamic_table(document, sources["5s"]["Sheet1"], "B25_TAN", "AP/OTB", start_col_idx=1, word_start_row=1, row_offset=2)
     except Exception as e:
         print("Error 5s:", e)
 
@@ -451,52 +475,11 @@ def update_others(document: DocumentType, sources: dict[str, Any]) -> None:
         except Exception as e: print("Error ngoaivi_bao:", e)
 
 def update_tam_nhi(document: DocumentType, sources: dict[str, Any]) -> None:
-    def extract_dynamic(wb, sheet_name, tag):
-        try:
-            sheet = wb[sheet_name]
-            t = find_table_by_tag(document, tag)
-            if not t: return
-            
-            num_cols = len(t.rows[0].cells)
-            
-            start_row = None
-            start_col = None
-            for row_idx, row in enumerate(sheet.iter_rows(values_only=True), 1):
-                for col_idx, cell in enumerate(row, 1):
-                    if isinstance(cell, str) and ("Tây Ninh" in cell or "TAy Ninh" in cell.replace('â','a')):
-                        start_row = row_idx
-                        start_col = col_idx
-                        break
-                if start_row: break
-            
-            if not start_row:
-                print(f"Could not find 'Tây Ninh' in {sheet_name}")
-                return
-                
-            matrix = []
-            for row_idx, row in enumerate(sheet.iter_rows(min_row=start_row, max_col=start_col + num_cols - 1, values_only=True), start_row):
-                val = row[start_col - 1]
-                if val is None or str(val).strip() == "":
-                    break
-                matrix.append(list(row[start_col - 1 : start_col - 1 + num_cols]))
-                
-            word_start_row = 1
-            for i in range(len(t.rows)):
-                row_text = " ".join(c.text for c in t.rows[i].cells)
-                if "Tây Ninh" in row_text or "Tân An" in row_text or "TAy Ninh" in row_text.replace('â','a'):
-                    word_start_row = i
-                    break
-                    
-            write_table_matrix(t, matrix, start_row=word_start_row)
-            print(f"Successfully wrote {tag} dynamically")
-        except Exception as e:
-            print(f"Error {tag}:", e)
-
     if "omc_nhi" in sources:
         try:
             wb = sources["omc_nhi"]
-            extract_dynamic(wb, "BANG 1 ", "B8_NHI")
-            extract_dynamic(wb, "BANG3", "B9_NHI")
+            extract_dynamic_table(document, wb["BANG 1 "], "B8_NHI", anchor_text=None, start_col_idx=1, word_start_row=1)
+            extract_dynamic_table(document, wb["BANG3"], "B9_NHI", anchor_text=None, start_col_idx=1, word_start_row=1)
         except Exception as e:
             print("Error processing omc_nhi:", e)
             
@@ -513,7 +496,7 @@ def update_tam_nhi(document: DocumentType, sources: dict[str, Any]) -> None:
                 "08_DLU": "B7_TAM"
             }
             for sheet_name, tag in mapping.items():
-                extract_dynamic(wb, sheet_name, tag)
+                extract_dynamic_table(document, wb[sheet_name], tag, anchor_text="Tây Ninh", start_col_idx=2, word_start_row=1)
         except Exception as e:
             print("Error processing omc_tam:", e)
 
