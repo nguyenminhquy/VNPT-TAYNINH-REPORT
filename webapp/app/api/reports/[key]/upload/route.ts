@@ -8,7 +8,7 @@ import { put, del } from '@vercel/blob';
 import * as XLSX from 'xlsx';
 
 // Giới hạn kích thước file: 25 MB
-const MAX_FILE_SIZE = 25 * 1024 * 1024;
+const MAX_FILE_SIZE = 50 * 1024 * 1024;
 
 // ── Hàm xử lý tổng hợp tất cả báo cáo ────────────────────────────────────────
 /**
@@ -203,6 +203,7 @@ export async function POST(
     try {
       blobResult = await put(pathname, fileBuffer, {
         access: 'public',
+        multipart: true,
       });
     } catch (blobErr: any) {
       console.error('[upload] Vercel Blob error:', blobErr);
