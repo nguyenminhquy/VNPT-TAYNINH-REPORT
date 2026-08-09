@@ -22,7 +22,8 @@ export async function POST(req: Request) {
       eoffice12 // (12) eOffice
     } = data;
 
-    const templatePath = path.join(process.cwd(), 'templates', 'TOTRINH', '13_Mau_Giay_moi.docx');
+    const templateName = role.includes('PHÓ GIÁM ĐỐC') ? '13_Mau_Giay_moi_PGD.docx' : '13_Mau_Giay_moi.docx';
+    const templatePath = path.join(process.cwd(), 'templates', 'TOTRINH', templateName);
     
     if (!fs.existsSync(templatePath)) {
       return NextResponse.json({ error: 'Template file not found' }, { status: 500 });
@@ -56,9 +57,9 @@ export async function POST(req: Request) {
       doc.replaceTextInEntireDocument(/.*\(CHUTRI\).*/, chuTri.trim() ? `Chủ trì: ${chuTri}` : 'Chủ trì: ………………………	………………………….……………….');
     }
 
-    // Replace (THOIGIAN)
+    // Replace (TIME)
     if (thoiGian !== undefined) {
-      doc.replaceTextInEntireDocument(/.*\(THOIGIAN\).*/, thoiGian.trim() ? `Thời gian: ${thoiGian}` : 'Thời gian:……	 …………………………………………………….');
+      doc.replaceTextInEntireDocument(/.*\(TIME\).*/, thoiGian.trim() ? `Thời gian: ${thoiGian}` : 'Thời gian:……	 …………………………………………………….');
     }
 
     // Replace (7) Địa điểm
