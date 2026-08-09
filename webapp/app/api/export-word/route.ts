@@ -1,4 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server';
+
+export const maxDuration = 60; // Nâng giới hạn thời gian chạy lên 60 giây (tối đa cho gói Hobby của Vercel)
+
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 

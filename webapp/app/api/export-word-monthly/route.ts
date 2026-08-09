@@ -2,6 +2,8 @@ import { NextResponse, NextRequest } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
+export const maxDuration = 60; // Nâng giới hạn thời gian chạy lên 60 giây (tối đa cho gói Hobby của Vercel)
+
 export async function POST(req: NextRequest) {
   // ── Xác thực ──────────────────────────────────────────────────────────────
   const session = await getServerSession(authOptions);
