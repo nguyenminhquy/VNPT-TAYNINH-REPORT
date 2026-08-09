@@ -10,7 +10,14 @@ export async function POST(request: Request): Promise<NextResponse> {
       request,
       onBeforeGenerateToken: async (pathname) => {
         return {
-          allowedContentTypes: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
+          maximumSizeInBytes: 50 * 1024 * 1024, // 50MB
+          allowedContentTypes: [
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'application/vnd.ms-excel',
+            'application/octet-stream',
+            'application/x-zip-compressed',
+            '', // browser may not know the type
+          ],
           tokenPayload: JSON.stringify({}),
         };
       },
@@ -20,6 +27,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     });
     return NextResponse.json(jsonResponse);
   } catch (error) {
+    console.error("[upload-token] Error generating token:", error);
     return NextResponse.json({ error: (error as Error).message }, { status: 400 });
   }
 }
