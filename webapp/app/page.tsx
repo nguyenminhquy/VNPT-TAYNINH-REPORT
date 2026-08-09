@@ -799,9 +799,7 @@ export default function Dashboard() {
               </div>
             )}
           </div>
-          <button className={`nav-item ${activeTab === 'schedule' ? 'active' : ''}`} onClick={() => { setActiveTab('schedule'); setActiveReportKey('schedule'); }}>
-            <Calendar size={18} /> Quản lý Lịch
-          </button>
+
           <div className="nav-divider" />
           <button className={`nav-item ${activeTab === 'handover' ? 'active' : ''}`} onClick={() => setActiveTab('handover')}>
             Sổ Giao Ca
