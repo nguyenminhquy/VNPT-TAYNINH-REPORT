@@ -281,20 +281,25 @@ export default function Dashboard() {
       }
 
       const wordBlob = await apiRes.blob();
-      const formData = new FormData();
-      formData.append("file", wordBlob, "report.docx");
+      
+      // 1. Tải trực tiếp về máy tính người dùng ngay lập tức (Bypass Vercel 4.5MB limit)
+      const url = window.URL.createObjectURL(wordBlob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "report.docx";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+      toast.success("Xuất báo cáo thành công!", { id: exportToast });
 
-      const saveRes = await fetch("/api/export-word-save", {
-        method: "POST",
-        body: formData
-      });
-
-      const json = await saveRes.json();
-      if (saveRes.ok && json.blobUrl) {
-        toast.success("Xuất báo cáo thành công!", { id: exportToast });
-        window.open(json.blobUrl, "_blank");
-      } else {
-        toast.error(json.error || "Lỗi khi lưu file Word", { id: exportToast });
+      // 2. Lưu lịch sử lên cloud (Vercel Blob) - có thể thất bại nếu file > 4.5MB
+      try {
+        const formData = new FormData();
+        formData.append("file", wordBlob, "report.docx");
+        await fetch("/api/export-word-save", { method: "POST", body: formData });
+      } catch (cloudErr) {
+        console.warn("Không thể lưu lịch sử lên cloud do file quá lớn", cloudErr);
       }
     } catch (e: any) {
       console.error(e);
@@ -336,20 +341,25 @@ export default function Dashboard() {
       }
 
       const wordBlob = await apiRes.blob();
-      const formData = new FormData();
-      formData.append("file", wordBlob, "monthly_report.docx");
+      
+      // 1. Tải trực tiếp về máy tính người dùng ngay lập tức (Bypass Vercel 4.5MB limit)
+      const url = window.URL.createObjectURL(wordBlob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "monthly_report.docx";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+      toast.success("Xuất báo cáo Tháng thành công!", { id: exportToast });
 
-      const saveRes = await fetch("/api/export-word-save", {
-        method: "POST",
-        body: formData
-      });
-
-      const json = await saveRes.json();
-      if (saveRes.ok && json.blobUrl) {
-        toast.success("Xuất báo cáo Tháng thành công!", { id: exportToast });
-        window.open(json.blobUrl, "_blank");
-      } else {
-        toast.error(json.error || "Lỗi khi lưu file Word", { id: exportToast });
+      // 2. Lưu lịch sử lên cloud (Vercel Blob) - có thể thất bại nếu file > 4.5MB
+      try {
+        const formData = new FormData();
+        formData.append("file", wordBlob, "monthly_report.docx");
+        await fetch("/api/export-word-save", { method: "POST", body: formData });
+      } catch (cloudErr) {
+        console.warn("Không thể lưu lịch sử lên cloud do file quá lớn", cloudErr);
       }
     } catch (e: any) {
       console.error(e);
@@ -391,20 +401,25 @@ export default function Dashboard() {
       }
 
       const wordBlob = await apiRes.blob();
-      const formData = new FormData();
-      formData.append("file", wordBlob, "Mất_liên_lạc_Tuần.docx");
+      
+      // 1. Tải trực tiếp về máy tính người dùng ngay lập tức (Bypass Vercel 4.5MB limit)
+      const url = window.URL.createObjectURL(wordBlob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "Mat_lien_lac_Tuan.docx";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+      toast.success("Xuất báo cáo MLL Tuần thành công!", { id: exportToast });
 
-      const saveRes = await fetch("/api/export-word-save", {
-        method: "POST",
-        body: formData
-      });
-
-      const json = await saveRes.json();
-      if (saveRes.ok && json.blobUrl) {
-        toast.success("Xuất báo cáo MLL Tuần thành công!", { id: exportToast });
-        window.open(json.blobUrl, "_blank");
-      } else {
-        toast.error(json.error || "Lỗi khi lưu file Word", { id: exportToast });
+      // 2. Lưu lịch sử lên cloud (Vercel Blob) - có thể thất bại nếu file > 4.5MB
+      try {
+        const formData = new FormData();
+        formData.append("file", wordBlob, "Mat_lien_lac_Tuan.docx");
+        await fetch("/api/export-word-save", { method: "POST", body: formData });
+      } catch (cloudErr) {
+        console.warn("Không thể lưu lịch sử lên cloud do file quá lớn", cloudErr);
       }
     } catch (e: any) {
       console.error(e);
