@@ -14,15 +14,7 @@ export async function POST(req: NextRequest) {
     const { blobUrls } = body;
 
     if (!blobUrls || Object.keys(blobUrls).length === 0) {
-      return NextResponse.json({ error: 'Missing blobUrls' }, { status: 400 });
-    }
-
-    const REQUIRED_KEYS = ['mbb', 'fbb', 'mytv', 'ispeed', '5s', 'xlsc', 'appendix', 'omc_tam', 'omc_nhi', 'phutro_quy', 'ngoaivi_bao', 'ngoaivi_tuan', 'cauhinh_quy'];
-    const missingKeys = REQUIRED_KEYS.filter(k => !blobUrls[k]);
-    if (missingKeys.length > 0) {
-      return NextResponse.json({
-        error: `Chưa đủ file Excel. Còn thiếu: ${missingKeys.join(', ')}`
-      }, { status: 422 });
+      return NextResponse.json({ error: 'Vui lòng tải lên ít nhất 1 file Excel' }, { status: 400 });
     }
 
     // ── Proxy sang Render Python Backend (giống CD5) ─────────────────────────

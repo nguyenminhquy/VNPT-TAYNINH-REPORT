@@ -290,14 +290,8 @@ async def export_word_monthly(request: Request):
         raise HTTPException(status_code=400, detail="Body JSON không hợp lệ.")
 
     blob_urls: Dict[str, str] = body.get("blobUrls", {})
-    REQUIRED_KEYS = ["mbb", "fbb", "mytv", "ispeed", "5s", "xlsc", "appendix", "omc_tam", "omc_nhi", "phutro_quy", "ngoaivi_bao", "ngoaivi_tuan", "cauhinh_quy"]
-    missing = [k for k in REQUIRED_KEYS if k not in blob_urls or not blob_urls[k]]
-    if missing:
-        raise HTTPException(
-            status_code=422,
-            detail=f"Chưa đủ file Excel. Còn thiếu: {', '.join(missing)}"
-        )
-
+    if not blob_urls:
+        raise HTTPException(status_code=400, detail="Vui lòng tải lên ít nhất 1 file Excel.")
     import sys
     sys.path.insert(0, str(Path(__file__).parent))
     import generate_monthly_report as gmr
@@ -344,9 +338,8 @@ async def export_word_monthly(request: Request):
         tasks = []
         for key, filename in EXCEL_KEYS.items():
             url = blob_urls.get(key)
-            if not url:
-                raise HTTPException(status_code=422, detail=f"Thiếu URL cho key: {key}")
-            tasks.append(download_file(client, url, DATA_DIR / filename, key))
+            if url:
+                tasks.append(download_file(client, url, DATA_DIR / filename, key))
         await asyncio.gather(*tasks)
 
     EXPORT_DIR = ROOT / "exports"

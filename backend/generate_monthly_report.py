@@ -122,13 +122,10 @@ def raw_matrix(
 
 
 def load_sources() -> dict[str, Any]:
-    missing = [filename for filename in FILES.values() if not (DATA_DIR / filename).is_file()]
-    if missing:
-        raise FileNotFoundError("Thiếu tệp nguồn: " + ", ".join(missing))
-
     sources: dict[str, Any] = {}
     for key, filename in FILES.items():
-        sources[key] = load_workbook(DATA_DIR / filename, data_only=True)
+        if (DATA_DIR / filename).is_file():
+            sources[key] = load_workbook(DATA_DIR / filename, data_only=True)
     return sources
 
 
