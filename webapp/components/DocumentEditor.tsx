@@ -14,6 +14,7 @@ import { TableCell } from '@tiptap/extension-table-cell';
 import { TableHeader } from '@tiptap/extension-table-header';
 import { ProtectedHeader } from './extensions/ProtectedHeader';
 import { ProtectedSignature } from './extensions/ProtectedSignature';
+import { documentTemplates } from '../templates';
 
 import {
   Bold, Italic, Underline as UnderlineIcon, AlignLeft, AlignCenter, AlignRight, AlignJustify,
@@ -23,13 +24,14 @@ import {
 import './DocumentEditor.css';
 
 interface DocumentEditorProps {
-  initialContent: string;
+  initialContent?: string;
   onSave?: (html: string) => void;
   title?: string;
 }
 
 export default function DocumentEditor({ initialContent, onSave, title = 'Văn bản chưa đặt tên' }: DocumentEditorProps) {
   const [isExporting, setIsExporting] = useState(false);
+  const [selectedTemplateKey, setSelectedTemplateKey] = useState<string>('to_trinh');
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -49,7 +51,7 @@ export default function DocumentEditor({ initialContent, onSave, title = 'Văn b
       ProtectedHeader,
       ProtectedSignature,
     ],
-    content: initialContent,
+    content: initialContent || documentTemplates[selectedTemplateKey].html,
     editorProps: {
       attributes: {
         class: 'a4-paper',
@@ -107,6 +109,19 @@ export default function DocumentEditor({ initialContent, onSave, title = 'Văn b
     }
   };
 
+  const handleTemplateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newKey = e.target.value;
+    setSelectedTemplateKey(newKey);
+    if (editor) {
+      if (confirm('Thay đổi mẫu sẽ xóa toàn bộ nội dung hiện tại. Bạn có chắc chắn muốn đổi không?')) {
+        editor.commands.setContent(documentTemplates[newKey].html);
+      } else {
+        // revert select
+        e.target.value = selectedTemplateKey;
+      }
+    }
+  };
+
   if (!editor) {
     return null;
   }
@@ -114,7 +129,17 @@ export default function DocumentEditor({ initialContent, onSave, title = 'Văn b
   return (
     <div className="document-editor-container">
       <div className="editor-header">
-        <h2 className="editor-title">{title}</h2>
+        <h2 className="editor-title">
+          <select 
+            value={selectedTemplateKey} 
+            onChange={handleTemplateChange}
+            style={{ fontSize: '1.2rem', padding: '4px 8px', borderRadius: '4px', border: '1px solid #ccc', background: '#fff' }}
+          >
+            {Object.entries(documentTemplates).map(([key, t]) => (
+              <option key={key} value={key}>{t.name}</option>
+            ))}
+          </select>
+        </h2>
         <div className="editor-actions">
           <button onClick={handleSave} className="btn-action primary"><Save size={16} /> Lưu</button>
           <button onClick={handlePrint} className="btn-action"><Printer size={16} /> In / PDF</button>

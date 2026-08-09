@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 // The React Component for the Header
 const HeaderComponent = (props: any) => {
   // We can use props.node.attrs to store the data
-  const { docNumber, date, month, year } = props.node.attrs;
+  const { docNumber, date, month, year, trichYeu } = props.node.attrs;
 
   const updateAttr = (key: string, value: string) => {
     props.updateAttributes({ [key]: value });
@@ -30,6 +30,16 @@ const HeaderComponent = (props: any) => {
                   placeholder="..."
                 />/TTr-TTHT
               </p>
+              {trichYeu !== undefined && (
+                <p style={{ margin: '4px 0 0 0', fontSize: '13pt' }}>
+                  V/v: <textarea 
+                    value={trichYeu} 
+                    onChange={e => updateAttr('trichYeu', e.target.value)}
+                    style={{ width: '90%', border: '1px dashed #ccc', outline: 'none', fontSize: '13pt', background: 'transparent', resize: 'vertical' }} 
+                    placeholder="Nhập trích yếu..."
+                  />
+                </p>
+              )}
             </td>
             <td style={{ width: '60%', textAlign: 'center', verticalAlign: 'top', border: 'none' }}>
               <p style={{ margin: 0, fontSize: '13pt', fontWeight: 'bold' }}>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</p>
@@ -60,6 +70,7 @@ export const ProtectedHeader = Node.create({
       date: { default: new Date().getDate().toString().padStart(2, '0') },
       month: { default: (new Date().getMonth() + 1).toString().padStart(2, '0') },
       year: { default: new Date().getFullYear().toString() },
+      trichYeu: { default: undefined }, // If undefined, it doesn't show
     };
   },
 
@@ -79,7 +90,10 @@ export const ProtectedHeader = Node.create({
             ['p', { style: 'margin: 0; font-size: 13pt; font-weight: bold;' }, 'VIỄN THÔNG TÂY NINH'],
             ['p', { style: 'margin: 0; font-size: 13pt; font-weight: bold;' }, 'TRUNG TÂM HẠ TẦNG'],
             ['hr', { style: 'width: 40%; border-top: 1px solid black; margin: 4px auto;' }],
-            ['p', { style: 'margin: 4px 0 0 0; font-size: 13pt;' }, `Số: ${HTMLAttributes.docNumber}/TTr-TTHT`]
+            ['p', { style: 'margin: 4px 0 0 0; font-size: 13pt;' }, `Số: ${HTMLAttributes.docNumber}/TTr-TTHT`],
+            ...(HTMLAttributes.trichYeu !== undefined ? [
+              ['p', { style: 'margin: 4px 0 0 0; font-size: 13pt;' }, `V/v: ${HTMLAttributes.trichYeu}`]
+            ] : [])
           ],
           ['td', { style: 'width: 60%; text-align: center; vertical-align: top; border: none;' },
             ['p', { style: 'margin: 0; font-size: 13pt; font-weight: bold;' }, 'CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM'],

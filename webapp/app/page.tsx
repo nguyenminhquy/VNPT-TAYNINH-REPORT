@@ -9,7 +9,6 @@ import { Loader2, Plus, Trash2, Calendar } from "lucide-react";
 import { toast } from 'react-hot-toast';
 import { upload } from '@vercel/blob/client';
 import DocumentEditor from "@/components/DocumentEditor";
-import { template02ToTrinh } from "@/templates/02_Mau_To_trinh";
 import ShiftHandover from "@/components/ShiftHandover";
 import InspectionLog from "@/components/InspectionLog";
 import GeneratorLog from "@/components/GeneratorLog";
@@ -1427,10 +1426,7 @@ export default function Dashboard() {
            {/* TAB PETITION -> TO TRINH */}
            {activeTab === 'petition' && (
              <div style={{ width: '100%', height: 'calc(100vh - 120px)', overflow: 'hidden', padding: '0', background: '#f3f4f6' }}>
-               <DocumentEditor 
-                 initialContent={activeReportKey === '02_Mau_To_trinh' ? template02ToTrinh : '<p style="text-align:center; margin-top:50px;">Chưa có mẫu cho file này. Chọn "Mẫu Tờ trình" ở menu bên trái để xem bản trình diễn.</p>'} 
-                 title={PETITION_TEMPLATES.find(t => t.id === activeReportKey)?.name || 'Văn bản hành chính'} 
-               />
+               <DocumentEditor />
              </div>
            )}
 
