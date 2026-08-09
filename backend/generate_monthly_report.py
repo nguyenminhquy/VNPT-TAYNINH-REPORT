@@ -486,8 +486,16 @@ def update_tam_nhi(document: DocumentType, sources: dict[str, Any]) -> None:
     if "omc_tam" in sources:
         try:
             wb = sources["omc_tam"]
+            
+            # B1_TAM has a complex header where Tây Ninh data is embedded in merged header cells (Row 0 and 1).
+            # The actual data rows start at "Bến Lức" (Row 2 in Word).
+            # The Word table has 10 columns, but it does NOT have an STT column (Tây Ninh is Col 1).
+            # So start_col_idx=2 to skip the STT column in Excel.
+            extract_dynamic_table(document, wb["01_MANE_CSG"], "B1_TAM", anchor_text="Bến Lức", start_col_idx=2, word_start_row=2)
+            
+            # B2_TAM to B7_TAM have normal data rows starting with "Tây Ninh" at Row 1.
+            # And they DO have an STT column in Word. So start_col_idx=1.
             mapping = {
-                "01_MANE_CSG": "B1_TAM",
                 "02_OLT": "B2_TAM",
                 "03_L2SW": "B3_TAM",
                 "05_3G": "B4_TAM",
@@ -496,7 +504,8 @@ def update_tam_nhi(document: DocumentType, sources: dict[str, Any]) -> None:
                 "08_DLU": "B7_TAM"
             }
             for sheet_name, tag in mapping.items():
-                extract_dynamic_table(document, wb[sheet_name], tag, anchor_text="Tây Ninh", start_col_idx=2, word_start_row=1)
+                extract_dynamic_table(document, wb[sheet_name], tag, anchor_text="Tây Ninh", start_col_idx=1, word_start_row=1)
+                
         except Exception as e:
             print("Error processing omc_tam:", e)
 
