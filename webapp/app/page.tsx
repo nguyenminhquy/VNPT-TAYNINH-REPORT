@@ -265,7 +265,9 @@ export default function Dashboard() {
         return;
       }
 
-      const apiRes = await fetch("/api/export-word", { 
+      // Bypass Vercel timeout bằng cách gọi thẳng Render backend
+      const backendUrl = process.env.NEXT_PUBLIC_CD5_BACKEND_URL || 'https://vnpt-tayninh-report.onrender.com';
+      const apiRes = await fetch(`${backendUrl}/export-word`, { 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ blobUrls })
@@ -318,7 +320,9 @@ export default function Dashboard() {
         return;
       }
 
-      const apiRes = await fetch("/api/export-word-monthly", { 
+      // Bypass Vercel timeout bằng cách gọi thẳng Render backend
+      const backendUrl = process.env.NEXT_PUBLIC_CD5_BACKEND_URL || 'https://vnpt-tayninh-report.onrender.com';
+      const apiRes = await fetch(`${backendUrl}/export-word-monthly`, { 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ blobUrls })
@@ -371,7 +375,9 @@ export default function Dashboard() {
         return;
       }
 
-      const apiRes = await fetch("/api/export-word-weekly", { 
+      // Bypass Vercel timeout bằng cách gọi thẳng Render backend
+      const backendUrl = process.env.NEXT_PUBLIC_CD5_BACKEND_URL || 'https://vnpt-tayninh-report.onrender.com';
+      const apiRes = await fetch(`${backendUrl}/export-word-weekly`, { 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ blobUrls })
