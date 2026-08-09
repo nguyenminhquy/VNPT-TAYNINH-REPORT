@@ -88,8 +88,10 @@ export default function Dashboard() {
   });
   const [form11, setForm11] = useState({ 
     title: '', 
-    bases: [''],
-    articles: [''],
+    thoiGian: '',
+    diaDiem: '',
+    thanhPhan: '',
+    toChuc: '',
     role: 'GIÁM ĐỐC', 
     signerName: '', 
     unit6: '', 
@@ -1696,46 +1698,20 @@ export default function Dashboard() {
                         <input type="text" value={form11.title} onChange={e => setForm11(p => ({ ...p, title: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} />
                       </div>
                       <div style={{ gridColumn: '1 / -1' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                          <label style={{ fontWeight: 600, color: 'var(--text-main)' }}>Căn cứ</label>
-                          <button onClick={() => setForm11(p => ({ ...p, bases: [...p.bases, ''] }))} type="button" style={{ padding: '4px 8px', borderRadius: 4, background: '#e2e8f0', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: 13, color: '#334155' }}>+ Thêm Căn cứ</button>
-                        </div>
-                        {form11.bases.map((base, idx) => (
-                          <div key={idx} style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
-                            <textarea value={base} onChange={e => {
-                              const newBases = [...form11.bases];
-                              newBases[idx] = e.target.value;
-                              setForm11(p => ({ ...p, bases: newBases }));
-                            }} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 60 }} placeholder={`Nội dung căn cứ ${idx + 1}`} />
-                            {form11.bases.length > 1 && (
-                              <button onClick={() => {
-                                const newBases = form11.bases.filter((_, i) => i !== idx);
-                                setForm11(p => ({ ...p, bases: newBases }));
-                              }} type="button" style={{ padding: '0 14px', background: '#fee2e2', color: '#ef4444', border: 'none', borderRadius: 8, cursor: 'pointer', fontWeight: 600 }}>Xóa</button>
-                            )}
-                          </div>
-                        ))}
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Thời gian (4)</label>
+                        <input type="text" value={form11.thoiGian} onChange={e => setForm11(p => ({ ...p, thoiGian: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} placeholder="VD: Hội nghị làm việc trong… ngày, từ ngày… đến ngày…" />
                       </div>
                       <div style={{ gridColumn: '1 / -1' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                          <label style={{ fontWeight: 600, color: 'var(--text-main)' }}>Các Điều / Nội dung chi tiết</label>
-                          <button onClick={() => setForm11(p => ({ ...p, articles: [...p.articles, ''] }))} type="button" style={{ padding: '4px 8px', borderRadius: 4, background: '#e2e8f0', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: 13, color: '#334155' }}>+ Thêm Điều</button>
-                        </div>
-                        {form11.articles.map((article, idx) => (
-                          <div key={idx} style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
-                            <textarea value={article} onChange={e => {
-                              const newArticles = [...form11.articles];
-                              newArticles[idx] = e.target.value;
-                              setForm11(p => ({ ...p, articles: newArticles }));
-                            }} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 80 }} placeholder={`Nội dung Điều ${idx + 1}`} />
-                            {form11.articles.length > 1 && (
-                              <button onClick={() => {
-                                const newArticles = form11.articles.filter((_, i) => i !== idx);
-                                setForm11(p => ({ ...p, articles: newArticles }));
-                              }} type="button" style={{ padding: '0 14px', background: '#fee2e2', color: '#ef4444', border: 'none', borderRadius: 8, cursor: 'pointer', fontWeight: 600 }}>Xóa</button>
-                            )}
-                          </div>
-                        ))}
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Địa điểm (5)</label>
+                        <input type="text" value={form11.diaDiem} onChange={e => setForm11(p => ({ ...p, diaDiem: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc' }} placeholder="Phòng họp..." />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Thành phần (6)</label>
+                        <textarea value={form11.thanhPhan} onChange={e => setForm11(p => ({ ...p, thanhPhan: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 80 }} placeholder="Khối cơ quan...\nCác đơn vị trực thuộc..." />
+                      </div>
+                      <div style={{ gridColumn: '1 / -1' }}>
+                        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Tổ chức triển khai (7)</label>
+                        <textarea value={form11.toChuc} onChange={e => setForm11(p => ({ ...p, toChuc: e.target.value }))} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#f8fafc', minHeight: 80 }} placeholder="- Các đơn vị tham dự đủ...\n- Ban tổ chức đón tiếp..." />
                       </div>
                       <div>
                         <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-main)' }}>Chức danh phê duyệt</label>

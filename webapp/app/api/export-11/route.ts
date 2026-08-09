@@ -6,7 +6,7 @@ import * as path from 'path';
 export async function POST(req: Request) {
   try {
     const data = await req.json();
-    const { title, bases, articles, role, signerName, unit6, author7, eoffice8 } = data;
+    const { title, thoiGian, diaDiem, thanhPhan, toChuc, role, signerName, unit6, author7, eoffice8 } = data;
 
     const templatePath = path.join(process.cwd(), 'templates', 'TOTRINH', '11_Mau_Giay_trieu_tap.docx');
     
@@ -28,26 +28,18 @@ export async function POST(req: Request) {
       }
     }
 
-    // Replace bases and articles (CONTENT)
-    if (bases !== undefined || articles !== undefined) {
-      let fullContent = '';
-      
-      const filteredBases = Array.isArray(bases) ? bases.filter(b => b.trim()) : [];
-      if (filteredBases.length > 0) {
-        fullContent += filteredBases.map(b => `- ${b}`).join('\n') + '\n\n';
-      }
-
-      const filteredArticles = Array.isArray(articles) ? articles.filter(a => a.trim()) : [];
-      if (filteredArticles.length > 0) {
-        fullContent += filteredArticles.map((a, i) => `Điều ${i + 1}. ${a}`).join('\n\n');
-      }
-
-      if (!fullContent) {
-        // Fallback to dotted lines if both are empty
-        fullContent = '.................................................................................................................................\n.................................................................................................................................\n..........................................................................................................\n1. .....................................................................................................................\n.................................................................................................................................\n..................................................................................................\n2. .....................................................................................................................\n..................................................................................................................................................................\n.................................................................................................................................';
-      }
-      
-      doc.replaceTextInEntireDocument(/\(\s*CONTENT\s*\)/, fullContent);
+    // Replace fields
+    if (thoiGian !== undefined) {
+      doc.replaceTextInEntireDocument(/\(\s*TIME\s*\)/, thoiGian || '...');
+    }
+    if (diaDiem !== undefined) {
+      doc.replaceTextInEntireDocument(/\(\s*LOCATION\s*\)/, diaDiem || '...');
+    }
+    if (thanhPhan !== undefined) {
+      doc.replaceTextInEntireDocument(/\(\s*PARTICIPANTS\s*\)/, thanhPhan || '...');
+    }
+    if (toChuc !== undefined) {
+      doc.replaceTextInEntireDocument(/\(\s*ORGANIZATION\s*\)/, toChuc || '...');
     }
 
     // Replace role (4) if present
