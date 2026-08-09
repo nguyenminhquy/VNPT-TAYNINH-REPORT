@@ -46,7 +46,8 @@ export async function POST(req: Request) {
 
     // Replace manager (Họ Và Tên)
     if (manager !== undefined) {
-      doc.replaceTextInEntireDocument(/.*Họ Và Tên.*/i, manager.trim() ? manager : '..............................');
+      doc.replaceTextInEntireDocument(/.*Họ VÀ TÊN.*/i, manager.trim() ? manager : '..............................');
+      doc.replaceTextInEntireDocument(/\(\s*SIGNER\s*\)/i, manager.trim() ? manager : '..............................');
     }
 
     // Replace author (XX(8))

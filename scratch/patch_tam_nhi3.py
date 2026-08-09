@@ -1,0 +1,46 @@
+import re
+
+with open('backend/generate_monthly_report.py', 'r', encoding='utf-8') as f:
+    content = f.read()
+
+tam_nhi_func = '''def update_tam_nhi(document: DocumentType, sources: dict[str, Any]) -> None:
+    if "omc_nhi" in sources:
+        try:
+            wb = sources["omc_nhi"]
+            extract_dynamic_table(document, wb["BANG 1 "], "B8_NHI", anchor_text=None, start_col_idx=1, word_start_row=1)
+            extract_dynamic_table(document, wb["BANG3"], "B9_NHI", anchor_text=None, start_col_idx=1, word_start_row=1)
+        except Exception as e:
+            print("Error processing omc_nhi:", e)
+            
+    if "omc_tam" in sources:
+        try:
+            wb = sources["omc_tam"]
+            
+            # B1_TAM has a complex header where Tây Ninh data is embedded in merged header cells (Row 0 and 1).
+            # The actual data rows start at "Bến Lức" (Row 2 in Word).
+            # The Word table has 10 columns, but it does NOT have an STT column (Tây Ninh is Col 1).
+            # So start_col_idx=2 to skip the STT column in Excel.
+            extract_dynamic_table(document, wb["01_MANE_CSG"], "B1_TAM", anchor_text="Bến Lức", start_col_idx=2, word_start_row=2)
+            
+            # B2_TAM to B7_TAM have normal data rows starting with "Tây Ninh" at Row 1.
+            # And they DO have an STT column in Word. So start_col_idx=1.
+            mapping = {
+                "02_OLT": "B2_TAM",
+                "03_L2SW": "B3_TAM",
+                "05_3G": "B4_TAM",
+                "06_4G": "B5_TAM",
+                "07_5G": "B6_TAM",
+                "08_DLU": "B7_TAM"
+            }
+            for sheet_name, tag in mapping.items():
+                extract_dynamic_table(document, wb[sheet_name], tag, anchor_text="Tây Ninh", start_col_idx=1, word_start_row=1)
+                
+        except Exception as e:
+            print("Error processing omc_tam:", e)
+'''
+
+content = re.sub(r'def update_tam_nhi\(.*?(?=\ndef update_appendix)', tam_nhi_func, content, flags=re.DOTALL)
+
+with open('backend/generate_monthly_report.py', 'w', encoding='utf-8') as f:
+    f.write(content)
+print("Patched update_tam_nhi in generate_monthly_report.py")

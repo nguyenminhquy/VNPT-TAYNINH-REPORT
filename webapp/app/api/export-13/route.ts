@@ -82,6 +82,7 @@ export async function POST(req: Request) {
     // Replace signerName
     if (signerName !== undefined) {
       doc.replaceTextInEntireDocument(/.*Họ và tên.*/i, signerName.trim() ? signerName : 'Họ và tên');
+      doc.replaceTextInEntireDocument(/\(\s*SIGNER\s*\)/i, signerName.trim() ? signerName : 'Họ và tên');
     }
 
     // Replace unit (10) and author (11)
