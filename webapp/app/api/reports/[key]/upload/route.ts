@@ -121,62 +121,17 @@ export async function POST(
       );
     }
 
-    // ── Parse FormData ───────────────────────────────────────────────────────
-    let formData: FormData;
+    // ── Đọc thông tin từ body (Client Upload) ──────────────────────────────
+    let bodyData;
     try {
-      formData = await request.formData();
+      bodyData = await request.json();
     } catch {
-      return NextResponse.json(
-        { error: 'Không thể đọc form data' },
-        { status: 400 },
-      );
+      return NextResponse.json({ error: 'Không thể đọc dữ liệu' }, { status: 400 });
     }
 
-    const file = formData.get('file');
-    if (!file || !(file instanceof File)) {
-      return NextResponse.json(
-        { error: 'Không tìm thấy file upload' },
-        { status: 400 },
-      );
-    }
-
-    // ── Validate định dạng file: chỉ chấp nhận .xlsx ────────────────────────
-    const fileName = file.name;
-    if (!fileName.toLowerCase().endsWith('.xlsx')) {
-      return NextResponse.json(
-        { error: 'Chỉ chấp nhận file .xlsx' },
-        { status: 400 },
-      );
-    }
-
-    // ── Validate kích thước file: tối đa 25MB ───────────────────────────────
-    if (file.size > MAX_FILE_SIZE) {
-      const sizeMB = (file.size / 1024 / 1024).toFixed(1);
-      return NextResponse.json(
-        { error: `File quá lớn (${sizeMB} MB). Tối đa 25 MB` },
-        { status: 400 },
-      );
-    }
-
-    // ── Đọc nội dung file vào buffer ─────────────────────────────────────────
-    const arrayBuffer = await file.arrayBuffer();
-    const fileBuffer = Buffer.from(arrayBuffer);
-
-    // ── Validate nội dung Excel: đọc thử bằng XLSX ───────────────────────────
-    try {
-      const workbook = XLSX.read(fileBuffer, { type: 'buffer' });
-      if (!workbook || !workbook.SheetNames || workbook.SheetNames.length === 0) {
-        return NextResponse.json(
-          { error: 'File Excel không hợp lệ hoặc rỗng' },
-          { status: 400 },
-        );
-      }
-    } catch (xlsxErr) {
-      console.error('[upload] XLSX parse error:', xlsxErr);
-      return NextResponse.json(
-        { error: 'File không phải định dạng Excel hợp lệ' },
-        { status: 400 },
-      );
+    const { blobUrl, blobPathname, fileName, fileSize } = bodyData;
+    if (!blobUrl || !blobPathname) {
+      return NextResponse.json({ error: 'Thiếu thông tin blob' }, { status: 400 });
     }
 
     // ── Lấy thông tin nguồn hiện tại để kiểm tra blob cũ ─────────────────────
@@ -188,29 +143,7 @@ export async function POST(
 
     if (sourceError) {
       console.error('[upload] source lookup error:', sourceError);
-      return NextResponse.json(
-        { error: 'Lỗi truy vấn thông tin nguồn báo cáo' },
-        { status: 500 },
-      );
-    }
-
-    // ── Upload lên Vercel Blob ────────────────────────────────────────────────
-    const timestamp = Date.now();
-    const safeFileName = `${key}_${timestamp}.xlsx`;
-    const pathname = `reports/${key}/${safeFileName}`;
-
-    let blobResult;
-    try {
-      blobResult = await put(pathname, fileBuffer, {
-        access: 'public',
-        multipart: true,
-      });
-    } catch (blobErr: any) {
-      console.error('[upload] Vercel Blob error:', blobErr);
-      return NextResponse.json(
-        { error: `Lỗi upload Vercel Blob: ${blobErr.message || 'Chưa cấu hình Storage hoặc sai Token'}` },
-        { status: 500 },
-      );
+      return NextResponse.json({ error: 'Lỗi truy vấn thông tin nguồn báo cáo' }, { status: 500 });
     }
 
     // ── Cập nhật hoặc Thêm mới report_sources ─────────────────────────────────
@@ -224,9 +157,9 @@ export async function POST(
       const res = await supabaseAdmin
         .from('report_sources')
         .update({
-          blob_url: blobResult.url,
-          blob_pathname: blobResult.pathname || pathname,
-          file_size: file.size,
+          blob_url: blobUrl,
+          blob_pathname: blobPathname,
+          file_size: fileSize || 0,
           uploaded_by: uploadedBy,
           uploaded_at: uploadedAt,
         })
@@ -243,10 +176,10 @@ export async function POST(
           key: key,
           label: sourceMeta?.label ?? key,
           owner: sourceMeta?.owner ?? 'Unknown',
-          filename: sourceMeta?.filename ?? `${key}.xlsx`,
-          blob_url: blobResult.url,
-          blob_pathname: blobResult.pathname || pathname,
-          file_size: file.size,
+          filename: sourceMeta?.filename ?? fileName,
+          blob_url: blobUrl,
+          blob_pathname: blobPathname,
+          file_size: fileSize || 0,
           uploaded_by: uploadedBy,
           uploaded_at: uploadedAt,
         })
@@ -258,24 +191,14 @@ export async function POST(
 
     if (updateError) {
       console.error('[upload] update source error:', updateError);
-      // Cố gắng xóa blob vừa upload để tránh rác
-      try {
-        await del(blobResult.url);
-      } catch {
-        // ignore
-      }
-      return NextResponse.json(
-        { error: `Lỗi DB: ${updateError.message || ''} - ${updateError.details || ''}` },
-        { status: 500 },
-      );
+      return NextResponse.json({ error: `Lỗi DB: ${updateError.message || ''}` }, { status: 500 });
     }
 
     // ── Xóa blob cũ nếu tồn tại SAU KHI update DB thành công ─────────────────
-    if (currentSource?.blob_url && currentSource.blob_url !== blobResult.url) {
+    if (currentSource?.blob_url && currentSource.blob_url !== blobUrl) {
       try {
         await del(currentSource.blob_url);
       } catch (delErr) {
-        // Không block flow nếu xóa blob cũ thất bại
         console.warn('[upload] failed to delete old blob:', delErr);
       }
     }
@@ -285,14 +208,13 @@ export async function POST(
     await supabaseAdmin.from('upload_history').insert({
       source_key: key,
       source_label: histSourceMeta?.label ?? key,
-      file_name: fileName,
-      file_size: file.size,
+      file_name: fileName || `${key}.xlsx`,
+      file_size: fileSize || 0,
       uploaded_by: uploadedBy,
       uploader_name: session.user?.name ?? 'unknown',
       uploaded_at: uploadedAt,
       status: 'success'
     });
-
     // ── Thử tổng hợp nếu đủ tất cả 8 nguồn tuần ──────────────────────────────
     let processResult: { success: boolean; message: string; generated_at?: string } | null = null;
 

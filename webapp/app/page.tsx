@@ -6,7 +6,8 @@ import { useRouter } from "next/navigation";
 import { REPORT_SOURCES, MONTHLY_REPORT_SOURCES, WEEKLY_MLL_SOURCES, type ReportKey } from "@/lib/reports";
 import Link from 'next/link';
 import { Loader2, Plus, Trash2, Calendar } from "lucide-react";
-import toast from "react-hot-toast";
+import { toast } from 'react-hot-toast';
+import { upload } from '@vercel/blob/client';
 import ShiftHandover from "@/components/ShiftHandover";
 import InspectionLog from "@/components/InspectionLog";
 import GeneratorLog from "@/components/GeneratorLog";
@@ -212,14 +213,27 @@ export default function Dashboard() {
 
   const handleUpload = async (key: ReportKey, file: File) => {
     setUploadingKey(key);
-    const formData = new FormData();
-    formData.append("file", file);
     const uploadToast = toast.loading(`Đang tải lên file ${file.name}...`);
     try {
+      // 1. Upload trực tiếp từ client lên Vercel Blob để né giới hạn payload 4.5MB của API Next.js
+      const blob = await upload(`reports/${key}/${key}_${Date.now()}.xlsx`, file, {
+        access: 'public',
+        handleUploadUrl: '/api/upload-token',
+        multipart: true,
+      });
+
+      // 2. Gửi thông tin file đã upload lên API để lưu vào CSDL
       const res = await fetch(`/api/reports/${key}/upload`, {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          blobUrl: blob.url,
+          blobPathname: blob.pathname,
+          fileName: file.name,
+          fileSize: file.size
+        }),
       });
+
       if (res.ok) {
         toast.success("Tải lên thành công!", { id: uploadToast });
         fetchData();
@@ -227,9 +241,9 @@ export default function Dashboard() {
         const errorData = await res.json();
         toast.error(`Lỗi: ${errorData.error || errorData.message}`, { id: uploadToast });
       }
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
-      toast.error("Đã xảy ra lỗi khi tải lên.", { id: uploadToast });
+      toast.error(`Đã xảy ra lỗi khi tải lên: ${e.message}`, { id: uploadToast });
     }
     setUploadingKey(null);
   };
