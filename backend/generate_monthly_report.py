@@ -362,7 +362,10 @@ def mll_table_matrix(sheet: Any) -> tuple[list[list[str]], dict[str, Any]]:
     return matrix, metrics
 
 
-def update_mll(document: DocumentType, sources: dict[str, Any]) -> str:\n    return ""\n\ndef update_ispeed(document: DocumentType, sources: dict[str, Any]) -> None:
+def update_mll(document: DocumentType, sources: dict[str, Any]) -> str:
+    return ""
+
+def update_ispeed(document: DocumentType, sources: dict[str, Any]) -> None:
     sheet = sources["ispeed"]["Báo cáo"]
     raw = raw_matrix(sheet, 1, 9, 1, 11)
     matrix: list[list[str]] = []
@@ -538,21 +541,19 @@ def update_tam_nhi(document: DocumentType, sources: dict[str, Any]) -> None:
         try:
             wb = sources["omc_nhi"]
             
-            # Tự động lấy sheet ThongKe_T của tháng mới nhất có trong file
-            thongke_sheets = [s for s in wb.sheetnames if s.startswith("ThongKe_T") and s[9:].isdigit()]
-            if thongke_sheets:
-                target_sheet_name = sorted(thongke_sheets, key=lambda x: int(x[9:]))[-1]
-            else:
-                target_sheet_name = "ThongKe_T7" # Fallback
-                
-            sheet = wb[target_sheet_name]
-            raw = raw_matrix(sheet, 6, 21, 2, 4)
-            matrix = []
-            for row in raw:
-                matrix.append([clean(row[0]), clean(row[1]), clean(row[2])])
-            t = find_table_by_tag(document, "B10_NHI")
-            if t:
-                write_table_matrix(t, matrix, start_row=1)
+            try:
+                sheet = wb["BANG 1 "]
+                matrix = raw_matrix(sheet, 8, 14, 2, 10)
+                t = find_table_by_tag(document, "B8_NHI")
+                if t: write_table_matrix(t, matrix, start_row=1)
+            except Exception as e: print("nhi 8", e)
+            
+            try:
+                sheet = wb["BANG3"]
+                matrix = raw_matrix(sheet, 4, 10, 2, 5)
+                t = find_table_by_tag(document, "B9_NHI")
+                if t: write_table_matrix(t, matrix, start_row=1)
+            except Exception as e: print("nhi 9", e)
         except Exception as e:
             print("Error processing omc_nhi:", e)
             
@@ -560,46 +561,23 @@ def update_tam_nhi(document: DocumentType, sources: dict[str, Any]) -> None:
         try:
             wb = sources["omc_tam"]
             
-            # MANE_CSG
-            try:
-                sheet = wb["01_MANE_CSG"]
-                matrix = raw_matrix(sheet, 3, 9, 2, 9)
-                t = find_table_by_tag(document, "HIỆN TRẠNG THIẾT BỊ:(OMC_TAM)", offset=0)
-                if t: write_table_matrix(t, matrix, start_row=1)
-            except Exception as e: print(e)
+            mapping = {
+                "01_MANE_CSG": ("B1_TAM", 9),
+                "02_OLT": ("B2_TAM", 7),
+                "03_L2SW": ("B3_TAM", 6),
+                "05_3G": ("B4_TAM", 6),
+                "06_4G": ("B5_TAM", 6),
+                "07_5G": ("B6_TAM", 6),
+                "08_DLU": ("B7_TAM", 6)
+            }
             
-            # OLT
-            try:
-                sheet = wb["02_OLT"]
-                matrix = raw_matrix(sheet, 3, 9, 2, 7)
-                t = find_table_by_tag(document, "HIỆN TRẠNG THIẾT BỊ:(OMC_TAM)", offset=1)
-                if t: write_table_matrix(t, matrix, start_row=1)
-            except Exception as e: print(e)
-            
-            # L2SW
-            try:
-                sheet = wb["03_L2SW"]
-                matrix = raw_matrix(sheet, 3, 9, 2, 6)
-                t = find_table_by_tag(document, "HIỆN TRẠNG THIẾT BỊ:(OMC_TAM)", offset=2)
-                if t: write_table_matrix(t, matrix, start_row=1)
-            except Exception as e: print(e)
-            
-            # 2G, 3G, 4G, 5G
-            for idx, sname in enumerate(["04_2G", "05_3G", "06_4G", "07_5G"]):
+            for sheet_name, (tag, max_col) in mapping.items():
                 try:
-                    sheet = wb[sname]
-                    matrix = raw_matrix(sheet, 3, 9, 2, 6)
-                    t = find_table_by_tag(document, "HIỆN TRẠNG THIẾT BỊ:(OMC_TAM)", offset=3+idx)
+                    sheet = wb[sheet_name]
+                    matrix = raw_matrix(sheet, 3, 9, 2, max_col)
+                    t = find_table_by_tag(document, tag)
                     if t: write_table_matrix(t, matrix, start_row=1)
-                except Exception as e: print(e)
-                
-            # DLU (offset 7)
-            try:
-                sheet = wb["08_DLU"]
-                matrix = raw_matrix(sheet, 3, 9, 2, 6)
-                t = find_table_by_tag(document, "HIỆN TRẠNG THIẾT BỊ:(OMC_TAM)", offset=7)
-                if t: write_table_matrix(t, matrix, start_row=1)
-            except Exception as e: print(e)
+                except Exception as e: print("tam", tag, e)
             
         except Exception as e:
             print("Error processing omc_tam:", e)
