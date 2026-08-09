@@ -30,6 +30,7 @@ export async function POST(req: Request) {
         t = 'Về việc ............................... (3) .............................';
       }
       doc.replaceTextInEntireDocument(/.*\(\s*3\s*\).*/, t);
+      doc.replaceTextInEntireDocument(/\(\s*TITLE\s*\)/i, t);
     }
 
     // Replace content (4)

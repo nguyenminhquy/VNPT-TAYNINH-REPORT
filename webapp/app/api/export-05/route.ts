@@ -30,6 +30,7 @@ export async function POST(req: Request) {
         t = 'Về việc ...................... (3) ...............................';
       }
       doc.replaceTextInEntireDocument(/.*\(\s*3\s*\).*/, t);
+      doc.replaceTextInEntireDocument(/\(\s*TITLE\s*\)/i, t);
     }
 
     // (4) GIÁM ĐỐC(4) - Usually this is the authority at the top left. We might just replace it with GIÁM ĐỐC if it's the Director, or keep it if it's not changing.

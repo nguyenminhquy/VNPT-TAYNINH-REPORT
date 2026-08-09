@@ -29,6 +29,7 @@ export async function POST(req: Request) {
         t = 'V/v ..........................................................';
       }
       doc.replaceTextInEntireDocument(/.*\(\s*3\s*\).*/, t);
+      doc.replaceTextInEntireDocument(/\(\s*TITLE\s*\)/i, t);
     }
 
     // Replace Kính gửi recipients in the dotted lines

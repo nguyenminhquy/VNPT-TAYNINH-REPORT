@@ -26,6 +26,7 @@ export async function POST(req: Request) {
     // Replace title
     if (title !== undefined) {
       doc.replaceTextInEntireDocument(/.*Về việc.*\(\s*3\s*\).*/, title.trim() ? title : 'Về việc ........................................................');
+      doc.replaceTextInEntireDocument(/\(\s*TITLE\s*\)/i, title.trim() ? title : '..............................');
     }
 
     // Replace content

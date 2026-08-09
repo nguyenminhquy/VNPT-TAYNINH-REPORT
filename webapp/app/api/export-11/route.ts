@@ -26,6 +26,7 @@ export async function POST(req: Request) {
           t = t.substring(3).trim();
         }
         doc.replaceTextInEntireDocument(/\(\s*3\s*\)/, t);
+      doc.replaceTextInEntireDocument(/\(\s*TITLE\s*\)/i, t);
       }
     }
 

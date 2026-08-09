@@ -35,6 +35,7 @@ export async function POST(req: Request) {
     // Replace (3) Trích yếu
     if (title !== undefined) {
       doc.replaceTextInEntireDocument(/.*\(\s*3\s*\).*/, title.trim() ? title : '................ (3) ...............');
+      doc.replaceTextInEntireDocument(/\(\s*TITLE\s*\)/i, title.trim() ? title : '..............................');
     }
 
     // Replace (4) Tên đơn vị ban hành
