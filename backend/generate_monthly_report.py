@@ -41,14 +41,13 @@ FILES = {
     "mytv": "3. BÁO CÁO MYTV_TÂN.xlsx",
     "ispeed": "5. BÁO CÁO ISPEED_QUOC.xlsx",
     "5s": "6. BÁO CÁO 5S NHÀ TRẠM_TÂN.xlsx",
-    "xlsc": "7.BÁO CÁO XLSC_TUẤN.xlsx",
-    "appendix": "8.PHỤ LỤC 1_HÂN.xlsx",
+    "xlsc": "7. BÁO CÁO XLSC_TUAN.xlsx",
+    "appendix": "8. PHỤ LỤC 1_ HÂN.xlsx",
     "omc_tam": "9.HIỆN TRẠNG THIẾT BỊ_TÂM.xlsx",
     "omc_nhi": "10. BÁO CÁO BSC_NHI.xlsx",
-    "phutro_quy": "11. THIẾT BỊ PHỤ TRỢ_QUÝ.xlsx",
-    "ngoaivi_bao": "12. MẠNG NGOẠI VI_BẢO.xlsx",
-    "ngoaivi_tuan": "13. XLSC MẠNG NGOẠI VI_TUẤN.xlsx",
-    "cauhinh_quy": "14. CẤU HÌNH TỰ ĐỘNG_QUÝ.xlsx"
+    "cauhinh_quy": "11. KẾT QUẢ CẤU HÌNH TỰ ĐỘNG.xlsx",
+    "ngoaivi_bao": "12. BÁO CÁO THIẾT BỊ NGOẠI VI.xlsx",
+    "phutro_quy": "13. BÁO CÁO THIẾT BỊ PHỤ TRỢ.xlsx"
 }
 
 
@@ -125,7 +124,7 @@ def load_sources() -> dict[str, Any]:
     sources: dict[str, Any] = {}
     for key, filename in FILES.items():
         if (DATA_DIR / filename).is_file():
-            sources[key] = load_workbook(DATA_DIR / filename, data_only=True)
+            sources[key] = load_workbook(DATA_DIR / filename, data_only=True, read_only=True)
     return sources
 
 
@@ -363,175 +362,93 @@ def update_mll(document: DocumentType, sources: dict[str, Any]) -> str:
     return ""
 
 def update_ispeed(document: DocumentType, sources: dict[str, Any]) -> None:
-    sheet = sources["ispeed"]["Báo cáo"]
-    raw = raw_matrix(sheet, 1, 9, 1, 11)
-    matrix: list[list[str]] = []
-    for row_index, row in enumerate(raw):
-        if row_index == 0:
-            matrix.append([clean(value) for value in row])
-            continue
-        matrix.append(
-            [
-                clean(row[0]),
-                clean(row[1]),
-                integer(row[2]),
-                integer(row[3]),
-                integer(row[4]),
-                percent(row[5]),
-                integer(row[6]),
-                integer(row[7]),
-                percent(row[8]),
-                integer(row[9]),
-                percent(row[10]),
-            ]
-        )
-    t = find_table_by_tag(document, "B23_QUOC")
-    if t:
-        write_table_matrix(t, matrix)
-
-    report_date = clean(sheet.cell(row=12, column=2).value)
-    if report_date:
-        replace_paragraph(document.paragraphs[55], "Thời gian lấy báo cáo: " + report_date)
-
-    total = raw[-1]
-    replace_paragraph(
-        document.paragraphs[59],
-        f"Công tác đo kiểm i-Speed đã thực hiện {integer(total[4])}/{integer(total[3])} mẫu, đạt {percent(total[5])}/Tháng kế hoạch.",
-    )
-    replace_paragraph(
-        document.paragraphs[60],
-        f"Công tác đo kiểm SpeedTest đã thực hiện {integer(total[7])}/{integer(total[6])} mẫu, đạt {percent(total[8])}/Tháng kế hoạch.",
-    )
-    replace_paragraph(
-        document.paragraphs[61],
-        f"Kết quả mẫu đo 5G SpeedTest đã thực hiện {integer(total[9])}/{integer(total[7])} mẫu, đạt {percent(total[10])}/Tổng mẫu đã đo.",
-    )
-
-
-def format_5s_matrix(rows: list[list[Any]]) -> list[list[str]]:
-    result: list[list[str]] = []
-    for row_index, row in enumerate(rows):
-        if row_index <= 1:
-            result.append([clean(value) for value in row])
-            continue
-        result.append(
-            [
-                clean(row[0]),
-                clean(row[1]),
-                integer(row[2]),
-                integer(row[3]),
-                integer(row[4]),
-                percent(row[5]),
-            ]
-        )
-    return result
-
+    if "ispeed" not in sources: return
+    try:
+        sheet = sources["ispeed"]["Báo cáo"]
+        raw = raw_matrix(sheet, 1, 9, 2, 11)
+        t = find_table_by_tag(document, "B22_QUOC")
+        if t: write_table_matrix(t, raw, start_row=1)
+    except Exception as e:
+        print("Error ispeed:", e)
 
 def update_5s(document: DocumentType, sources: dict[str, Any]) -> None:
-    sheet = sources["5s"]["Sheet1"]
-    station = format_5s_matrix(raw_matrix(sheet, 1, 10, 1, 6))
-    air_conditioning = format_5s_matrix(raw_matrix(sheet, 14, 23, 1, 6))
-    ap_otb = format_5s_matrix(raw_matrix(sheet, 26, 35, 1, 6))
-    
-    t_st = find_table_by_tag(document, "B24_TAN")
-    t_ap = find_table_by_tag(document, "B25_TAN")
-    t_ac = find_table_by_tag(document, "B26_TAN")
-    if t_st: write_table_matrix(t_st, station)
-    if t_ap: write_table_matrix(t_ap, ap_otb)
-    if t_ac: write_table_matrix(t_ac, air_conditioning)
+    if "5s" not in sources: return
+    try:
+        sheet = sources["5s"]["Sheet1"]
+        # In new document, we have B23_TAN, B24_TAN, B25_TAN
+        station = raw_matrix(sheet, 1, 10, 2, 6)
+        air_conditioning = raw_matrix(sheet, 14, 23, 2, 6)
+        ap_otb = raw_matrix(sheet, 26, 35, 2, 6)
+        
+        t23 = find_table_by_tag(document, "B23_TAN")
+        if t23: write_table_matrix(t23, station, start_row=1)
+        
+        t24 = find_table_by_tag(document, "B24_TAN")
+        if t24: write_table_matrix(t24, air_conditioning, start_row=1)
+        
+        t25 = find_table_by_tag(document, "B25_TAN")
+        if t25: write_table_matrix(t25, ap_otb, start_row=1)
+    except Exception as e:
+        print("Error 5s:", e)
 
-    source_date = datetime.fromtimestamp((DATA_DIR / FILES["5s"]).stat().st_mtime)
-    value = f"Thời gian lấy báo cáo: {source_date:%d/%m/%Y}"
-    for index in (64, 70, 76):
-        replace_paragraph(document.paragraphs[index], value)
-
-
-def parse_xlsc_title(title: str) -> tuple[str, str, int, int] | None:
-    match = re.search(
-        r"\((\d{2})-(\d{2})-(\d{4})\s*-\s*(\d{2})-(\d{2})-(\d{4})\)",
-        title,
-    )
-    if not match:
-        return None
-    start = f"{match.group(1)}/{match.group(2)}/{match.group(3)}"
-    end = f"{match.group(4)}/{match.group(5)}/{match.group(6)}"
-    return start, end, int(match.group(5)), int(match.group(6))
-
-
-def xlsc_matrix(sheet: Any) -> list[list[str]]:
-    raw = raw_matrix(sheet, 1, 10, 1, 10)
-    result: list[list[str]] = []
-    for row_index, row in enumerate(raw):
-        if row_index <= 1:
-            result.append([clean(value) for value in row])
-            continue
-        result.append(
-            [
-                clean(row[0]),
-                integer(row[1]),
-                integer(row[2]),
-                integer(row[3]),
-                integer(row[4]),
-                percent(row[5], stored_as_percent=True),
-                integer(row[6]),
-                integer(row[7]),
-                integer(row[8]),
-                percent(row[9], stored_as_percent=True),
-            ]
-        )
-    return result
-
-
-def update_xlsc_summary(
-    document: DocumentType,
-    paragraph_start: int,
-    total_row: Sequence[Any],
-    date_range: tuple[str, str, int, int] | None,
-) -> None:
-    if date_range:
-        replace_paragraph(
-            document.paragraphs[paragraph_start],
-            f"Kỳ báo cáo: {date_range[0]} – {date_range[1]}",
-        )
-    replace_paragraph(document.paragraphs[paragraph_start + 1], f"Tổng phiếu giao: {integer(total_row[1])} phiếu")
-    replace_paragraph(
-        document.paragraphs[paragraph_start + 2],
-        f"Hoàn thành: {integer(total_row[2])}/{integer(total_row[1])} phiếu",
-    )
-    replace_paragraph(document.paragraphs[paragraph_start + 3], f"Hoàn thành đúng hạn: {integer(total_row[3])} phiếu")
-    replace_paragraph(document.paragraphs[paragraph_start + 4], f"Hoàn thành quá hạn: {integer(total_row[4])} phiếu")
-    replace_paragraph(
-        document.paragraphs[paragraph_start + 5],
-        f"Tỉ lệ đúng hạn: {percent(total_row[5], stored_as_percent=True)}",
-    )
-    replace_paragraph(document.paragraphs[paragraph_start + 6], f"Phiếu tồn quá hạn: {integer(total_row[8])} phiếu")
-
+def extract_by_tag_in_sheet(document, wb, tag, max_rows=20, max_cols=10):
+    for sheet_name in wb.sheetnames:
+        sheet = wb[sheet_name]
+        for row_idx, row in enumerate(sheet.iter_rows(values_only=True), 1):
+            for col_idx, cell in enumerate(row, 1):
+                if isinstance(cell, str) and (tag in cell or cell.replace("0", "O") == tag.replace("0", "O")):
+                    # Tag found! The data is typically below or left of it.
+                    # Since we know the column of the tag is the far right, we extract from col 2 to col_idx-1
+                    # And rows from row_idx to row_idx+max_rows
+                    start_col = 2
+                    end_col = col_idx - 1
+                    if end_col < start_col: end_col = col_idx
+                    start_row = row_idx
+                    # Find end_row by looking for empty rows
+                    end_row = row_idx + max_rows
+                    
+                    matrix = raw_matrix(sheet, start_row, end_row, start_col, end_col)
+                    # Filter out completely empty rows
+                    matrix = [r for r in matrix if any(c != "" for c in r)]
+                    
+                    t = find_table_by_tag(document, tag)
+                    if t: 
+                        try:
+                            write_table_matrix(t, matrix, start_row=1)
+                            print(f"Successfully wrote {tag}")
+                        except Exception as e:
+                            print(f"Error writing {tag}: {e}")
+                    return True
+    return False
 
 def update_xlsc(document: DocumentType, sources: dict[str, Any]) -> None:
-    workbook = sources["xlsc"]
-    mappings = [
-        ("XLSC MANE", "Kết quả phiếu XLSC MANE(OMC_TUAN)", 81),
-        ("XLSC ACCESS", "Kết quả phiếu XLSC Access(OMC_TUAN)", 94),
-        ("XLSC VÔ TUYẾN", "Kết quả phiếu XLSC vô tuyến(OMC_TUAN)", 105),
-    ]
-    report_month: tuple[int, int] | None = None
-    for sheet_name, table_tag, paragraph_start in mappings:
-        sheet = workbook[sheet_name]
-        matrix = xlsc_matrix(sheet)
-        t = find_table_by_tag(document, table_tag)
-        if t: write_table_matrix(t, matrix)
-        date_range = parse_xlsc_title(clean(sheet.cell(row=1, column=1).value))
-        if date_range:
-            report_month = (date_range[2], date_range[3])
-        total_row = raw_matrix(sheet, 10, 10, 1, 10)[0]
-        update_xlsc_summary(document, paragraph_start, total_row, date_range)
+    if "xlsc" in sources:
+        try:
+            wb = sources["xlsc"]
+            for tag in ["B26_TUAN", "B27_TUAN", "B28_TUAN", "B29_TUAN", "B30_TUAN"]:
+                extract_by_tag_in_sheet(document, wb, tag, max_rows=15)
+        except Exception as e:
+            print("Error xlsc:", e)
 
-    if report_month:
-        replace_paragraph(
-            document.paragraphs[79],
-            f"KẾT QUẢ THỰC HIỆN PHIẾU SỰ CỐ CHUYÊN ĐỀ 5 THÁNG {report_month[0]} NĂM {report_month[1]}:",
-        )
-
+def update_others(document: DocumentType, sources: dict[str, Any]) -> None:
+    if "phutro_quy" in sources:
+        try:
+            extract_by_tag_in_sheet(document, sources["phutro_quy"], "B31_QUY", max_rows=10)
+        except Exception as e: print("Error phutro_quy:", e)
+        
+    if "cauhinh_quy" in sources:
+        try:
+            # Handle typo B13_QUY -> B32_QUY
+            extract_by_tag_in_sheet(document, sources["cauhinh_quy"], "B13_QUY", max_rows=15)
+            # Try B32_QUY as well
+            extract_by_tag_in_sheet(document, sources["cauhinh_quy"], "B32_QUY", max_rows=15)
+        except Exception as e: print("Error cauhinh_quy:", e)
+        
+    if "ngoaivi_bao" in sources:
+        try:
+            extract_by_tag_in_sheet(document, sources["ngoaivi_bao"], "B33_BAO", max_rows=15, max_cols=16)
+            extract_by_tag_in_sheet(document, sources["ngoaivi_bao"], "B34_BAO", max_rows=15, max_cols=16)
+        except Exception as e: print("Error ngoaivi_bao:", e)
 
 def update_tam_nhi(document: DocumentType, sources: dict[str, Any]) -> None:
     if "omc_nhi" in sources:
@@ -749,7 +666,7 @@ def generate(output: Path | None = None) -> dict[str, Any]:
         update_ispeed(document, sources)
         update_5s(document, sources)
         update_xlsc(document, sources)
-        update_appendix(document, sources)
+        update_others(document, sources)
         update_tam_nhi(document, sources)
         remove_tags(document)
         replace_report_week(document, week)

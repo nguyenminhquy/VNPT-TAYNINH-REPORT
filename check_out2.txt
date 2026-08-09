@@ -1,0 +1,84 @@
+Table 0: VIỄN THÔNG TÂY NINH TRUNG TÂM HẠ TẦNG | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự do - Hạnh phúc
+Table 1: STT | THT | 10_2025
+Table 2: STT | THT | Loại TB
+Table 3: STT | THT | Loại TB
+Table 4: STT | THT | Loại TB
+Table 5: STT | THT | Loại TB
+Table 6: STT | THT | Loại TB
+Table 7: STT | Tổ Hạ tầng | TTVT
+Table 8: STT | Trung tâm viễn thông | Số CSHT
+Table 9: STT | Tổ Hạ Tầng | Cáp Quang
+Table 10: STT | Tổ Hạ Tầng | AP/OTB
+Table 11: STT | THT | TTVT
+Table 12: STT | Loại CSHT | MOBIFONE
+Table 13: STT | Loại CSHT | SCTV
+Table 14: STT | Loại CSHT | LA34
+Table 15: Tên KPIs | Tỷ trọng | Mục tiêu giao
+Table 16: STT | Tổ Hạ tầng | Tổng điểm BSC
+Table 17: Tháng | Xếp hạng QoS | Xếp hạng QoS
+Table 18: TT | QoS, QoE | Thành phần
+Table 19: Khu vực | Trạm | Nguyên nhân
+Table 20: Khu vực | Trạm | Nguyên nhân
+Table 21: Khu vực | Trạm | Nguyên nhân
+Table 22: Nguyên nhân | Giải pháp
+Table 23: STT | THT | FBB QoS
+Table 24: STT | THT | TTVT
+Table 25: STT | THT | TTVT
+Table 26: STT | THT | FBB QoE
+Table 27: STT | THT | TTVT
+Table 28: THỜI GIAN MẤT LIÊN LẠC MẠNG DI ĐỘNG LŨY KẾ THEO TTHT | THỜI GIAN MẤT LIÊN LẠC MẠNG DI ĐỘNG LŨY KẾ THEO TTHT | THỜI GIAN MẤT LIÊN LẠC MẠNG DI ĐỘNG LŨY KẾ THEO TTHT
+Table 29: Tỷ lệ xử lý sự cố hệ thống di động đúng hạn 120 phút theo THT | Tỷ lệ xử lý sự cố hệ thống di động đúng hạn 120 phút theo THT | Tỷ lệ xử lý sự cố hệ thống di động đúng hạn 120 phút theo THT
+Table 30: Tỷ lệ xử lý sự cố hệ thống di động đúng hạn 120 phút theo TTVT | Tỷ lệ xử lý sự cố hệ thống di động đúng hạn 120 phút theo TTVT | Tỷ lệ xử lý sự cố hệ thống di động đúng hạn 120 phút theo TTVT
+Table 31: Tỷ lệ xử lý sự cố hệ thống di động đúng hạn tuần 30 (15/07 - 22/07) | Tỷ lệ xử lý sự cố hệ thống di động đúng hạn tuần 30 (15/07 - 22/07) | Tỷ lệ xử lý sự cố hệ thống di động đúng hạn tuần 30 (15/07 - 22/07)
+Table 32: Tỷ lệ xử lý sự cố hệ thống di động đúng hạn tuần 31 (22/07 - 29/07) | Tỷ lệ xử lý sự cố hệ thống di động đúng hạn tuần 31 (22/07 - 29/07) | Tỷ lệ xử lý sự cố hệ thống di động đúng hạn tuần 31 (22/07 - 29/07)
+Table 33: STT | Tổ Hạ Tầng | Số lượng NV
+Table 34: BÁO CÁO TIẾN ĐỘ 5S NHÀ TRẠM - QUÝ 3/2026 | BÁO CÁO TIẾN ĐỘ 5S NHÀ TRẠM - QUÝ 3/2026 | BÁO CÁO TIẾN ĐỘ 5S NHÀ TRẠM - QUÝ 3/2026
+Table 35: BÁO CÁO TIẾN ĐỘ 5S AP/OTB - THÁNG 7/2026 | BÁO CÁO TIẾN ĐỘ 5S AP/OTB - THÁNG 7/2026 | BÁO CÁO TIẾN ĐỘ 5S AP/OTB - THÁNG 7/2026
+Table 36: BÁO CÁO TIẾN ĐỘ VỆ SINH MÁY LẠNH - QUÝ 3/2026 | BÁO CÁO TIẾN ĐỘ VỆ SINH MÁY LẠNH - QUÝ 3/2026 | BÁO CÁO TIẾN ĐỘ VỆ SINH MÁY LẠNH - QUÝ 3/2026
+Table 37: Chỉ tiêu | Kết quả
+Table 38: STT | Tổ Hạ tầng | Số CSHT
+Table 39: STT | Tổ Hạ tầng | Số CSHT
+Table 40: STT | Tổ Hạ tầng | Số vị trí cho thuê
+Table 41: STT | Tổ Hạ tầng | Số vị trí cho thuê
+Table 42: STT | Tổ Hạ tầng | Số vị trí cho thuê
+Table 43: Bước | Hạng mục | Số dự án
+Table 44: STT | Loại anten | Số dự án
+Table 45: Điểm nghẽn | Quy mô | Chi tiết
+Table 46: Mức giá | Số trạm | Tỷ trọng
+Table 47: STT | Nhiệm vụ | Nội dung thực hiện
+Table 48: Tổ Hạ tầng | Bảo an OLT có 1 Uplink (Đảm bảo OLT ≥ 2 Uplink) | Bảo an OLT có 1 Uplink (Đảm bảo OLT ≥ 2 Uplink)
+Table 49: TRẠNG THÁI | SỐ LƯỢNG | TỶ LỆ
+Table 50: STT | TỔ HẠ TẦNG | TỔNG SỐ
+Table 51: STT | TỔ HẠ TẦNG | ĐỢT 1
+Table 52: STT | NHÓM CÔNG VIỆC | SỐ LƯỢNG
+Table 53: STT | NGUYÊN NHÂN / VƯỚNG MẮC | CHƯA THỰC HIỆN
+Table 54: Tổ Hạ tầng | KH Đợt 1 (Trước 30/06/2026) | KH Đợt 2 (Từ 1/7→cuối 2026)
+Table 55: STT | Chương trình | Trạng thái
+Table 56: Giải pháp | Ưu điểm | Hạn chế
+Table 57: STT | Tổ hạ tầng | Tổng thiết bị
+Table 58: STT | Tổ hạ tầng | Tổng thiết bị
+Table 59: STT | Tên chỉ tiêu | Nhóm chi phí
+Table 60: STT | Tên Tổ / Đơn vị quản lý | Số lượng trạm
+Table 61: STT | Loại trạm | Số lượng
+Table 62: STT | Hạng mục thiết bị | Số lượng
+Table 63: STT | Tổ Hạ tầng | Tỷ lệ % Đạt YC
+Table 64: STT | Tổ Hạ tầng | Số CSHT tăng điện
+Table 65: STT | Đơn vị / Tổ Hạ tầng | Số trạm tăng
+Table 66: STT | TTVT | 06/2026
+Table 67: XLSC MANE - TÂY NINH (01-07-2026 - 01-08-2026) | XLSC MANE - TÂY NINH (01-07-2026 - 01-08-2026) | XLSC MANE - TÂY NINH (01-07-2026 - 01-08-2026)
+Table 68: XLSC ACCESS - TÂY NINH (01-07-2026 - 01-08-2026) | XLSC ACCESS - TÂY NINH (01-07-2026 - 01-08-2026) | XLSC ACCESS - TÂY NINH (01-07-2026 - 01-08-2026)
+Table 69: XLSC VÔ TUYẾN - TÂY NINH (01-07-2026 - 01-08-2026) | XLSC VÔ TUYẾN - TÂY NINH (01-07-2026 - 01-08-2026) | XLSC VÔ TUYẾN - TÂY NINH (01-07-2026 - 01-08-2026)
+Table 70: XLSC MNV - TÂY NINH & LONG AN (01/07/2026 – 01/08/2026) | XLSC MNV - TÂY NINH & LONG AN (01/07/2026 – 01/08/2026) | XLSC MNV - TÂY NINH & LONG AN (01/07/2026 – 01/08/2026)
+Table 71: STT | Đơn vị | Tổng TB PTM
+Table 72: STT | Vấn đề tồn tại | Phương án xử lý
+Table 73: STT | TÊN NHIỆM VỤ | MỤC TIÊU
+Table 74: Nơi nhận: - GĐ, PGĐ TTHT (b/c); - Tổ Khai thác Hệ thống; - Các Tổ HT; - Tổ Tổng hợp; - Lưu: Tổ Khai thác Hệ thống.  Số eOffice:  - VBKS. | GIÁM ĐỐC
+Table 75: STT | Sự cố | Tên NE
+Table 76: MANE—2 phiếu quá hạn | MANE—2 phiếu quá hạn | MANE—2 phiếu quá hạn
+Table 77: ACCESS — 15 phiếu quá hạn | ACCESS — 15 phiếu quá hạn | ACCESS — 15 phiếu quá hạn
+Table 78: VÔ TUYẾN — 57 phiếu quá hạn | VÔ TUYẾN — 57 phiếu quá hạn | VÔ TUYẾN — 57 phiếu quá hạn
+
+--- Paragraphs ---
+Para 31: Bảng Kết Quả Thực Hiện KPIs(B10_NHI)
+Para 32: Bảng điểm BSC tháng 7 (B11_NHI)
+Para 53: 09 phản ánh khi liên hệ lại hỗ trợ xử lý thì KH đã sử dụng được dịch vụ (nhờ người thân điều chỉnh, đăng kí dịch vụ, ...)

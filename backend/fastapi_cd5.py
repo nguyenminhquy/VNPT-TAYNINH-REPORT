@@ -183,15 +183,20 @@ async def export_word(request: Request):
     DATA_DIR = ROOT / "data sample"
     DATA_DIR.mkdir(parents=True, exist_ok=True)
 
+
     EXCEL_KEYS = {
         "mbb":      "1. BÁO CÁO MBB_HUNG.xlsx",
         "fbb":      "2. BÁO CÁO FBB_BAO.xlsx",
         "mytv":     "3. BÁO CÁO MYTV_TÂN.xlsx",
-        "mll":      "4. BÁO CÁO MLL_KHANH.xlsx",
         "ispeed":   "5. BÁO CÁO ISPEED_QUOC.xlsx",
         "5s":       "6. BÁO CÁO 5S NHÀ TRẠM_TÂN.xlsx",
-        "xlsc":     "7.BÁO CÁO XLSC_TUẤN.xlsx",
-        "appendix": "PHỤ LỤC 1.xlsx",
+        "xlsc":     "7. BÁO CÁO XLSC_TUAN.xlsx",
+        "appendix": "8. PHỤ LỤC 1_ HÂN.xlsx",
+        "omc_tam":  "9.HIỆN TRẠNG THIẾT BỊ_TÂM.xlsx",
+        "omc_nhi":  "10. BÁO CÁO BSC_NHI.xlsx",
+        "cauhinh_quy": "11. KẾT QUẢ CẤU HÌNH TỰ ĐỘNG.xlsx",
+        "ngoaivi_bao": "12. BÁO CÁO THIẾT BỊ NGOẠI VI.xlsx",
+        "phutro_quy": "13. BÁO CÁO THIẾT BỊ PHỤ TRỢ.xlsx"
     }
 
     # Tải từng file từ Blob URL về data sample/
@@ -304,20 +309,20 @@ async def export_word_monthly(request: Request):
     DATA_DIR = ROOT / "data sample"
     DATA_DIR.mkdir(parents=True, exist_ok=True)
 
+
     EXCEL_KEYS = {
         "mbb":      "1. BÁO CÁO MBB_HUNG.xlsx",
         "fbb":      "2. BÁO CÁO FBB_BAO.xlsx",
         "mytv":     "3. BÁO CÁO MYTV_TÂN.xlsx",
         "ispeed":   "5. BÁO CÁO ISPEED_QUOC.xlsx",
         "5s":       "6. BÁO CÁO 5S NHÀ TRẠM_TÂN.xlsx",
-        "xlsc":     "7.BÁO CÁO XLSC_TUẤN.xlsx",
-        "appendix": "8.PHỤ LỤC 1_HÂN.xlsx",
+        "xlsc":     "7. BÁO CÁO XLSC_TUAN.xlsx",
+        "appendix": "8. PHỤ LỤC 1_ HÂN.xlsx",
         "omc_tam":  "9.HIỆN TRẠNG THIẾT BỊ_TÂM.xlsx",
         "omc_nhi":  "10. BÁO CÁO BSC_NHI.xlsx",
-        "phutro_quy": "11. THIẾT BỊ PHỤ TRỢ_QUÝ.xlsx",
-        "ngoaivi_bao": "12. MẠNG NGOẠI VI_BẢO.xlsx",
-        "ngoaivi_tuan": "13. XLSC MẠNG NGOẠI VI_TUẤN.xlsx",
-        "cauhinh_quy": "14. CẤU HÌNH TỰ ĐỘNG_QUÝ.xlsx"
+        "cauhinh_quy": "11. KẾT QUẢ CẤU HÌNH TỰ ĐỘNG.xlsx",
+        "ngoaivi_bao": "12. BÁO CÁO THIẾT BỊ NGOẠI VI.xlsx",
+        "phutro_quy": "13. BÁO CÁO THIẾT BỊ PHỤ TRỢ.xlsx"
     }
 
     import httpx
