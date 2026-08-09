@@ -296,9 +296,9 @@ export default function Dashboard() {
       } else {
         toast.error(json.error || "Lỗi khi lưu file Word", { id: exportToast });
       }
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
-      toast.error("Lỗi mạng khi xuất Word", { id: exportToast });
+      toast.error(`Lỗi xuất Word: ${e.message}`, { id: exportToast });
     }
     setIsExporting(false);
   };
@@ -351,9 +351,9 @@ export default function Dashboard() {
       } else {
         toast.error(json.error || "Lỗi khi lưu file Word", { id: exportToast });
       }
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
-      toast.error("Lỗi mạng khi xuất Word", { id: exportToast });
+      toast.error(`Lỗi xuất Word: ${e.message}`, { id: exportToast });
     }
     setIsExporting(false);
   };
@@ -406,9 +406,9 @@ export default function Dashboard() {
       } else {
         toast.error(json.error || "Lỗi khi lưu file Word", { id: exportToast });
       }
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
-      toast.error("Lỗi mạng khi xuất Word", { id: exportToast });
+      toast.error(`Lỗi xuất Word: ${e.message}`, { id: exportToast });
     }
     setIsExporting(false);
     setIsExporting(false);

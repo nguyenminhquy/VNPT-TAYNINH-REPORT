@@ -41,6 +41,15 @@ export async function POST(request: Request) {
     const fileSize = wordBuffer.byteLength;
     const filename = buildFilename();
 
+    let validToken = undefined;
+    for (const key of Object.keys(process.env)) {
+      const val = process.env[key];
+      if (val && val.startsWith('vercel_blob_rw_')) {
+        validToken = val;
+        break;
+      }
+    }
+
     let blobUrl: string;
     try {
       const blob = await put(
@@ -48,6 +57,7 @@ export async function POST(request: Request) {
         wordBuffer,
         {
           access: 'public',
+          token: validToken,
           contentType:
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         }
