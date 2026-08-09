@@ -5,10 +5,16 @@ export async function POST(request: Request): Promise<NextResponse> {
   const body = (await request.json()) as HandleUploadBody;
   
   try {
+    // Tìm token trong env (hỗ trợ cả khi có prefix như NEW_BLOB_READ_WRITE_TOKEN)
+    const blobToken = process.env.BLOB_READ_WRITE_TOKEN || 
+                     Object.keys(process.env).find(k => k.endsWith('_BLOB_READ_WRITE_TOKEN')) 
+                     ? process.env[Object.keys(process.env).find(k => k.endsWith('_BLOB_READ_WRITE_TOKEN'))!] 
+                     : undefined;
+
     const jsonResponse = await handleUpload({
       body,
       request,
-      token: process.env.BLOB_READ_WRITE_TOKEN,
+      token: blobToken,
       onBeforeGenerateToken: async (pathname) => {
         return {
           maximumSizeInBytes: 50 * 1024 * 1024, // 50MB
